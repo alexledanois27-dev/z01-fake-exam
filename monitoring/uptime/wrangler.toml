@@ -1,0 +1,18 @@
+name = "z01exam-uptime"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+# Pas d'adresse publique : le Worker ne fait que se déclencher chaque minute.
+workers_dev = false
+
+[triggers]
+crons = ["* * * * *"]
+
+[vars]
+TARGET_URL = "https://z01exam.online"
+
+# Espace KV qui garde l'état (échecs consécutifs, alerte envoyée) entre deux
+# vérifications. Créé par `npx wrangler kv namespace create STATE`.
+[[kv_namespaces]]
+binding = "STATE"
+id = "dadb1073e145491db0c003762e0e2fab"
+preview_id = "18e9d8ce98834aa2b5b00343a438b7c8"
