@@ -1,6 +1,5 @@
 name: Ticket prêt à coder (mainteneurs)
 description: Un ticket spécifié, prêt à être pris par un contributeur
-labels: ["à valider"]
 body:
   - type: markdown
     attributes:

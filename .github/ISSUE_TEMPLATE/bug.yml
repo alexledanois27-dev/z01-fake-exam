@@ -1,7 +1,7 @@
 name: Signaler un bug
 description: Quelque chose ne marche pas comme prévu
 title: "[Bug] "
-labels: ["bug", "à valider"]
+labels: ["bug"]
 body:
   - type: textarea
     id: description
@@ -13,7 +13,7 @@ body:
     id: etapes
     attributes:
       label: Comment le reproduire ?
-      description: Le parcours (Go, JS, Rust, Java), le mode (Exam, True Exam, Learning), l'exercice et ce que tu as fait.
+      description: Le parcours (Go, JS, Rust, Java), le mode (entraînement, examen libre/strict, fiches), l'exercice et ce que tu as fait.
       placeholder: |
         1. Parcours Go, mode Exam
         2. Exercice « firstword »

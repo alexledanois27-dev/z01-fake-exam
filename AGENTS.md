@@ -1,29 +1,36 @@
-# Instructions du dépôt
+# Instructions — Z01 Fake Exam personnel
+
+Ce dépôt privé appartient à son propriétaire GitHub. Il dérive de z01exam/z01exam,
+mais ne publie rien sur leur dépôt ni leur infrastructure. Lire README.md,
+docs/maintenance.md et docs/provenance.md avant une modification importante.
 
 ## Git et livraison
 
-- Ne jamais pousser directement sur `main` : elle est protégée.
-- Travailler sur une branche liée au ticket (`42-description-courte`) et ouvrir
-  une pull request, en brouillon dès le premier commit.
-- Une PR = un seul ticket, avec `Closes #N` dans la description.
-- La fusion est faite par le mainteneur principal après relecture et CI verte.
-- La production est déployée automatiquement à chaque fusion sur `main` dont
-  la CI est verte (`.github/workflows/deploy.yml`). Ne jamais lancer de
-  déploiement à la main sans l'accord du mainteneur principal.
+- `main` contient la version stable ; `develop` prépare les évolutions.
+- Créer une branche courte depuis `develop` : `feat/...`, `fix/...`, `docs/...`.
+- Faire des commits ciblés et expliquer les validations dans une pull request.
+- Ne pas forcer un push ni réécrire l’historique partagé sans demande explicite.
+- L’import initial autorisé du travail local peut initialiser `main` et `develop`
+  après validation. Ensuite, privilégier les PR plutôt que les pushes sur `main`.
+- Une fusion ou un push ne déploie jamais le site. Toute mise en ligne requiert
+  une demande distincte et une validation de l’environnement cible.
 
-## Périmètre
+## Mise en œuvre
 
-- Respecter les rôles décrits dans `docs/architecture-services.md` : une
-  modification ne touche qu'une brique (interface, catalogue, correcteur)
-  et garde ses contrats HTTP.
-- Ne pas modifier `.github/workflows/`, `scripts/deploy_vps.sh` ni
-  `.github/CODEOWNERS` sans ticket explicite.
-- Ne jamais écrire de secret, d'adresse de serveur ni de donnée personnelle
-  dans le dépôt.
+- Modifier les sources `frontend/`, puis reconstruire avec `npm run build`.
+  `app.js` et `style.css` sont générés et versionnés.
+- Garder les licences, notices et la provenance de la base open source.
+- Ne jamais commiter de secrets, `.env` privé, données du navigateur ou clés SSH.
+- Préserver la séparation entraînement/examen, les contraintes du mode strict,
+  les restrictions de fonctions Go et la distinction Tester/correction complète.
+- Les changements de sécurité et les workflows doivent être expliqués et testés.
+- Les anciens scripts de déploiement VPS sont historiques : ne pas les exécuter
+  ni les réactiver implicitement.
 
-## Qualité
+## Vérification
 
-- Garder les changements ciblés et vérifier le comportement concerné avant de
-  demander une relecture (`make start`, `go test ./...` dans `backend/`).
-- Ne pas modifier ou supprimer des tests uniquement pour obtenir un passage au
-  vert.
+- Exécuter `make check` (Node.js 22 et Go stable recommandés).
+- Pour le runner, rejouer les tests Docker ciblés documentés dans
+  docs/mise-en-ligne.md et docs/tests-securite.md.
+- Ne pas supprimer un test pour masquer un échec. Mettre à jour ses attentes
+  uniquement lorsqu’un changement fonctionnel autorisé le justifie.

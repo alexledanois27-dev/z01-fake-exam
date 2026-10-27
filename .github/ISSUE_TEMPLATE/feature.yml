@@ -1,7 +1,7 @@
 name: Proposer une fonctionnalité
-description: Une idée pour améliorer Z01EXAM
+description: Une idée pour améliorer Z01 Fake Exam
 title: "[Feature] "
-labels: ["enhancement", "à valider"]
+labels: ["enhancement"]
 body:
   - type: markdown
     attributes:

@@ -1,15 +1,13 @@
-## Ce que change cette PR
+## Problème et résultat
 
-<!-- En une ou deux phrases, ce que l'apprenant ou le mainteneur va remarquer. -->
+<!-- Décrire le besoin et le comportement obtenu. Lier un ticket si pertinent. -->
 
-Closes #<!-- numéro du ticket -->
+## Validation
 
-## Comment je l'ai testé
+<!-- Commandes exécutées, résultats et éventuelles limites. -->
 
-<!-- Ce que tu as lancé ou vérifié dans le navigateur. -->
-
-## Vérifications
-
-- [ ] La PR ne traite qu'un seul sujet.
-- [ ] J'ai testé en local (`make start` ou `./scripts/dev.sh`).
-- [ ] La CI est verte.
+- [ ] Sources modifiées et bundles régénérés si nécessaire.
+- [ ] `make check` réussi.
+- [ ] Tests Docker ciblés exécutés si le runner change.
+- [ ] Documentation et limites de sécurité actualisées si nécessaire.
+- [ ] Aucun secret ni déploiement implicite.

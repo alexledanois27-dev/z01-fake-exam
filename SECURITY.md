@@ -1,40 +1,21 @@
-# Politique de sécurité
+# Sécurité — Z01 Fake Exam
 
-Z01EXAM exécute du code envoyé par les utilisateurs. Une faille peut donc
-toucher le serveur et tous les apprenants : merci de la signaler en privé.
+Cette copie personnelle exécute du code utilisateur dans Docker. Son profil
+de production est destiné à un usage privé avec accès partagé.
 
-## Signaler une faille
+Consulter [le guide de mise en ligne](docs/mise-en-ligne.md) pour les protections,
+les limites, les prérequis et les tests à rejouer sur le serveur final. Ne pas
+exposer directement le serveur de développement sur Internet.
 
-**N'ouvre pas d'issue publique et n'en parle pas sur le Discord.**
+## Signaler un problème
 
-Utilise le signalement privé de GitHub :
-[Security → Report a vulnerability](https://github.com/z01exam/z01exam/security/advisories/new).
-Seul le mainteneur voit ton rapport.
+Contacter en privé la personne qui héberge cette copie. Ne pas publier de
+secrets, de données personnelles ou de procédure exploitable sur un serveur
+exposé. Le dépôt GitHub personnel est privé ; ne pas envoyer les problèmes propres à cette copie aux mainteneurs amont.
 
-Indique si possible :
+Indiquer la version, le composant concerné, les étapes de reproduction et
+l’impact observé. Tester sur une instance locale isolée et arrêter une fois
+le problème démontré.
 
-- ce que la faille permet de faire ;
-- les étapes pour la reproduire (requête, soumission, parcours concerné) ;
-- la version affichée en bas à droite du site ou renvoyée par
-  `GET /api/version`.
-
-Le mainteneur accuse réception dès que possible, te tient informé de la
-correction et te cite dans l'avis publié si tu le souhaites. Le projet est
-bénévole : il n'y a pas de récompense.
-
-## Ce qui est concerné
-
-- Le code de ce dépôt : interface, catalogue, correcteur et serveur Go.
-- L'isolation des soumissions : sortie du conteneur Docker, accès au réseau,
-  contournement des limites de mémoire ou de processus.
-- Le site [z01exam.online](https://z01exam.online).
-
-Ne sont pas concernés : les images de test `ghcr.io/01-edu/*` et les contenus
-de l'API Zone01, à signaler directement à Zone01.
-
-## Tester sans nuire
-
-- Teste en priorité sur ta copie locale (`make start`).
-- Sur le site public, pas de déni de service, pas de charge massive, et pas
-  d'accès aux données d'autres personnes.
-- Arrête-toi dès que la faille est démontrée.
+Les problèmes propres aux images et contenus externes de 01-edu/Zone01 doivent
+être transmis à leurs mainteneurs respectifs.

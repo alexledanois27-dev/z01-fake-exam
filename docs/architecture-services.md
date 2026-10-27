@@ -5,8 +5,8 @@
 Le dépôt reste un monorepo Go 1.22. Quatre exécutables explicites démarrent les
 composants : `cmd/web`, `cmd/catalog`, `cmd/runner` et `cmd/monolith`. Le
 monolithe est conservé comme composition de compatibilité : il préserve les
-URL, le déploiement Render actuel et le comportement runtime pendant la
-migration.
+URL et la composition des services. Aucun déploiement hérité n’est actif dans
+la copie personnelle.
 
 | Service | Exécutable | Responsabilité | Expose | Consomme |
 | --- | --- | --- | --- | --- |
@@ -24,8 +24,8 @@ Hors monolithe, Catalogue et Runner ne doivent jamais être exposés sur une
 interface publique. Leur `LISTEN_ADDR` est configurable : utiliser une adresse
 de boucle locale ou un réseau privé, puis contrôler le pare-feu et les règles
 réseau de la plate-forme. En particulier, `/internal/runner-catalog` est un
-contrat privé sans mécanisme d'authentification applicatif ; sa confidentialité
-repose sur ce cloisonnement réseau.
+contrat privé protégé par le même middleware d’authentification en production ;
+le cloisonnement réseau reste obligatoire.
 
 ## Frontières de code
 
@@ -108,7 +108,7 @@ cd backend && \
 Les assets Web et les contenus source sont lus depuis le dépôt. Seul le
 Catalogue lit les énoncés et l'API Zone01 ; le Runner reçoit les métadonnées
 privées Rust/Java dans son snapshot. Le Runner a néanmoins besoin d'un espace
-inscriptible : il crée un dossier temporaire sous `rootDir` pour chaque requête
+inscriptible : il crée un dossier dans le répertoire temporaire système pour chaque requête
 puis le supprime. Aucun volume de soumission n'est partagé entre services.
 
 ## Migration et exploitation
@@ -142,3 +142,44 @@ exécutables avec `go test ./...`, `go vet ./...` et `go build ./cmd/...`.
 valide les quatre moulinettes officielles. Enfin,
 `./scripts/test_services_e2e.sh` vérifie la topologie réelle Catalogue →
 Runner → Web et une soumission Go de bout en bout.
+
+## Restrictions Go — version personnelle
+
+Le catalogue Go publie deux métadonnées : `expectedFiles` et `allowedFunctions`.
+`allowedFunctions: null` signifie que les restrictions sont inconnues ; une
+liste vide représente des règles connues sans import ni builtin autorisé.
+Le snapshot privé du Runner conserve ces valeurs. Le contrat de soumission
+`POST /api/run` reste `{exerciseId, code}` ; des règles envoyées par le navigateur
+ne remplacent jamais celles du catalogue.
+
+Pour le cursus CDA (`module-go`), des restrictions absentes bloquent la correction.
+Le Runner prépare le fichier attendu (package `main` pour un `main.go`, package
+`student` pour une fonction) puis contrôle les imports et les accès exacts aux
+symboles importés avec l’AST Go. Les alias explicites sont gérés ; les imports
+pointés sont refusés. Ce contrôle complémentaire est nécessaire : l’image
+épinglée laisse passer certains membres non listés d’un package autorisé.
+Il transmet ensuite `FILE` et `ALLOWED_FUNCTIONS` à la moulinette Docker,
+qui applique RC, le contrôle de formatage et les tests fonctionnels.
+Le chemin historique des exercices sans ces métadonnées reste compatible.
+
+`RUN_GO_RESTRICTIONS_INTEGRATION=1 go test -run '^TestGoRestrictionsIntegration$' -v .`
+(depuis `backend/`) vérifie l’image réelle sur des fonctions, programmes, imports
+interdits et fonctions interdites au sein d’un package partiellement autorisé.
+
+## Exécution du programme de la consigne
+
+`Exercise.example` contient le programme extrait de l’énoncé. Le mode `example`
+de `POST /api/run` utilise exclusivement ce programme serveur avec la solution.
+Les anciens champs de configuration client sont ignorés. Le mode `harness`
+est imposé pour associer la solution au programme de l’énoncé.
+La réponse `{success, output}` décrit l’exécution et ne valide pas l’exercice.
+La correction complète demeure inchangée.
+
+## Organisation du code de cette copie
+
+La [carte de maintenance](maintenance.md) détaille les fichiers de l’interface
+et du backend. Les routes sont définies dans `backend/http_routes.go` ;
+les handlers sont répartis entre `http_catalog.go`, `http_run.go` et
+`http_static.go`. `backend/main.go` conserve le démarrage des services.
+Les sources d’interface sont assemblées par `npm run build` ; les bundles
+racine restent livrés pour que les services Go fonctionnent sans Node.js.

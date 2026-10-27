@@ -1,5 +1,1 @@
-blank_issues_enabled: false
-contact_links:
-  - name: Poser une question sur le Discord
-    url: https://discord.gg/cP2Dn5DF6H
-    about: Pour une question ou une discussion, passe plutôt par le Discord de la communauté.
+blank_issues_enabled: true
