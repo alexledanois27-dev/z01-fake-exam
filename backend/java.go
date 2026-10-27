@@ -1,10 +1,8 @@
 package backend
 
 import (
-	"bytes"
 	"context"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 )
@@ -42,6 +40,9 @@ func LoadJavaExercises() ([]Exercise, error) {
 	}
 	sortExercises(list)
 	hydrateZoneStatements(ctx, list)
+	for i := range list {
+		list[i].Example = LanguageExample("java", list[i].Statement)
+	}
 	return list, nil
 }
 
@@ -97,12 +98,15 @@ func javaStatementPlaceholder(subject string) string {
 }
 
 func RunJavaExercise(ex Exercise, code string) (bool, string) {
-	dir, err := os.MkdirTemp(rootDir, "javaexam-*")
+	if err := validateRunnerExercise(ex); err != nil {
+		return false, err.Error()
+	}
+	dir, err := os.MkdirTemp("", "javaexam-*")
 	if err != nil {
 		return false, "Erreur système: " + err.Error()
 	}
 	defer os.RemoveAll(dir)
-	_ = os.Chmod(dir, 0o777)
+	_ = os.Chmod(dir, 0o755)
 	if err := prepareJavaStudentDir(dir, ex, code); err != nil {
 		return false, "Erreur de préparation Java: " + err.Error()
 	}
@@ -115,8 +119,8 @@ func RunJavaExercise(ex Exercise, code string) (bool, string) {
 	args := append([]string{"run", "--rm", "--platform", "linux/amd64"}, baseDockerRunArgs("")...)
 	args = withOptionalCPULimit(args)
 	args = append(args, "-v", dir+":/app/student:rw", "-e", "EXERCISE="+ex.Runner, image)
-	cmd := exec.CommandContext(ctx, "docker", args...)
-	var stdout, stderr bytes.Buffer
+	cmd := dockerRunCommand(ctx, args)
+	var stdout, stderr limitedOutput
 	cmd.Stdout, cmd.Stderr = &stdout, &stderr
 	err = cmd.Run()
 	out := strings.TrimSpace(stdout.String() + "\n" + stderr.String())

@@ -21,16 +21,21 @@ func LoadGoExercises() ([]Exercise, error) {
 	for _, found := range collectZoneExercises(root, goExams) {
 		key := found.node.Key
 		list = append(list, Exercise{
-			ID:         key,
-			Title:      key,
-			Statement:  "## Énoncé Go\n\nChargement de l’énoncé officiel Zone01 : `" + found.node.Attrs.Subject + "`.",
-			Template:   "package piscine\n\n// Implémente " + key + " comme décrit dans l'énoncé.\n",
-			Runner:     key,
-			Image:      found.image,
-			SubjectURL: found.node.Attrs.Subject,
+			ID:               key,
+			Title:            key,
+			Statement:        "## Énoncé Go\n\nChargement de l’énoncé officiel Zone01 : `" + found.node.Attrs.Subject + "`.",
+			Template:         "package piscine\n\n// Implémente " + key + " comme décrit dans l'énoncé.\n",
+			Runner:           key,
+			Image:            found.image,
+			SubjectURL:       found.node.Attrs.Subject,
+			ExpectedFiles:    found.node.Attrs.ExpectedFiles,
+			AllowedFunctions: found.node.Attrs.AllowedFunctions,
 		})
 	}
 	sortExercises(list)
 	hydrateZoneStatements(ctx, list)
+	for i := range list {
+		list[i].Example = GoExample(list[i].Statement)
+	}
 	return list, nil
 }

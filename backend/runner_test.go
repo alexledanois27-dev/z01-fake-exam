@@ -65,7 +65,7 @@ func TestOfficialGoDockerArgsUseTheImageEntrypointContract(t *testing.T) {
 func TestRunExerciseReturnsOfficialSuccessMessage(t *testing.T) {
 	useFakeDocker(t, "exit 0")
 
-	ok, out := RunExercise(Exercise{ID: "onlya", Runner: "onlya"}, "package main\n\nfunc main() {}\n")
+	ok, out := RunExercise(Exercise{ID: "onlya", Runner: "onlya", ExpectedFiles: []string{"onlya/main.go"}}, "package main\n\nfunc main() {}\n")
 	if !ok {
 		t.Fatalf("RunExercise returned failure: %q", out)
 	}
@@ -77,7 +77,7 @@ func TestRunExerciseReturnsOfficialSuccessMessage(t *testing.T) {
 func TestRunExerciseKeepsOfficialFailureDiagnostic(t *testing.T) {
 	useFakeDocker(t, "printf '%s\\n' 'Your Go files are not correctly formatted :' >&2\nprintf '%s\\n' 'student.go' >&2\nexit 1")
 
-	ok, out := RunExercise(Exercise{ID: "onlya", Runner: "onlya"}, "package main\n\nfunc main() {}\n")
+	ok, out := RunExercise(Exercise{ID: "onlya", Runner: "onlya", ExpectedFiles: []string{"onlya/main.go"}}, "package main\n\nfunc main() {}\n")
 	if ok {
 		t.Fatalf("RunExercise unexpectedly succeeded: %q", out)
 	}

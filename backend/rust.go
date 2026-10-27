@@ -1,13 +1,11 @@
 package backend
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 )
@@ -25,9 +23,10 @@ type zoneRustNode struct {
 }
 
 type zoneRustAttrs struct {
-	Subject       string   `json:"subject"`
-	ExpectedFiles []string `json:"expectedFiles"`
-	Validations   []struct {
+	Subject          string   `json:"subject"`
+	ExpectedFiles    []string `json:"expectedFiles"`
+	AllowedFunctions []string `json:"allowedFunctions"`
+	Validations      []struct {
 		Type      string `json:"type"`
 		TestImage string `json:"testImage"`
 	} `json:"validations"`
@@ -68,6 +67,9 @@ func LoadRustExercises() ([]Exercise, error) {
 	}
 	sortExercises(list)
 	hydrateZoneStatements(ctx, list)
+	for i := range list {
+		list[i].Example = LanguageExample("rust", list[i].Statement)
+	}
 	return list, nil
 }
 
@@ -113,12 +115,15 @@ func rustStatementPlaceholder(subject string) string {
 }
 
 func RunRustExercise(ex Exercise, code string) (bool, string) {
-	dir, err := os.MkdirTemp(rootDir, "rustexam-*")
+	if err := validateRunnerExercise(ex); err != nil {
+		return false, err.Error()
+	}
+	dir, err := os.MkdirTemp("", "rustexam-*")
 	if err != nil {
 		return false, "Erreur système: " + err.Error()
 	}
 	defer os.RemoveAll(dir)
-	_ = os.Chmod(dir, 0o777)
+	_ = os.Chmod(dir, 0o755)
 	if err := prepareRustStudentDir(dir, ex, code); err != nil {
 		return false, "Erreur de préparation Rust: " + err.Error()
 	}
@@ -134,8 +139,8 @@ func RunRustExercise(ex Exercise, code string) (bool, string) {
 	// Mount the temporary workspace as that student folder, rather than over
 	// the image's own /app directory (which also contains the official tests).
 	args = append(args, "-w", "/app/student", "-v", dir+":/app/student/student:rw", "-e", "EXERCISE="+ex.Runner, image)
-	cmd := exec.CommandContext(ctx, "docker", args...)
-	var stdout, stderr bytes.Buffer
+	cmd := dockerRunCommand(ctx, args)
+	var stdout, stderr limitedOutput
 	cmd.Stdout, cmd.Stderr = &stdout, &stderr
 	err = cmd.Run()
 	out := strings.TrimSpace(stdout.String() + "\n" + stderr.String())

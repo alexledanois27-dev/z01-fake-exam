@@ -1,11 +1,9 @@
 package backend
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strconv"
@@ -13,12 +11,15 @@ import (
 )
 
 func RunJSExercise(ex Exercise, code string) (bool, string) {
-	tmpDir, err := os.MkdirTemp(rootDir, "jsexam-*")
+	if err := validateRunnerExercise(ex); err != nil {
+		return false, err.Error()
+	}
+	tmpDir, err := os.MkdirTemp("", "jsexam-*")
 	if err != nil {
 		return false, "Erreur système tmpDir: " + err.Error()
 	}
 	defer os.RemoveAll(tmpDir)
-	_ = os.Chmod(tmpDir, 0o777)
+	_ = os.Chmod(tmpDir, 0o755)
 
 	fileName := "solution.js"
 	if len(ex.ExpectedFiles) > 0 && strings.TrimSpace(ex.ExpectedFiles[0]) != "" {
@@ -29,7 +30,7 @@ func RunJSExercise(ex Exercise, code string) (bool, string) {
 	if err := os.WriteFile(codePath, []byte(code), 0o644); err != nil {
 		return false, "Erreur écriture code JS: " + err.Error()
 	}
-	_ = os.Chmod(codePath, 0o666)
+	_ = os.Chmod(codePath, 0o644)
 
 	exerciseName := strings.TrimSpace(ex.Runner)
 	if exerciseName == "" {
@@ -71,9 +72,7 @@ func RunJSDocker(studentDir, exerciseID, expectedFiles string) (string, string, 
 		"run", "--rm",
 	}
 	cmdArgs = append(cmdArgs, baseDockerRunArgs("")...)
-	if v := strings.TrimSpace(os.Getenv("RUNNER_CPUS")); v != "" && v != "0" {
-		cmdArgs = append(cmdArgs, "--cpus", v)
-	}
+	cmdArgs = withOptionalCPULimit(cmdArgs)
 
 	cmdArgs = append(cmdArgs,
 		"-v", studentDir+":/jail/student:rw",
@@ -84,8 +83,8 @@ func RunJSDocker(studentDir, exerciseID, expectedFiles string) (string, string, 
 	}
 	cmdArgs = append(cmdArgs, image)
 
-	cmd := exec.CommandContext(ctx, "docker", cmdArgs...)
-	var outBuf, errBuf bytes.Buffer
+	cmd := dockerRunCommand(ctx, cmdArgs)
+	var outBuf, errBuf limitedOutput
 	cmd.Stdout = &outBuf
 	cmd.Stderr = &errBuf
 	err := cmd.Run()
@@ -209,14 +208,15 @@ func syntaxLocationFromDockerCheck(studentDir, fileName string) string {
 	target := "/jail/student/" + filepath.Base(fileName)
 	cmdArgs := []string{"run", "--rm", "--entrypoint", "node"}
 	cmdArgs = append(cmdArgs, baseDockerRunArgs("")...)
+	cmdArgs = withOptionalCPULimit(cmdArgs)
 	cmdArgs = append(cmdArgs,
 		"-v", studentDir+":/jail/student:rw",
 		image,
 		"--check", target,
 	)
 
-	cmd := exec.CommandContext(ctx, "docker", cmdArgs...)
-	var outBuf, errBuf bytes.Buffer
+	cmd := dockerRunCommand(ctx, cmdArgs)
+	var outBuf, errBuf limitedOutput
 	cmd.Stdout = &outBuf
 	cmd.Stderr = &errBuf
 	_ = cmd.Run()

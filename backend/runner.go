@@ -1,11 +1,9 @@
 package backend
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 )
@@ -21,12 +19,18 @@ var (
 // Exam. The image owns the test suite; this repository only prepares the
 // student workspace that its entrypoint expects at /go-tests/student.
 func RunExercise(ex Exercise, code string) (bool, string) {
-	studentDir, err := os.MkdirTemp(rootDir, "goexam-*")
+	if err := validateRunnerExercise(ex); err != nil {
+		return false, err.Error()
+	}
+	if err := validateGoPackage(ex, code); err != nil {
+		return false, err.Error()
+	}
+	studentDir, err := os.MkdirTemp("", "goexam-*")
 	if err != nil {
 		return false, "Erreur système: " + err.Error()
 	}
 	defer os.RemoveAll(studentDir)
-	_ = os.Chmod(studentDir, 0o777)
+	_ = os.Chmod(studentDir, 0o755)
 
 	// La moulinette cherche le programme dans student/<exercice>/ : le nom
 	// officiel (Runner).
@@ -34,10 +38,30 @@ func RunExercise(ex Exercise, code string) (bool, string) {
 	if exerciseID == "" {
 		exerciseID = ex.ID
 	}
-	if err := prepareOfficialGoStudentDir(studentDir, exerciseID, code); err != nil {
-		return false, "Erreur de préparation du code: " + err.Error()
+	image := goImageFor(ex)
+	if strings.Contains(image, "/module-go") && ex.AllowedFunctions == nil {
+		return false, "Correction indisponible : les fonctions autorisées manquent dans le catalogue."
 	}
-	stdout, stderr, runErr := RunOfficialGoDocker(goImageFor(ex), studentDir, exerciseID)
+	var file string
+	var errPrepare error
+	if len(ex.ExpectedFiles) > 0 || ex.AllowedFunctions != nil {
+		file, errPrepare = prepareRestrictedGoStudentDir(studentDir, ex, code)
+	} else {
+		errPrepare = prepareOfficialGoStudentDir(studentDir, exerciseID, code)
+	}
+	if errPrepare != nil {
+		return false, "Erreur de préparation du code: " + errPrepare.Error()
+	}
+	if ex.AllowedFunctions != nil {
+		source, err := os.ReadFile(filepath.Join(studentDir, file))
+		if err != nil {
+			return false, "Erreur de lecture du code : " + err.Error()
+		}
+		if err := checkGoAllowedAccess(file, string(source), ex.AllowedFunctions); err != nil {
+			return false, err.Error()
+		}
+	}
+	stdout, stderr, runErr := runOfficialGoDocker(image, studentDir, exerciseID, file, ex.AllowedFunctions)
 	out := strings.TrimSpace(stdout + "\n" + stderr)
 
 	if runErr != nil {
@@ -92,14 +116,21 @@ func ensureTrailingNewline(code string) string {
 }
 
 func RunOfficialGoDocker(image, studentDir, exerciseID string) (string, string, error) {
+	return runOfficialGoDocker(image, studentDir, exerciseID, "", nil)
+}
+
+func runOfficialGoDocker(image, studentDir, exerciseID, file string, allowed []string) (string, string, error) {
 	timeout := runTimeout()
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 
 	args := officialGoDockerArgsFor(image, studentDir, exerciseID)
+	if allowed != nil {
+		args = append(args[:len(args)-1], "-e", "FILE="+file, "-e", "ALLOWED_FUNCTIONS="+strings.Join(allowed, " "), image)
+	}
 
-	cmd := exec.CommandContext(ctx, "docker", args...)
-	var stdout, stderr bytes.Buffer
+	cmd := dockerRunCommand(ctx, args)
+	var stdout, stderr limitedOutput
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
 	err := cmd.Run()

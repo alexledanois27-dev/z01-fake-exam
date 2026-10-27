@@ -12,20 +12,26 @@ import (
 )
 
 type Exercise struct {
-	ID            string   `json:"id"`
-	Title         string   `json:"title"`
-	Statement     string   `json:"statement"`
-	Example       string   `json:"example"`
-	Template      string   `json:"template"`
-	Runner        string   `json:"runner"`
-	ExpectedFiles []string `json:"expectedFiles,omitempty"`
-	Image         string   `json:"-"`
-	SubjectURL    string   `json:"-"`
+	ID               string   `json:"id"`
+	Title            string   `json:"title"`
+	Statement        string   `json:"statement"`
+	Example          string   `json:"example"`
+	Template         string   `json:"template"`
+	Runner           string   `json:"runner"`
+	ExpectedFiles    []string `json:"expectedFiles,omitempty"`
+	AllowedFunctions []string `json:"allowedFunctions"`
+	Image            string   `json:"-"`
+	SubjectURL       string   `json:"-"`
 }
 
 type RunRequest struct {
-	ExerciseID string `json:"exerciseId"`
-	Code       string `json:"code"`
+	Example    *string  `json:"example,omitempty"`
+	Args       []string `json:"args,omitempty"`
+	Stdin      string   `json:"stdin,omitempty"`
+	TestMode   string   `json:"testMode,omitempty"`
+	Mode       string   `json:"mode,omitempty"`
+	ExerciseID string   `json:"exerciseId"`
+	Code       string   `json:"code"`
 }
 
 type RunResponse struct {
@@ -108,7 +114,7 @@ func LoadJSExercises(jsDir string) ([]Exercise, error) {
 			ID:            id,
 			Title:         base,
 			Statement:     string(body),
-			Example:       "",
+			Example:       LanguageExample("js", string(body)),
 			Template:      template,
 			Runner:        testID,
 			ExpectedFiles: []string{expectedFile},
