@@ -11,7 +11,8 @@ cloner, consulter les issues ou lire les actions.
 - `archive/upstream-base` : base open source `c55677a` ; ne pas la modifier.
 
 L’ancien historique est conservé. L’import des modifications locales est regroupé
-en trois commits : backend/sécurité, interface/parcours, documentation/GitHub.
+en trois lots : backend/sécurité, interface/parcours, documentation/GitHub,
+avec un ajustement documentaire du canal de modération personnel.
 Cette organisation ne prétend pas recréer des commits correspondant à chacune
 des anciennes demandes de personnalisation.
 

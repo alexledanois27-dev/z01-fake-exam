@@ -58,8 +58,9 @@ public.
 
 ## Signaler un comportement
 
-Signale tout comportement abusif, harcelant ou inacceptable au mainteneur, en
-**message privé sur le [Discord de la communauté](https://discord.gg/cP2Dn5DF6H)**.
+Signale tout comportement abusif, harcelant ou inacceptable en privé au
+propriétaire de ce dépôt personnel. Le Discord du projet d’origine ne modère
+pas cette copie. Ne publie pas de données personnelles dans une issue.
 
 Tous les signalements sont examinés rapidement et équitablement. Le mainteneur
 respecte la vie privée et la sécurité de la personne qui signale.
