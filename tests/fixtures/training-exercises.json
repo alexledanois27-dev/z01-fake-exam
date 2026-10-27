@@ -1,0 +1,72 @@
+{
+  "go": [
+    {
+      "id": "countalpha",
+      "title": "countalpha",
+      "statement": "## countalpha\n\n### Instructions\n\nWrite a function `CountAlpha()` that takes a string as an argument and returns the number of alphabetic characters in the string.\n\n### Expected functions\n\n```go\nfunc CountAlpha(s string) int {\n\n}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```go\npackage main\n\nimport (\n\t\"fmt\"\n)\n\nfunc main() {\n\tfmt.Println(CountAlpha(\"Hello world\"))\n\tfmt.Println(CountAlpha(\"H e l l o\"))\n\tfmt.Println(CountAlpha(\"H1e2l3l4o\"))\n}\n\n```\n\nAnd its output:\n\n```console\n$ go run .\n10\n5\n5\n```",
+      "example": "package main\n\nimport (\n\t\"fmt\"\n)\n\nfunc main() {\n\tfmt.Println(CountAlpha(\"Hello world\"))\n\tfmt.Println(CountAlpha(\"H e l l o\"))\n\tfmt.Println(CountAlpha(\"H1e2l3l4o\"))\n}\n",
+      "template": "package piscine\n\n// Implémente countalpha comme décrit dans l'énoncé.\n",
+      "runner": "countalpha",
+      "expectedFiles": [
+        "countalpha.go"
+      ],
+      "allowedFunctions": []
+    },
+    {
+      "id": "only1",
+      "title": "only1",
+      "statement": "## only1\n\n### Instructions\n\nWrite a program that displays a `1` character on the standard output and nothing else.\n\n### Usage\n\n```console\n$ go run .\n1\n$ go run . \"a\" \"b\"\n1\n$ go run . \"a\" \"b\" \"c\"\n1\n```",
+      "example": "",
+      "template": "package piscine\n\n// Implémente only1 comme décrit dans l'énoncé.\n",
+      "runner": "only1",
+      "expectedFiles": [
+        "only1/main.go"
+      ],
+      "allowedFunctions": [
+        "github.com/01-edu/z01.PrintRune"
+      ]
+    }
+  ],
+  "js": [
+    {
+      "id": "grid-words-finder-2",
+      "title": "Grid Words Finder 2",
+      "statement": "## Grid Words Finder 2\n\n### Instructions\n\nWrite a function `gridWordFinder2(grid, word)` that:\n\n- Takes a 2D grid of characters and a target word as input.\n- Searches for all occurrences of the word in the grid.\n- For each occurrence, return an object containing:\n  - x and y: The starting coordinates of the word.\n  - direction: Either \"horizontal\" or \"vertical\" depending on the word's orientation.\n\n> ⚠️ Note: You are not allowed to use any kind of loops\n\n### Expected function\n\n```js\nfunction gridWordFinder2(grid, word) {}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```js\nconst grid = [\n  [\"c\", \"a\", \"t\"],\n  [\"d\", \"o\", \"g\"],\n  [\"r\", \"a\", \"t\"],\n];\n\nconsole.log(gridWordFinder2(grid, \"cat\"));\n```\n\nAnd its output:\n\n```console\n$ node main.js\n[{x:0, y:0, direction:\"horizontal\"}]\n$\n```\n",
+      "example": "const grid = [\n  [\"c\", \"a\", \"t\"],\n  [\"d\", \"o\", \"g\"],\n  [\"r\", \"a\", \"t\"],\n];\n\nconsole.log(gridWordFinder2(grid, \"cat\"));\n",
+      "template": "function solve(input) {\n  return input;\n}\n\nmodule.exports = { solve };\n",
+      "runner": "grid-word-finder2",
+      "expectedFiles": [
+        "js-grid-word-finder2.js"
+      ],
+      "allowedFunctions": null
+    }
+  ],
+  "rust": [
+    {
+      "id": "rust-checkpoint-partial-sums",
+      "title": "partial_sums",
+      "statement": "## partial_sums\n\n### Instructions\n\nCreate a function named `parts_sums`, that receives a slice of `u64`, and returns a vector with the partial sums of the received array.\n\nThis is how partial sums work:\n\n1- First you split the array in its partitions:\n\n```sh\n[1, 2, 3, 4, 5]\n      |\n      V\n[1, 2, 3, 4, 5]\n[1, 2, 3, 4]\n[1, 2, 3]\n[1, 2]\n[1]\n[]\n```\n\n2- Then you add each partition together:\n\n```sh\n[1, 2, 3, 4, 5] = 15\n[1, 2, 3, 4]    = 10\n[1, 2, 3]       = 6\n[1, 2]          = 3\n[1]             = 1\n[]              = 0\n```\n\n3- So, in conclusion:\n\n```rs\nparts_sums(&[1, 2, 3, 4, 5]) // == [15, 10, 6, 3 ,1, 0]\n```\n\n### Expected Functions\n\n```rs\npub fn parts_sums(arr: &[u64]) -> Vec<u64> {\n    todo!()\n}\n```\n\n### Example\n\nHere is a program to test your function:\n\n```rs\nuse partial_sums::*;\n\nfn main() {\n    println!(\n        \"Partial sums of [5, 18, 3, 23] is: {:?}\",\n        parts_sums(&[5, 18, 3, 23])\n    );\n}\n```\n\nAnd its output:\n\n```sh\n$ cargo run\nPartial sums of [5, 18, 3, 23] is: [49, 26, 23, 5, 0]\n$\n```",
+      "example": "use partial_sums::*;\n\nfn main() {\n    println!(\n        \"Partial sums of [5, 18, 3, 23] is: {:?}\",\n        parts_sums(&[5, 18, 3, 23])\n    );\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "partial_sums",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null
+    }
+  ],
+  "java": [
+    {
+      "id": "java-next-prime",
+      "title": "NextPrime",
+      "statement": "## NextPrime\n\n### Instructions\n\nIn a file named **`NextPrime.java`**, implement a function called **`nextPrime`** that takes an integer as input and returns the next prime number greater than the given value.\n\n> 👉 A **prime number** is a natural number greater than **1** that has no divisors other than **1** and itself. For example, `2`, `3`, `5`, and `7` are prime numbers, while `4` and `6` are not because they can be divided evenly by numbers other than 1 and themselves.\n\n### Expected Functions\n\n```java\npublic class NextPrime {\n    public static Integer nextPrime(Integer n) {\n        // your code here\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(NextPrime.nextPrime(3));\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\n5\n$\n```",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(NextPrime.nextPrime(3));\n    }\n}\n",
+      "template": "public class NextPrime {\n    // Écris ta solution ici.\n}\n",
+      "runner": "NextPrime",
+      "expectedFiles": [
+        "NextPrime.java"
+      ],
+      "allowedFunctions": null
+    }
+  ]
+}

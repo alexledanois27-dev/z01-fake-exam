@@ -1,0 +1,52 @@
+.failure-reaction {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 4px;
+  padding: 8px;
+  border: 1px solid
+    hsl(var(--accent-hue) calc(26.56% * var(--theme-chroma)) 25.1% / 1);
+  border-radius: 4px;
+  background: hsl(var(--accent-hue) calc(25% * var(--theme-chroma)) 7.84% / 1);
+  white-space: normal;
+  color: hsl(var(--accent-hue) calc(40.16% * var(--theme-chroma)) 75.1% / 1);
+}
+.failure-reaction img {
+  display: block;
+  width: 98px;
+  height: 76px;
+  max-width: 100%;
+  object-fit: cover;
+  border-radius: 3px;
+}
+.failure-reaction-content {
+  display: flex;
+  flex: 1;
+  min-width: 130px;
+  flex-direction: column;
+  gap: 10px;
+  font: 11px/1.6 sans-serif;
+}
+.failure-reaction-content .text-button {
+  align-self: flex-start;
+  padding: 0;
+  text-decoration: underline;
+}
+.failure-reaction-still {
+  font-size: 40px;
+  line-height: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .failure-reaction img {
+    display: none;
+  }
+}
+
+/* Leave room for the diagnostic and its reaction on shorter desktop windows. */
+.console-container:has(.failure-reaction) {
+  min-height: 270px;
+}
+.right-panel:has(.failure-reaction) .editor-container {
+  flex-shrink: 1;
+}

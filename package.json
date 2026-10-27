@@ -1,0 +1,16 @@
+{
+  "name": "z01-fake-exam",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-frontend.cjs",
+    "build:check": "node scripts/build-frontend.cjs --check",
+    "test": "npm run build:check && node --test tests/unit/*.test.cjs tests/exam-ui.test.cjs",
+    "test:go": "go -C backend test ./...",
+    "check": "npm test && npm run test:go",
+    "build:editor": "npm --prefix editor run build",
+    "hints:check": "node scripts/check-training-hints.cjs"
+  },
+  "devDependencies": {
+    "jsdom": "22.1.0"
+  }
+}

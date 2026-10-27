@@ -1,0 +1,780 @@
+{
+  "java-age-finder": {
+    "title": "AgeFinder",
+    "statementHash": "ece9f76a",
+    "topics": [
+      "Dates",
+      "Validation"
+    ],
+    "strategy": "Analyse la date puis compare anniversaire et date courante pour compter les années complètes.",
+    "hints": [
+      "Soustraire seulement les numéros d’année surestime parfois l’âge.",
+      "Intercepte les erreurs de date et applique le retour -1 demandé."
+    ],
+    "checks": [
+      "Anniversaire aujourd’hui et demain",
+      "Date invalide et année bissextile"
+    ]
+  },
+  "java-almost-palindrome": {
+    "title": "AlmostPalindrome",
+    "statementHash": "69f268a2",
+    "topics": [
+      "Deux pointeurs",
+      "Palindrome"
+    ],
+    "strategy": "Compare les extrémités en avançant vers le centre ; au premier désaccord, essaie de retirer l’un des deux caractères.",
+    "hints": [
+      "Une seule suppression est permise.",
+      "Vérifie les deux sous-chaînes candidates au lieu de supprimer arbitrairement un côté."
+    ],
+    "checks": [
+      "Palindrome déjà valide",
+      "Suppression à gauche, à droite et impossible"
+    ]
+  },
+  "java-area-calculator": {
+    "title": "AreaCalculator",
+    "statementHash": "04f04982",
+    "topics": [
+      "Surcharge",
+      "Arithmétique"
+    ],
+    "strategy": "Définis les surcharges correspondant à chaque forme et applique sa formule d’aire.",
+    "hints": [
+      "La signature distingue les types de calcul attendus.",
+      "Ne confonds pas une surcharge avec un unique calcul à paramètres optionnels."
+    ],
+    "checks": [
+      "Chaque forme",
+      "Dimensions nulles et valeurs décimales"
+    ]
+  },
+  "java-is-armstrong": {
+    "title": "ArmstrongNumber",
+    "statementHash": "e93beef2",
+    "topics": [
+      "Chiffres",
+      "Puissances"
+    ],
+    "strategy": "Compte les chiffres puis additionne chaque chiffre élevé à cette puissance.",
+    "hints": [
+      "Compare la somme à la valeur initiale, conservée séparément.",
+      "Distingue le nombre de chiffres de la valeur de chaque chiffre."
+    ],
+    "checks": [
+      "0, 153 et 154",
+      "Nombre à un chiffre et nombre de plusieurs chiffres"
+    ]
+  },
+  "java-average-calc": {
+    "title": "AverageCalc",
+    "statementHash": "b1c7fbeb",
+    "topics": [
+      "Suite arithmétique",
+      "Validation"
+    ],
+    "strategy": "Parcours les termes dans le sens du pas et calcule somme divisée par nombre de termes.",
+    "hints": [
+      "Un pas nul ou mal orienté ne doit pas provoquer de boucle infinie.",
+      "Utilise une division adaptée au résultat et respecte la valeur zéro en cas d’erreur."
+    ],
+    "checks": [
+      "Pas positif puis négatif",
+      "Pas nul et bornes incompatibles"
+    ]
+  },
+  "java-breakdown-url": {
+    "title": "BreakdownURL",
+    "statementHash": "b180eabe",
+    "topics": [
+      "Regex",
+      "Groupes de capture"
+    ],
+    "strategy": "Construis une expression avec groupes pour les composants de l’URL et rends les parties facultatives optionnelles.",
+    "hints": [
+      "Les séparateurs ne doivent pas être inclus dans les valeurs capturées.",
+      "Distingue l’absence d’un composant d’une URL invalide selon les exemples."
+    ],
+    "checks": [
+      "URL complète",
+      "Sans port, chemin ou paramètres"
+    ]
+  },
+  "java-builder-blueprint": {
+    "title": "BuilderBlueprint",
+    "statementHash": "baa82097",
+    "topics": [
+      "Builder",
+      "Construction progressive"
+    ],
+    "strategy": "Sépare le produit de son constructeur et laisse les méthodes du builder accumuler les réglages.",
+    "hints": [
+      "Les méthodes chaînables doivent retourner le builder.",
+      "build fabrique le résultat attendu ; complète les signatures et les composants indiqués dans le squelette."
+    ],
+    "checks": [
+      "Construction minimale",
+      "Plusieurs appels chaînés et paramètres optionnels"
+    ]
+  },
+  "java-circular-linked-list": {
+    "title": "CircularLinkedList",
+    "statementHash": "b7b96cc4",
+    "topics": [
+      "Liste circulaire",
+      "Indices"
+    ],
+    "strategy": "Maintiens un lien de la dernière cellule vers la première et parcours avec une limite explicite.",
+    "hints": [
+      "Une boucle qui attend null ne termine pas dans une liste circulaire.",
+      "Traite les modifications de tête et le cas d’un unique nœud séparément."
+    ],
+    "checks": [
+      "Liste vide",
+      "Indice au-delà de la taille et retrait du dernier nœud"
+    ]
+  },
+  "java-config-protector": {
+    "title": "ConfigProtector",
+    "statementHash": "986e4032",
+    "topics": [
+      "Regex",
+      "Remplacement ciblé"
+    ],
+    "strategy": "Repère les lignes des clés sensibles et remplace uniquement leur valeur par les astérisques attendus.",
+    "hints": [
+      "Une clé peut contenir des caractères spéciaux pour une regex : traite-la comme du texte.",
+      "Préserve les autres lignes et la structure clé=valeur."
+    ],
+    "checks": [
+      "Clé absente",
+      "Plusieurs clés sensibles et valeur vide"
+    ]
+  },
+  "java-count-char": {
+    "title": "CountChar",
+    "statementHash": "fe31af06",
+    "topics": [
+      "Parcours",
+      "Compteur",
+      "Caractères"
+    ],
+    "strategy": "Compare chaque caractère de la chaîne au caractère recherché.",
+    "hints": [
+      "Toutes les occurrences doivent être comptées, même consécutives.",
+      "Un espace peut aussi être le caractère recherché."
+    ],
+    "checks": [
+      "Chaîne vide",
+      "Caractère absent et plusieurs occurrences"
+    ]
+  },
+  "java-date-formatter": {
+    "title": "DateFormatter",
+    "statementHash": "a78d2057",
+    "topics": [
+      "Timestamp",
+      "UTC",
+      "État dérivé"
+    ],
+    "strategy": "Convertis les secondes UNIX en date UTC puis rends l’un des formats acceptés.",
+    "hints": [
+      "Les formats sont des conventions de la consigne, pas forcément des motifs Java directement utilisables.",
+      "Recalcule après un setter valide ; conserve le dernier résultat si le format est invalide."
+    ],
+    "checks": [
+      "Timestamp zéro",
+      "Changement de format, casse et format invalide"
+    ]
+  },
+  "java-day-of-week": {
+    "title": "DayOfWeek",
+    "statementHash": "5e0efb88",
+    "topics": [
+      "Dates",
+      "Jour de semaine"
+    ],
+    "strategy": "Analyse la date et calcule l’écart vers le prochain jour demandé.",
+    "hints": [
+      "La notion de prochain peut exclure le jour courant : vérifie les exemples.",
+      "Traite les noms de jours et les dates invalides selon le contrat."
+    ],
+    "checks": [
+      "Jour déjà correspondant",
+      "Passage de mois ou d’année et date invalide"
+    ]
+  },
+  "java-digitcount": {
+    "title": "Digitlen",
+    "statementHash": "e814ed9e",
+    "topics": [
+      "Division entière",
+      "Signe"
+    ],
+    "strategy": "Compte les chiffres en divisant successivement le nombre par dix.",
+    "hints": [
+      "Zéro possède un chiffre.",
+      "Évite le débordement si tu changes le signe de la valeur minimale du type."
+    ],
+    "checks": [
+      "0 et négatif",
+      "Puissance de dix et entier minimal"
+    ]
+  },
+  "java-distinct-substring-length": {
+    "title": "DistinctSubstringLength",
+    "statementHash": "4ae82ce3",
+    "topics": [
+      "Fenêtre glissante",
+      "Dernières positions"
+    ],
+    "strategy": "Fais avancer une fenêtre sans caractère répété et mémorise sa longueur maximale.",
+    "hints": [
+      "En cas de répétition, déplace le début après l’occurrence précédente.",
+      "Ne fais jamais reculer le début de fenêtre."
+    ],
+    "checks": [
+      "Chaîne vide",
+      "abba, lettres toutes différentes et répétition unique"
+    ]
+  },
+  "java-double-linked-list": {
+    "title": "DoubleLinkedList",
+    "statementHash": "adec30e2",
+    "topics": [
+      "Liens avant et arrière",
+      "Cas limites",
+      "Nœuds"
+    ],
+    "strategy": "Chaque insertion ou suppression doit maintenir les liens dans les deux directions.",
+    "hints": [
+      "Modifier la tête ou la queue demande une attention particulière.",
+      "Contrôle les indices et la taille avant de parcourir."
+    ],
+    "checks": [
+      "Liste vide",
+      "Retrait en tête, milieu et queue"
+    ]
+  },
+  "java-factorial": {
+    "title": "Factorial",
+    "statementHash": "0d10702c",
+    "topics": [
+      "Produit",
+      "Cas de base"
+    ],
+    "strategy": "Multiplie les entiers de 1 à n à partir de l’élément neutre un.",
+    "hints": [
+      "La factorielle de zéro vaut un.",
+      "Respecte le type retourné et les limites du domaine de test."
+    ],
+    "checks": [
+      "0 et 1",
+      "Petit entier supérieur à un"
+    ]
+  },
+  "java-factorial-master": {
+    "title": "FactorialMaster",
+    "statementHash": "329cae72",
+    "topics": [
+      "Classe abstraite",
+      "Récursion",
+      "Itération"
+    ],
+    "strategy": "Définis le contrat abstrait puis implémente séparément les variantes itérative et récursive.",
+    "hints": [
+      "Les deux classes doivent produire le même résultat pour les mêmes entrées.",
+      "La récursion a besoin d’un cas de base pour zéro et un."
+    ],
+    "checks": [
+      "0 et 1 dans les deux classes",
+      "Plusieurs valeurs identiques entre implémentations"
+    ]
+  },
+  "java-factory-blueprint": {
+    "title": "FactoryBlueprint",
+    "statementHash": "07d068f7",
+    "topics": [
+      "Interface",
+      "Factory",
+      "Polymorphisme"
+    ],
+    "strategy": "Fais implémenter le contrat Product par chaque produit concret et choisis la classe dans la factory.",
+    "hints": [
+      "Le type de retour permet d’utiliser tous les produits par la même interface.",
+      "Prévois le comportement pour un type de produit inconnu tel que demandé."
+    ],
+    "checks": [
+      "Chaque produit",
+      "Type inconnu et appel via l’interface"
+    ]
+  },
+  "java-first-unique": {
+    "title": "FirstUnique",
+    "statementHash": "6afa31fb",
+    "topics": [
+      "Fréquences",
+      "Ordre stable"
+    ],
+    "strategy": "Compte les caractères puis parcours de nouveau le texte pour trouver le premier de fréquence un.",
+    "hints": [
+      "L’ordre du dictionnaire ne représente pas forcément l’ordre du texte.",
+      "Retourne le caractère de repli prévu si aucune fréquence ne vaut un."
+    ],
+    "checks": [
+      "Premier unique tardif",
+      "Tous répétés et chaîne vide"
+    ]
+  },
+  "java-flexisort": {
+    "title": "Flexisort",
+    "statementHash": "23638f4a",
+    "topics": [
+      "Classe abstraite",
+      "Tri à bulles",
+      "Tri par insertion"
+    ],
+    "strategy": "Partage l’accès au tableau dans la classe abstraite puis implémente les deux tris dans leurs sous-classes.",
+    "hints": [
+      "Le tri à bulles compare les voisins ; l’insertion maintient un préfixe trié.",
+      "Vérifie que les getters et setters accèdent au même tableau utilisé par le tri."
+    ],
+    "checks": [
+      "Tableau déjà trié",
+      "Ordre inverse et doublons pour les deux sous-classes"
+    ]
+  },
+  "java-goodbye-mars": {
+    "title": "GoodbyeMars",
+    "statementHash": "f8a79b73",
+    "topics": [
+      "Méthode statique",
+      "Chaîne constante"
+    ],
+    "strategy": "Retourne exactement la chaîne fixe demandée depuis la méthode statique.",
+    "hints": [
+      "La méthode renvoie une valeur plutôt que de l’afficher directement.",
+      "La ponctuation et les espaces font partie du contrat."
+    ],
+    "checks": [
+      "Égalité exacte de la chaîne",
+      "Absence d’affichage parasite"
+    ]
+  },
+  "java-harmonious-fusion": {
+    "title": "HarmoniousFusion",
+    "statementHash": "e500f062",
+    "topics": [
+      "Fusion",
+      "Deux pointeurs"
+    ],
+    "strategy": "Compare les éléments courants des deux tableaux déjà triés et prends le plus petit.",
+    "hints": [
+      "Avance seulement dans le tableau dont l’élément vient d’être choisi.",
+      "Ajoute la fin du tableau restant après épuisement de l’autre."
+    ],
+    "checks": [
+      "Un tableau vide",
+      "Doublons et plages de valeurs disjointes"
+    ]
+  },
+  "java-html-validator": {
+    "title": "HTMLValidator",
+    "statementHash": "5661e839",
+    "topics": [
+      "Pile",
+      "Analyse de balises"
+    ],
+    "strategy": "Analyse les balises reconnues et utilise une pile pour vérifier leur fermeture dans l’ordre inverse.",
+    "hints": [
+      "Une fermeture doit correspondre au sommet de la pile.",
+      "Ne cherche pas à valider tout HTML : respecte le sous-ensemble de la consigne."
+    ],
+    "checks": [
+      "Balises imbriquées",
+      "Croisement et balise non fermée"
+    ]
+  },
+  "java-check-anagram": {
+    "title": "IsAnagram",
+    "statementHash": "da1e9f90",
+    "topics": [
+      "Fréquences",
+      "Normalisation de casse"
+    ],
+    "strategy": "Normalise la casse puis compare les fréquences de tous les caractères.",
+    "hints": [
+      "Une même longueur ne suffit pas à prouver une anagramme.",
+      "Ne retire pas d’espaces ou de signes si la consigne ne le demande pas."
+    ],
+    "checks": [
+      "Casses différentes",
+      "Lettres répétées et mêmes longueurs non anagrammes"
+    ]
+  },
+  "java-longest-common-prefix": {
+    "title": "LongestCommonPrefix",
+    "statementHash": "fd17eb71",
+    "topics": [
+      "Comparaison verticale",
+      "Bornes",
+      "Préfixes"
+    ],
+    "strategy": "Compare les caractères à la même position dans toutes les chaînes.",
+    "hints": [
+      "Arrête au premier désaccord ou à la fin de la chaîne la plus courte.",
+      "La comparaison est sensible à la casse."
+    ],
+    "checks": [
+      "Chaîne vide dans le tableau",
+      "Aucun préfixe et chaînes identiques"
+    ]
+  },
+  "java-maximal-square": {
+    "title": "MaximalSquare",
+    "statementHash": "d90de349",
+    "topics": [
+      "Programmation dynamique",
+      "Matrice"
+    ],
+    "strategy": "Pour chaque 1, déduis le côté maximal à partir des voisins haut, gauche et diagonale.",
+    "hints": [
+      "Le nouveau côté est borné par le plus petit de ces trois côtés voisins.",
+      "La réponse attendue est l’aire : élève au carré le meilleur côté."
+    ],
+    "checks": [
+      "Matrice de zéros",
+      "Un seul 1 et carré touchant une bordure"
+    ]
+  },
+  "java-monthly-period": {
+    "title": "MonthlyPeriod",
+    "statementHash": "666ba758",
+    "topics": [
+      "Dates",
+      "Période calendaire"
+    ],
+    "strategy": "Analyse les deux dates et calcule une période en années et mois complets.",
+    "hints": [
+      "Une durée calendaire ne s’obtient pas en divisant des jours par trente.",
+      "Les dates inversées sont admises ; respecte le format et la valeur Error en cas d’échec."
+    ],
+    "checks": [
+      "Dates identiques",
+      "Ordre inversé, mois incomplet et date invalide"
+    ]
+  },
+  "java-multiplication-table": {
+    "title": "MultiplicationTable",
+    "statementHash": "0af55e93",
+    "topics": [
+      "Boucle",
+      "Formatage"
+    ],
+    "strategy": "Parcours les multiplicateurs demandés et affiche une ligne par produit.",
+    "hints": [
+      "La valeur de base reste la même à chaque ligne.",
+      "Respecte exactement les espaces autour de x et de =."
+    ],
+    "checks": [
+      "Nombre positif",
+      "Zéro et nombre négatif"
+    ]
+  },
+  "java-next-prime": {
+    "title": "NextPrime",
+    "statementHash": "07a7847a",
+    "topics": [
+      "Primalité",
+      "Recherche stricte"
+    ],
+    "strategy": "Commence après la valeur fournie et cherche le premier entier premier.",
+    "hints": [
+      "Contrairement à une recherche inclusive, un nombre déjà premier n’est pas sa propre réponse.",
+      "Les candidats inférieurs à deux ne sont pas premiers."
+    ],
+    "checks": [
+      "1 et 2",
+      "Borne première et borne composée"
+    ]
+  },
+  "java-perfect-number": {
+    "title": "PerfectNumber",
+    "statementHash": "69865c43",
+    "topics": [
+      "Somme de diviseurs",
+      "Validation"
+    ],
+    "strategy": "Additionne les diviseurs propres positifs et compare la somme au nombre.",
+    "hints": [
+      "Le nombre lui-même doit être exclu.",
+      "Si tu utilises des paires, ne compte pas deux fois la racine d’un carré."
+    ],
+    "checks": [
+      "6 et 28",
+      "1, nombre premier et carré parfait"
+    ]
+  },
+  "java-reverse-array": {
+    "title": "ReverseArray",
+    "statementHash": "80f947b0",
+    "topics": [
+      "Deux pointeurs",
+      "Tableau résultat"
+    ],
+    "strategy": "Associe le premier élément à la dernière position, puis progresse vers le centre.",
+    "hints": [
+      "Les doublons ne changent pas le mécanisme.",
+      "Respecte la demande de nouveau tableau si l’entrée doit rester indépendante."
+    ],
+    "checks": [
+      "Tableau vide",
+      "Nombre pair puis impair d’éléments"
+    ]
+  },
+  "java-rotate-array": {
+    "title": "RotateArray",
+    "statementHash": "addea3e1",
+    "topics": [
+      "Modulo",
+      "Indices circulaires"
+    ],
+    "strategy": "Réduis le nombre de rotations à la taille du tableau puis calcule les positions de destination.",
+    "hints": [
+      "Normalise les rotations négatives pour obtenir un décalage dans les bornes.",
+      "Vérifie le sens de rotation dans les exemples avant d’écrire la formule d’indice."
+    ],
+    "checks": [
+      "Rotation nulle et multiple de la taille",
+      "Rotation négative et tableau vide"
+    ]
+  },
+  "java-single-linked-list": {
+    "title": "SingleLinkedList",
+    "statementHash": "55c6536c",
+    "topics": [
+      "Nœuds",
+      "Parcours",
+      "Indices"
+    ],
+    "strategy": "Maintiens une tête de liste et traverse les liens pour trouver un indice.",
+    "hints": [
+      "Une insertion en fin doit raccorder le dernier nœud au nouveau.",
+      "Le retrait en tête diffère du retrait après un prédécesseur ; contrôle les indices."
+    ],
+    "checks": [
+      "Liste vide",
+      "Ajout unique et retrait de tête ou de fin"
+    ]
+  },
+  "java-singleton-blueprint": {
+    "title": "SingletonBlueprint",
+    "statementHash": "fb011435",
+    "topics": [
+      "Instance unique",
+      "Constructeur privé"
+    ],
+    "strategy": "Empêche la construction extérieure et conserve l’unique instance dans la classe.",
+    "hints": [
+      "Le point d’accès global doit être statique.",
+      "Deux demandes d’instance doivent renvoyer la même référence."
+    ],
+    "checks": [
+      "Deux appels successifs",
+      "Impossibilité d’appeler directement le constructeur"
+    ]
+  },
+  "java-sort-array": {
+    "title": "SortArray",
+    "statementHash": "b569c473",
+    "topics": [
+      "Tri",
+      "Comparaison"
+    ],
+    "strategy": "Construis un ordre croissant en comparant les éléments du tableau.",
+    "hints": [
+      "Un tri par insertion convient pour commencer simplement.",
+      "Vérifie les exigences de mutation de l’entrée avant de choisir un tri en place."
+    ],
+    "checks": [
+      "Ordre inverse",
+      "Tableau vide, doublons et nombres négatifs"
+    ]
+  },
+  "java-spiral-matrix": {
+    "title": "SpiralMatrix",
+    "statementHash": "d655a839",
+    "topics": [
+      "Bornes de grille",
+      "Simulation"
+    ],
+    "strategy": "Maintiens quatre frontières et remplis successivement haut, droite, bas et gauche.",
+    "hints": [
+      "Resserre la frontière correspondante après chaque parcours.",
+      "Vérifie qu’une ligne ou colonne centrale n’est pas écrite deux fois."
+    ],
+    "checks": [
+      "n égal à 1",
+      "Tailles paires et impaires"
+    ]
+  },
+  "java-steady-sequence": {
+    "title": "SteadySequence",
+    "statementHash": "5ce2c9d2",
+    "topics": [
+      "Ensemble",
+      "Suites consécutives"
+    ],
+    "strategy": "Ignore les doublons puis commence une suite uniquement si son prédécesseur est absent.",
+    "hints": [
+      "L’ordre d’entrée ne détermine pas la suite numérique.",
+      "Étends chaque départ tant que l’entier suivant existe."
+    ],
+    "checks": [
+      "Tableau désordonné",
+      "Doublons, valeurs négatives et suite isolée"
+    ]
+  },
+  "java-strlen": {
+    "title": "Strlen",
+    "statementHash": "60a50582",
+    "topics": [
+      "Chaîne",
+      "Longueur"
+    ],
+    "strategy": "Renvoie la longueur de la chaîne selon le contrat String demandé.",
+    "hints": [
+      "Ne compte pas les mots ni les seuls caractères alphabétiques.",
+      "En Java, la longueur de String compte des unités UTF-16 ; respecte les cas de l’énoncé."
+    ],
+    "checks": [
+      "Chaîne vide",
+      "Espaces et plusieurs caractères"
+    ]
+  },
+  "java-system-logger": {
+    "title": "SystemLogger",
+    "statementHash": "0d426e16",
+    "topics": [
+      "Concaténation",
+      "Préfixe"
+    ],
+    "strategy": "Construis la chaîne retournée en plaçant le préfixe fixe avant le message.",
+    "hints": [
+      "L’espace après les deux-points fait partie du résultat.",
+      "La méthode doit retourner la chaîne plutôt que l’afficher."
+    ],
+    "checks": [
+      "Message vide",
+      "Ponctuation et espaces conservés"
+    ]
+  },
+  "java-time-tracker": {
+    "title": "TimeTracker",
+    "statementHash": "45f7a8e7",
+    "topics": [
+      "Durée",
+      "Setters",
+      "État dérivé"
+    ],
+    "strategy": "Centralise le recalcul de durée et appelle-le après chaque changement de date.",
+    "hints": [
+      "Choisis ensuite l’unité selon les seuils exacts de 120 de la consigne.",
+      "Les durées invalides ne doivent pas devenir négatives hors sentinelle -1."
+    ],
+    "checks": [
+      "Durée nulle et inversée",
+      "Valeurs juste avant et après chaque seuil"
+    ]
+  },
+  "java-todo-list": {
+    "title": "TodoList",
+    "statementHash": "549c1ec0",
+    "topics": [
+      "Objets",
+      "Capacité",
+      "Indices"
+    ],
+    "strategy": "Sépare les données d’une Task du tableau de tâches géré par TodoList.",
+    "hints": [
+      "Contrôle capacité et indices avant toute modification.",
+      "Respecte les contraintes de description et le format exact de l’affichage."
+    ],
+    "checks": [
+      "Liste pleine",
+      "Indice invalide et modification d’une tâche existante"
+    ]
+  },
+  "java-top-frequents": {
+    "title": "TopFrequents",
+    "statementHash": "297bea47",
+    "topics": [
+      "HashMap",
+      "Tas",
+      "Ordre stable"
+    ],
+    "strategy": "Compte les fréquences et mémorise l’indice de première apparition de chaque valeur.",
+    "hints": [
+      "Le tas compare d’abord la fréquence, puis cet indice pour les égalités.",
+      "Retourne les k meilleurs éléments dans l’ordre demandé, pas dans l’ordre interne du tas."
+    ],
+    "checks": [
+      "Fréquences égales",
+      "Valeurs répétées et k à la limite"
+    ]
+  },
+  "java-unit-converter": {
+    "title": "UnitConverter",
+    "statementHash": "c9a10b0c",
+    "topics": [
+      "Branchement",
+      "Arithmétique"
+    ],
+    "strategy": "Sélectionne la conversion à partir du couple unité source et unité cible.",
+    "hints": [
+      "Les deux sens d’une conversion n’emploient pas toujours la même formule directe.",
+      "Utilise une division décimale et traite les couples inconnus avec ERROR."
+    ],
+    "checks": [
+      "Chaque conversion admise",
+      "Unités inconnues et valeur décimale"
+    ]
+  },
+  "java-universal-greeting": {
+    "title": "UniversalGreeting",
+    "statementHash": "9e2374d8",
+    "topics": [
+      "Conditions",
+      "Chaînes constantes"
+    ],
+    "strategy": "Associe chaque code de langue à son message exact.",
+    "hints": [
+      "La casse et la ponctuation des messages doivent être conservées.",
+      "Un code inconnu renvoie une chaîne vide."
+    ],
+    "checks": [
+      "FR, EN et ES",
+      "Code inconnu et chaîne vide"
+    ]
+  },
+  "java-valid-sudoku": {
+    "title": "ValidSudoku",
+    "statementHash": "20c8a8bb",
+    "topics": [
+      "Ensembles",
+      "Lignes",
+      "Colonnes",
+      "Blocs"
+    ],
+    "strategy": "Contrôle séparément les chiffres déjà vus dans chaque ligne, colonne et bloc 3 × 3.",
+    "hints": [
+      "Les cases vides ne participent pas aux répétitions.",
+      "Cette validation ne cherche pas une solution complète du Sudoku."
+    ],
+    "checks": [
+      "Grille partielle valide",
+      "Doublon de ligne, de colonne puis de bloc"
+    ]
+  }
+}

@@ -1,0 +1,238 @@
+@media (min-width: 1600px) {
+  .app-shell {
+    grid-template-columns: 270px minmax(0, 1fr);
+  }
+  .workspace {
+    padding: 30px;
+  }
+  .subject {
+    padding: 34px;
+  }
+  .markdown-viewer {
+    font-size: 13px;
+  }
+  .markdown-viewer pre code {
+    font-size: 12px;
+  }
+}
+@media (max-width: 1150px) {
+  .topbar {
+    padding: 0 18px;
+    gap: 14px;
+  }
+  .brand {
+    min-width: 190px;
+    font-size: 19px;
+  }
+  .private-badge {
+    display: none;
+  }
+  .track-option span,
+  .mode-option span {
+    padding: 7px 9px;
+    font-size: 11px;
+  }
+  .app-shell {
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+  .workspace {
+    padding: 18px 14px;
+  }
+  .layout {
+    grid-template-columns:
+      minmax(230px, var(--left-panel-width, 43%))
+      10px minmax(280px, 1fr);
+  }
+  .subject {
+    padding: 20px;
+  }
+  .title-row h2 {
+    font-size: 22px;
+  }
+  .level-badge {
+    display: none;
+  }
+  .timer-panel {
+    min-width: 245px;
+  }
+  .timer-main {
+    gap: 5px;
+  }
+  .editor-tools .icon-button,
+  .tool-divider {
+    display: none;
+  }
+  .button kbd {
+    display: none;
+  }
+  .console-shortcut {
+    display: none;
+  }
+  .search-field kbd {
+    display: none;
+  }
+}
+@media (max-width: 900px) {
+  html,
+  body {
+    height: auto;
+    min-height: 100%;
+    overflow: auto;
+  }
+  #app {
+    height: auto;
+    min-height: 100dvh;
+  }
+  .topbar {
+    height: auto;
+    min-height: 76px;
+    flex-wrap: wrap;
+    padding: 14px 18px;
+    gap: 12px;
+  }
+  .brand {
+    min-width: 160px;
+    margin-right: auto;
+  }
+  .track-switch {
+    margin-right: 0;
+  }
+  .mode-switch {
+    width: 100%;
+    justify-content: center;
+  }
+  .app-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .catalog-panel {
+    padding: 14px 18px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    max-height: 260px;
+  }
+  .catalog-heading {
+    padding: 0 0 9px;
+  }
+  .search-field {
+    margin-bottom: 8px;
+  }
+  .filters {
+    border: 0;
+    padding: 0 0 8px;
+  }
+  .filters > .eyebrow {
+    display: none;
+  }
+  .chips {
+    margin: 0;
+    gap: 4px;
+  }
+  .exercise-list {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex: none;
+    min-height: 44px;
+    margin-top: 0;
+    gap: 5px;
+  }
+  .exercise-chip {
+    flex-shrink: 0;
+    white-space: nowrap;
+    width: auto;
+    padding: 8px 10px;
+  }
+  .exercise-number {
+    display: none;
+  }
+  .catalog-footer {
+    display: none;
+  }
+  .workspace {
+    padding: 18px;
+    min-height: 1000px;
+  }
+  .workspace-header {
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .timer-panel {
+    min-width: 255px;
+  }
+  .layout {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 0;
+  }
+  .left-panel {
+    min-height: 330px;
+    max-height: 480px;
+    flex: none;
+  }
+  .subject {
+    padding: 23px;
+  }
+  .right-panel {
+    min-height: 630px;
+    flex: 1;
+  }
+  .resize-handle.vertical {
+    display: none;
+  }
+  .editor-container {
+    height: 420px !important;
+    flex-basis: 420px !important;
+  }
+  .console-container {
+    min-height: 210px;
+  }
+  .editor-tools .icon-button {
+    display: block;
+  }
+  .true-exam-mode .true-exam-panel {
+    flex-wrap: wrap;
+  }
+  .learning-mode .catalog-panel {
+    display: none;
+  }
+  .learning-mode .workspace {
+    min-height: 700px;
+  }
+  .learning-layout {
+    flex-direction: column;
+  }
+  .learning-sidebar {
+    width: 100% !important;
+    max-height: 190px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .learning-main {
+    padding: 23px;
+  }
+  .learning-mode .timer-panel {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  button {
+    transition:
+      background 0.15s,
+      color 0.15s,
+      border-color 0.15s;
+  }
+}
+
+.console-box:empty::before {
+  content: "Ta console est prête.\a\aÉcris ta solution puis lance les tests avec Ctrl + Entrée.";
+  color: hsl(var(--accent-hue) calc(4.2% * var(--theme-chroma)) 53.33% / 1);
+}
+
+#code-workspace .cm-editor,
+#code-workspace .cm-gutters {
+  background: hsl(var(--accent-hue) calc(8.7% * var(--theme-chroma)) 9.02% / 1);
+}

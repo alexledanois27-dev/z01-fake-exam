@@ -1,0 +1,134 @@
+.topbar {
+  height: 78px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding: 0 26px;
+  background: hsl(var(--accent-hue) calc(8.7% * var(--theme-chroma)) 9.02% / 1);
+}
+.brand {
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-decoration: none;
+  min-width: 218px;
+  font-size: 21px;
+  font-weight: 750;
+  letter-spacing: -0.7px;
+}
+.brand-light {
+  font-weight: 400;
+  color: hsl(var(--accent-hue) calc(4.94% * var(--theme-chroma)) 68.24% / 1);
+}
+.brand small {
+  font-size: 8px;
+  display: block;
+  font-weight: 600;
+  letter-spacing: 1.7px;
+  color: var(--muted);
+  margin-top: 1px;
+}
+.brand-symbol {
+  width: 38px;
+  height: 38px;
+  background: #d5d4d2;
+  color: hsl(var(--accent-hue) calc(9.3% * var(--theme-chroma)) 16.86% / 1);
+  display: grid;
+  place-content: center;
+  font-size: 30px;
+  border-radius: 11px;
+  position: relative;
+  line-height: 1;
+}
+.brand-symbol span {
+  color: hsl(var(--accent-hue) calc(4.35% * var(--theme-chroma)) 49.61% / 1);
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}
+.track-switch,
+.mode-switch {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.track-switch {
+  margin-right: auto;
+}
+.track-option,
+.mode-option {
+  position: relative;
+  cursor: pointer;
+}
+.track-option input,
+.mode-option input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.track-option span,
+.mode-option span {
+  padding: 7px 13px;
+  display: block;
+  border-radius: 7px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.track-option input:checked + span {
+  background: hsl(
+    var(--accent-hue) calc(8.74% * var(--theme-chroma)) 20.2% / 1
+  );
+  color: hsl(var(--accent-hue) calc(4.76% * var(--theme-chroma)) 87.65% / 1);
+}
+.mode-switch {
+  background: hsl(
+    var(--accent-hue) calc(10.34% * var(--theme-chroma)) 5.69% / 1
+  );
+  padding: 4px;
+  border: 1px solid
+    hsl(var(--accent-hue) calc(9.09% * var(--theme-chroma)) 17.25% / 1);
+  border-radius: 9px;
+}
+.mode-option input:checked + span {
+  background: hsl(
+    var(--accent-hue) calc(9.09% * var(--theme-chroma)) 21.57% / 1
+  );
+  color: #f6f6f6;
+  box-shadow: 0 1px 3px #0005;
+}
+.track-option input:focus-visible + span,
+.mode-option input:focus-visible + span {
+  outline: 2px solid var(--accent);
+}
+.private-badge {
+  font-size: 10px;
+  color: hsl(var(--accent-hue) calc(4.58% * var(--theme-chroma)) 70% / 1);
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+.private-badge > span,
+.status-dot {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  background: var(--green);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Preserve the supplied logo and transparency; render it black on the yellow banner. */
+.brand-logo {
+  display: block;
+  width: 46px;
+  height: 38px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: brightness(0);
+}

@@ -1,0 +1,47 @@
+{
+  "javascript": [
+    "frontend/app/context.js",
+    "frontend/app/configuration.js",
+    "frontend/app/progress.js",
+    "frontend/app/navigation.js",
+    "frontend/app/brute-force.js",
+    "frontend/app/exam-controller.js",
+    "frontend/app/exercise-model.js",
+    "frontend/app/markdown.js",
+    "frontend/app/learning.js",
+    "frontend/app/catalog-loader.js",
+    "frontend/app/code-hints.js",
+    "frontend/app/training-guide.js",
+    "frontend/app/catalog-view.js",
+    "frontend/app/failure-reaction.js",
+    "frontend/app/submission.js",
+    "frontend/app/events.js",
+    "frontend/app/layout.js",
+    "frontend/app/appearance.js",
+    "frontend/app/exam-focus.js",
+    "frontend/app/motion.js",
+    "frontend/app/bootstrap.js"
+  ],
+  "styles": [
+    "frontend/styles/base.css",
+    "frontend/styles/header.css",
+    "frontend/styles/catalog.css",
+    "frontend/styles/workspace.css",
+    "frontend/styles/statement.css",
+    "frontend/styles/editor.css",
+    "frontend/styles/learning.css",
+    "frontend/styles/responsive.css",
+    "frontend/styles/sessions.css",
+    "frontend/styles/theme.css",
+    "frontend/styles/training-guide.css",
+    "frontend/styles/failure-reaction.css",
+    "frontend/styles/appearance.css",
+    "frontend/styles/motion.css"
+  ],
+  "guides": [
+    "go",
+    "js",
+    "rust",
+    "java"
+  ]
+}

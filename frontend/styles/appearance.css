@@ -1,0 +1,181 @@
+:root {
+  --accent-hue: 51;
+  --theme-chroma: 1;
+  --accent: #f4cf00;
+}
+:root[data-accent="gray"] {
+  --accent-hue: 215;
+  --theme-chroma: 0;
+  --accent: #9098a3;
+}
+:root[data-accent="blue"] {
+  --accent-hue: 214;
+  --accent: #2986ff;
+}
+:root[data-accent="green"] {
+  --accent-hue: 144;
+  --accent: #00c968;
+}
+:root[data-accent="red"] {
+  --accent-hue: 0;
+  --accent: #ff3b45;
+}
+:root[data-accent="violet"] {
+  --accent-hue: 266;
+  --accent: #9855ff;
+}
+.accent-picker {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.accent-swatch {
+  display: grid;
+  place-items: center;
+  width: 23px;
+  height: 28px;
+  position: relative;
+  cursor: pointer;
+}
+.accent-swatch input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.accent-swatch span {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--swatch);
+  pointer-events: none;
+}
+.accent-swatch input:checked + span {
+  box-shadow:
+    0 0 0 2px #090a08,
+    0 0 0 3px #f5f5ef;
+}
+.accent-swatch input:focus-visible + span {
+  outline: 2px solid var(--swatch);
+  outline-offset: 5px;
+}
+.accent-swatch:hover span {
+  transform: scale(1.15);
+}
+#success-confetti {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 100;
+}
+.confetti-piece {
+  position: absolute;
+  bottom: -15px;
+  width: 5px;
+  height: 9px;
+  background: var(--accent);
+  animation: confetti-rise 1500ms ease-out both;
+}
+.confetti-piece:nth-child(3n) {
+  background: var(--text);
+  width: 6px;
+  height: 6px;
+}
+.confetti-piece:nth-child(3n + 1) {
+  border-radius: 50%;
+  opacity: 0.8;
+}
+@keyframes confetti-rise {
+  0% {
+    transform: translate3d(0, 10px, 0) rotate(0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--drift), calc(-1 * var(--rise)), 0) rotate(var(--spin));
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #success-confetti {
+    display: none;
+  }
+}
+@media (max-width: 900px) {
+  .accent-picker {
+    margin-left: auto;
+    margin-right: 12px;
+  }
+}
+
+/* Strong accents keep dark lettering on filled controls and the brand. */
+.brand small {
+  color: #101010;
+}
+.button-primary:hover:not(:disabled) {
+  background: var(--accent);
+  filter: brightness(1.12);
+}
+
+.accent-menu {
+  position: relative;
+  flex-shrink: 0;
+}
+.accent-menu > summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 44px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel);
+  cursor: pointer;
+  color: var(--muted);
+  list-style: none;
+}
+.accent-menu > summary::-webkit-details-marker {
+  display: none;
+}
+.accent-current {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.accent-menu > .accent-options {
+  display: grid;
+  grid-template-columns: repeat(3, 28px);
+  gap: 8px;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 60;
+  padding: 12px;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--panel);
+  box-shadow: 0 12px 30px #0008;
+}
+.accent-menu:not([open]) > .accent-options {
+  display: none;
+}
+.accent-options .accent-swatch {
+  width: 28px;
+  height: 28px;
+}
+@media (max-width: 900px) {
+  .accent-menu {
+    margin-left: auto;
+    margin-right: 12px;
+  }
+}

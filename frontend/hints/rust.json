@@ -1,0 +1,659 @@
+{
+  "rust-checkpoint-blood-types-s": {
+    "title": "blood_types_s",
+    "statementHash": "fc91afc8",
+    "topics": [
+      "Enums",
+      "Table de compatibilité"
+    ],
+    "strategy": "Sépare les règles du groupe ABO et celles du facteur Rh pour décider de la compatibilité.",
+    "hints": [
+      "Pour les listes de dons et réceptions, applique la règle dans le bon sens.",
+      "Utilise la table comme référence exhaustive et conserve l’ordre attendu des résultats."
+    ],
+    "checks": [
+      "O négatif et AB positif",
+      "Tous les couples des huit groupes"
+    ]
+  },
+  "rust-checkpoint-brackets-matching": {
+    "title": "brackets_matching",
+    "statementHash": "982d8eea",
+    "topics": [
+      "Pile",
+      "Caractères"
+    ],
+    "strategy": "Empile les ouvertures et compare chaque fermeture avec le sommet.",
+    "hints": [
+      "Ignore les caractères qui ne sont pas des délimiteurs.",
+      "À la fin de chaque argument, la pile doit être vide."
+    ],
+    "checks": [
+      "Aucun délimiteur",
+      "Croisement et fermeture sans ouverture"
+    ]
+  },
+  "rust-checkpoint-brain-fuck": {
+    "title": "brain_fuck",
+    "statementHash": "0380ba2f",
+    "topics": [
+      "Interpréteur",
+      "Mémoire",
+      "Indices"
+    ],
+    "strategy": "Maintiens les 2048 cellules, le pointeur mémoire et l’indice d’instruction.",
+    "hints": [
+      "Pour les boucles, compte les crochets imbriqués pour trouver le correspondant.",
+      "Respecte la sémantique des cellules octets et des sauts indiquée dans la consigne."
+    ],
+    "checks": [
+      "Boucle sautée sur zéro",
+      "Boucles imbriquées et déplacement du pointeur"
+    ]
+  },
+  "rust-checkpoint-car-rental": {
+    "title": "car_rental",
+    "statementHash": "87956712",
+    "topics": [
+      "Mutabilité intérieure",
+      "Emprunts"
+    ],
+    "strategy": "Choisis les conteneurs de mutabilité intérieure correspondant aux types de retour demandés.",
+    "hints": [
+      "Un accès partagé ne donne pas automatiquement un accès mutable direct.",
+      "Respecte les durées de vie des gardes d’emprunt et évite les emprunts incompatibles simultanés."
+    ],
+    "checks": [
+      "Lecture puis mutation",
+      "Accès partagé et garde encore vivante"
+    ]
+  },
+  "rust-checkpoint-check-user-name": {
+    "title": "check_user_name",
+    "statementHash": "d78497cb",
+    "topics": [
+      "Enum",
+      "Result",
+      "Validation"
+    ],
+    "strategy": "Modélise les niveaux d’accès puis distingue création, validation du nom et autorisations.",
+    "hints": [
+      "Une erreur attendue doit être retournée selon le contrat plutôt que provoquer un panic.",
+      "Suis exactement les messages et changements de niveau définis dans l’énoncé."
+    ],
+    "checks": [
+      "Nom valide et invalide",
+      "Utilisateur invité puis administrateur"
+    ]
+  },
+  "rust-checkpoint-count-factorial-steps": {
+    "title": "count_factorial_steps",
+    "statementHash": "501d1b65",
+    "topics": [
+      "Produit progressif",
+      "Arrêt"
+    ],
+    "strategy": "Multiplie progressivement les entiers jusqu’à atteindre ou dépasser la valeur.",
+    "hints": [
+      "Zéro, un et les nombres non factoriels doivent donner zéro.",
+      "Protège la multiplication contre le dépassement avant de calculer le produit suivant."
+    ],
+    "checks": [
+      "0, 1 et 6",
+      "Nombre entre deux factorielles et grande valeur"
+    ]
+  },
+  "rust-checkpoint-counting-words": {
+    "title": "counting_words",
+    "statementHash": "aa2bdaad",
+    "topics": [
+      "Tokenisation",
+      "HashMap"
+    ],
+    "strategy": "Normalise la casse et compte les mots en conservant les apostrophes internes pertinentes.",
+    "hints": [
+      "Les nombres sont des mots et les espaces ASCII peuvent varier.",
+      "Écarte les autres ponctuations sans perdre les séparations entre mots."
+    ],
+    "checks": [
+      "HELLO puis hello",
+      "Apostrophes, chiffres, tabulations et sauts de ligne"
+    ]
+  },
+  "rust-checkpoint-display-table": {
+    "title": "display_table",
+    "statementHash": "4b21f0a2",
+    "topics": [
+      "Display",
+      "Largeurs de colonnes"
+    ],
+    "strategy": "Calcule la largeur maximale de chaque colonne avant de construire les lignes.",
+    "hints": [
+      "Le centrage répartit les espaces à gauche et à droite.",
+      "Si le nombre d’espaces est impair, suis la convention de l’exemple."
+    ],
+    "checks": [
+      "Colonnes de tailles différentes",
+      "Contenu plus court d’un nombre impair de caractères"
+    ]
+  },
+  "rust-checkpoint-dress-code": {
+    "title": "dress_code",
+    "statementHash": "50935132",
+    "topics": [
+      "Option",
+      "Result",
+      "Pattern matching"
+    ],
+    "strategy": "Traite séparément le niveau de formalité et le résultat de l’invitation.",
+    "hints": [
+      "Le couple None et Err constitue une exception pour le chapeau.",
+      "Construis les enums publics et l’Outfit avec les variantes exactes."
+    ],
+    "checks": [
+      "None avec Ok puis Err",
+      "Some de zéro et valeur positive"
+    ]
+  },
+  "rust-checkpoint-drop-the-blog": {
+    "title": "drop_the_blog",
+    "statementHash": "e1c04360",
+    "topics": [
+      "Drop",
+      "Mutabilité intérieure",
+      "Durées de vie"
+    ],
+    "strategy": "Relie chaque article à son blog et centralise la mise à jour de destruction.",
+    "hints": [
+      "Le trait Drop doit enregistrer la destruction une seule fois.",
+      "discard consomme l’article ; évite de compter manuellement puis de recompter dans Drop."
+    ],
+    "checks": [
+      "Article détruit en fin de bloc",
+      "Destruction explicite et état des autres articles"
+    ]
+  },
+  "rust-checkpoint-filter-table": {
+    "title": "filter_table",
+    "statementHash": "37c080d0",
+    "topics": [
+      "Closures",
+      "Colonnes et lignes"
+    ],
+    "strategy": "Construis la table puis sélectionne colonnes ou lignes en appliquant les closures demandées.",
+    "hints": [
+      "Une colonne retenue doit conserver ses valeurs dans toutes les lignes.",
+      "Garde les en-têtes et données alignés après chaque filtre."
+    ],
+    "checks": [
+      "Aucune colonne retenue",
+      "Toutes les lignes et enchaînement de filtres"
+    ]
+  },
+  "rust-checkpoint-flat-tree": {
+    "title": "flat_tree",
+    "statementHash": "fd88cfdd",
+    "topics": [
+      "Collection ordonnée",
+      "Itération"
+    ],
+    "strategy": "Le BTreeSet maintient déjà ses éléments dans l’ordre.",
+    "hints": [
+      "Parcours-le dans cet ordre pour construire le Vec attendu.",
+      "Ne réintroduis ni doublons ni tri dans l’ordre inverse."
+    ],
+    "checks": [
+      "Ensemble vide",
+      "Valeurs ajoutées dans le désordre"
+    ]
+  },
+  "rust-checkpoint-format-me": {
+    "title": "format_me",
+    "statementHash": "279f04ce",
+    "topics": [
+      "Display",
+      "Option"
+    ],
+    "strategy": "Formate chaque champ optionnel selon sa présence et la variante du parc.",
+    "hints": [
+      "Un champ absent ne doit pas ajouter de texte ou de séparateur superflu.",
+      "Respecte exactement l’ordre et la ponctuation des exemples."
+    ],
+    "checks": [
+      "Tous les champs présents",
+      "Champs absents et chaque variante de ParkType"
+    ]
+  },
+  "rust-checkpoint-get-document-id": {
+    "title": "get_document_id",
+    "statementHash": "69ccc12a",
+    "topics": [
+      "Result",
+      "Propagation d’erreurs"
+    ],
+    "strategy": "Traverse la chaîne des bureaux en propageant la première erreur rencontrée.",
+    "hints": [
+      "Chaque accès peut échouer avant le bureau suivant.",
+      "Ne remplace pas une erreur métier par un panic ou une valeur d’identifiant arbitraire."
+    ],
+    "checks": [
+      "Tous les bureaux accessibles",
+      "Échec à chaque niveau de la chaîne"
+    ]
+  },
+  "rust-checkpoint-insertion-sort": {
+    "title": "insertion_sort",
+    "statementHash": "04cf467e",
+    "topics": [
+      "Tri par insertion",
+      "Étapes limitées"
+    ],
+    "strategy": "Insère chaque élément dans le préfixe déjà trié et arrête au nombre d’étapes demandé.",
+    "hints": [
+      "Une étape correspond à l’itération définie dans les exemples.",
+      "Ne termine pas systématiquement le tri lorsque steps est trop petit."
+    ],
+    "checks": [
+      "Zéro étape",
+      "Une étape et nombre d’étapes suffisant"
+    ]
+  },
+  "rust-checkpoint-inv-pyramid": {
+    "title": "inv_pyramid",
+    "statementHash": "df85bd02",
+    "topics": [
+      "Construction de lignes",
+      "Répétition"
+    ],
+    "strategy": "Construis la montée des tailles de 1 à n puis la descente sans répéter le sommet.",
+    "hints": [
+      "L’indentation fait partie de chaque chaîne.",
+      "Le résultat est un vecteur de lignes, pas une sortie imprimée directement."
+    ],
+    "checks": [
+      "Hauteur 1",
+      "Hauteur plus grande et motif de plusieurs caractères"
+    ]
+  },
+  "rust-checkpoint-lucas-number": {
+    "title": "lucas_number",
+    "statementHash": "1d7c87fb",
+    "topics": [
+      "Récurrence",
+      "Mémoire constante"
+    ],
+    "strategy": "Pars des deux termes initiaux 2 et 1 puis additionne les deux précédents.",
+    "hints": [
+      "Le rang zéro et le rang un ont des résultats distincts.",
+      "Une méthode itérative évite les recalculs d’une récursion naïve."
+    ],
+    "checks": [
+      "Rangs 0, 1 et 2",
+      "Plusieurs termes consécutifs"
+    ]
+  },
+  "rust-checkpoint-lunch-queue": {
+    "title": "lunch_queue",
+    "statementHash": "c6d76586",
+    "topics": [
+      "File",
+      "FIFO"
+    ],
+    "strategy": "Ajoute les personnes d’un côté et retire de l’autre pour conserver le premier arrivé.",
+    "hints": [
+      "L’inversion doit changer l’ordre de toute la file.",
+      "Traite les opérations sur une file vide selon les signatures demandées."
+    ],
+    "checks": [
+      "File vide",
+      "Ajouts multiples puis inversion et retrait"
+    ]
+  },
+  "rust-checkpoint-matrix-determinant": {
+    "title": "matrix_determinant",
+    "statementHash": "c9460125",
+    "topics": [
+      "Matrices",
+      "Développement par cofacteurs"
+    ],
+    "strategy": "Développe le déterminant suivant une ligne avec les mineurs 2 × 2.",
+    "hints": [
+      "Les signes des trois termes alternent plus, moins, plus.",
+      "Utilise un type signé et vérifie les indices des lignes et colonnes supprimées."
+    ],
+    "checks": [
+      "Matrice identité",
+      "Lignes identiques et déterminant négatif"
+    ]
+  },
+  "rust-checkpoint-matrix-display": {
+    "title": "matrix_display",
+    "statementHash": "5bf656fb",
+    "topics": [
+      "Struct",
+      "Display"
+    ],
+    "strategy": "Stocke les dimensions et éléments puis formate chaque ligne selon l’exemple.",
+    "hints": [
+      "Distingue la représentation des données de leur affichage.",
+      "Contrôle les espaces, parenthèses et retours à la ligne sans ajouter de ligne superflue."
+    ],
+    "checks": [
+      "Petite matrice",
+      "Plusieurs lignes et valeurs négatives"
+    ]
+  },
+  "rust-checkpoint-modify-letter": {
+    "title": "modify_letter",
+    "statementHash": "c6dcd48e",
+    "topics": [
+      "ASCII",
+      "Casse",
+      "Filtrage"
+    ],
+    "strategy": "Traite séparément suppression sensible, suppression insensible et inversion de casse de la lettre cible.",
+    "hints": [
+      "L’insensibilité compare les versions normalisées des lettres.",
+      "Les caractères non ciblés doivent rester inchangés."
+    ],
+    "checks": [
+      "Lettre en deux casses",
+      "Lettre absente et caractères non alphabétiques"
+    ]
+  },
+  "rust-checkpoint-moving-targets": {
+    "title": "moving_targets",
+    "statementHash": "27fe4aee",
+    "topics": [
+      "Liste chaînée",
+      "Box",
+      "Option"
+    ],
+    "strategy": "Représente les nœuds récursifs par des liens possédés et un éventuel nœud de tête.",
+    "hints": [
+      "push et pop concernent la tête : le dernier ajouté sort d’abord.",
+      "Prends possession du lien avant de le remplacer pour éviter les conflits d’emprunt."
+    ],
+    "checks": [
+      "Liste vide",
+      "Deux ajouts, lecture de tête et retraits successifs"
+    ]
+  },
+  "rust-checkpoint-negative-spelling": {
+    "title": "negative_spelling",
+    "statementHash": "6ed9a7c1",
+    "topics": [
+      "Décomposition numérique",
+      "Composition de mots"
+    ],
+    "strategy": "Valide le signe puis décompose la valeur en millions, milliers, centaines, dizaines et unités.",
+    "hints": [
+      "Les nombres de 10 à 19 et les dizaines nécessitent des noms spécifiques.",
+      "Assemble espaces, tirets et préfixe minus conformément aux exemples."
+    ],
+    "checks": [
+      "-1, -14 et -348",
+      "Millier, million et entrée non négative"
+    ]
+  },
+  "rust-checkpoint-nextprime": {
+    "title": "nextprime",
+    "statementHash": "c72876eb",
+    "topics": [
+      "Primalité",
+      "Recherche ascendante"
+    ],
+    "strategy": "Cherche le premier nombre premier à partir de la borne incluse.",
+    "hints": [
+      "Deux est le premier candidat premier possible.",
+      "Teste les diviseurs sans dépasser la racine, en évitant le débordement de d × d."
+    ],
+    "checks": [
+      "0, 1 et 2",
+      "Borne déjà première et grand nombre composé"
+    ]
+  },
+  "rust-checkpoint-office-worker": {
+    "title": "office_worker",
+    "statementHash": "33db6e3d",
+    "topics": [
+      "From",
+      "Analyse de texte",
+      "Enum"
+    ],
+    "strategy": "Convertis séparément le rôle puis les trois champs du travailleur.",
+    "hints": [
+      "Les chaînes ont un format et une casse de rôle définis par l’énoncé.",
+      "Vérifie les valeurs de repli demandées avant de convertir l’âge."
+    ],
+    "checks": [
+      "Chaque rôle",
+      "Champs manquants et âge invalide selon la consigne"
+    ]
+  },
+  "rust-checkpoint-order-books": {
+    "title": "order_books",
+    "statementHash": "9b3f76c9",
+    "topics": [
+      "Modules",
+      "Tri",
+      "Comparaison insensible"
+    ],
+    "strategy": "Définis les modules et leurs types publics puis trie les livres par titre sans tenir compte de la casse.",
+    "hints": [
+      "Les comparaisons portent sur des titres normalisés.",
+      "Conserve les titres d’origine dans les objets retournés."
+    ],
+    "checks": [
+      "Titres de casses différentes",
+      "Liste vide et titres identiques"
+    ]
+  },
+  "rust-checkpoint-organize-garage": {
+    "title": "organize_garage",
+    "statementHash": "812db054",
+    "topics": [
+      "Génériques",
+      "Option",
+      "Addition"
+    ],
+    "strategy": "Déplace la valeur du côté source vers la destination, en combinant les valeurs si nécessaire.",
+    "hints": [
+      "Les deux côtés peuvent être absents ou présents indépendamment.",
+      "Après un déplacement effectif, vide le côté source selon le contrat."
+    ],
+    "checks": [
+      "Deux côtés vides",
+      "Un seul côté occupé et deux valeurs à additionner"
+    ]
+  },
+  "rust-checkpoint-own-and-return": {
+    "title": "own_and_return",
+    "statementHash": "356e666d",
+    "topics": [
+      "Ownership",
+      "Emprunt"
+    ],
+    "strategy": "La fonction qui consomme reçoit le Film par valeur ; celle qui lit reçoit un emprunt.",
+    "hints": [
+      "Déplacer un champ String consomme sa propriété sans le cloner inutilement.",
+      "Pour la lecture, utilise le type de retour attendu en conservant la réutilisabilité du Film."
+    ],
+    "checks": [
+      "Lecture répétée",
+      "Consommation et vérification des signatures"
+    ]
+  },
+  "rust-checkpoint-partial-sums": {
+    "title": "partial_sums",
+    "statementHash": "b826be1c",
+    "topics": [
+      "Sommes de préfixes",
+      "Accumulateur"
+    ],
+    "strategy": "Construis les sommes des préfixes jusqu’au préfixe vide, dans l’ordre montré.",
+    "hints": [
+      "Le dernier résultat est zéro.",
+      "Prépare les sommes cumulées puis inverse leur ordre plutôt que recalculer chaque somme."
+    ],
+    "checks": [
+      "Slice vide",
+      "Un élément et plusieurs éléments"
+    ]
+  },
+  "rust-checkpoint-previousprime": {
+    "title": "previousprime",
+    "statementHash": "630df932",
+    "topics": [
+      "Primalité",
+      "Recherche descendante"
+    ],
+    "strategy": "Commence strictement sous la borne puis cherche vers le bas.",
+    "hints": [
+      "Ne soustrais pas à un entier non signé nul sans contrôle.",
+      "Retourne zéro si aucun nombre premier inférieur n’existe."
+    ],
+    "checks": [
+      "Bornes 0, 1 et 2",
+      "Borne première et borne composée"
+    ]
+  },
+  "rust-checkpoint-prime-checker": {
+    "title": "prime_checker",
+    "statementHash": "d05a5630",
+    "topics": [
+      "Option",
+      "Result",
+      "Diviseurs"
+    ],
+    "strategy": "Sépare les valeurs sans réponse, les nombres premiers et les erreurs de primalité.",
+    "hints": [
+      "Les valeurs inférieures ou égales à un donnent None.",
+      "Distingue le cas pair du diviseur impair et respecte le diviseur attendu."
+    ],
+    "checks": [
+      "0, 1 et 2",
+      "Composé pair et composé impair"
+    ]
+  },
+  "rust-checkpoint-profanity-filter": {
+    "title": "profanity_filter",
+    "statementHash": "9cca8a98",
+    "topics": [
+      "Result",
+      "Validation de texte"
+    ],
+    "strategy": "Vérifie le message avant de construire un résultat réussi.",
+    "hints": [
+      "Une chaîne vide et la présence du terme interdit déclenchent l’erreur définie.",
+      "Respecte la règle de recherche et la casse précisées dans les exemples."
+    ],
+    "checks": [
+      "Message vide",
+      "Terme interdit présent et message accepté"
+    ]
+  },
+  "rust-checkpoint-queens": {
+    "title": "queens",
+    "statementHash": "63e64f1b",
+    "topics": [
+      "Coordonnées",
+      "Diagonales"
+    ],
+    "strategy": "Valide les positions puis compare lignes, colonnes et écarts diagonaux.",
+    "hints": [
+      "Deux reines sont sur une diagonale si les écarts absolus de leurs coordonnées sont égaux.",
+      "Évite les soustractions non signées qui débordent."
+    ],
+    "checks": [
+      "Même ligne ou colonne",
+      "Diagonale et coordonnées hors échiquier"
+    ]
+  },
+  "rust-checkpoint-reverse-it": {
+    "title": "reverse_it",
+    "statementHash": "40aef591",
+    "topics": [
+      "Chiffres",
+      "Chaîne",
+      "Signe"
+    ],
+    "strategy": "Renverse l’écriture de la valeur absolue puis concatène son écriture d’origine.",
+    "hints": [
+      "Le signe négatif n’est ajouté qu’au début du résultat.",
+      "Les zéros issus du renversement restent des caractères de la sortie."
+    ],
+    "checks": [
+      "Zéro",
+      "Nombre finissant par zéro et valeur négative"
+    ]
+  },
+  "rust-checkpoint-rot21": {
+    "title": "rot21",
+    "statementHash": "01857f2c",
+    "topics": [
+      "ASCII",
+      "Modulo"
+    ],
+    "strategy": "Repère l’alphabet et la casse puis décale l’indice de 21 modulo 26.",
+    "hints": [
+      "Majuscules et minuscules ont des origines distinctes.",
+      "Laisse inchangés les caractères non alphabétiques ASCII."
+    ],
+    "checks": [
+      "Lettres proches de z et Z",
+      "Chiffres, ponctuation et caractères non ASCII"
+    ]
+  },
+  "rust-checkpoint-rpn": {
+    "title": "rpn",
+    "statementHash": "3afff605",
+    "topics": [
+      "Pile",
+      "Analyse d’expression"
+    ],
+    "strategy": "Empile les nombres et remplace les deux derniers par le résultat de chaque opérateur.",
+    "hints": [
+      "L’opérande dépilé en premier se trouve à droite de l’opération.",
+      "Ignore les espaces supplémentaires et exige une seule valeur finale."
+    ],
+    "checks": [
+      "Soustraction et division",
+      "Opérandes manquants, division par zéro et argument absent"
+    ]
+  },
+  "rust-checkpoint-scytale-decoder": {
+    "title": "scytale_decoder",
+    "statementHash": "f91df28e",
+    "topics": [
+      "Transposition",
+      "Indices"
+    ],
+    "strategy": "Reconstitue les positions de la grille d’enroulement à partir du nombre de lettres par tour.",
+    "hints": [
+      "La dernière rangée peut être incomplète.",
+      "Une chaîne vide ou un nombre de lettres par tour nul retourne None."
+    ],
+    "checks": [
+      "Exemples à deux et trois lettres par tour",
+      "Longueur non divisible et paramètre nul"
+    ]
+  },
+  "rust-checkpoint-smallest": {
+    "title": "smallest",
+    "statementHash": "beb60350",
+    "topics": [
+      "HashMap",
+      "Minimum"
+    ],
+    "strategy": "Parcours les valeurs du dictionnaire en conservant la plus petite.",
+    "hints": [
+      "La valeur de départ doit permettre de gérer une collection vide.",
+      "La consigne demande le maximum de i32 pour une table vide."
+    ],
+    "checks": [
+      "Table vide",
+      "Valeurs négatives et minimum répété"
+    ]
+  }
+}

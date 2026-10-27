@@ -1,0 +1,534 @@
+{
+  "array-reverse-chunks": {
+    "title": "Array Reverse Chunks",
+    "statementHash": "c2ddf1f7",
+    "topics": [
+      "Tableaux",
+      "Deux pointeurs"
+    ],
+    "strategy": "Inverse chaque bloc indépendamment, sans modifier l’ordre des blocs.",
+    "hints": [
+      "Borne le dernier bloc à la longueur réelle du tableau.",
+      "Échange les éléments des deux extrémités du bloc puis rapproche les indices."
+    ],
+    "checks": [
+      "Bloc de taille 1",
+      "Dernier bloc incomplet et tableau vide"
+    ]
+  },
+  "bubble-sort-analyzer": {
+    "title": "Bubble Sort Analyzer",
+    "statementHash": "212b806e",
+    "topics": [
+      "Tri à bulles",
+      "Comparateur"
+    ],
+    "strategy": "Compare les voisins et échange-les selon le comparateur fourni.",
+    "hints": [
+      "Le compteur d’itérations et celui des échanges ne représentent pas la même chose.",
+      "Respecte la convention de comptage des exemples avant d’ajouter une optimisation."
+    ],
+    "checks": [
+      "Tableau déjà trié",
+      "Ordre inverse, doublons et comparateur décroissant"
+    ]
+  },
+  "character-maker": {
+    "title": "Character Maker",
+    "statementHash": "6963b67d",
+    "topics": [
+      "Fermeture",
+      "Curryfication",
+      "Fusion profonde"
+    ],
+    "strategy": "Conserve le personnage dans une fermeture et renvoie la même fonction de construction.",
+    "hints": [
+      "Un objet déclenche une fusion profonde ; une fonction transforme l’état courant.",
+      "Un appel sans argument termine la chaîne et renvoie le personnage."
+    ],
+    "checks": [
+      "Fusions imbriquées",
+      "Transformation après fusion et finalisation sans modification"
+    ]
+  },
+  "deep-clone": {
+    "title": "Deep Clone",
+    "statementHash": "1e9dc55e",
+    "topics": [
+      "Récursion",
+      "Identité des références"
+    ],
+    "strategy": "Distingue les primitives des conteneurs et reconstruis récursivement chaque niveau.",
+    "hints": [
+      "Un tableau doit rester un tableau, et null n’est pas un objet à parcourir.",
+      "Vérifie l’indépendance des références et pas seulement l’égalité du contenu."
+    ],
+    "checks": [
+      "Objet avec tableaux imbriqués",
+      "Modification de l’original après clonage"
+    ]
+  },
+  "deep-equal": {
+    "title": "Deep Equal",
+    "statementHash": "79fe505f",
+    "topics": [
+      "Récursion",
+      "Comparaison structurelle"
+    ],
+    "strategy": "Compare les primitives puis les types de conteneurs, les clés et leurs valeurs récursives.",
+    "hints": [
+      "L’ordre des tableaux compte, celui des clés d’objet ne compte pas.",
+      "Même nombre de clés ne signifie pas mêmes clés ni mêmes valeurs."
+    ],
+    "checks": [
+      "Clés réordonnées",
+      "Tableaux permutés, null et différence profondément imbriquée"
+    ]
+  },
+  "deep-find": {
+    "title": "Deep Find",
+    "statementHash": "2fe60498",
+    "topics": [
+      "Chemin de propriétés",
+      "Parcours"
+    ],
+    "strategy": "Découpe le chemin par points et avance d’un niveau à chaque segment.",
+    "hints": [
+      "Un indice de tableau se parcourt aussi comme une propriété.",
+      "Arrête proprement sur une étape absente, sans confondre une valeur fausse avec une absence."
+    ],
+    "checks": [
+      "Chemin absent",
+      "Valeur 0, false ou null et indice de tableau"
+    ]
+  },
+  "deep-freeze": {
+    "title": "Deep Freeze",
+    "statementHash": "dba8a2d5",
+    "topics": [
+      "Récursion",
+      "Immutabilité"
+    ],
+    "strategy": "Parcours les objets et tableaux imbriqués puis fige chaque conteneur.",
+    "hints": [
+      "Figer seulement la racine ne protège pas les objets enfants.",
+      "Traite null et les primitives avant de chercher des propriétés."
+    ],
+    "checks": [
+      "Objet profondément imbriqué",
+      "Tableau enfant et tentative de modification"
+    ]
+  },
+  "divisorfinder": {
+    "title": "divisorFinder",
+    "statementHash": "9372b69a",
+    "topics": [
+      "Diviseurs",
+      "Modulo"
+    ],
+    "strategy": "Cherche les entiers positifs qui divisent n sans reste, en excluant n.",
+    "hints": [
+      "Le nombre 1 n’a aucun diviseur propre positif.",
+      "Conserve l’ordre demandé des diviseurs."
+    ],
+    "checks": [
+      "n égal à 1",
+      "Nombre premier et carré parfait"
+    ]
+  },
+  "election-mix": {
+    "title": "Election Mix",
+    "statementHash": "52d24b2f",
+    "topics": [
+      "Curryfication",
+      "Filtrage",
+      "Transformation"
+    ],
+    "strategy": "Capture criteria et mapper dans une fermeture qui recevra ensuite un objet.",
+    "hints": [
+      "Décide d’abord avec la clé et la valeur si la paire doit être retenue.",
+      "Applique mapper uniquement aux valeurs retenues et construis un nouvel objet."
+    ],
+    "checks": [
+      "Aucune clé retenue",
+      "Toutes les clés et réutilisation de la fonction curryfiée"
+    ]
+  },
+  "evensum": {
+    "title": "evenSum",
+    "statementHash": "6580dccc",
+    "topics": [
+      "Parité",
+      "Accumulateur"
+    ],
+    "strategy": "Additionne les nombres pairs compris entre zéro et la borne.",
+    "hints": [
+      "Un pas de deux évite de traiter les impairs.",
+      "Vérifie si la borne elle-même doit être incluse."
+    ],
+    "checks": [
+      "Bornes 0, 1 et 2",
+      "Borne paire puis impaire"
+    ]
+  },
+  "exam-grader": {
+    "title": "Exam Grader",
+    "statementHash": "f3475143",
+    "topics": [
+      "Promesses",
+      "Échéance globale"
+    ],
+    "strategy": "Observe les résultats dans l’ordre avec une seule échéance pour tout l’examen.",
+    "hints": [
+      "Les promesses existent déjà : les attendre ne les démarre pas nécessairement l’une après l’autre.",
+      "Ne réinitialise pas le timeout à chaque exercice et arrête d’ajouter des notes après l’échéance."
+    ],
+    "checks": [
+      "Toutes les notes à temps",
+      "Exercice lent avant un résultat déjà disponible"
+    ]
+  },
+  "factorial": {
+    "title": "factorial",
+    "statementHash": "5bde8293",
+    "topics": [
+      "Produit",
+      "Cas de base"
+    ],
+    "strategy": "Multiplie les entiers de 1 à n avec un accumulateur initialisé à un.",
+    "hints": [
+      "La factorielle de zéro vaut un.",
+      "Une récursion est possible mais une boucle évite de remplir la pile."
+    ],
+    "checks": [
+      "n égal à 0 et 1",
+      "Plusieurs petits entiers"
+    ]
+  },
+  "fibonacci": {
+    "title": "fibonacci",
+    "statementHash": "ae49388e",
+    "topics": [
+      "Récurrence",
+      "Mémoire constante"
+    ],
+    "strategy": "Conserve uniquement les deux termes précédents pour construire le suivant.",
+    "hints": [
+      "Les premiers termes sont zéro et un.",
+      "Une récursion naïve répète inutilement de nombreux calculs."
+    ],
+    "checks": [
+      "Indices 0, 1 et 2",
+      "Indice plus grand"
+    ]
+  },
+  "final-attempt": {
+    "title": "Final Attempt",
+    "statementHash": "c9efa4f8",
+    "topics": [
+      "Fonction enveloppe",
+      "Async",
+      "Relance"
+    ],
+    "strategy": "Renvoie une fonction qui tente le callback et intercepte ses échecs.",
+    "hints": [
+      "Transmets tous les arguments à chaque tentative.",
+      "Arrête dès le premier succès ; après épuisement renvoie le texte exact demandé."
+    ],
+    "checks": [
+      "Succès immédiat",
+      "Succès au dernier essai et échec permanent"
+    ]
+  },
+  "flat-object": {
+    "title": "Flat Object",
+    "statementHash": "26abdba5",
+    "topics": [
+      "Récursion",
+      "Chemins",
+      "Transformation"
+    ],
+    "strategy": "Descends dans l’objet en transportant le chemin courant et transforme chaque feuille.",
+    "hints": [
+      "Construis les chemins avec un point entre les niveaux.",
+      "Applique mapper aux valeurs finales, pas aux conteneurs intermédiaires."
+    ],
+    "checks": [
+      "Objet imbriqué",
+      "Feuilles nulles et chemins à plusieurs niveaux"
+    ]
+  },
+  "flatten-object": {
+    "title": "Flatten Object",
+    "statementHash": "8f502217",
+    "topics": [
+      "Récursion",
+      "Chemins de propriétés"
+    ],
+    "strategy": "Aplatis chaque feuille dans une nouvelle propriété nommée par son chemin complet.",
+    "hints": [
+      "Les indices des tableaux font partie du chemin.",
+      "Distingue null d’un conteneur afin de ne pas le parcourir."
+    ],
+    "checks": [
+      "Tableau dans un objet",
+      "Objet vide et feuille à plusieurs niveaux"
+    ]
+  },
+  "grid-words-finder": {
+    "title": "Grid Words Finder",
+    "statementHash": "96f86bf8",
+    "topics": [
+      "Grille",
+      "Recherche directionnelle"
+    ],
+    "strategy": "Teste chaque mot à chaque départ possible horizontalement et verticalement.",
+    "hints": [
+      "Cet exercice ne demande ni diagonales ni changement de direction.",
+      "Contrôle les limites avant de comparer tous les caractères du mot."
+    ],
+    "checks": [
+      "Mot horizontal puis vertical",
+      "Mot absent et départ au bord de la grille"
+    ]
+  },
+  "grid-words-finder-2": {
+    "title": "Grid Words Finder 2",
+    "statementHash": "5fdb4e52",
+    "topics": [
+      "Récursion",
+      "Recherche dans une grille"
+    ],
+    "strategy": "Remplace les parcours par des appels récursifs sur les coordonnées et les positions du mot.",
+    "hints": [
+      "Aucune boucle n’est autorisée par cette consigne.",
+      "Collecte toutes les occurrences avec leurs coordonnées et leur direction exactes."
+    ],
+    "checks": [
+      "Occurrences multiples",
+      "Bord de grille et correspondance verticale"
+    ]
+  },
+  "insertion-sort-analyzer": {
+    "title": "Insertion Sort Analyzer",
+    "statementHash": "ac090dd4",
+    "topics": [
+      "Tri par insertion",
+      "Comparateur"
+    ],
+    "strategy": "Insère chaque nouvel élément dans la partie déjà triée en décalant les précédents.",
+    "hints": [
+      "Le comparateur décide de l’ordre et non une comparaison numérique fixe.",
+      "Compte les étapes et échanges comme définis par les exemples."
+    ],
+    "checks": [
+      "Tableau déjà trié",
+      "Ordre inverse, doublons et comparateur personnalisé"
+    ]
+  },
+  "nested-array-reverser": {
+    "title": "Nested Array Reverser",
+    "statementHash": "a36672af",
+    "topics": [
+      "Tableaux imbriqués",
+      "Ordre"
+    ],
+    "strategy": "Inverse l’ordre des sous-tableaux puis l’ordre des mots dans chacun.",
+    "hints": [
+      "La sortie est une chaîne unique et non un tableau.",
+      "Réunis les mots avec un espace sans perdre l’ordre obtenu."
+    ],
+    "checks": [
+      "Une seule ligne",
+      "Plusieurs lignes et sous-tableau vide"
+    ]
+  },
+  "object-lab": {
+    "title": "Object Lab",
+    "statementHash": "214ec8cb",
+    "topics": [
+      "Fusion",
+      "Accumulateurs",
+      "Pipeline"
+    ],
+    "strategy": "Fusionne les objets dans l’ordre en comptant les nouvelles clés et les remplacements.",
+    "hints": [
+      "Une clé déjà présente est écrasée par l’objet suivant.",
+      "Applique ensuite les transformations en séquence et garde leurs compteurs séparés."
+    ],
+    "checks": [
+      "Clés communes à trois objets",
+      "Aucun transformateur et remplacement par une valeur fausse"
+    ]
+  },
+  "palindromic-chains": {
+    "title": "Palindromic Chains",
+    "statementHash": "eab0e9bc",
+    "topics": [
+      "Itération",
+      "Palindrome"
+    ],
+    "strategy": "Pour chaque entier, additionne-le à son écriture renversée jusqu’à obtenir un palindrome.",
+    "hints": [
+      "Teste si le nombre est déjà palindrome avant une addition.",
+      "Arrête à la limite de 100 tentatives et applique le résultat de repli demandé."
+    ],
+    "checks": [
+      "Palindrome initial",
+      "Plusieurs additions et limite atteinte"
+    ]
+  },
+  "perfectnum": {
+    "title": "PerfectNum",
+    "statementHash": "6abb569c",
+    "topics": [
+      "Diviseurs propres",
+      "Somme"
+    ],
+    "strategy": "Additionne les diviseurs positifs strictement inférieurs au nombre puis compare la somme.",
+    "hints": [
+      "Un nombre parfait est strictement positif.",
+      "Si tu parcours par paires de diviseurs, ne compte pas deux fois une racine carrée."
+    ],
+    "checks": [
+      "1 et 6",
+      "28, nombre premier et carré parfait"
+    ]
+  },
+  "pipeline": {
+    "title": "Pipeline",
+    "statementHash": "6a280c47",
+    "topics": [
+      "Composition",
+      "Historique"
+    ],
+    "strategy": "Applique chaque fonction à la sortie de la précédente.",
+    "hints": [
+      "Conserve les informations de chaque étape au moment où elle est exécutée.",
+      "Le résultat final et l’historique doivent respecter la structure demandée."
+    ],
+    "checks": [
+      "Pipeline vide",
+      "Fonctions non commutatives et changement de type"
+    ]
+  },
+  "sentencepyramid": {
+    "title": "sentencePyramid",
+    "statementHash": "160ed13a",
+    "topics": [
+      "Mots",
+      "Préfixes progressifs"
+    ],
+    "strategy": "Affiche les préfixes de la phrase en ajoutant un mot à chaque ligne.",
+    "hints": [
+      "La première ligne ne contient que le premier mot.",
+      "Soigne les espaces et le nombre de lignes de sortie."
+    ],
+    "checks": [
+      "Un seul mot",
+      "Phrase de plusieurs mots et espaces"
+    ]
+  },
+  "sleep-breaker": {
+    "title": "Sleep Breaker",
+    "statementHash": "5d114bdc",
+    "topics": [
+      "Promesses",
+      "Course temporelle"
+    ],
+    "strategy": "Fais concourir l’expiration du délai et la résolution du breaker.",
+    "hints": [
+      "Le premier événement doit résoudre la promesse retournée.",
+      "Évite une seconde résolution utile et nettoie le timer lorsque le breaker gagne."
+    ],
+    "checks": [
+      "Breaker rapide",
+      "Délai plus court et breaker tardif"
+    ]
+  },
+  "snake-path-validator": {
+    "title": "Snake Path Validator",
+    "statementHash": "18f7c74e",
+    "topics": [
+      "Récursion",
+      "Connexité"
+    ],
+    "strategy": "Explore récursivement les cellules 1 par leurs voisins orthogonaux et mémorise les cellules visitées.",
+    "hints": [
+      "Aucune boucle n’est autorisée ; une cellule seule est admise.",
+      "Vérifie que tous les 1 appartiennent à la même composante ; les diagonales ne relient pas les cases."
+    ],
+    "checks": [
+      "Cellule unique",
+      "Deux groupes séparés et contact uniquement diagonal"
+    ]
+  },
+  "swappable-object": {
+    "title": "Swappable Object",
+    "statementHash": "c7b54c12",
+    "topics": [
+      "Proxy",
+      "Recherche inverse"
+    ],
+    "strategy": "Intercepte la lecture d’une propriété pour permettre une recherche par clé ou par valeur.",
+    "hints": [
+      "La lecture d’une vraie clé doit garder son comportement normal.",
+      "La recherche inverse doit refléter l’état courant de l’objet."
+    ],
+    "checks": [
+      "Lecture directe et inverse",
+      "Modification d’une valeur après création"
+    ]
+  },
+  "transform-keys": {
+    "title": "Transform Keys",
+    "statementHash": "1dddcce6",
+    "topics": [
+      "Récursion",
+      "Transformation de clés"
+    ],
+    "strategy": "Reconstruis chaque objet en transformant ses clés et en traitant récursivement les valeurs conteneurs.",
+    "hints": [
+      "Les valeurs primitives restent inchangées.",
+      "Distingue les tableaux et null des objets ordinaires."
+    ],
+    "checks": [
+      "Objet imbriqué",
+      "Tableau enfant et valeurs primitives"
+    ]
+  },
+  "trap-object": {
+    "title": "Trap Object",
+    "statementHash": "ed108eec",
+    "topics": [
+      "Proxy",
+      "Interception"
+    ],
+    "strategy": "Utilise des interceptions de lecture et d’écriture pour notifier fn.",
+    "hints": [
+      "En lecture, transmets la clé et la valeur ; en écriture, garde aussi l’ancienne valeur.",
+      "Après notification, effectue bien l’opération normale sur l’objet cible."
+    ],
+    "checks": [
+      "Lecture d’une propriété",
+      "Écriture nouvelle puis remplacement"
+    ]
+  },
+  "zoo-race": {
+    "title": "Zoo Race",
+    "statementHash": "7aad1e7d",
+    "topics": [
+      "Promesses",
+      "Temps par segments"
+    ],
+    "strategy": "Calcule le temps de chaque animal en additionnant les durées de ses segments de vitesse.",
+    "hints": [
+      "La distance restante change après chaque segment.",
+      "La course choisit la promesse résolue en premier ; surveille l’unité utilisée par le timer."
+    ],
+    "checks": [
+      "Distance dans chacun des trois segments",
+      "Deux animaux de durées différentes"
+    ]
+  }
+}

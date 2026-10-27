@@ -1,0 +1,302 @@
+/* Rules originate from the server catalogue, never from the code submission. */
+.restriction-panel {
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--line);
+  background: hsl(
+    var(--accent-hue) calc(10.26% * var(--theme-chroma)) 15.29% / 1
+  );
+  padding: 12px 16px;
+}
+.restriction-panel[hidden] {
+  display: none;
+}
+.restriction-panel summary {
+  cursor: pointer;
+  font-size: 11px;
+  color: hsl(var(--accent-hue) calc(4.11% * var(--theme-chroma)) 85.69% / 1);
+}
+.restriction-panel summary span {
+  color: hsl(var(--accent-hue) calc(4.62% * var(--theme-chroma)) 61.76% / 1);
+  font-size: 9px;
+  margin-left: 8px;
+}
+.function-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+.function-tags code {
+  font:
+    10px/1.5 ui-monospace,
+    monospace;
+  color: hsl(var(--accent-hue) calc(5.26% * var(--theme-chroma)) 85.1% / 1);
+  background: hsl(
+    var(--accent-hue) calc(8.77% * var(--theme-chroma)) 22.35% / 1
+  );
+  border: 1px solid
+    hsl(var(--accent-hue) calc(3.9% * var(--theme-chroma)) 30.2% / 1);
+  border-radius: 4px;
+  padding: 2px 6px;
+  overflow-wrap: anywhere;
+}
+.function-tags span {
+  font-size: 10px;
+  color: hsl(var(--accent-hue) calc(3.7% * var(--theme-chroma)) 78.82% / 1);
+}
+.restriction-panel p {
+  margin: 7px 0 0;
+  font-size: 10px;
+  line-height: 1.6;
+  color: hsl(var(--accent-hue) calc(4.4% * var(--theme-chroma)) 64.31% / 1);
+}
+.expected-file-label code {
+  color: hsl(var(--accent-hue) calc(5.62% * var(--theme-chroma)) 82.55% / 1);
+  font:
+    10px ui-monospace,
+    monospace;
+}
+
+/* Exam sessions reveal only the current exercise. */
+.true-exam-mode .catalog-panel {
+  display: none;
+}
+.true-exam-mode .app-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
+.exam-setup .layout,
+.exam-complete .layout {
+  display: none;
+}
+.exam-setup .workspace,
+.exam-complete .workspace {
+  overflow-y: auto;
+}
+.exam-lobby,
+.exam-report {
+  width: min(900px, 100%);
+  margin: 20px auto;
+  padding: 36px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: hsl(
+    var(--accent-hue) calc(7.94% * var(--theme-chroma)) 12.35% / 1
+  );
+}
+.exam-lobby[hidden],
+.exam-report[hidden],
+.timer-panel[hidden],
+button[hidden],
+details[hidden] {
+  display: none !important;
+}
+.exam-lobby h2,
+.exam-report h2 {
+  margin: 12px 0;
+  font-size: 27px;
+  letter-spacing: -0.6px;
+}
+.exam-lobby > p,
+.exam-report > p {
+  color: hsl(var(--accent-hue) calc(4.88% * var(--theme-chroma)) 67.84% / 1);
+  max-width: 720px;
+}
+.exam-choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 28px 0 22px;
+}
+.exam-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  padding: 22px;
+  background: hsl(
+    var(--accent-hue) calc(10.71% * var(--theme-chroma)) 10.98% / 1
+  );
+  border: 1px solid
+    hsl(var(--accent-hue) calc(4.17% * var(--theme-chroma)) 28.24% / 1);
+  border-radius: 10px;
+}
+.exam-choice:has(input:checked) {
+  border-color: hsl(
+    var(--accent-hue) calc(5.15% * var(--theme-chroma)) 80.98% / 1
+  );
+  background: hsl(
+    var(--accent-hue) calc(8.57% * var(--theme-chroma)) 20.59% / 1
+  );
+}
+.exam-choice input {
+  accent-color: hsl(
+    var(--accent-hue) calc(4.55% * var(--theme-chroma)) 82.75% / 1
+  );
+  margin-top: 6px;
+}
+.exam-choice strong,
+.exam-choice small {
+  display: block;
+}
+.exam-choice strong {
+  font-size: 16px;
+}
+.exam-choice small {
+  color: hsl(var(--accent-hue) calc(4.88% * var(--theme-chroma)) 83.92% / 1);
+  margin-top: 6px;
+  font-size: 11px;
+}
+.exam-choice p {
+  color: hsl(var(--accent-hue) calc(5% * var(--theme-chroma)) 68.63% / 1);
+  margin: 13px 0 0;
+  font-size: 12px;
+}
+.exam-lobby .exam-lobby-note {
+  font-size: 12px;
+}
+.exam-start-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+.exam-start-actions .button {
+  padding: 10px 16px;
+}
+.exam-report-score {
+  font-size: 34px;
+  font-weight: 600;
+  color: hsl(var(--accent-hue) calc(5.88% * var(--theme-chroma)) 86.67% / 1);
+  margin: 25px 0 10px;
+}
+.exam-result-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid var(--line);
+  padding: 13px 4px;
+}
+.exam-result-row strong {
+  color: hsl(var(--accent-hue) calc(4.82% * var(--theme-chroma)) 67.45% / 1);
+  font-weight: 500;
+}
+.exam-result-row strong[data-state="passed"] {
+  color: #9ed8b4;
+}
+.exam-result-row strong[data-state="failed"],
+.exam-result-row strong[data-state="error"] {
+  color: #edb29f;
+}
+.true-exam-mode .true-exam-panel {
+  flex-wrap: wrap;
+}
+.true-exam-actions {
+  flex-wrap: wrap;
+}
+@media (max-width: 900px) {
+  .exam-choices {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .exam-lobby,
+  .exam-report {
+    padding: 24px;
+    margin-top: 0;
+  }
+  .exam-setup .workspace,
+  .exam-complete .workspace {
+    min-height: 0;
+  }
+}
+
+.editor-header {
+  flex-wrap: wrap;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  row-gap: 8px;
+}
+.editor-tools {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+#example-btn {
+  font-size: 10px;
+}
+.example-preview {
+  border-bottom: 1px solid var(--line);
+  padding: 8px 14px;
+  color: hsl(var(--accent-hue) calc(3.9% * var(--theme-chroma)) 69.8% / 1);
+  font-size: 10px;
+  flex-shrink: 0;
+}
+.example-preview summary {
+  cursor: pointer;
+}
+.example-preview pre {
+  overflow: auto;
+  max-height: 150px;
+  margin: 10px 0;
+  white-space: pre;
+}
+.example-preview p {
+  margin: 6px 0;
+  color: hsl(var(--accent-hue) calc(4.08% * var(--theme-chroma)) 61.57% / 1);
+}
+.example-preview[open] {
+  max-height: 55%;
+  overflow: auto;
+}
+
+#exam-focus-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #111;
+  color: #eee;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 32px;
+  text-align: center;
+}
+#exam-focus-panel[hidden] {
+  display: none;
+}
+#exam-focus-panel p {
+  max-width: 560px;
+  line-height: 1.6;
+}
+#exam-focus-panel button {
+  padding: 12px 24px;
+  cursor: pointer;
+}
+
+.exam-navigation-locked .mode-switch,
+.exam-navigation-locked .track-switch {
+  display: none !important;
+}
+
+#exam-brute-force-reaction[hidden] {
+  display: none;
+}
+#exam-brute-force-reaction {
+  margin: 24px 0;
+  text-align: center;
+}
+#exam-brute-force-reaction img {
+  width: min(100%, 380px);
+  height: auto;
+  border-radius: 8px;
+}
+#exam-brute-force-reaction figcaption,
+#exam-brute-force-note {
+  margin-top: 12px;
+  color: var(--text-muted, #aaa);
+  font-size: 12px;
+}
+
+/* Training never displays an exam timer, including before JS initialization. */
+#app:not(.true-exam-mode) .timer-panel {
+  display: none !important;
+}

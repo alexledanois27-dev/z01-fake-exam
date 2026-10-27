@@ -1,0 +1,1050 @@
+{
+  "addprimesum": {
+    "title": "addprimesum",
+    "statementHash": "a9e13f4d",
+    "topics": [
+      "Nombres premiers",
+      "Accumulateur"
+    ],
+    "strategy": "Teste la primalité des entiers jusqu’à la borne et additionne ceux retenus.",
+    "hints": [
+      "Un entier inférieur à 2 n’est pas premier.",
+      "Cherche un diviseur seulement tant que d ≤ n/d, puis respecte les erreurs d’arguments."
+    ],
+    "checks": [
+      "Borne 0 et 1",
+      "Borne première et arguments invalides"
+    ]
+  },
+  "brackets": {
+    "title": "brackets",
+    "statementHash": "3bcffef2",
+    "topics": [
+      "Pile",
+      "Parcours de chaîne"
+    ],
+    "strategy": "Mémorise les ouvertures dans une pile pour vérifier leur ordre de fermeture.",
+    "hints": [
+      "La prochaine fermeture doit correspondre à la dernière ouverture.",
+      "Ignore les autres caractères et exige une pile vide à la fin."
+    ],
+    "checks": [
+      "Chaîne sans parenthèses",
+      "Croisements comme ([)] et ouverture non fermée"
+    ]
+  },
+  "brainfuck": {
+    "title": "brainfuck",
+    "statementHash": "427b30e1",
+    "topics": [
+      "Interpréteur",
+      "Machine à états"
+    ],
+    "strategy": "Garde une mémoire, un pointeur de cellule et une position dans le programme.",
+    "hints": [
+      "Chaque symbole modifie la mémoire, le pointeur ou la sortie.",
+      "Pour les crochets, recherche le correspondant en comptant les boucles imbriquées."
+    ],
+    "checks": [
+      "Cellule initialisée à zéro",
+      "Boucles imbriquées et boucle sautée"
+    ]
+  },
+  "cameltosnakecase": {
+    "title": "cameltosnakecase",
+    "statementHash": "6df1e03b",
+    "topics": [
+      "Validation",
+      "Transformation",
+      "Chaînes"
+    ],
+    "strategy": "Valide toute la chaîne avant de convertir ses majuscules en séparateurs.",
+    "hints": [
+      "Les deux conventions camelCase admises ont des règles précises.",
+      "Une entrée invalide doit rester intégralement inchangée, sans conversion partielle."
+    ],
+    "checks": [
+      "Chaîne vide",
+      "Majuscules consécutives et majuscule finale"
+    ]
+  },
+  "canjump": {
+    "title": "canjump",
+    "statementHash": "77312114",
+    "topics": [
+      "Simulation",
+      "Indices"
+    ],
+    "strategy": "Simule le trajet : chaque valeur impose la longueur exacte du saut.",
+    "hints": [
+      "Ce problème ne permet pas de choisir un saut plus court.",
+      "Arrête sur le dernier indice, un dépassement ou un zéro bloquant avant la fin."
+    ],
+    "checks": [
+      "Tableau vide ou singleton",
+      "Saut hors limites et zéro intermédiaire"
+    ]
+  },
+  "checknumber": {
+    "title": "checknumber",
+    "statementHash": "f4dc74ad",
+    "topics": [
+      "Recherche",
+      "Prédicat",
+      "Chaînes"
+    ],
+    "strategy": "Parcours les caractères pour chercher un chiffre décimal.",
+    "hints": [
+      "Une seule correspondance suffit pour retourner vrai.",
+      "Distingue une chaîne sans chiffre d’une chaîne vide."
+    ],
+    "checks": [
+      "Texte sans chiffre",
+      "Chiffre au début et à la fin"
+    ]
+  },
+  "chunk": {
+    "title": "chunk",
+    "statementHash": "4d2f3c2b",
+    "topics": [
+      "Découpage",
+      "Bornes"
+    ],
+    "strategy": "Avance par blocs de taille donnée et borne la fin de chaque bloc.",
+    "hints": [
+      "Le dernier bloc peut être plus court.",
+      "Traite la taille nulle avant la boucle et respecte le format d’affichage."
+    ],
+    "checks": [
+      "Taille nulle",
+      "Slice vide et dernier bloc incomplet"
+    ]
+  },
+  "concatalternate": {
+    "title": "concatalternate",
+    "statementHash": "7e499c77",
+    "topics": [
+      "Deux pointeurs",
+      "Alternance"
+    ],
+    "strategy": "Choisis d’abord le slice le plus long, puis alterne ses valeurs avec l’autre.",
+    "hints": [
+      "En cas d’égalité, le premier argument commence.",
+      "Quand un slice est épuisé, ajoute le reste de l’autre dans son ordre."
+    ],
+    "checks": [
+      "Longueurs égales",
+      "Un slice vide et longueurs différentes"
+    ]
+  },
+  "concatslice": {
+    "title": "concatslice",
+    "statementHash": "f2f892b7",
+    "topics": [
+      "Slices",
+      "Concaténation"
+    ],
+    "strategy": "Construis un nouveau slice avec tous les éléments du premier, puis du second.",
+    "hints": [
+      "Conserve les doublons et l’ordre d’origine.",
+      "Ne mélange pas concaténation et alternance."
+    ],
+    "checks": [
+      "Deux slices vides",
+      "Un seul slice vide et doublons"
+    ]
+  },
+  "countalpha": {
+    "title": "countalpha",
+    "statementHash": "6dc392f3",
+    "topics": [
+      "Parcours",
+      "Compteur"
+    ],
+    "strategy": "Compte les caractères alphabétiques au fil d’un seul parcours.",
+    "hints": [
+      "Pour les exemples ASCII, compare les intervalles a–z et A–Z.",
+      "N’incrémente pas le compteur pour les chiffres, espaces ou signes."
+    ],
+    "checks": [
+      "Chaîne vide",
+      "Mélange de majuscules, chiffres et ponctuation"
+    ]
+  },
+  "countcharacter": {
+    "title": "countcharacter",
+    "statementHash": "b7c48db4",
+    "topics": [
+      "Comparaison",
+      "Compteur"
+    ],
+    "strategy": "Compare chaque caractère au caractère recherché et compte les égalités.",
+    "hints": [
+      "Le paramètre recherché est une rune, pas un texte à plusieurs caractères.",
+      "Un espace peut aussi être le caractère recherché."
+    ],
+    "checks": [
+      "Caractère absent",
+      "Chaîne vide et occurrences répétées"
+    ]
+  },
+  "countrepeats": {
+    "title": "countrepeats",
+    "statementHash": "d9695614",
+    "topics": [
+      "Groupes consécutifs",
+      "Compression RLE"
+    ],
+    "strategy": "Mémorise le caractère courant et la longueur de sa séquence.",
+    "hints": [
+      "Émets le groupe lorsque le caractère change.",
+      "N’oublie pas le dernier groupe ; ici le caractère précède le compteur."
+    ],
+    "checks": [
+      "Un seul caractère",
+      "Groupes séparés du même caractère"
+    ]
+  },
+  "digitlen": {
+    "title": "digitlen",
+    "statementHash": "75baa02a",
+    "topics": [
+      "Division entière",
+      "Bases"
+    ],
+    "strategy": "Compte les divisions successives par la base jusqu’à épuisement de la valeur.",
+    "hints": [
+      "Valide d’abord que la base est comprise entre 2 et 36.",
+      "Traite le signe et le zéro comme cas séparés ; évite les débordements en changeant le signe."
+    ],
+    "checks": [
+      "Base invalide",
+      "Zéro, négatif et puissance de la base"
+    ]
+  },
+  "fifthandskip": {
+    "title": "fifthandskip",
+    "statementHash": "df056292",
+    "topics": [
+      "Compteur",
+      "Filtrage"
+    ],
+    "strategy": "Ignore les espaces, conserve cinq caractères puis saute le sixième.",
+    "hints": [
+      "Sépare les groupes conservés par un espace.",
+      "Gère d’abord la chaîne vide et les entrées trop courtes selon la consigne."
+    ],
+    "checks": [
+      "Entrée vide et courte",
+      "Espaces internes et frontière du sixième caractère"
+    ]
+  },
+  "findpairs": {
+    "title": "findpairs",
+    "statementHash": "15f6068e",
+    "topics": [
+      "Validation",
+      "Double parcours"
+    ],
+    "strategy": "Après validation de l’entrée, examine les couples d’indices i < j dont la somme vaut la cible.",
+    "hints": [
+      "Un même indice ne peut pas être associé à lui-même.",
+      "Conserve l’ordre des couples et distingue les différents messages d’erreur."
+    ],
+    "checks": [
+      "Nombres négatifs et doublons",
+      "Aucune paire, cible invalide et tableau mal formé"
+    ]
+  },
+  "findprevprime": {
+    "title": "findprevprime",
+    "statementHash": "59155516",
+    "topics": [
+      "Primalité",
+      "Recherche descendante"
+    ],
+    "strategy": "Descends depuis la valeur reçue jusqu’au premier nombre premier.",
+    "hints": [
+      "La borne elle-même peut être la réponse.",
+      "Teste les diviseurs jusqu’à la racine et retourne zéro si aucun premier n’existe."
+    ],
+    "checks": [
+      "Valeurs inférieures à 2",
+      "Nombre premier et nombre composé"
+    ]
+  },
+  "firstword": {
+    "title": "firstword",
+    "statementHash": "3699aefc",
+    "topics": [
+      "Bornes de mot",
+      "Parcours"
+    ],
+    "strategy": "Repère le premier mot délimité par des espaces et les extrémités.",
+    "hints": [
+      "Saute les espaces initiaux avant de chercher la fin du mot.",
+      "Respecte le retour à la ligne même lorsqu’aucun mot n’est trouvé."
+    ],
+    "checks": [
+      "Chaîne vide",
+      "Espaces initiaux et espaces multiples"
+    ]
+  },
+  "fishandchips": {
+    "title": "fishandchips",
+    "statementHash": "2034504d",
+    "topics": [
+      "Conditions",
+      "Modulo"
+    ],
+    "strategy": "Teste les divisibilités par 2 et 3 pour choisir le texte attendu.",
+    "hints": [
+      "Le cas divisible par les deux doit être distingué des cas simples.",
+      "Vérifie d’abord le traitement des négatifs puis celui des non-divisibles."
+    ],
+    "checks": [
+      "Multiple de 6",
+      "Négatif et entier non divisible"
+    ]
+  },
+  "fprime": {
+    "title": "fprime",
+    "statementHash": "77283118",
+    "topics": [
+      "Factorisation",
+      "Division"
+    ],
+    "strategy": "Divise successivement par les plus petits facteurs possibles.",
+    "hints": [
+      "Tant qu’un facteur divise encore le nombre, conserve-le.",
+      "Gère les séparateurs sans astérisque final et le facteur restant."
+    ],
+    "checks": [
+      "Nombre premier",
+      "Facteur répété et arguments invalides"
+    ]
+  },
+  "fromto": {
+    "title": "fromto",
+    "statementHash": "3681e7b7",
+    "topics": [
+      "Boucle orientée",
+      "Formatage"
+    ],
+    "strategy": "Choisis le sens de parcours selon les deux bornes et inclus les extrémités.",
+    "hints": [
+      "Chaque nombre doit occuper deux chiffres.",
+      "Valide l’intervalle 0–99 et évite une virgule après le dernier nombre."
+    ],
+    "checks": [
+      "Bornes identiques",
+      "Ordre décroissant et borne invalide"
+    ]
+  },
+  "gcd": {
+    "title": "gcd",
+    "statementHash": "e364a896",
+    "topics": [
+      "Algorithme d’Euclide",
+      "Modulo"
+    ],
+    "strategy": "Remplace progressivement le couple par le second entier et le reste de la division.",
+    "hints": [
+      "Le dernier reste non nul donne le PGCD.",
+      "Cette consigne exige zéro si l’un des arguments est nul."
+    ],
+    "checks": [
+      "Un argument nul",
+      "Entiers premiers entre eux et multiples"
+    ]
+  },
+  "grouping": {
+    "title": "grouping",
+    "statementHash": "888052c9",
+    "topics": [
+      "Analyse de motif",
+      "Recherche"
+    ],
+    "strategy": "Sépare les alternatives du motif puis cherche leurs occurrences dans le texte.",
+    "hints": [
+      "Valide les délimiteurs et la syntaxe avant toute recherche.",
+      "Numérote les résultats dans leur ordre d’apparition, comme dans les exemples."
+    ],
+    "checks": [
+      "Plusieurs alternatives",
+      "Motif invalide et absence de correspondance"
+    ]
+  },
+  "hashcode": {
+    "title": "hashcode",
+    "statementHash": "7819a28e",
+    "topics": [
+      "ASCII",
+      "Transformation"
+    ],
+    "strategy": "Transforme chaque caractère avec la formule donnée et la longueur de la chaîne.",
+    "hints": [
+      "Applique le modulo 127 avant la correction des caractères non imprimables.",
+      "N’utilise pas une fonction de hachage standard : la formule est spécifique."
+    ],
+    "checks": [
+      "Chaîne vide",
+      "Valeur donnant un caractère non imprimable"
+    ]
+  },
+  "hiddenp": {
+    "title": "hiddenp",
+    "statementHash": "50d69794",
+    "topics": [
+      "Sous-séquence",
+      "Deux pointeurs"
+    ],
+    "strategy": "Avance dans le second texte et ne progresse dans le premier qu’en cas de correspondance.",
+    "hints": [
+      "Les lettres doivent garder leur ordre, sans être contiguës.",
+      "Le premier texte vide est toujours caché dans le second."
+    ],
+    "checks": [
+      "Premier texte vide",
+      "Lettres présentes mais dans le mauvais ordre"
+    ]
+  },
+  "inter": {
+    "title": "inter",
+    "statementHash": "7a6a07e6",
+    "topics": [
+      "Ensembles",
+      "Ordre stable",
+      "Chaînes"
+    ],
+    "strategy": "Parcours le premier texte et retiens les caractères également présents dans le second.",
+    "hints": [
+      "Mémorise ce qui a déjà été affiché.",
+      "Conserve l’ordre du premier texte et non celui d’un ensemble trié."
+    ],
+    "checks": [
+      "Doublons",
+      "Aucune intersection et caractères communs réordonnés"
+    ]
+  },
+  "iscapitalized": {
+    "title": "iscapitalized",
+    "statementHash": "44edbd6f",
+    "topics": [
+      "Début de mot",
+      "Validation"
+    ],
+    "strategy": "Identifie le début de chaque mot et vérifie sa première lettre.",
+    "hints": [
+      "Un caractère non alphabétique initial est accepté.",
+      "La chaîne vide est un cas faux explicite."
+    ],
+    "checks": [
+      "Mot commençant en minuscule",
+      "Chiffre initial et chaîne vide"
+    ]
+  },
+  "itoa": {
+    "title": "itoa",
+    "statementHash": "2f3a48d1",
+    "topics": [
+      "Division entière",
+      "Construction de chaîne"
+    ],
+    "strategy": "Extrais les chiffres par reste et division puis remets-les dans l’ordre.",
+    "hints": [
+      "Traite séparément zéro et le signe.",
+      "Prévois le plus petit entier : sa valeur positive peut dépasser le type signé."
+    ],
+    "checks": [
+      "Zéro et négatif",
+      "Plus petit entier représentable"
+    ]
+  },
+  "itoabase": {
+    "title": "itoabase",
+    "statementHash": "83a5a724",
+    "topics": [
+      "Conversion de base",
+      "Restes"
+    ],
+    "strategy": "Extrais les chiffres dans la base demandée puis inverse leur ordre.",
+    "hints": [
+      "Les restes supérieurs à 9 correspondent à A–F.",
+      "Ajoute le signe une seule fois et gère zéro explicitement."
+    ],
+    "checks": [
+      "Bases 2 et 16",
+      "Zéro et valeur négative"
+    ]
+  },
+  "lastword": {
+    "title": "lastword",
+    "statementHash": "14602364",
+    "topics": [
+      "Parcours à rebours",
+      "Bornes"
+    ],
+    "strategy": "Ignore les espaces finaux puis cherche le début du dernier mot.",
+    "hints": [
+      "La ponctuation reste dans le mot : seuls les espaces le délimitent.",
+      "Ajoute le retour à la ligne demandé, même sans mot."
+    ],
+    "checks": [
+      "Chaîne faite d’espaces",
+      "Ponctuation et espaces finaux"
+    ]
+  },
+  "longestword": {
+    "title": "longestword",
+    "statementHash": "8cbb4102",
+    "topics": [
+      "Unicode",
+      "Validation de jetons"
+    ],
+    "strategy": "Valide chaque mot avant de comparer sa longueur au meilleur candidat.",
+    "hints": [
+      "Un mot commence par une lettre ; seule la ponctuation finale autorisée est optionnelle.",
+      "Conserve le premier mot en cas d’égalité et distingue caractères Unicode et octets."
+    ],
+    "checks": [
+      "Lettres accentuées",
+      "Égalité, chiffre interne et aucun mot valide"
+    ]
+  },
+  "notdecimal": {
+    "title": "notdecimal",
+    "statementHash": "82c2f2fb",
+    "topics": [
+      "Validation numérique",
+      "Écriture décimale",
+      "Chaînes"
+    ],
+    "strategy": "Identifie signe, chiffres et partie décimale avant d’enlever le point si nécessaire.",
+    "hints": [
+      "Évite les erreurs d’arrondi d’une conversion flottante pour une opération textuelle.",
+      "Normalise les zéros initiaux et le signe du résultat numérique ; une entrée invalide reste inchangée, suivie du retour à la ligne."
+    ],
+    "checks": [
+      "Entrée vide et invalide",
+      "Décimale nulle, signe et zéros"
+    ]
+  },
+  "only1": {
+    "title": "only1",
+    "statementHash": "cb978200",
+    "topics": [
+      "Programme minimal",
+      "Sortie standard"
+    ],
+    "strategy": "Écris un programme principal qui émet uniquement le caractère 1.",
+    "hints": [
+      "Ne lis pas les arguments : ils ne changent pas le résultat.",
+      "N’ajoute ni espace ni retour à la ligne."
+    ],
+    "checks": [
+      "Sans argument",
+      "Avec plusieurs arguments et comparaison exacte de la sortie"
+    ]
+  },
+  "onlya": {
+    "title": "onlya",
+    "statementHash": "b19ded2f",
+    "topics": [
+      "Programme minimal",
+      "Sortie standard"
+    ],
+    "strategy": "Écris un programme principal qui émet uniquement la lettre a.",
+    "hints": [
+      "La lettre est minuscule.",
+      "N’ajoute ni espace ni retour à la ligne."
+    ],
+    "checks": [
+      "Sans argument",
+      "Sortie contenant un seul caractère"
+    ]
+  },
+  "onlyb": {
+    "title": "onlyb",
+    "statementHash": "6ca2413b",
+    "topics": [
+      "Programme minimal",
+      "Sortie standard"
+    ],
+    "strategy": "Écris un programme principal qui émet uniquement la lettre B.",
+    "hints": [
+      "La lettre demandée est majuscule malgré le nom de l’exercice.",
+      "N’ajoute ni espace ni retour à la ligne."
+    ],
+    "checks": [
+      "Sans argument",
+      "Vérification de la casse et de la longueur"
+    ]
+  },
+  "onlyf": {
+    "title": "onlyf",
+    "statementHash": "6ffe8879",
+    "topics": [
+      "Programme minimal",
+      "Sortie standard"
+    ],
+    "strategy": "Écris un programme principal qui émet uniquement la lettre f.",
+    "hints": [
+      "La lettre est minuscule.",
+      "N’ajoute ni espace ni retour à la ligne."
+    ],
+    "checks": [
+      "Sans argument",
+      "Sortie contenant un seul caractère"
+    ]
+  },
+  "onlyz": {
+    "title": "onlyz",
+    "statementHash": "57a1e377",
+    "topics": [
+      "Programme minimal",
+      "Sortie standard"
+    ],
+    "strategy": "Écris un programme principal qui émet uniquement la lettre z.",
+    "hints": [
+      "La lettre est minuscule.",
+      "N’ajoute ni espace ni retour à la ligne."
+    ],
+    "checks": [
+      "Sans argument",
+      "Sortie contenant un seul caractère"
+    ]
+  },
+  "options": {
+    "title": "options",
+    "statementHash": "d6c2094e",
+    "topics": [
+      "Masque de bits",
+      "Analyse d’arguments"
+    ],
+    "strategy": "Associe chaque option à un bit et regroupe les options par OU binaire.",
+    "hints": [
+      "L’aide et les options invalides ont des règles de priorité précises.",
+      "Affiche les 32 bits dans l’ordre attendu, groupés par huit."
+    ],
+    "checks": [
+      "Options répétées",
+      "Aide prioritaire et lettre invalide"
+    ]
+  },
+  "passwordentropy": {
+    "title": "passwordentropy",
+    "statementHash": "3781dd3b",
+    "topics": [
+      "Classes de caractères",
+      "Logarithme"
+    ],
+    "strategy": "Détecte les catégories présentes, additionne leurs tailles puis applique L × log₂(P).",
+    "hints": [
+      "Une catégorie ne contribue qu’une fois, même si plusieurs caractères lui appartiennent.",
+      "Le mot de passe vide retourne zéro avant tout logarithme."
+    ],
+    "checks": [
+      "Chaîne vide",
+      "Une catégorie seule et mélange de catégories"
+    ]
+  },
+  "piglatin": {
+    "title": "piglatin",
+    "statementHash": "bddbacae",
+    "topics": [
+      "Recherche de voyelle",
+      "Rotation",
+      "Chaînes"
+    ],
+    "strategy": "Cherche la première voyelle pour déplacer le préfixe consonantique à la fin.",
+    "hints": [
+      "Si le mot commence déjà par une voyelle, seul le suffixe est ajouté.",
+      "Vérifie le cas sans voyelle et les règles exactes d’arguments dans la consigne."
+    ],
+    "checks": [
+      "Voyelle initiale",
+      "Groupe de consonnes et aucune voyelle"
+    ]
+  },
+  "printif": {
+    "title": "printif",
+    "statementHash": "8e9a5bd7",
+    "topics": [
+      "Condition",
+      "Longueur",
+      "Chaînes"
+    ],
+    "strategy": "Compare la longueur au seuil trois pour choisir la chaîne retournée.",
+    "hints": [
+      "Le seuil est inclus dans le cas valide.",
+      "Le retour à la ligne fait partie du résultat attendu."
+    ],
+    "checks": [
+      "Longueurs 2 et 3",
+      "Chaîne vide"
+    ]
+  },
+  "printifnot": {
+    "title": "printifnot",
+    "statementHash": "d8507926",
+    "topics": [
+      "Conditions",
+      "Cas particuliers",
+      "Chaînes"
+    ],
+    "strategy": "Traite d’abord l’entrée vide puis le seuil de longueur inférieur à trois.",
+    "hints": [
+      "La frontière trois diffère de printif.",
+      "Vérifie les retours à la ligne de chaque branche dans les exemples."
+    ],
+    "checks": [
+      "Chaîne vide",
+      "Longueurs 2 et 3"
+    ]
+  },
+  "printmemory": {
+    "title": "printmemory",
+    "statementHash": "6e02dd0e",
+    "topics": [
+      "Octets",
+      "Hexadécimal",
+      "Chaînes"
+    ],
+    "strategy": "Sépare l’affichage hexadécimal des octets de leur représentation graphique.",
+    "hints": [
+      "Un octet se décompose en deux chiffres hexadécimaux.",
+      "Seuls les octets 33 à 126 sont graphiques ; remplace notamment l’espace par un point."
+    ],
+    "checks": [
+      "Octets 0, 32, 33 et 126",
+      "Respect des groupes et des retours à la ligne"
+    ]
+  },
+  "printrevcomb": {
+    "title": "printrevcomb",
+    "statementHash": "1fd76e2d",
+    "topics": [
+      "Boucles imbriquées",
+      "Combinaisons"
+    ],
+    "strategy": "Fais décroître trois chiffres en imposant premier > deuxième > troisième.",
+    "hints": [
+      "Cette contrainte élimine répétitions et permutations équivalentes.",
+      "Insère les séparateurs uniquement entre les combinaisons."
+    ],
+    "checks": [
+      "Première et dernière combinaison",
+      "Absence de chiffres répétés et de séparateur final"
+    ]
+  },
+  "rectperimeter": {
+    "title": "rectperimeter",
+    "statementHash": "b80c2c9e",
+    "topics": [
+      "Validation",
+      "Arithmétique"
+    ],
+    "strategy": "Après validation des dimensions, calcule deux fois la somme largeur plus hauteur.",
+    "hints": [
+      "L’aire et le périmètre sont deux formules différentes.",
+      "Applique le résultat spécial demandé pour une dimension négative."
+    ],
+    "checks": [
+      "Rectangle carré",
+      "Dimension nulle et négative"
+    ]
+  },
+  "repeatalpha": {
+    "title": "repeatalpha",
+    "statementHash": "eda817f3",
+    "topics": [
+      "ASCII",
+      "Répétition"
+    ],
+    "strategy": "Calcule le rang alphabétique de chaque lettre puis affiche-la autant de fois.",
+    "hints": [
+      "Les majuscules et minuscules ont le même rang.",
+      "Les caractères non alphabétiques ne doivent pas recevoir un rang de lettre."
+    ],
+    "checks": [
+      "a, z et majuscules",
+      "Espaces, chiffres et chaîne vide"
+    ]
+  },
+  "retainfirsthalf": {
+    "title": "retainfirsthalf",
+    "statementHash": "edfb5fb1",
+    "topics": [
+      "Découpage",
+      "Cas limites"
+    ],
+    "strategy": "Renvoie la première moitié en arrondissant sa longueur vers le bas.",
+    "hints": [
+      "La longueur un est une exception : conserve son caractère.",
+      "La chaîne vide reste vide."
+    ],
+    "checks": [
+      "Longueurs 0 et 1",
+      "Longueurs paires et impaires"
+    ]
+  },
+  "revconcatalternate": {
+    "title": "revconcatalternate",
+    "statementHash": "88725553",
+    "topics": [
+      "Parcours inverse",
+      "Deux pointeurs"
+    ],
+    "strategy": "Lis les slices depuis leur fin et choisis la source selon leurs longueurs restantes.",
+    "hints": [
+      "Quand les tailles restantes sont égales, prends d’abord le premier argument.",
+      "Ne confonds pas cette règle avec une simple alternance fixe."
+    ],
+    "checks": [
+      "Tailles égales",
+      "Premier ou second slice nettement plus long"
+    ]
+  },
+  "reversestrcap": {
+    "title": "reversestrcap",
+    "statementHash": "90cca773",
+    "topics": [
+      "Bornes de mot",
+      "Casse"
+    ],
+    "strategy": "Passe les lettres en minuscules et repère la dernière lettre de chaque mot.",
+    "hints": [
+      "Une fin de chaîne peut aussi terminer un mot.",
+      "Traite chaque argument séparément avec son retour à la ligne."
+    ],
+    "checks": [
+      "Un seul mot",
+      "Espaces multiples et plusieurs arguments"
+    ]
+  },
+  "revwstr": {
+    "title": "revwstr",
+    "statementHash": "e1d14681",
+    "topics": [
+      "Découpage",
+      "Mots"
+    ],
+    "strategy": "Repère les mots alphanumériques puis affiche-les dans l’ordre inverse.",
+    "hints": [
+      "Le séparateur de sortie est un seul espace.",
+      "Respecte la définition des mots et le nombre d’arguments de cette consigne."
+    ],
+    "checks": [
+      "Un mot",
+      "Ponctuation, espaces multiples et argument absent"
+    ]
+  },
+  "romannumbers": {
+    "title": "romannumbers",
+    "statementHash": "af7eff38",
+    "topics": [
+      "Décomposition gloutonne",
+      "Table de symboles"
+    ],
+    "strategy": "Décompose la valeur avec les symboles romains, du plus grand au plus petit.",
+    "hints": [
+      "Prévois les couples soustractifs comme IV et IX.",
+      "Produis aussi l’écriture du calcul et respecte la limite 4000."
+    ],
+    "checks": [
+      "Valeurs 4, 9 et 49",
+      "Borne maximale et entrée invalide"
+    ]
+  },
+  "rostring": {
+    "title": "rostring",
+    "statementHash": "eb80dddb",
+    "topics": [
+      "Rotation de mots",
+      "Normalisation"
+    ],
+    "strategy": "Repère les mots et déplace le premier à la fin sans changer les autres.",
+    "hints": [
+      "Un texte d’un seul mot reste identique après normalisation.",
+      "Réunis les mots avec un espace et termine comme demandé."
+    ],
+    "checks": [
+      "Un mot et chaîne vide",
+      "Plusieurs espaces et ponctuation"
+    ]
+  },
+  "rpncalc": {
+    "title": "rpncalc",
+    "statementHash": "1c6469d8",
+    "topics": [
+      "Pile",
+      "Opérateurs"
+    ],
+    "strategy": "Empile les nombres ; chaque opérateur dépile deux valeurs et réempile le résultat.",
+    "hints": [
+      "La première valeur dépilée est l’opérande de droite.",
+      "À la fin, exige exactement une valeur et rejette les opérations invalides."
+    ],
+    "checks": [
+      "Soustraction et division",
+      "Pile insuffisante, division par zéro et surplus de valeurs"
+    ]
+  },
+  "saveandmiss": {
+    "title": "saveandmiss",
+    "statementHash": "3aa208f0",
+    "topics": [
+      "Blocs",
+      "Alternance"
+    ],
+    "strategy": "Alterne un bloc conservé et un bloc ignoré de la taille reçue.",
+    "hints": [
+      "Borne chaque bloc à la fin de la chaîne.",
+      "Lis les cas nuls ou négatifs de la consigne avant de faire avancer l’indice."
+    ],
+    "checks": [
+      "Taille 1",
+      "Bloc final incomplet et taille non positive"
+    ]
+  },
+  "slice": {
+    "title": "slice",
+    "statementHash": "ecff63a3",
+    "topics": [
+      "Indices négatifs",
+      "Bornes"
+    ],
+    "strategy": "Traduis les indices négatifs relativement à la fin, puis borne les positions.",
+    "hints": [
+      "Un seul indice signifie aller jusqu’à la fin.",
+      "Gère explicitement une fin précédant le début."
+    ],
+    "checks": [
+      "Slice vide",
+      "Indices négatifs, hors limites et ordre inversé"
+    ]
+  },
+  "thirdtimeisacharm": {
+    "title": "thirdtimeisacharm",
+    "statementHash": "1b1e0ae6",
+    "topics": [
+      "Indice",
+      "Modulo"
+    ],
+    "strategy": "Conserve le troisième caractère, puis chaque troisième suivant.",
+    "hints": [
+      "Avec des indices à partir de zéro, la première position utile est deux.",
+      "Traite les chaînes courtes et ajoute le retour à la ligne demandé."
+    ],
+    "checks": [
+      "Longueurs 0, 2 et 3",
+      "Longueur non multiple de trois"
+    ]
+  },
+  "union": {
+    "title": "union",
+    "statementHash": "cc303872",
+    "topics": [
+      "Ensemble",
+      "Ordre stable",
+      "Chaînes"
+    ],
+    "strategy": "Parcours le premier texte puis le second en émettant chaque caractère une seule fois.",
+    "hints": [
+      "Mémorise les caractères déjà rencontrés.",
+      "Ne trie pas le résultat : l’ordre de première apparition compte."
+    ],
+    "checks": [
+      "Doublons dans les deux textes",
+      "Un argument vide et caractères disjoints"
+    ]
+  },
+  "wdmatch": {
+    "title": "wdmatch",
+    "statementHash": "031a7893",
+    "topics": [
+      "Sous-séquence",
+      "Deux pointeurs"
+    ],
+    "strategy": "Cherche les caractères du premier texte, dans l’ordre, à travers le second.",
+    "hints": [
+      "Avance dans le premier uniquement si le caractère correspond.",
+      "Affiche le premier texte seulement si toute la sous-séquence a été trouvée."
+    ],
+    "checks": [
+      "Correspondance espacée",
+      "Ordre incorrect et argument vide"
+    ]
+  },
+  "weareunique": {
+    "title": "weareunique",
+    "statementHash": "3c155847",
+    "topics": [
+      "Différence symétrique",
+      "Ensembles",
+      "Chaînes"
+    ],
+    "strategy": "Compte les caractères présents dans un seul des deux textes, une seule fois chacun.",
+    "hints": [
+      "Un caractère répété dans un texte ne compte pas plusieurs fois.",
+      "Les deux chaînes vides constituent le cas spécial -1."
+    ],
+    "checks": [
+      "Deux chaînes vides",
+      "Doublons et textes ayant les mêmes caractères"
+    ]
+  },
+  "wordanatomy": {
+    "title": "wordanatomy",
+    "statementHash": "eb4b9905",
+    "topics": [
+      "Préfixes",
+      "Suffixes",
+      "Chaînes"
+    ],
+    "strategy": "Parcours séparément les listes de préfixes et de suffixes dans leur ordre d’origine.",
+    "hints": [
+      "Le premier élément correspondant gagne, pas le plus long.",
+      "Les deux recherches sont indépendantes et peuvent ne rien trouver."
+    ],
+    "checks": [
+      "Plusieurs préfixes compatibles",
+      "Suffixe seul et aucune correspondance"
+    ]
+  },
+  "wordflip": {
+    "title": "wordflip",
+    "statementHash": "7a6ad9a3",
+    "topics": [
+      "Ordre des mots",
+      "Normalisation"
+    ],
+    "strategy": "Découpe le texte en mots puis inverse leur ordre en normalisant les espaces.",
+    "hints": [
+      "Les espaces initiaux, finaux et multiples ne sont pas conservés.",
+      "Vérifie le message réservé à l’entrée vide et le retour à la ligne."
+    ],
+    "checks": [
+      "Plusieurs mots",
+      "Espaces multiples et entrée vide"
+    ]
+  },
+  "zipstring": {
+    "title": "zipstring",
+    "statementHash": "feb72f5d",
+    "topics": [
+      "Compression RLE",
+      "Groupes consécutifs"
+    ],
+    "strategy": "Compte chaque groupe de lettres identiques consécutives et écris nombre puis lettre.",
+    "hints": [
+      "Deux groupes séparés de la même lettre restent distincts.",
+      "Émets aussi le dernier groupe."
+    ],
+    "checks": [
+      "Une lettre",
+      "Groupes de taille un et répétitions séparées"
+    ]
+  }
+}

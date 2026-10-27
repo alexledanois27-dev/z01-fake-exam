@@ -1,0 +1,121 @@
+.training-guide {
+  margin: 0 0 24px;
+  padding: 16px;
+  border: 1px solid
+    hsl(var(--accent-hue) calc(35% * var(--theme-chroma)) 23.53% / 1);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  background: hsl(
+    var(--accent-hue) calc(23.4% * var(--theme-chroma)) 9.22% / 1
+  );
+  color: hsl(var(--accent-hue) calc(20.37% * var(--theme-chroma)) 78.82% / 1);
+  line-height: 1.65;
+}
+.training-guide > summary {
+  color: var(--accent);
+  cursor: pointer;
+  font-weight: 750;
+  font-size: 13px;
+}
+.training-guide .guide-intro {
+  color: hsl(var(--accent-hue) calc(14.43% * var(--theme-chroma)) 61.96% / 1);
+  font-size: 11px;
+}
+.guide-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 16px 0;
+}
+.guide-topics span {
+  border: 1px solid
+    hsl(var(--accent-hue) calc(24.37% * var(--theme-chroma)) 23.33% / 1);
+  border-radius: 3px;
+  padding: 2px 8px;
+  font-size: 10px;
+  color: hsl(var(--accent-hue) calc(37.5% * var(--theme-chroma)) 74.9% / 1);
+}
+.guide-step {
+  border-top: 1px solid
+    hsl(var(--accent-hue) calc(24.49% * var(--theme-chroma)) 19.22% / 1);
+  padding: 12px 0;
+}
+.guide-step h4 {
+  margin: 0 0 6px;
+  color: hsl(var(--accent-hue) calc(43.28% * var(--theme-chroma)) 86.86% / 1);
+  font-size: 12px;
+}
+.guide-step p {
+  margin: 5px 0;
+  font-size: 12px;
+}
+.guide-reveal {
+  margin: 8px 0 12px;
+}
+.guide-functions {
+  border-top: 1px solid
+    hsl(var(--accent-hue) calc(24.49% * var(--theme-chroma)) 19.22% / 1);
+  padding-top: 12px;
+  font-size: 11px;
+}
+.guide-functions summary {
+  cursor: pointer;
+  color: hsl(var(--accent-hue) calc(34.69% * var(--theme-chroma)) 71.18% / 1);
+}
+.guide-functions code {
+  color: hsl(var(--accent-hue) calc(75.19% * var(--theme-chroma)) 74.71% / 1);
+  overflow-wrap: anywhere;
+}
+.true-exam-mode .training-guide,
+.learning-mode .training-guide {
+  display: none;
+}
+.guide-reference {
+  padding-top: 12px;
+  margin-top: 10px;
+  border-top: 1px solid
+    hsl(var(--accent-hue) calc(24.49% * var(--theme-chroma)) 19.22% / 1);
+  font-size: 12px;
+}
+.guide-reference summary {
+  cursor: pointer;
+  color: hsl(var(--accent-hue) calc(61.59% * var(--theme-chroma)) 70.39% / 1);
+  font-weight: 650;
+}
+.guide-reference h4 {
+  margin: 20px 0 6px;
+  font-size: 12px;
+  color: hsl(var(--accent-hue) calc(42.5% * var(--theme-chroma)) 84.31% / 1);
+}
+.guide-reference p {
+  margin: 8px 0;
+}
+.guide-reference pre {
+  margin: 12px 0 18px;
+  padding: 12px;
+  overflow-x: auto;
+  border: 1px solid
+    hsl(var(--accent-hue) calc(23.89% * var(--theme-chroma)) 22.16% / 1);
+  border-radius: 3px;
+  background: hsl(var(--accent-hue) calc(25.00% * var(--theme-chroma)) 4.71% / 1.000);
+  line-height: 1.7;
+  tab-size: 4;
+}
+.guide-reference pre code {
+  white-space: pre;
+  color: hsl(var(--accent-hue) calc(40.43% * var(--theme-chroma)) 81.57% / 1);
+  font:
+    11px/1.7 ui-monospace,
+    monospace;
+}
+.guide-reference li {
+  margin: 10px 0;
+}
+.guide-reference ul {
+  padding-left: 18px;
+}
+.guide-warning {
+  border-left: 2px solid var(--accent);
+  padding-left: 10px;
+  color: hsl(var(--accent-hue) calc(82.86% * var(--theme-chroma)) 65.69% / 1);
+}

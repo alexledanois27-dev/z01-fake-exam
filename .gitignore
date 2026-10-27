@@ -2,3 +2,26 @@ exam-tests/.gocache/
 
 # IDE
 .idea/
+
+# Dépendances de compilation de l’éditeur
+editor/node_modules/
+
+# Dépendances des tests d’interface
+node_modules/
+
+# Configuration privée de déploiement
+.env
+.env.*
+!.env.example
+!*.env.example
+deploy/production.env
+
+# Fichiers locaux non destinés au dépôt
+*.log
+*.pid
+*.pem
+*.key
+.DS_Store
+coverage/
+playwright-report/
+test-results/

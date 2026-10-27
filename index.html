@@ -1,145 +1,619 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Z01EXAM</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div id="app">
-
-    <header class="topbar">
-        <div class="topbar-left">
-            <a class="discord-link-btn" href="https://discord.gg/cP2Dn5DF6H" target="_blank" rel="noopener noreferrer">Join Discord</a>
-            <div class="track-switch" role="radiogroup" aria-label="Langage de la piscine">
-                <label class="track-option">
-                    <input type="radio" name="track-mode" value="go" id="track-go" checked>
-                    <span>Go</span>
-                </label>
-                <label class="track-option">
-                    <input type="radio" name="track-mode" value="js" id="track-js">
-                    <span>JS</span>
-                </label>
-                <label class="track-option">
-                    <input type="radio" name="track-mode" value="rust" id="track-rust">
-                    <span>Rust</span>
-                </label>
-                <label class="track-option">
-                    <input type="radio" name="track-mode" value="java" id="track-java">
-                    <span>Java</span>
-                </label>
-            </div>
-            <div id="exam-title" class="exam-title">Sélectionne un exercice</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#13130f" />
+    <title>Z01 Fake Exam · Mon espace d’entraînement</title>
+    <link rel="stylesheet" href="style.css?v=20261027-exam-timer-only" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Z01 Fake Exam, accueil"
+          ><img
+            class="brand-logo"
+            src="assets/z01-logo.png"
+            alt=""
+            width="46"
+            height="38"
+          />
+          <span
+            >Z01<span class="brand-light"> Fake Exam</span
+            ><small>MON ESPACE D’ENTRAÎNEMENT</small></span
+          ></a
+        >
+        <div
+          class="track-switch"
+          role="radiogroup"
+          aria-label="Langage de la piscine"
+        >
+          <label class="track-option"
+            ><input
+              type="radio"
+              name="track-mode"
+              value="go"
+              id="track-go"
+              checked
+            /><span>Go</span></label
+          >
+          <label class="track-option"
+            ><input
+              type="radio"
+              name="track-mode"
+              value="js"
+              id="track-js"
+            /><span>JavaScript</span></label
+          >
+          <label class="track-option"
+            ><input
+              type="radio"
+              name="track-mode"
+              value="rust"
+              id="track-rust"
+            /><span>Rust</span></label
+          >
+          <label class="track-option"
+            ><input
+              type="radio"
+              name="track-mode"
+              value="java"
+              id="track-java"
+            /><span>Java</span></label
+          >
         </div>
-        <div class="topbar-right">
-            <div class="switch-group mode-switch-group">
-                <div class="mode-switch" role="radiogroup" aria-label="Mode de l'application">
-                    <label class="mode-option">
-                        <input type="radio" name="app-mode" value="exam" id="mode-exam" checked>
-                        <span>Exam</span>
-                    </label>
-                    <label class="mode-option">
-                        <input type="radio" name="app-mode" value="true-exam" id="mode-true-exam">
-                        <span>True Exam</span>
-                    </label>
-                    <label class="mode-option">
-                        <input type="radio" name="app-mode" value="learning" id="mode-learning">
-                        <span>Learning</span>
-                    </label>
+        <div
+          class="mode-switch"
+          role="radiogroup"
+          aria-label="Mode de l’application"
+        >
+          <label class="mode-option"
+            ><input
+              type="radio"
+              name="app-mode"
+              value="exam"
+              id="mode-exam"
+              checked
+            /><span>Entraînement</span></label
+          >
+          <label class="mode-option"
+            ><input
+              type="radio"
+              name="app-mode"
+              value="true-exam"
+              id="mode-true-exam"
+            /><span>Examen</span></label
+          >
+          <label class="mode-option"
+            ><input
+              type="radio"
+              name="app-mode"
+              value="learning"
+              id="mode-learning"
+            /><span>Fiches</span></label
+          >
+        </div>
+        <details class="accent-menu" id="accent-menu">
+          <summary
+            aria-label="Choisir la nuance de l’interface"
+            title="Changer la couleur"
+          >
+            <span class="accent-current" aria-hidden="true"></span
+            ><span aria-hidden="true">▾</span>
+          </summary>
+          <div
+            class="accent-picker accent-options"
+            id="accent-theme"
+            role="radiogroup"
+            aria-label="Nuance de l’interface"
+          >
+            <label class="accent-swatch" title="Jaune"
+              ><input
+                type="radio"
+                name="accent"
+                value="yellow"
+                aria-label="Jaune" /><span
+                aria-hidden="true"
+                style="--swatch: #f4cf00"
+              ></span
+            ></label>
+            <label class="accent-swatch" title="Gris"
+              ><input
+                type="radio"
+                name="accent"
+                value="gray"
+                aria-label="Gris" /><span
+                aria-hidden="true"
+                style="--swatch: #9098a3"
+              ></span
+            ></label>
+            <label class="accent-swatch" title="Bleu"
+              ><input
+                type="radio"
+                name="accent"
+                value="blue"
+                aria-label="Bleu" /><span
+                aria-hidden="true"
+                style="--swatch: #2986ff"
+              ></span
+            ></label>
+            <label class="accent-swatch" title="Vert"
+              ><input
+                type="radio"
+                name="accent"
+                value="green"
+                aria-label="Vert" /><span
+                aria-hidden="true"
+                style="--swatch: #00c968"
+              ></span
+            ></label>
+            <label class="accent-swatch" title="Rouge"
+              ><input
+                type="radio"
+                name="accent"
+                value="red"
+                aria-label="Rouge" /><span
+                aria-hidden="true"
+                style="--swatch: #ff3b45"
+              ></span
+            ></label>
+            <label class="accent-swatch" title="Violet"
+              ><input
+                type="radio"
+                name="accent"
+                value="violet"
+                aria-label="Violet" /><span
+                aria-hidden="true"
+                style="--swatch: #9855ff"
+              ></span
+            ></label>
+          </div>
+        </details>
+      </header>
+      <div class="app-shell">
+        <aside class="catalog-panel" aria-label="Catalogue d’exercices">
+          <div class="catalog-heading">
+            <h1>Exercices</h1>
+            <span id="exercise-count" class="count-pill">—</span>
+          </div>
+          <label class="search-field"
+            ><svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="10.5" cy="10.5" r="6.5" />
+              <path d="m16 16 4.5 4.5" /></svg
+            ><input
+              id="exercise-search"
+              type="search"
+              placeholder="Rechercher un exercice…"
+              aria-label="Rechercher un exercice"
+            /><kbd>Ctrl K</kbd></label
+          >
+          <div class="filters">
+            <span class="eyebrow">DIFFICULTÉ</span>
+            <div id="level-filters" class="chips"></div>
+          </div>
+          <div
+            id="exercise-chips"
+            class="exercise-list"
+            aria-label="Liste des exercices"
+          >
+            <p class="empty-state">Chargement des exercices…</p>
+          </div>
+          <div class="catalog-footer">
+            <div class="progress-label">
+              <span>Ma progression</span
+              ><strong id="progress-label">0 / 0</strong>
+            </div>
+            <progress
+              id="catalog-progress"
+              max="1"
+              value="0"
+              aria-label="Exercices réussis"
+            ></progress>
+          </div>
+        </aside>
+        <main class="workspace">
+          <div class="workspace-header">
+            <div class="exercise-heading">
+              <div class="breadcrumb">
+                Mon entraînement <span>/</span>
+                <span id="track-breadcrumb">Go</span>
+              </div>
+              <div class="title-row">
+                <h2 id="exam-title">Choisis un exercice</h2>
+                <span id="exercise-level" class="level-badge"
+                  >Prêt à coder</span
+                >
+              </div>
+            </div>
+            <section class="timer-panel" aria-label="Compte à rebours" hidden>
+              <div class="timer-caption">
+                <span class="timer-dot"></span
+                ><span id="timer-status">À ton rythme</span>
+              </div>
+              <div class="timer-main">
+                <output
+                  id="timer-display"
+                  role="timer"
+                  aria-live="off"
+                  aria-label="Temps restant"
+                  >02:00:00</output
+                ><button
+                  id="timer-toggle"
+                  class="button button-subtle"
+                  type="button"
+                >
+                  Démarrer</button
+                ><button
+                  id="timer-reset"
+                  class="icon-button"
+                  type="button"
+                  aria-label="Réinitialiser le timer"
+                  title="Réinitialiser le timer"
+                >
+                  ↺
+                </button>
+                <details class="timer-settings">
+                  <summary aria-label="Régler la durée" title="Régler la durée">
+                    ⚙
+                  </summary>
+                  <div class="timer-popover">
+                    <label for="timer-minutes">Durée en minutes</label>
+                    <div>
+                      <input
+                        id="timer-minutes"
+                        required
+                        type="number"
+                        min="1"
+                        max="480"
+                        step="1"
+                        value="120"
+                      /><button
+                        id="timer-apply"
+                        class="button button-primary"
+                        type="button"
+                      >
+                        Appliquer
+                      </button>
+                    </div>
+                    <small
+                      >De 1 à 480 minutes. Appliquer remet le timer à zéro. Ton
+                      code reste accessible à la fin.</small
+                    >
+                  </div>
+                </details>
+              </div>
+              <div id="timer-notice" class="sr-only" role="status"></div>
+            </section>
+          </div>
+          <section id="exam-lobby" class="exam-lobby" hidden>
+            <span class="eyebrow">EXAMEN BLANC</span>
+            <h2>Choisis les conditions de ta session.</h2>
+            <p>
+              Une nouvelle série, un éditeur vierge. Les prochains exercices
+              restent masqués.
+            </p>
+            <div
+              class="exam-choices"
+              role="radiogroup"
+              aria-label="Conditions de l’examen"
+            >
+              <label class="exam-choice"
+                ><input
+                  type="radio"
+                  name="exam-kind"
+                  value="free"
+                  checked
+                /><span
+                  ><strong>Examen libre</strong
+                  ><small>Sans timer · saut autorisé</small>
+                  <p>
+                    Avance à ton rythme et passe un exercice si tu bloques.
+                  </p></span
+                ></label
+              >
+              <label class="exam-choice"
+                ><input type="radio" name="exam-kind" value="strict" /><span
+                  ><strong>Examen chronométré</strong
+                  ><small>3 heures · aucun saut</small>
+                  <p>
+                    Valide l’exercice pour avancer. La session est rendue
+                    automatiquement à la fin du temps.
+                  </p></span
+                ></label
+              >
+            </div>
+            <p class="exam-lobby-note">
+              Tes soumissions déterminent le bilan. Tu peux rendre la session
+              avant la fin. Les brouillons et les réussites d’entraînement ne
+              sont jamais repris.
+            </p>
+            <div class="exam-start-actions">
+              <button
+                id="exam-start"
+                class="button button-primary"
+                type="button"
+              >
+                Démarrer une nouvelle session</button
+              ><button
+                id="exam-resume"
+                class="button button-subtle"
+                type="button"
+                hidden
+              >
+                Reprendre ma session
+              </button>
+            </div>
+            <p id="exam-setup-message" role="status"></p>
+          </section>
+          <section
+            id="exam-report"
+            class="exam-report"
+            hidden
+            aria-label="Bilan d’examen"
+            tabindex="-1"
+          >
+            <span class="eyebrow">SESSION TERMINÉE</span>
+            <h2>Bilan de ta session</h2>
+            <p id="exam-report-reason"></p>
+            <div id="exam-report-score" class="exam-report-score"></div>
+            <p id="exam-report-note"></p>
+            <div id="exam-report-results"></div>
+            <p id="exam-brute-force-note"></p>
+            <figure id="exam-brute-force-reaction" hidden>
+              <img
+                alt="Une réussite un peu particulière : poignée de main de The Office"
+                width="640"
+                height="627"
+                loading="lazy"
+              />
+              <figcaption>
+                Des exercices réussis… avec une méthode bien à toi. Aucun point
+                retiré.
+              </figcaption>
+            </figure>
+            <div class="exam-start-actions">
+              <button
+                id="exam-report-new"
+                class="button button-primary"
+                type="button"
+              >
+                Nouvelle session</button
+              ><button
+                id="exam-report-training"
+                class="button button-subtle"
+                type="button"
+              >
+                Retour à l’entraînement
+              </button>
+            </div>
+          </section>
+          <div class="layout">
+            <section class="left-panel" aria-label="Énoncé de l’exercice">
+              <div class="panel-heading">
+                <div class="panel-tab">
+                  <span aria-hidden="true">≡</span> Énoncé
                 </div>
-            </div>
-        </div>
-    </header>
-
-    <div class="layout">
-        <!-- LEFT: énoncé -->
-        <section class="left-panel">
-            <div class="chips-label">Exercises</div>
-            <div class="true-exam-panel">
-                <div class="chips-label">True Exam</div>
+                <button
+                  id="download-statement"
+                  class="text-button"
+                  type="button"
+                  title="Télécharger cet énoncé au format Markdown"
+                >
+                  Exporter .md <span aria-hidden="true">↗</span>
+                </button>
+              </div>
+              <div class="true-exam-panel">
+                <div>
+                  <span class="eyebrow">SESSION D’EXAMEN</span>
+                  <p id="true-exam-status"></p>
+                </div>
                 <div class="true-exam-actions">
-                    <button id="true-exam-next" class="btn-small">next</button>
-                    <button id="true-exam-restart" class="btn-small">restart</button>
+                  <button
+                    id="true-exam-restart"
+                    class="button button-subtle"
+                    type="button"
+                  >
+                    Modes
+                  </button>
+                  <button
+                    id="true-exam-next"
+                    class="button button-primary"
+                    type="button"
+                  >
+                    Suivant →
+                  </button>
+                  <button
+                    id="exam-skip"
+                    class="button button-subtle"
+                    type="button"
+                  >
+                    Passer cet exercice
+                  </button>
+                  <button
+                    id="exam-submit"
+                    class="button button-primary"
+                    type="button"
+                  >
+                    Rendre l’examen
+                  </button>
                 </div>
-                <div id="true-exam-status" class="true-exam-status"></div>
-            </div>
-            <div class="filters">
-                <span class="filters-label">Niveau</span>
-                <div id="level-filters" class="chips"></div>
-            </div>
-            <div id="exercise-chips" class="chips"></div>
-
-            <div class="subject">
-                <div id="exercise-content" class="subject-box markdown-viewer">
-                    Choisis un exercice pour afficher le contenu complet du README.
-                </div>
-            </div>
-        </section>
-
-        <!-- Séparateur vertical redimensionnable -->
-        <div class="resize-handle vertical"></div>
-
-        <!-- RIGHT: éditeur + console -->
-        <section class="right-panel">
-            <div class="editor-container">
+              </div>
+              <details
+                id="go-restrictions"
+                class="restriction-panel"
+                open
+                hidden
+              >
+                <summary>
+                  Fonctions autorisées <span>Contrôlées à la correction</span>
+                </summary>
+                <div id="allowed-functions" class="function-tags"></div>
+                <p id="restriction-note"></p>
+              </details>
+              <div class="subject">
+                <article id="exercise-content" class="markdown-viewer">
+                  <h2>Prêt pour le prochain défi ?</h2>
+                  <p>
+                    Sélectionne un exercice dans le catalogue pour commencer.
+                  </p>
+                </article>
+              </div>
+              <div class="statement-footer">
+                <span class="status-dot"></span> Énoncé chargé depuis le
+                catalogue <span class="muted">Markdown</span>
+              </div>
+            </section>
+            <div
+              class="resize-handle vertical"
+              title="Ajuster les panneaux"
+              aria-hidden="true"
+            ></div>
+            <section class="right-panel" aria-label="Espace de code">
+              <div class="editor-container">
                 <div class="editor-header">
-                    <div id="editor-tab-label" class="editor-tab active">go main.go</div>
+                  <div id="editor-tab-label" class="editor-tab active">
+                    main.go
+                  </div>
+                  <div class="editor-tools">
+                    <button
+                      id="font-smaller"
+                      class="icon-button"
+                      type="button"
+                      aria-label="Réduire la taille du code"
+                      title="Réduire le code"
+                    >
+                      A−</button
+                    ><button
+                      id="font-larger"
+                      class="icon-button"
+                      type="button"
+                      aria-label="Agrandir la taille du code"
+                      title="Agrandir le code"
+                    >
+                      A+</button
+                    ><span class="tool-divider"></span
+                    ><button
+                      id="example-btn"
+                      class="button button-subtle"
+                      type="button"
+                      disabled
+                      title="Lancer le programme d’exemple de l’énoncé"
+                    >
+                      Tester l’exemple
+                    </button>
+                    <button
+                      id="run-btn"
+                      class="button button-primary"
+                      type="button"
+                    >
+                      <span aria-hidden="true">▷</span> Exécuter
+                      <kbd>Ctrl ↵</kbd>
+                    </button>
+                  </div>
                 </div>
-
                 <div class="editor-box">
-                    <div class="editor-wrapper">
-                        <div class="line-numbers" aria-hidden="true">
-                            <pre id="line-numbers-text"></pre>
-                        </div>
-                        <pre id="highlighted-code" class="highlighted-code"><code></code></pre>
-                        <textarea id="code-editor" spellcheck="false"></textarea>
-                    </div>
+                  <div id="code-workspace"></div>
+                  <textarea
+                    id="code-editor"
+                    spellcheck="false"
+                    aria-label="Éditeur de secours"
+                  ></textarea>
                 </div>
-            </div>
-
-            <div class="resize-handle horizontal"></div>
-
-            <div class="console-container">
+                <div class="program-args">
+                  <label for="program-args">Args</label>
+                  <input
+                    id="program-args"
+                    type="text"
+                    maxlength="8192"
+                    autocomplete="off"
+                    spellcheck="false"
+                    placeholder='"bonjour le monde" 42'
+                    aria-describedby="program-args-help"
+                  />
+                  <span id="program-args-help"
+                    >Arguments de Tester · sans validation</span
+                  >
+                </div>
+                <div class="editor-status">
+                  <span id="editor-position">Ligne 1</span><span>UTF-8</span
+                  ><span id="editor-language">Go</span
+                  ><span class="editor-engine">CodeMirror</span>
+                </div>
+              </div>
+              <div
+                class="resize-handle horizontal"
+                title="Ajuster la console"
+                aria-hidden="true"
+              ></div>
+              <div class="console-container">
                 <div class="console-header">
-                    <span class="console-label">&lt;/&gt; console</span>
+                  <div class="panel-tab">
+                    <span aria-hidden="true">›_</span> Résultats
+                    <span id="run-status" class="run-status">Prêt</span>
+                  </div>
+                  <button id="clear-console" class="text-button" type="button">
+                    Effacer
+                  </button>
                 </div>
-                <pre id="output" class="console-box"></pre>
+                <details id="example-preview" class="example-preview">
+                  <summary>Programme de test de la consigne</summary>
+                  <pre id="example-source"></pre>
+                  <p>
+                    Ce programme utilise ta solution et affiche sa sortie, sans
+                    valider l’exercice.
+                  </p>
+                </details>
+                <pre
+                  id="output"
+                  class="console-box"
+                  role="log"
+                  aria-live="polite"
+                >
+Les résultats de tes tests apparaîtront ici.
 
-                <div class="actions">
-                    <button id="run-btn" class="btn-run">run</button>
-                    <button id="clear-console" class="btn-run">clean console</button>
+Écris ta solution puis lance les tests avec Ctrl + Entrée.</pre>
+                <div class="console-footer">
+                  <span class="status-dot"></span> Correction isolée dans
+                  Docker<span class="console-shortcut"
+                    >Ctrl + F pour rechercher dans le code</span
+                  >
                 </div>
+              </div>
+            </section>
+          </div>
+          <section
+            id="learning-panel"
+            class="learning-panel"
+            aria-label="Fiches de révision"
+          >
+            <div class="panel-heading">
+              <div class="panel-tab">Fiches de révision</div>
+              <span class="muted">Un rappel avant de coder.</span>
             </div>
-        </section>
-    </div>
-
-    <section id="learning-panel" class="learning-panel">
-        <div class="learning-header">
-            <div class="chips-label">Learning</div>
-            <div class="learning-subtitle">Contenus guidés pour réviser avant de coder.</div>
-        </div>
-        <div class="learning-body">
             <div class="learning-layout">
-                <aside class="learning-sidebar">
-                    <div id="learning-lessons" class="learning-lessons"></div>
-                </aside>
-                <div class="learning-resize-handle vertical"></div>
-                <div class="learning-main">
-                    <div id="learning-content" class="learning-box markdown-viewer">
-                        Sélectionne une leçon dans la liste pour afficher son contenu.
-                    </div>
-                </div>
+              <aside class="learning-sidebar">
+                <div id="learning-lessons"></div>
+              </aside>
+              <div class="learning-resize-handle vertical"></div>
+              <div class="learning-main">
+                <article
+                  id="learning-content"
+                  class="markdown-viewer"
+                ></article>
+              </div>
             </div>
-        </div>
-    </section>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="app.js"></script>
-<span id="version-badge" class="version-badge" title="Version exécutée" aria-label="Version exécutée">version…</span>
-<script src="version.js"></script>
-</body>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script src="vendor/marked.min.js"></script>
+    <script src="vendor/purify.min.js"></script>
+    <script src="vendor/editor.bundle.js"></script>
+    <script src="frontend/lib/personal-progress.js"></script>
+    <script src="frontend/lib/exam-timer.js"></script>
+    <script src="frontend/lib/exam-sessions.js"></script>
+    <script src="frontend/lib/training-hints.js"></script>
+    <script src="app.js?v=20261027-exam-timer-only"></script>
+    <script src="frontend/lib/timer-ui.js?v=20261027-exam-timer-only"></script>
+  </body>
 </html>
-
-
-
