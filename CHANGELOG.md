@@ -1,5 +1,13 @@
 # Historique fonctionnel
 
+## 28 octobre 2026 — fiches multilangages et références en entraînement
+
+- 36 nouvelles fiches : 12 Rust, 11 JavaScript et 13 Java, soit 70 avec Go.
+- Références explicites pour les 175 exercices vers les notions utiles.
+- Lecteur superposé qui conserve le code ; références masquées en examen.
+- Onglet Fiches filtré par langage, chargement local à la demande.
+- Tests de couverture, navigation et exemples exécutables dans les trois langages.
+
 ## 28 octobre 2026 — secours local des quatre langages
 
 - Copies complètes de 175 exercices, avec consignes et métadonnées de correction.

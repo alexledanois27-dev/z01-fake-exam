@@ -1,38 +1,424 @@
 {
   "lessons": [
-    { "id": "01", "title": "Structure d’un fichier Go", "path": "learning-content/1 Structure d’un fichier Go.md" },
-    { "id": "02", "title": "Fonctions et signatures", "path": "learning-content/2 Fonctions et signatures.md" },
-    { "id": "03", "title": "Variables, constantes, zéro-value", "path": "learning-content/3 Variables, constantes, zéro-value.md" },
-    { "id": "04", "title": "Types de base + conversions", "path": "learning-content/4 Types de base + conversions.md" },
-    { "id": "05", "title": "Conditions", "path": "learning-content/5 Conditions.md" },
-    { "id": "06", "title": "Boucles", "path": "learning-content/6 Boucles.md" },
-    { "id": "07", "title": "Print au caractère près", "path": "learning-content/7 Print au caractère près.md" },
-    { "id": "08", "title": "Arguments CLI", "path": "learning-content/8 Arguments CLI.md" },
-    { "id": "09", "title": "String comme tableau de bytes", "path": "learning-content/9 String comme tableau de bytes.md" },
-    { "id": "10", "title": "Itérer une string", "path": "learning-content/10 Itérer une string.md" },
-    { "id": "11", "title": "Concaténer et construire une string", "path": "learning-content/11 # Concaténer et construire une string.md" },
-    { "id": "12", "title": "Nettoyer espaces et découper en mots", "path": "learning-content/12 Nettoyer espaces et découper en mots.md" },
-    { "id": "13", "title": "Recherche remplacement simple", "path": "learning-content/13 Recherche remplacement simple.md" },
-    { "id": "14", "title": "Transformations de casse", "path": "learning-content/14 Transformations de casse.md" },
-    { "id": "15", "title": "Renverser rotation zip", "path": "learning-content/15 Renverser rotation zip.md" },
-    { "id": "16", "title": "Slices", "path": "learning-content/16 Slices.md" },
-    { "id": "17", "title": "Tableaux fixes", "path": "learning-content/17 Tableaux fixes.md" },
-    { "id": "18", "title": "Maps comme set", "path": "learning-content/18 Maps comme set.md" },
-    { "id": "19", "title": "Atoi “maison”", "path": "learning-content/19 Atoi “maison”.md" },
-    { "id": "20", "title": "Itoa “maison”", "path": "learning-content/20 Itoa “maison”.md" },
-    { "id": "21", "title": "Conversion en base N", "path": "learning-content/21 Conversion en base N.md" },
-    { "id": "22", "title": "Longueur d’un nombre", "path": "learning-content/22 Longueur d’un nombre.md" },
-    { "id": "23", "title": "GCD (PGCD)", "path": "learning-content/23 GCD (PGCD).md" },
-    { "id": "24", "title": "Nombres premiers", "path": "learning-content/24 Nombres premiers.md" },
-    { "id": "25", "title": "Factorisation", "path": "learning-content/25 Factorisation.md" },
-    { "id": "26", "title": "Two pointers", "path": "learning-content/26 Two pointers.md" },
-    { "id": "27", "title": "Comptage", "path": "learning-content/27 Comptage.md" },
-    { "id": "28", "title": "Bitwise bases", "path": "learning-content/28 Bitwise bases.md" },
-    { "id": "29", "title": "Encodage d’options en bits", "path": "learning-content/29 Encodage d’options en bits.md" },
-    { "id": "30", "title": "Stack via slice", "path": "learning-content/30 Stack via slice.md" },
-    { "id": "31", "title": "RPN calc", "path": "learning-content/31 RPN calc.md" },
-    { "id": "32", "title": "Parenthèses brackets", "path": "learning-content/32 Parenthèses brackets.md" },
-    { "id": "33", "title": "Brainfuck: mémoire + pointeur", "path": "learning-content/33 Brainfuck: mémoire + pointeur.md" },
-    { "id": "34", "title": "Brainfuck: matching [ ]", "path": "learning-content/34 Brainfuck: matching [ ].md" }
+    {
+      "id": "01",
+      "title": "Structure d’un fichier Go",
+      "path": "learning-content/1 Structure d’un fichier Go.md",
+      "track": "go"
+    },
+    {
+      "id": "02",
+      "title": "Fonctions et signatures",
+      "path": "learning-content/2 Fonctions et signatures.md",
+      "track": "go"
+    },
+    {
+      "id": "03",
+      "title": "Variables, constantes, zéro-value",
+      "path": "learning-content/3 Variables, constantes, zéro-value.md",
+      "track": "go"
+    },
+    {
+      "id": "04",
+      "title": "Types de base + conversions",
+      "path": "learning-content/4 Types de base + conversions.md",
+      "track": "go"
+    },
+    {
+      "id": "05",
+      "title": "Conditions",
+      "path": "learning-content/5 Conditions.md",
+      "track": "go"
+    },
+    {
+      "id": "06",
+      "title": "Boucles",
+      "path": "learning-content/6 Boucles.md",
+      "track": "go"
+    },
+    {
+      "id": "07",
+      "title": "Print au caractère près",
+      "path": "learning-content/7 Print au caractère près.md",
+      "track": "go"
+    },
+    {
+      "id": "08",
+      "title": "Arguments CLI",
+      "path": "learning-content/8 Arguments CLI.md",
+      "track": "go"
+    },
+    {
+      "id": "09",
+      "title": "String comme tableau de bytes",
+      "path": "learning-content/9 String comme tableau de bytes.md",
+      "track": "go"
+    },
+    {
+      "id": "10",
+      "title": "Itérer une string",
+      "path": "learning-content/10 Itérer une string.md",
+      "track": "go"
+    },
+    {
+      "id": "11",
+      "title": "Concaténer et construire une string",
+      "path": "learning-content/11 # Concaténer et construire une string.md",
+      "track": "go"
+    },
+    {
+      "id": "12",
+      "title": "Nettoyer espaces et découper en mots",
+      "path": "learning-content/12 Nettoyer espaces et découper en mots.md",
+      "track": "go"
+    },
+    {
+      "id": "13",
+      "title": "Recherche remplacement simple",
+      "path": "learning-content/13 Recherche remplacement simple.md",
+      "track": "go"
+    },
+    {
+      "id": "14",
+      "title": "Transformations de casse",
+      "path": "learning-content/14 Transformations de casse.md",
+      "track": "go"
+    },
+    {
+      "id": "15",
+      "title": "Renverser rotation zip",
+      "path": "learning-content/15 Renverser rotation zip.md",
+      "track": "go"
+    },
+    {
+      "id": "16",
+      "title": "Slices",
+      "path": "learning-content/16 Slices.md",
+      "track": "go"
+    },
+    {
+      "id": "17",
+      "title": "Tableaux fixes",
+      "path": "learning-content/17 Tableaux fixes.md",
+      "track": "go"
+    },
+    {
+      "id": "18",
+      "title": "Maps comme set",
+      "path": "learning-content/18 Maps comme set.md",
+      "track": "go"
+    },
+    {
+      "id": "19",
+      "title": "Atoi “maison”",
+      "path": "learning-content/19 Atoi “maison”.md",
+      "track": "go"
+    },
+    {
+      "id": "20",
+      "title": "Itoa “maison”",
+      "path": "learning-content/20 Itoa “maison”.md",
+      "track": "go"
+    },
+    {
+      "id": "21",
+      "title": "Conversion en base N",
+      "path": "learning-content/21 Conversion en base N.md",
+      "track": "go"
+    },
+    {
+      "id": "22",
+      "title": "Longueur d’un nombre",
+      "path": "learning-content/22 Longueur d’un nombre.md",
+      "track": "go"
+    },
+    {
+      "id": "23",
+      "title": "GCD (PGCD)",
+      "path": "learning-content/23 GCD (PGCD).md",
+      "track": "go"
+    },
+    {
+      "id": "24",
+      "title": "Nombres premiers",
+      "path": "learning-content/24 Nombres premiers.md",
+      "track": "go"
+    },
+    {
+      "id": "25",
+      "title": "Factorisation",
+      "path": "learning-content/25 Factorisation.md",
+      "track": "go"
+    },
+    {
+      "id": "26",
+      "title": "Two pointers",
+      "path": "learning-content/26 Two pointers.md",
+      "track": "go"
+    },
+    {
+      "id": "27",
+      "title": "Comptage",
+      "path": "learning-content/27 Comptage.md",
+      "track": "go"
+    },
+    {
+      "id": "28",
+      "title": "Bitwise bases",
+      "path": "learning-content/28 Bitwise bases.md",
+      "track": "go"
+    },
+    {
+      "id": "29",
+      "title": "Encodage d’options en bits",
+      "path": "learning-content/29 Encodage d’options en bits.md",
+      "track": "go"
+    },
+    {
+      "id": "30",
+      "title": "Stack via slice",
+      "path": "learning-content/30 Stack via slice.md",
+      "track": "go"
+    },
+    {
+      "id": "31",
+      "title": "RPN calc",
+      "path": "learning-content/31 RPN calc.md",
+      "track": "go"
+    },
+    {
+      "id": "32",
+      "title": "Parenthèses brackets",
+      "path": "learning-content/32 Parenthèses brackets.md",
+      "track": "go"
+    },
+    {
+      "id": "33",
+      "title": "Brainfuck: mémoire + pointeur",
+      "path": "learning-content/33 Brainfuck: mémoire + pointeur.md",
+      "track": "go"
+    },
+    {
+      "id": "34",
+      "title": "Brainfuck: matching [ ]",
+      "path": "learning-content/34 Brainfuck: matching [ ].md",
+      "track": "go"
+    },
+    {
+      "id": "rust-01",
+      "title": "Types, fonctions et expressions",
+      "path": "learning-content/rust/rust-01.md",
+      "track": "rust"
+    },
+    {
+      "id": "rust-02",
+      "title": "Ownership, emprunts et durées de vie",
+      "path": "learning-content/rust/rust-02.md",
+      "track": "rust"
+    },
+    {
+      "id": "rust-03",
+      "title": "Chaînes, caractères et Unicode",
+      "path": "learning-content/rust/rust-03.md",
+      "track": "rust"
+    },
+    {
+      "id": "rust-04",
+      "title": "Vec, slices, itérateurs et tri",
+      "path": "learning-content/rust/rust-04.md",
+      "track": "rust"
+    },
+    {
+      "id": "rust-05",
+      "title": "HashMap, HashSet et collections ordonnées",
+      "path": "learning-content/rust/rust-05.md",
+      "track": "rust"
+    },
+    {
+      "id": "rust-06",
+      "title": "Option, Result et propagation des erreurs",
+      "path": "learning-content/rust/rust-06.md",
+      "track": "rust"
+    },
+    {
+      "id": "rust-07",
+      "title": "Enums et pattern matching",
+      "path": "learning-content/rust/rust-07.md",
+      "track": "rust"
+    },
+    {
+      "id": "rust-08",
+      "title": "Struct, traits et formatage Display",
+      "path": "learning-content/rust/rust-08.md",
+      "track": "rust"
+    },
+    {
+      "id": "rust-09",
+      "title": "Génériques, modules et conversions",
+      "path": "learning-content/rust/rust-09.md",
+      "track": "rust"
+    },
+    {
+      "id": "rust-10",
+      "title": "Box, Rc, RefCell et Drop",
+      "path": "learning-content/rust/rust-10.md",
+      "track": "rust"
+    },
+    {
+      "id": "rust-11",
+      "title": "Piles, files et structures récursives",
+      "path": "learning-content/rust/rust-11.md",
+      "track": "rust"
+    },
+    {
+      "id": "rust-12",
+      "title": "Algorithmes numériques, matrices et états",
+      "path": "learning-content/rust/rust-12.md",
+      "track": "rust"
+    },
+    {
+      "id": "js-01",
+      "title": "Variables, types et fonctions",
+      "path": "learning-content/js/js-01.md",
+      "track": "js"
+    },
+    {
+      "id": "js-02",
+      "title": "Tableaux, chaînes et indices",
+      "path": "learning-content/js/js-02.md",
+      "track": "js"
+    },
+    {
+      "id": "js-03",
+      "title": "Boucles, accumulateurs et nombres",
+      "path": "learning-content/js/js-03.md",
+      "track": "js"
+    },
+    {
+      "id": "js-04",
+      "title": "Objets, références et parcours de propriétés",
+      "path": "learning-content/js/js-04.md",
+      "track": "js"
+    },
+    {
+      "id": "js-05",
+      "title": "Récursion, chemins et références circulaires",
+      "path": "learning-content/js/js-05.md",
+      "track": "js"
+    },
+    {
+      "id": "js-06",
+      "title": "Closures, curryfication et composition",
+      "path": "learning-content/js/js-06.md",
+      "track": "js"
+    },
+    {
+      "id": "js-07",
+      "title": "Proxy, accès indirect et immutabilité",
+      "path": "learning-content/js/js-07.md",
+      "track": "js"
+    },
+    {
+      "id": "js-08",
+      "title": "Promesses et async/await",
+      "path": "learning-content/js/js-08.md",
+      "track": "js"
+    },
+    {
+      "id": "js-09",
+      "title": "Timers, échéances et nouvelles tentatives",
+      "path": "learning-content/js/js-09.md",
+      "track": "js"
+    },
+    {
+      "id": "js-10",
+      "title": "Comparateurs et étapes de tri",
+      "path": "learning-content/js/js-10.md",
+      "track": "js"
+    },
+    {
+      "id": "js-11",
+      "title": "Grilles, directions et backtracking",
+      "path": "learning-content/js/js-11.md",
+      "track": "js"
+    },
+    {
+      "id": "java-01",
+      "title": "Classes, types et méthodes statiques",
+      "path": "learning-content/java/java-01.md",
+      "track": "java"
+    },
+    {
+      "id": "java-02",
+      "title": "String, caractères et comparaison",
+      "path": "learning-content/java/java-02.md",
+      "track": "java"
+    },
+    {
+      "id": "java-03",
+      "title": "Tableaux, indices, comparateurs et tri",
+      "path": "learning-content/java/java-03.md",
+      "track": "java"
+    },
+    {
+      "id": "java-04",
+      "title": "Map, Set, fréquences et ordre",
+      "path": "learning-content/java/java-04.md",
+      "track": "java"
+    },
+    {
+      "id": "java-05",
+      "title": "Objets, constructeurs et état dérivé",
+      "path": "learning-content/java/java-05.md",
+      "track": "java"
+    },
+    {
+      "id": "java-06",
+      "title": "Interfaces, héritage et polymorphisme",
+      "path": "learning-content/java/java-06.md",
+      "track": "java"
+    },
+    {
+      "id": "java-07",
+      "title": "Listes simplement, doublement et circulairement chaînées",
+      "path": "learning-content/java/java-07.md",
+      "track": "java"
+    },
+    {
+      "id": "java-08",
+      "title": "Piles et analyse de texte structuré",
+      "path": "learning-content/java/java-08.md",
+      "track": "java"
+    },
+    {
+      "id": "java-09",
+      "title": "Dates, UTC, Duration et Period",
+      "path": "learning-content/java/java-09.md",
+      "track": "java"
+    },
+    {
+      "id": "java-10",
+      "title": "Expressions régulières et remplacements ciblés",
+      "path": "learning-content/java/java-10.md",
+      "track": "java"
+    },
+    {
+      "id": "java-11",
+      "title": "Builder, Factory et Singleton",
+      "path": "learning-content/java/java-11.md",
+      "track": "java"
+    },
+    {
+      "id": "java-12",
+      "title": "Nombres, fenêtres glissantes et invariants",
+      "path": "learning-content/java/java-12.md",
+      "track": "java"
+    },
+    {
+      "id": "java-13",
+      "title": "Matrices, ensembles et programmation dynamique",
+      "path": "learning-content/java/java-13.md",
+      "track": "java"
+    }
   ]
 }

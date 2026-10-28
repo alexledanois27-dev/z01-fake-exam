@@ -28,7 +28,7 @@ function normalizeLesson(raw, idx) {
   const path = raw.path || raw.url || raw.file || raw.href;
   if (!path) return null;
   const slug = raw.slug || slugify(title || id);
-  return { id, title, path, slug };
+  return { id, title, path, slug, track: raw.track || "go" };
 }
 
 function renderLearningContent(md) {
@@ -46,7 +46,7 @@ function renderLearningLessons() {
   const header = document.createElement("div");
   header.className = "header";
   const title = document.createElement("div");
-  title.textContent = "Leçons";
+  title.textContent = `Fiches ${{ go: "Go", js: "JavaScript", rust: "Rust", java: "Java" }[currentTrack]}`;
   const count = document.createElement("div");
   count.textContent =
     learningLessons.length > 0 ? `${learningLessons.length}` : "0";
@@ -69,7 +69,7 @@ function renderLearningLessons() {
     if (lesson.id === learningCurrentLessonId) {
       btn.classList.add("active");
     }
-    const labelId = lesson.id || idx + 1;
+    const labelId = String(idx + 1).padStart(2, "0");
     btn.textContent = `${labelId} - ${lesson.title}`;
     btn.addEventListener("click", () => {
       selectLearningLesson(lesson.id);
@@ -78,91 +78,56 @@ function renderLearningLessons() {
   });
 }
 
-function renderJsLearningLessons() {
-  if (!learningLessonsEl) return;
-  learningLessonsEl.innerHTML = "";
-
-  const header = document.createElement("div");
-  header.className = "header";
-  const title = document.createElement("div");
-  title.textContent = "Leçons JS";
-  const count = document.createElement("div");
-  count.textContent = `${jsLearningLessons.length}`;
-  header.appendChild(title);
-  header.appendChild(count);
-  learningLessonsEl.appendChild(header);
-
-  jsLearningLessons.forEach((lesson) => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "lesson-item";
-    if (lesson.id === jsLearningCurrentLessonId) {
-      btn.classList.add("active");
-    }
-    btn.textContent = `${lesson.id} - ${lesson.title}`;
-    btn.addEventListener("click", () => {
-      selectJsLearningLesson(lesson.id);
-    });
-    learningLessonsEl.appendChild(btn);
-  });
-}
-
-function selectJsLearningLesson(lessonId) {
-  const lesson =
-    jsLearningLessons.find((l) => l.id === lessonId) || jsLearningLessons[0];
-  if (!lesson) return;
-  jsLearningCurrentLessonId = lesson.id;
-  renderJsLearningLessons();
-  renderLearningContent(lesson.content);
-}
-
 async function loadLearningManifest() {
-  try {
-    const res = await fetch("/learning-content/manifest.json");
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    learningManifest = data || {};
-    const lessons = Array.isArray(learningManifest.lessons)
-      ? learningManifest.lessons
-      : [];
-    learningLessons = lessons
-      .map((l, i) => normalizeLesson(l, i))
-      .filter(Boolean);
-  } catch (e) {
-    learningManifest = null;
-    learningLessons = [];
-    console.warn("Impossible de charger le manifest learning:", e.message || e);
-  }
+  learningManifest = revisionCatalog;
+  learningLessons = revisionCatalog.lessons
+    .filter((lesson) => (lesson.track || "go") === currentTrack)
+    .map(normalizeLesson)
+    .filter(Boolean);
 }
 
 async function loadLearningData() {
-  if (learningLoaded) return;
-  learningLoaded = true;
   await loadLearningManifest();
+  learningLoaded = true;
+}
+
+async function revisionMarkdown(lesson) {
+  if (typeof learningLessonCache[lesson.id] === "string")
+    return learningLessonCache[lesson.id];
+  const text = await fetchTextResource(lesson.path);
+  learningLessonCache[lesson.id] = text;
+  return text;
 }
 
 async function selectLearningLesson(lessonId) {
-  let lesson = learningLessons.find((l) => l.id === lessonId);
-  if (!lesson) {
-    const slugId = slugify(lessonId || "");
-    lesson = learningLessons.find((l) => l.slug === slugId);
-  }
-  if (!lesson) return;
+  const lesson = learningLessons.find(
+    (l) => l.id === lessonId || l.slug === slugify(lessonId || ""),
+  );
+  if (!lesson || !learningMode) return;
+  const track = currentTrack;
+  const request = ++learningRequestSequence;
   learningCurrentLessonId = lesson.id;
+  learningSelections[track] = lesson.id;
   renderLearningLessons();
-  if (learningContentEl) {
-    learningContentEl.textContent = "Chargement de la leçon...";
-  }
+  learningContentEl.textContent = "Chargement de la fiche…";
   try {
-    const cached = learningLessonCache[lesson.id];
-    const md =
-      cached || (await fetchTextResource("/" + lesson.path.replace(/^\//, "")));
-    learningLessonCache[lesson.id] = md;
+    const md = await revisionMarkdown(lesson);
+    if (
+      request !== learningRequestSequence ||
+      !learningMode ||
+      currentTrack !== track
+    )
+      return;
     renderLearningContent(md);
-  } catch (e) {
-    renderLearningContent(
-      `Impossible de charger la leçon ${lesson.id} (${lesson.path}) : ${e.message}`,
-    );
+  } catch (error) {
+    if (
+      request !== learningRequestSequence ||
+      !learningMode ||
+      currentTrack !== track
+    )
+      return;
+    learningContentEl.textContent =
+      "Impossible de charger la fiche. Réessaie ou vérifie que ses fichiers sont présents.";
   }
 }
 
@@ -219,48 +184,18 @@ function setLearningMode(enabled) {
     document.body.classList.toggle("learning-mode", learningMode);
   }
   updateModeLabel();
+  learningRequestSequence++;
   if (learningMode) {
-    if (isJsTrack()) {
-      const target =
-        jsLearningCurrentLessonId ||
-        (jsLearningLessons[0] && jsLearningLessons[0].id);
-      renderJsLearningLessons();
-      if (target) {
-        selectJsLearningLesson(target);
-      } else {
-        renderLearningContent("# Learning JS\n\nAucune leçon JS disponible.");
-      }
-      return;
-    }
-    if (isRustTrack()) {
-      renderLearningLessons();
-      renderLearningContent(
-        "# Apprentissage Rust\n\nLe parcours Rust est disponible en mode Examen et Vrai examen, avec les énoncés et images officielles Zone01.",
-      );
-      return;
-    }
-    if (isJavaTrack()) {
-      renderLearningLessons();
-      renderLearningContent(
-        "# Apprentissage Java\n\nLe parcours Java est disponible en mode Examen et Vrai examen, avec les énoncés et images officielles Zone01.",
-      );
-      return;
-    }
+    const track = currentTrack;
     loadLearningData().then(() => {
-      if (!learningLessons.length) {
-        renderLearningLessons();
-        renderLearningContent(learningSource || defaultLearningMd);
-        return;
-      }
-      const hasCurrent = learningLessons.some(
-        (lesson) => lesson.id === learningCurrentLessonId,
-      );
-      const targetId = hasCurrent
-        ? learningCurrentLessonId
-        : learningLessons[0].id;
-      selectLearningLesson(targetId);
+      if (!learningMode || currentTrack !== track) return;
+      learningCurrentLessonId = learningSelections[track] || null;
+      renderLearningLessons();
+      const target =
+        learningLessons.find((l) => l.id === learningCurrentLessonId) ||
+        learningLessons[0];
+      if (target) selectLearningLesson(target.id);
+      else renderLearningContent(defaultLessonMsg);
     });
-  } else {
-    renderLearningContent(defaultLessonMsg);
-  }
+  } else renderLearningContent(defaultLessonMsg);
 }

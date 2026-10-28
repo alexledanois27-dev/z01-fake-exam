@@ -32,6 +32,19 @@ async function boot(saved = {}, defer = false, catalogs = null) {
   };
   for (const [k, v] of Object.entries(saved)) w.localStorage.setItem(k, v);
   w.fetch = async (url, opts) => {
+    const resource = decodeURIComponent(
+      new URL(String(url), "http://localhost:8092").pathname,
+    );
+    if (resource.startsWith("/learning-content/")) {
+      const path = require("node:path").resolve(root, "." + resource);
+      if (!path.startsWith(root) || !fs.existsSync(path))
+        return { ok: false, status: 404 };
+      return {
+        ok: true,
+        text: async () => fs.readFileSync(path, "utf8"),
+        json: async () => JSON.parse(fs.readFileSync(path, "utf8")),
+      };
+    }
     if (url === "/api/run") {
       const body = JSON.parse(opts.body);
       requests.push(body);
@@ -800,6 +813,71 @@ require("node:test")(
     );
     click(w, '[data-id="countalpha"]');
     assert.match(el(w, "statement-source").textContent, /API Zone01/);
+    env.dom.window.close();
+  },
+);
+require("node:test")(
+  "training references open real lessons without changing code and disappear in exams",
+  async () => {
+    const catalogs = require("./fixtures/training-exercises.json");
+    for (const track of ["go", "js", "rust", "java"]) {
+      const env = await boot({ "z02intra-track-mode": track }, false, catalogs);
+      const w = env.w;
+      const references = el(w, "exercise-revision-links");
+      assert.ok(references, track);
+      draft(w, "MY CODE TO KEEP");
+      const before = el(w, "exam-title").textContent;
+      references.querySelector("button").click();
+      await tick();
+      const dialog = el(w, "revision-dialog");
+      assert.ok(dialog?.open, track);
+      assert.ok(dialog.querySelector("article").textContent.length > 100);
+      assert.ok(!dialog.textContent.includes("Impossible de charger"));
+      assert.equal(el(w, "code-editor").value, "MY CODE TO KEEP");
+      assert.equal(el(w, "exam-title").textContent, before);
+      dialog.querySelector("button").click();
+      assert.equal(el(w, "revision-dialog"), null);
+      assert.equal(el(w, "code-editor").value, "MY CODE TO KEEP");
+      references.querySelector("button").click();
+      await tick();
+      click(w, "#mode-true-exam");
+      assert.equal(el(w, "revision-dialog"), null);
+      assert.equal(el(w, "exercise-revision-links"), null);
+      click(w, "#exam-start");
+      assert.equal(el(w, "exercise-revision-links"), null);
+      env.dom.window.close();
+    }
+  },
+);
+require("node:test")(
+  "revision tab filters its lessons by language and loads real Markdown",
+  async () => {
+    const catalogs = require("./fixtures/training-exercises.json");
+    const env = await boot({}, false, catalogs);
+    const w = env.w;
+    for (const [track, count] of [
+      ["go", 34],
+      ["js", 11],
+      ["rust", 12],
+      ["java", 13],
+    ]) {
+      click(w, "#track-" + track);
+      click(w, "#mode-learning");
+      await tick();
+      const buttons = el(w, "learning-lessons").querySelectorAll("button");
+      assert.equal(buttons.length, count, track);
+      assert.ok(el(w, "learning-content").querySelector("h1"), track);
+      assert.ok(
+        !el(w, "learning-content").textContent.includes(
+          "Impossible de charger",
+        ),
+        track,
+      );
+      buttons[buttons.length - 1].click();
+      await tick();
+      assert.ok(el(w, "learning-content").querySelector("h1"), track);
+      click(w, "#mode-exam");
+    }
     env.dom.window.close();
   },
 );

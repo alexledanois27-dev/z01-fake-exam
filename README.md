@@ -50,6 +50,16 @@ Le plein écran est demandé ; une sortie de plein écran ou un changement d’o
 impose un écran de reprise, sans arrêter le temps. Le navigateur conserve ses
 commandes système : cela ne constitue pas une protection anti-triche.
 
+### Réviser pendant l’entraînement
+
+Les 70 fiches couvrent Go (34), Rust (12), JavaScript (11) et Java (13).
+Chacun des 175 exercices propose des **Fiches utiles** adaptées aux notions du sujet.
+Elles s’ouvrent dans un lecteur superposé : le code en cours reste intact.
+L’onglet Fiches filtre aussi les leçons selon le langage sélectionné.
+Ces références complètent les aides progressives et sont masquées en examen.
+Les nouvelles fiches contiennent syntaxe, exemples autonomes, pièges et checklist,
+sans solution complète du sujet. Voir [le guide des fiches](learning-content/README.md).
+
 ### Tester et corriger
 
 - **Tester** exécute ton programme et affiche sa sortie ou ses erreurs, sans point
