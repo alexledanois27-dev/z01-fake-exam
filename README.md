@@ -10,7 +10,7 @@ Il n’est ni édité ni validé par Zone01.
 
 [Prise en main](#démarrer-en-local) · [Architecture](docs/maintenance.md) ·
 [Sécurité](SECURITY.md) · [Mise en ligne](docs/mise-en-ligne.md) ·
-[API Zone01 et chemins](docs/api-zone01.md) · [Provenance](docs/provenance.md) · [Changements](CHANGELOG.md) · [Dépôt GitHub](docs/depot-github.md)
+[API Zone01 et chemins](docs/api-zone01.md) · [Provenance](docs/provenance.md) · [Évolutions depuis la base](docs/evolutions-base.md) · [Changements](CHANGELOG.md) · [Dépôt GitHub](docs/depot-github.md)
 
 ![Vue de l’espace d’entraînement](docs/images/workspace.png)
 
@@ -56,6 +56,8 @@ Les 70 fiches couvrent Go (34), Rust (12), JavaScript (11) et Java (13).
 Chacun des 175 exercices propose des **Fiches utiles** adaptées aux notions du sujet.
 Elles s’ouvrent dans un lecteur superposé : le code en cours reste intact.
 L’onglet Fiches filtre aussi les leçons selon le langage sélectionné.
+Changer de langage conserve l’onglet actuel ; le bilan d’examen et le titre de
+l’exercice restent réservés à leur vue respective.
 Ces références complètent les aides progressives et sont masquées en examen.
 Les nouvelles fiches contiennent syntaxe, exemples autonomes, pièges et checklist,
 sans solution complète du sujet. Voir [le guide des fiches](learning-content/README.md).
