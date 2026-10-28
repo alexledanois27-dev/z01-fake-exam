@@ -1,6 +1,6 @@
 # Instructions — Z01 Fake Exam personnel
 
-Ce dépôt privé appartient à son propriétaire GitHub. Il dérive de z01exam/z01exam,
+Ce dépôt public appartient à son propriétaire GitHub. Il dérive de z01exam/z01exam,
 mais ne publie rien sur leur dépôt ni leur infrastructure. Lire README.md,
 docs/maintenance.md et docs/provenance.md avant une modification importante.
 
