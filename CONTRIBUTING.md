@@ -1,6 +1,6 @@
 # Contribuer à cette version personnelle
 
-Le projet est maintenu dans un dépôt GitHub privé. Il est indépendant du dépôt
+Le projet est maintenu dans un dépôt GitHub public. Il est indépendant du dépôt
 [z01exam/z01exam](https://github.com/z01exam/z01exam), dont il conserve les notices
 et l’historique. Voir [la provenance](docs/provenance.md).
 
@@ -45,7 +45,7 @@ Elle ne prouve donc pas à elle seule la compatibilité des quatre moulinettes.
 ## Données et publication
 
 Ne pas publier de secrets ni exporter le localStorage des utilisateurs dans le
-dépôt. Les fichiers `.env` privés et les dépendances sont ignorés. Un dépôt privé
+dépôt. Les fichiers `.env` privés et les dépendances sont ignorés. Un dépôt public
 n’est pas un coffre-fort : vérifier chaque diff avant un push.
 
 Aucun workflow ne déploie automatiquement. Les anciens scripts VPS restent des
