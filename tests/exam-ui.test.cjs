@@ -61,7 +61,8 @@ async function boot(saved = {}, defer = false, catalogs = null) {
   const scripts = Array.from(w.document.querySelectorAll("script[src]"), (el) =>
     el.getAttribute("src"),
   ).filter((name) => name !== "vendor/editor.bundle.js");
-  for (const name of scripts) w.eval(fs.readFileSync(root + name.split("?")[0], "utf8"));
+  for (const name of scripts)
+    w.eval(fs.readFileSync(root + name.split("?")[0], "utf8"));
   await tick();
   return {
     dom,
@@ -776,6 +777,29 @@ require("node:test")(
     w = env.w;
     assert.equal(el(w, "exam-brute-force-reaction").hidden, false);
     assert.match(el(w, "exam-brute-force-note").textContent, /2 \/ 3/);
+    env.dom.window.close();
+  },
+);
+require("node:test")(
+  "statement provenance distinguishes API and dated offline snapshots for Go",
+  async () => {
+    const env = await boot({}, false, {
+      go: [
+        {
+          ...fixtures[0],
+          statementSource: "local",
+          snapshotDate: "2026-10-28T08:00:00Z",
+        },
+        { ...fixtures[1], statementSource: "zone01-api" },
+      ],
+    });
+    const w = env.w;
+    assert.match(
+      el(w, "statement-source").textContent,
+      /copie locale.*2026-10-28/,
+    );
+    click(w, '[data-id="countalpha"]');
+    assert.match(el(w, "statement-source").textContent, /API Zone01/);
     env.dom.window.close();
   },
 );

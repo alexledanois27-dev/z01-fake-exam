@@ -16,6 +16,7 @@ type Exercise struct {
 	Title            string   `json:"title"`
 	Statement        string   `json:"statement"`
 	StatementSource  string   `json:"statementSource,omitempty"`
+	SnapshotDate     string   `json:"snapshotDate,omitempty"`
 	Example          string   `json:"example"`
 	Template         string   `json:"template"`
 	Runner           string   `json:"runner"`

@@ -114,6 +114,7 @@ func hydrateZoneStatements(ctx context.Context, exercises []Exercise) {
 			for i := range jobs {
 				if statement, err := fetchZoneStatement(ctx, exercises[i].SubjectURL); err == nil && statement != "" {
 					exercises[i].Statement = statement
+					exercises[i].StatementSource = "zone01-api"
 				}
 			}
 		}()
