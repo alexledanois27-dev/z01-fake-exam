@@ -4,8 +4,9 @@
 
 - Attribution du projet d’origine mise en évidence dans le README.
 - Dépôt public et documentation de contribution adaptée.
-- Protections main/develop : PR, approbation, CI, conversations résolues,
+- Protections main/develop : PR, CI, conversations résolues,
   branche à jour, interdiction des pushes forcés et des suppressions.
+- Approbation externe facultative pour permettre la fusion de ses propres PR.
 
 ## 28 octobre 2026 — niveaux JavaScript officiels
 
