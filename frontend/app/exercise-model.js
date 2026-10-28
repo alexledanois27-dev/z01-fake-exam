@@ -76,6 +76,11 @@ function renderGoRestrictions(ex) {
 }
 
 function updateExerciseHeader(ex) {
+  if (learningMode) {
+    examTitleEl.textContent = "Fiches de révision";
+    document.getElementById("exercise-level").textContent = "Apprendre";
+    return;
+  }
   const source = document.getElementById("statement-source");
   if (source)
     source.textContent =

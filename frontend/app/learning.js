@@ -168,6 +168,9 @@ function setLearningMode(enabled) {
   learningMode = !!enabled;
   renderTrainingGuide(learningMode ? null : currentExercise);
   if (learningMode) {
+    document.getElementById("exam-lobby").hidden = true;
+    document.getElementById("exam-report").hidden = true;
+    appEl.classList.remove("exam-setup", "exam-complete");
     editorIdentity = null;
     codeEditorEl.value = "";
     updateHighlight();

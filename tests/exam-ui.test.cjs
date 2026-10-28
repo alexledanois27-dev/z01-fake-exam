@@ -138,6 +138,14 @@ require("node:test")(
       "0 / 3 exercices validés",
     );
     assert.ok(!el(w, "exam-report-results").textContent.includes("lastword"));
+    click(w, "#mode-learning");
+    await tick();
+    assert.equal(el(w, "exam-report").hidden, true);
+    assert.equal(el(w, "exam-lobby").hidden, true);
+    assert.equal(el(w, "exam-title").textContent, "Fiches de révision");
+    assert.equal(w.document.querySelector(".exam-complete"), null);
+    click(w, "#mode-true-exam");
+    assert.equal(el(w, "exam-report").hidden, false);
     click(w, "#exam-report-training");
     assert.equal(el(w, "code-editor").value, "");
     assert.match(el(w, "progress-label").textContent, /1 \/ 3/);
@@ -866,6 +874,11 @@ require("node:test")(
       await tick();
       const buttons = el(w, "learning-lessons").querySelectorAll("button");
       assert.equal(buttons.length, count, track);
+      assert.equal(
+        el(w, "exam-title").textContent,
+        "Fiches de révision",
+        track,
+      );
       assert.ok(el(w, "learning-content").querySelector("h1"), track);
       assert.ok(
         !el(w, "learning-content").textContent.includes(
@@ -879,5 +892,47 @@ require("node:test")(
       click(w, "#mode-exam");
     }
     env.dom.window.close();
+  },
+);
+
+require("node:test")(
+  "changing language preserves the active tab instead of restoring its previous tab",
+  async () => {
+    const catalogs = require("./fixtures/training-exercises.json");
+    const env = await boot({}, false, catalogs);
+    const w = env.w;
+    try {
+      // Give JavaScript an exam history, then leave it in training.
+      click(w, "#track-js");
+      click(w, "#mode-true-exam");
+      click(w, "#exam-start");
+      click(w, "#exam-submit");
+      await tick();
+      click(w, "#mode-exam");
+      click(w, "#track-go");
+      click(w, "#mode-learning");
+      for (const track of ["js", "rust", "java", "go"]) {
+        click(w, "#track-" + track);
+        await tick();
+        assert.equal(el(w, "mode-learning").checked, true, track);
+        assert.equal(
+          el(w, "exam-title").textContent,
+          "Fiches de révision",
+          track,
+        );
+        assert.equal(el(w, "exam-report").hidden, true, track);
+      }
+      click(w, "#mode-exam");
+      for (const track of ["js", "rust", "java", "go"]) {
+        click(w, "#track-" + track);
+        assert.equal(el(w, "mode-exam").checked, true, track);
+      }
+      click(w, "#mode-true-exam");
+      click(w, "#track-rust");
+      assert.equal(el(w, "mode-true-exam").checked, true);
+      assert.equal(el(w, "exam-lobby").hidden, false);
+    } finally {
+      env.dom.window.close();
+    }
   },
 );

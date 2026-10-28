@@ -1306,6 +1306,14 @@ button {
   background: transparent;
 }
 
+/* Exam panels belong exclusively to the exam view, including restored sessions. */
+.learning-mode .exam-lobby,
+.learning-mode .exam-report,
+#app:not(.true-exam-mode) .exam-lobby,
+#app:not(.true-exam-mode) .exam-report {
+  display: none !important;
+}
+
 /* Source: frontend/styles/responsive.css */
 @media (min-width: 1600px) {
   .app-shell {

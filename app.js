@@ -455,9 +455,8 @@ function setTrackMode(mode) {
   const ready = personalReady;
   personalReady = false;
   currentLevelFilter = (saved && saved.filter) || "all";
-  examKind = saved && saved.examKind === "strict" ? "strict" : "free";
-  learningMode = !!saved && saved.mode === "learning";
-  trueExamMode = !!saved && saved.mode === "true-exam";
+  // Changing language preserves the current tab and exam conditions.
+  // Only exercise selection and difficulty belong to the destination language.
   if (appEl) {
     appEl.classList.toggle("learning-mode", learningMode);
     appEl.classList.toggle("true-exam-mode", trueExamMode);
@@ -467,6 +466,7 @@ function setTrackMode(mode) {
   updateTrackDependentUi();
   if (
     !trueExamMode &&
+    !learningMode &&
     saved &&
     getTrackExercises().some((ex) => exId(ex) === saved.selected)
   ) {
@@ -811,8 +811,8 @@ function renderExamReport() {
 function renderExamView() {
   syncExamFocus();
   const phase = currentExam?.phase;
-  const lobby = trueExamMode && !currentExam;
-  const report = trueExamMode && phase === "finished";
+  const lobby = trueExamMode && !learningMode && !currentExam;
+  const report = trueExamMode && !learningMode && phase === "finished";
   appEl.classList.toggle("exam-setup", lobby);
   appEl.classList.toggle("exam-complete", report);
   document.getElementById("exam-lobby").hidden = !lobby;
@@ -1051,6 +1051,11 @@ function renderGoRestrictions(ex) {
 }
 
 function updateExerciseHeader(ex) {
+  if (learningMode) {
+    examTitleEl.textContent = "Fiches de révision";
+    document.getElementById("exercise-level").textContent = "Apprendre";
+    return;
+  }
   const source = document.getElementById("statement-source");
   if (source)
     source.textContent =
@@ -1464,6 +1469,9 @@ function setLearningMode(enabled) {
   learningMode = !!enabled;
   renderTrainingGuide(learningMode ? null : currentExercise);
   if (learningMode) {
+    document.getElementById("exam-lobby").hidden = true;
+    document.getElementById("exam-report").hidden = true;
+    appEl.classList.remove("exam-setup", "exam-complete");
     editorIdentity = null;
     codeEditorEl.value = "";
     updateHighlight();
