@@ -1,7 +1,7 @@
 {
   "array-reverse-chunks": {
     "title": "Array Reverse Chunks",
-    "statementHash": "c2ddf1f7",
+    "statementHash": "4dd23320",
     "topics": [
       "Tableaux",
       "Deux pointeurs"
@@ -18,7 +18,7 @@
   },
   "bubble-sort-analyzer": {
     "title": "Bubble Sort Analyzer",
-    "statementHash": "212b806e",
+    "statementHash": "0e151bdb",
     "topics": [
       "Tri à bulles",
       "Comparateur"
@@ -35,7 +35,7 @@
   },
   "character-maker": {
     "title": "Character Maker",
-    "statementHash": "6963b67d",
+    "statementHash": "eda3438a",
     "topics": [
       "Fermeture",
       "Curryfication",
@@ -104,7 +104,7 @@
   },
   "deep-freeze": {
     "title": "Deep Freeze",
-    "statementHash": "dba8a2d5",
+    "statementHash": "98d7c2c4",
     "topics": [
       "Récursion",
       "Immutabilité"
@@ -121,7 +121,7 @@
   },
   "divisorfinder": {
     "title": "divisorFinder",
-    "statementHash": "9372b69a",
+    "statementHash": "8a3b4418",
     "topics": [
       "Diviseurs",
       "Modulo"
@@ -156,7 +156,7 @@
   },
   "evensum": {
     "title": "evenSum",
-    "statementHash": "6580dccc",
+    "statementHash": "6604d65c",
     "topics": [
       "Parité",
       "Accumulateur"
@@ -190,7 +190,7 @@
   },
   "factorial": {
     "title": "factorial",
-    "statementHash": "5bde8293",
+    "statementHash": "9eadde59",
     "topics": [
       "Produit",
       "Cas de base"
@@ -207,7 +207,7 @@
   },
   "fibonacci": {
     "title": "fibonacci",
-    "statementHash": "ae49388e",
+    "statementHash": "0b36e683",
     "topics": [
       "Récurrence",
       "Mémoire constante"
@@ -277,7 +277,7 @@
   },
   "grid-words-finder": {
     "title": "Grid Words Finder",
-    "statementHash": "96f86bf8",
+    "statementHash": "3da3b2f4",
     "topics": [
       "Grille",
       "Recherche directionnelle"
@@ -294,7 +294,7 @@
   },
   "grid-words-finder-2": {
     "title": "Grid Words Finder 2",
-    "statementHash": "5fdb4e52",
+    "statementHash": "382c2b5e",
     "topics": [
       "Récursion",
       "Recherche dans une grille"
@@ -311,7 +311,7 @@
   },
   "insertion-sort-analyzer": {
     "title": "Insertion Sort Analyzer",
-    "statementHash": "ac090dd4",
+    "statementHash": "9af6677f",
     "topics": [
       "Tri par insertion",
       "Comparateur"
@@ -328,7 +328,7 @@
   },
   "nested-array-reverser": {
     "title": "Nested Array Reverser",
-    "statementHash": "a36672af",
+    "statementHash": "a6fbb9d1",
     "topics": [
       "Tableaux imbriqués",
       "Ordre"
@@ -363,7 +363,7 @@
   },
   "palindromic-chains": {
     "title": "Palindromic Chains",
-    "statementHash": "eab0e9bc",
+    "statementHash": "4f824374",
     "topics": [
       "Itération",
       "Palindrome"
@@ -380,7 +380,7 @@
   },
   "perfectnum": {
     "title": "PerfectNum",
-    "statementHash": "6abb569c",
+    "statementHash": "d50367bb",
     "topics": [
       "Diviseurs propres",
       "Somme"
@@ -414,7 +414,7 @@
   },
   "sentencepyramid": {
     "title": "sentencePyramid",
-    "statementHash": "160ed13a",
+    "statementHash": "fae7d9d1",
     "topics": [
       "Mots",
       "Préfixes progressifs"
@@ -448,7 +448,7 @@
   },
   "snake-path-validator": {
     "title": "Snake Path Validator",
-    "statementHash": "18f7c74e",
+    "statementHash": "649e2f38",
     "topics": [
       "Récursion",
       "Connexité"
@@ -465,7 +465,7 @@
   },
   "swappable-object": {
     "title": "Swappable Object",
-    "statementHash": "c7b54c12",
+    "statementHash": "aacad7de",
     "topics": [
       "Proxy",
       "Recherche inverse"
@@ -499,7 +499,7 @@
   },
   "trap-object": {
     "title": "Trap Object",
-    "statementHash": "ed108eec",
+    "statementHash": "98b9c065",
     "topics": [
       "Proxy",
       "Interception"

@@ -5,7 +5,6 @@
 Write two functions, `animal` and `zooRace`, to simulate a race between animals:
 
 1. **Function `animal`**:
-
    - Takes the following parameters:
      - `name`: The name of the animal.
      - `maxSpeed`: The maximum speed of the animal (in meters per second).

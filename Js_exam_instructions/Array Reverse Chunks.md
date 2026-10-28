@@ -2,7 +2,18 @@
 
 ### Instructions
 
-Write a function that takes an array `arr` and an integer `chunkSize` (where chunkSize > 0). The function should reverse the elements within each chunk of size `chunkSize` in the array and return the modified array. If the last chunk is smaller than `chunkSize`, reverse all remaining elements.
+Write a function that takes:
+
+- An array (`arr`)
+- A number (`chunkSize`) **(must be bigger than 0)**
+
+The function should:
+
+1. **Split the array into chunks** (groups) of size `chunkSize`.
+2. **Reverse the elements inside each chunk**.
+3. Put all the reversed chunks back into one array and return it.
+
+**If the last chunk is smaller than chunkSize, reverse whatever is left.**
 
 ### Expected function
 
@@ -29,3 +40,13 @@ $ node main.js
 [4, 3, 2, 1, 5]
 $
 ```
+
+### 💡 Tip
+
+Here’s how to think about it:
+
+1. Start at index `0`.
+2. Take a slice of the array from `i` to `i + chunkSize`.
+3. Reverse that slice.
+4. Add it to the final result.
+5. Move `i` forward by `chunkSize` and repeat until the end.

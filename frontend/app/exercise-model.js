@@ -76,6 +76,14 @@ function renderGoRestrictions(ex) {
 }
 
 function updateExerciseHeader(ex) {
+  const source = document.getElementById("statement-source");
+  if (source)
+    source.textContent =
+      currentTrack === "js"
+        ? ex.statementSource === "zone01-api"
+          ? "Énoncé officiel · API Zone01"
+          : "Énoncé · copie locale de secours"
+        : "Énoncé chargé depuis le catalogue";
   const title = exTitle(ex);
   renderGoRestrictions(ex);
   document.getElementById("example-preview").hidden = !ex.example;

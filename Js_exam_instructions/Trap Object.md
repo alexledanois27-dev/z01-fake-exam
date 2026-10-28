@@ -2,12 +2,13 @@
 
 ### Instructions
 
-Write a function `trapObject(obj, fn)` that takes an object and a function. The returned object should behave normally but **run `fn` every time a property is accessed or modified**.
+Write a function **`trapObject(obj, fn)`** that takes an object and a callback function.
+The function should return a new object that behaves like the original, but **calls `fn` every time a property is accessed or modified.**
 
-The function `fn` should receive the following arguments:
+The callback **`fn`** should be invoked with the following arguments:
 
-- `"get"` when a property is accessed, along with the key and value.
-- `"set"` when a property is modified, along with the key, old value, and new value.
+- On **property access**: `"get"`, the property key, and its current value.
+- On **property modification**: `"set"`, the property key, the old value, and the new value.
 
 ### Expected Function
 
@@ -40,6 +41,31 @@ console.log(obj.age); // Logs: Accessed age: 30
 ```sh
 $ node main.js
 Accessed name: Alice
+Alice
 Modified age: 25 → 30
 Accessed age: 30
+30
+```
+
+### Tips
+
+A **Proxy** is like a **wrapper** around an object that lets you **control or customize any action** performed on it — such as getting or setting a property — using special functions called **traps**.
+
+```js
+const user = { name: "Alice", age: 25 };
+
+const proxyUser = new Proxy(user, {
+  get(target, prop) {
+    console.log(`Getting ${prop}`);
+    return target[prop];
+  },
+  set(target, prop, value) {
+    console.log(`Setting ${prop} to ${value}`);
+    target[prop] = value;
+    return true;
+  },
+});
+
+proxyUser.name; // 👉 logs: Getting name
+proxyUser.age = 30; // 👉 logs: Setting age to 30
 ```

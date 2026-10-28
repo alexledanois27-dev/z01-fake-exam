@@ -2,8 +2,18 @@
 
 ### Instructions
 
-Write a function gridWordsFinder(grid, words) that takes a 2D grid of characters and an array of words.
-Finds and returns all words from the array that can be traced horizontally (left to right) or vertically (top to bottom) in the grid.
+Write a function that takes:
+
+- A **grid** (2D array of letters).
+- An **array of words**.
+
+The function should:
+
+- **Find and return** all the words from the array that can be traced:
+  - **Horizontally** (left to right).
+  - **Vertically** (top to bottom).
+
+_(You don’t need to check backwards or diagonal directions.)_
 
 ### Expected function
 
@@ -37,3 +47,12 @@ $ node main.js
 []
 $
 ```
+
+### Tip
+
+To solve it:
+
+1. For **each row**, join the letters into a word.
+2. For **each column**, join the letters into a word.
+3. For every word in the list, check if it appears in any row or column.
+4. Collect and return all matching words.

@@ -10,7 +10,7 @@ Il n’est ni édité ni validé par Zone01.
 
 [Prise en main](#démarrer-en-local) · [Architecture](docs/maintenance.md) ·
 [Sécurité](SECURITY.md) · [Mise en ligne](docs/mise-en-ligne.md) ·
-[Provenance](docs/provenance.md) · [Changements](CHANGELOG.md) · [Dépôt GitHub](docs/depot-github.md)
+[API Zone01 et chemins](docs/api-zone01.md) · [Provenance](docs/provenance.md) · [Changements](CHANGELOG.md) · [Dépôt GitHub](docs/depot-github.md)
 
 ![Vue de l’espace d’entraînement](docs/images/workspace.png)
 
@@ -52,7 +52,7 @@ commandes système : cela ne constitue pas une protection anti-triche.
 ### Tester et corriger
 
 - **Tester** exécute ton programme et affiche sa sortie ou ses erreurs, sans point
-  ni validation. Le champ **Args** accepte par exemple `"bonjour monde" 42` ; les
+  ni validation. Le champ **Args** accepte par exemple `"Hello World" 42` ; les
   arguments restent littéraux, sans exécuter une commande shell.
 - Pour une fonction seule, Tester utilise le programme d’appel de la consigne
   lorsqu’il existe. Sans programme d’appel, un message explique la limite. Un
@@ -92,8 +92,11 @@ ou d’un rechargement. En examen, le brouillon et l’échéance sont restaurab
 Le serveur reçoit le code pour l’exécuter ; les fichiers temporaires sont supprimés
 à la fin de l’exécution normale ou à l’expiration du runner.
 
-Les énoncés/catalogues viennent des ressources Zone01/01-edu et de contenus locaux
-pour JavaScript. La correction utilise des images publiques 01-edu **épinglées
+Les énoncés/catalogues des quatre langages viennent des ressources Zone01/01-edu.
+JavaScript utilise le checkpoint `/rouen/cursus-cda/checkpoint-js` et ses fichiers
+attendus officiels. Les 31 identifiants historiques sont conservés. En cas de
+panne du catalogue ou d’un énoncé, une copie locale JavaScript sert de secours ;
+la source effective est indiquée sous la consigne. La correction utilise des images publiques 01-edu **épinglées
 par digest**, et non une API privée de correction. Les tests de l’établissement
 peuvent différer. Voir [les contrats des moulinettes](docs/moulinettes.md).
 
