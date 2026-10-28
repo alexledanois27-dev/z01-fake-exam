@@ -4,9 +4,13 @@
 Rust et Java, puis simuler un examen.**
 
 Éditeur CodeMirror, consignes, exécution Docker, aides progressives et interface
-sombre personnalisable. Ce dépôt est une version personnelle privée basée sur
+sombre personnalisable. Ce dépôt public est une version personnelle basée sur
 le projet open source [z01exam/z01exam](https://github.com/z01exam/z01exam).
 Il n’est ni édité ni validé par Zone01.
+
+**Projet d’origine d’Alioune : [z01exam/z01exam](https://github.com/z01exam/z01exam).**
+Cette version conserve son historique et ses licences ; les adaptations personnelles
+sont détaillées dans [les évolutions depuis la base](docs/evolutions-base.md).
 
 [Prise en main](#démarrer-en-local) · [Architecture](docs/maintenance.md) ·
 [Sécurité](SECURITY.md) · [Mise en ligne](docs/mise-en-ligne.md) ·
@@ -26,7 +30,8 @@ cd z01-fake-exam
 PORT=8092 make start
 ```
 
-L’accès au dépôt privé nécessite ton compte GitHub autorisé. Ouvrir
+Le dépôt est consultable publiquement ; seuls les collaborateurs autorisés peuvent
+proposer des changements sur ses branches. Ouvrir
 [http://127.0.0.1:8092](http://127.0.0.1:8092), puis arrêter avec `Ctrl+C`.
 Sans Make : `PORT=8092 go -C backend run ./cmd/dev`.
 Sans `PORT`, le port par défaut est 8080. Le lancement local ne déploie rien.

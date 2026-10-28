@@ -1,5 +1,12 @@
 # Historique fonctionnel
 
+## 28 octobre 2026 — publication du dépôt et protections
+
+- Attribution du projet d’Alioune mise en évidence dans le README.
+- Dépôt public et documentation de contribution adaptée.
+- Protections main/develop : PR, approbation, CI, conversations résolues,
+  branche à jour, interdiction des pushes forcés et des suppressions.
+
 ## 28 octobre 2026 — niveaux JavaScript officiels
 
 - Filtrage JavaScript réactivé et niveaux issus de `attrs.group` de l’API (N1 à N7).

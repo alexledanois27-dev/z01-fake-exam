@@ -9,7 +9,7 @@ L’historique des contributeurs d’origine est conservé, sans réécriture de
 commits. `archive/upstream-base` permet de comparer la base à la version actuelle.
 
 Le dépôt personnel n’a pas de remote pointant vers l’amont. `origin` désigne
-uniquement le dépôt privé personnel. Il ne s’agit pas d’une version officielle
+uniquement le dépôt personnel public. Il ne s’agit pas d’une version officielle
 Zone01 et aucune équivalence avec leurs conditions d’examen n’est revendiquée.
 
 ## Ce qui vient de la base
@@ -43,7 +43,7 @@ continuer à être relus, testés et maintenus comme tout autre code.
   disponibilité et leurs droits ne sont pas transférés par la licence du code.
 - Logo fourni par l’utilisateur et médias de réaction : provenance dans
   [assets/README.md](../assets/README.md). Les droits des médias restent à leurs
-  titulaires. Le caractère privé du dépôt ne dispense pas de vérifier les droits
+  titulaires. La publication du code ne transfère pas les droits de ces médias ; vérifier les droits
   avant une diffusion publique.
 
 ## Hébergement et données
@@ -51,5 +51,5 @@ continuer à être relus, testés et maintenus comme tout autre code.
 Aucun site public n’a été déployé par cet import. La préparation de sécurité
 n’équivaut pas à une certification. Les scores, brouillons et historiques sont
 conservés dans le navigateur, pas dans un compte utilisateur sur le serveur.
-Le dépôt privé est destiné au développement personnel ; l’application ne possède
+Le dépôt public est destiné au développement personnel ; l’application ne possède
 pas encore de gestion de comptes individuels ni de file d’attente de corrections.
