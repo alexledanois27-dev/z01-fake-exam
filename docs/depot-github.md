@@ -21,13 +21,16 @@ Pour les prochaines modifications, créer une branche depuis `develop`, ouvrir u
 PR puis intégrer vers `main` lors d’une livraison. Voir [CONTRIBUTING](../CONTRIBUTING.md).
 ## Protections de main et develop
 
-Les deux branches imposent une pull request et une approbation avant fusion.
+Les deux branches imposent une pull request avant fusion ; aucune approbation
+externe n’est obligatoire, afin que le propriétaire puisse fusionner ses propres PR.
 Les approbations sont invalidées si de nouveaux commits sont ajoutés ; les
 conversations de revue doivent être résolues. Les contrôles CI `frontend` et
 `backend` doivent réussir, sur une branche à jour avec la cible.
 Les règles s’appliquent aussi aux administrateurs : pushes directs, pushes forcés
-et suppression des branches sont interdits. L’auteur d’une PR ne peut pas
-s’approuver lui-même ; un autre collaborateur doit la relire.
+et suppression des branches sont interdits. GitHub ne permet pas à l’auteur d’une PR de
+s’approuver lui-même ; la revue externe est recommandée mais facultative.
+Cette règle permet aussi aux collaborateurs ayant le droit de fusionner de le faire
+sans approbation externe, une fois les autres conditions remplies.
 
 La suppression automatique des branches après fusion est désactivée pour garder
 `develop` après une livraison vers `main`. Les branches de travail peuvent être
