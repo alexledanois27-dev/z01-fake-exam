@@ -187,9 +187,8 @@ function setTrackMode(mode) {
   const ready = personalReady;
   personalReady = false;
   currentLevelFilter = (saved && saved.filter) || "all";
-  examKind = saved && saved.examKind === "strict" ? "strict" : "free";
-  learningMode = !!saved && saved.mode === "learning";
-  trueExamMode = !!saved && saved.mode === "true-exam";
+  // Changing language preserves the current tab and exam conditions.
+  // Only exercise selection and difficulty belong to the destination language.
   if (appEl) {
     appEl.classList.toggle("learning-mode", learningMode);
     appEl.classList.toggle("true-exam-mode", trueExamMode);
@@ -199,6 +198,7 @@ function setTrackMode(mode) {
   updateTrackDependentUi();
   if (
     !trueExamMode &&
+    !learningMode &&
     saved &&
     getTrackExercises().some((ex) => exId(ex) === saved.selected)
   ) {

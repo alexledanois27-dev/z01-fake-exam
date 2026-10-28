@@ -2,7 +2,12 @@
 
 ### Instructions
 
-Write a function that takes a string `sentence` and prints a sentence pyramid where each line adds one more word from the sentence. Each line should contain the words from the beginning up to the current word.
+Write a function that takes a string (`sentence`) and **prints a pyramid** where:
+
+- The **first line** prints the first word.
+- The **second line** prints the first two words.
+- The **third line** prints the first three words.
+- And so on… until the full sentence is printed.
 
 ### Expected function
 
@@ -30,3 +35,11 @@ This is a simple sentence
 This is a simple sentence pyramid
 $
 ```
+
+### Tip
+
+To build the pyramid:
+
+1. Split the sentence into words → use `.split(" ")`.
+2. Start from the first word and print lines adding one more word each time.
+3. Stop when all words are printed.

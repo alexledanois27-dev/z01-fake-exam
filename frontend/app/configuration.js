@@ -1,39 +1,3 @@
-const jsLearningLessons = [
-  {
-    id: "JS-01",
-    title: "Bases JavaScript",
-    content: `
-# JS Learning 01
-
-- Variables: \`let\`, \`const\`
-- Fonctions
-- Tableaux et objets
-`,
-  },
-  {
-    id: "JS-02",
-    title: "Algo & Strings",
-    content: `
-# JS Learning 02
-
-- Boucles
-- Transformations de chaînes
-- Comparaison de sorties pour les exercices
-`,
-  },
-  {
-    id: "JS-03",
-    title: "Préparation Piscine",
-    content: `
-# JS Learning 03
-
-- Lire l'énoncé attentivement
-- Écrire des cas simples d'abord
-- Itérer vers les cas limites
-`,
-  },
-];
-
 const LEVEL_SPECS = {
   1: ["onlyz", "onlya", "onlyb", "onlyf", "only1"],
   2: [
@@ -124,6 +88,7 @@ const defaultLessonMsg =
 let learningManifest = null;
 let learningLessons = [];
 let learningCurrentLessonId = null;
-let jsLearningCurrentLessonId = null;
 let learningLoaded = false;
 const learningLessonCache = {};
+const learningSelections = {};
+let learningRequestSequence = 0;

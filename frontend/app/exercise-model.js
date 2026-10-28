@@ -76,6 +76,20 @@ function renderGoRestrictions(ex) {
 }
 
 function updateExerciseHeader(ex) {
+  if (learningMode) {
+    examTitleEl.textContent = "Fiches de révision";
+    document.getElementById("exercise-level").textContent = "Apprendre";
+    return;
+  }
+  const source = document.getElementById("statement-source");
+  if (source)
+    source.textContent =
+      ex.statementSource === "zone01-api"
+        ? "Énoncé officiel · API Zone01"
+        : ex.statementSource === "local"
+          ? "Énoncé · copie locale de secours" +
+            (ex.snapshotDate ? ` · ${ex.snapshotDate.slice(0, 10)}` : "")
+          : "Énoncé chargé depuis le catalogue";
   const title = exTitle(ex);
   renderGoRestrictions(ex);
   document.getElementById("example-preview").hidden = !ex.example;

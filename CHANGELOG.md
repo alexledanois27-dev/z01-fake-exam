@@ -1,5 +1,36 @@
 # Historique fonctionnel
 
+## 28 octobre 2026 — cohérence de navigation
+
+- Changer de langage conserve l’onglet actuel et les conditions d’examen choisies.
+- Le nom de l’exercice d’entraînement ne remplace plus le titre des fiches.
+- Le bilan et l’écran de préparation d’examen restent masqués dans les fiches.
+- Tests de transition entre fiches, entraînement et bilan, dans les quatre langages.
+
+## 28 octobre 2026 — fiches multilangages et références en entraînement
+
+- 36 nouvelles fiches : 12 Rust, 11 JavaScript et 13 Java, soit 70 avec Go.
+- Références explicites pour les 175 exercices vers les notions utiles.
+- Lecteur superposé qui conserve le code ; références masquées en examen.
+- Onglet Fiches filtré par langage, chargement local à la demande.
+- Tests de couverture, navigation et exemples exécutables dans les trois langages.
+
+## 28 octobre 2026 — secours local des quatre langages
+
+- Copies complètes de 175 exercices, avec consignes et métadonnées de correction.
+- Secours automatique si l’API est indisponible, sans restaurer de faux énoncés
+  lorsqu’une copie correspondante existe.
+- `CATALOG_MODE=offline` pour démarrer sans appeler les API.
+- Synchronisation manuelle validée, provenance/date visibles et tests sans API.
+
+## 28 octobre 2026 — catalogue JavaScript depuis l’API
+
+- Chargement prioritaire des 31 exercices du checkpoint JavaScript Zone01.
+- Métadonnées et fichiers attendus officiels, identifiants de progression conservés.
+- Copie locale synchronisée en secours et source visible sous la consigne.
+- Empreintes des aides mises à jour après comparaison des consignes et signatures.
+- Tests des alias, du secours, des chemins et correction réelle de factorial.
+
 ## Version personnelle initiale — 27 octobre 2026
 
 Import du travail local à partir de la base open source `c55677a`. Les commits

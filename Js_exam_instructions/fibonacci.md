@@ -2,7 +2,27 @@
 
 ### Instructions
 
-Write a function that takes an `integer` `n` as an argument and returns the `n`th number in the Fibonacci sequence. The sequence starts with 0 and 1, and each subsequent number is the sum of the previous two numbers.
+Write a function that takes a number (`n`) and returns the **n-th number** in the **Fibonacci sequence**.
+
+**What’s the Fibonacci sequence?**
+
+It starts like this:
+
+```
+0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
+```
+
+- The first two numbers are always `0` and `1`.
+- Every next number is the **sum of the two before it**.
+
+For example:
+
+- `fibonacci(0)` → `0`
+- `fibonacci(1)` → `1`
+- `fibonacci(2)` → `1` (`0 + 1`)
+- `fibonacci(3)` → `2` (`1 + 1`)
+- `fibonacci(4)` → `3` (`2 + 1`)
+- and so on.
 
 ### Expected function
 
@@ -27,3 +47,11 @@ $ node main.js
 55
 $
 ```
+
+### Tip
+
+To get the Fibonacci number:
+
+1. Start from `0` and `1`.
+2. Add them to get the next number.
+3. Repeat this until you reach the `n`-th number.

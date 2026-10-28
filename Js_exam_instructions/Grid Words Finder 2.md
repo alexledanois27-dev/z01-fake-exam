@@ -2,15 +2,20 @@
 
 ### Instructions
 
-Write a function `gridWordFinder2(grid, word)` that:
+Write a function that takes:
 
-- Takes a 2D grid of characters and a target word as input.
-- Searches for all occurrences of the word in the grid.
-- For each occurrence, return an object containing:
-  - x and y: The starting coordinates of the word.
-  - direction: Either "horizontal" or "vertical" depending on the word's orientation.
+- A **2D grid of letters** (`grid`)
+- A **word** to search for (`word`)
 
-> ⚠️ Note: You are not allowed to use any kind of loops
+Your function should:
+
+1. **Find all occurrences** of the word in the grid.
+2. For each occurrence, return an object:
+   - `x`: column index (starting position)
+   - `y`: row index (starting position)
+   - `direction`: `"horizontal"` or `"vertical"`
+
+> Note: The word should be searched only in the positive direction, left to right for horizontal, and top to bottom for vertical.
 
 ### Expected function
 
@@ -39,3 +44,16 @@ $ node main.js
 [{x:0, y:0, direction:"horizontal"}]
 $
 ```
+
+### Tip
+
+To solve this:
+
+1. **Horizontal search**:
+   - For each row (`y`), check if the row joined as a string contains the word.
+   - If yes, note down the starting `x` and `y`.
+
+2. **Vertical search**:
+   - Transpose the grid → turn columns into rows (can be done using `.map()`).
+   - Repeat the horizontal search on this new grid.
+   - When you find a word, swap `x` and `y` in the result.

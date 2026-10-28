@@ -27,8 +27,12 @@ const guides = Object.fromEntries(
     ),
   ]),
 );
+const revisionCatalog = {
+  lessons: require("../learning-content/manifest.json").lessons,
+  exerciseLinks: require("../learning-content/exercise-links.json"),
+};
 const outputs = {
-  "app.js": `/* ${banner} */\n(function () {\nconst trainingGuides = ${JSON.stringify(guides)};\n${assemble(manifest.javascript)}\n})();\n`,
+  "app.js": `/* ${banner} */\n(function () {\nconst trainingGuides = ${JSON.stringify(guides)};\nconst revisionCatalog = ${JSON.stringify(revisionCatalog)};\n${assemble(manifest.javascript)}\n})();\n`,
   "style.css": `/* ${banner} */\n${assemble(manifest.styles)}`,
 };
 // Parse before writing, so invalid source cannot replace a working bundle.

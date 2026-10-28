@@ -2,13 +2,22 @@
 
 ### Instructions
 
-Write a function `insertionSortAnalyzer(arr, comparator)` that:
+Write a function that takes:
 
-- Takes an array `arr` and a comparator function `comparator`.
-- Sorts the array using the **insertion sort** algorithm and returns an object with the following properties:
-  - `sortedArray`: The sorted array.
-  - `iterations`: The total number of iterations (steps) performed during the sort.
-  - `swaps`: The total number of swaps performed during the sort.
+- An array (`arr`)
+- A **comparator** function (`comparator`) that tells how to compare two numbers
+
+Your function should:
+
+1. **Sort the array using the insertion sort algorithm**.
+2. Keep track of:
+   - **iterations** → how many steps (comparisons) it made.
+   - **swaps** → how many times two values were switched.
+
+3. Return an object containing:
+   - The **sorted array**.
+   - The number of **iterations**.
+   - The number of **swaps**.
 
 ### Expected function
 
@@ -34,11 +43,30 @@ And its output:
 $ node main.js
 {
   sortedArray: [1, 2, 3, 4, 5, 6],
-  iterations: 15,
-  swaps: 8
+  iterations: 12,
+  swaps: 9
 }
 $
 ```
+
+### Tip — How Insertion Sort Works
+
+1. Start from the second item (`i = 1`).
+2. Compare it with the previous items.
+3. If it’s smaller, **swap** it backward until it’s in the right spot.
+4. Count each step (iteration) and each time you swap two numbers.
+
+### Tip - About the Comparator
+
+The **comparator** tells the function how to compare numbers:
+
+```javascript
+(a, b) => a - b;
+```
+
+- If the result is `< 0`, `a` comes **before** `b`.
+- If it’s `0`, they are **equal**.
+- If it’s `> 0`, `a` comes **after** `b`.
 
 ### Notes
 

@@ -1,8 +1,11 @@
 // Rebuilt on every exercise/mode change: revealed help never follows into an exam.
 function renderTrainingGuide(exercise) {
+  closeRevisionLesson();
+  document.getElementById("exercise-revision-links")?.remove();
   document.getElementById("training-guide")?.remove();
   if (!exercise || trueExamMode || learningMode) return;
   const result = TrainingHints.lookup(trainingGuides, currentTrack, exercise);
+  if (result.status === "ready") renderExerciseRevisionLinks(exercise);
   const panel = document.createElement("details");
   panel.id = "training-guide";
   panel.className = "training-guide";

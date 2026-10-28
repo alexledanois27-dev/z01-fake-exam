@@ -2,13 +2,22 @@
 
 ### Instructions
 
-Write a function `bubbleSortAnalyzer(arr, comparator)` that:
+Write a function that takes:
 
-- Takes an array `arr` and a comparator function `comparator`.
-- Sorts the array using the **bubble sort** algorithm and returns an object with the following properties:
-  - `sortedArray`: The sorted array.
-  - `iterations`: The total number of iterations (steps) performed during the sort.
-  - `swaps`: The total number of swaps performed during the sort.
+- An array (`arr`)
+- A **comparator** function (`comparator`) to compare two numbers.
+
+Your function should:
+
+1. **Sort the array using the bubble sort algorithm**.
+2. Count:
+   - **iterations** → total number of comparisons/steps.
+   - **swaps** → total times two numbers were switched.
+
+3. Return an object with:
+   - The **sorted array**.
+   - The number of **iterations**.
+   - The number of **swaps**.
 
 ### Expected function
 
@@ -35,10 +44,30 @@ $ node main.js
 {
   sortedArray: [1, 2, 3, 4, 7],
   iterations: 10,
-  swaps: 7
+  swaps: 6
 }
 $
 ```
+
+### Tip — How Bubble Sort Works
+
+1. Compare each pair of items in the array.
+2. If they’re in the wrong order (according to the **comparator**), swap them.
+3. Repeat this process for the whole array multiple times until no swaps are needed.
+
+**On every pass, the largest item "bubbles up" to the end.**
+
+### Tip - About the Comparator
+
+The **comparator** decides how to compare two numbers:
+
+```javascript
+(a, b) => a - b;
+```
+
+- If result `< 0` → `a` comes **before** `b`.
+- If result `0` → `a` and `b` are **equal**.
+- If result `> 0` → `a` comes **after** `b`.
 
 ### Notes
 

@@ -6,6 +6,9 @@ Garder les parcours utilisateur et les contrats HTTP stables. Une nouvelle
 session d’examen ne réutilise jamais le code d’entraînement. Une exécution du
 programme d’exemple ne valide jamais un exercice. Les exercices à venir restent
 masqués en examen. Les données du navigateur restent locales.
+Changer de langage conserve le mode courant et le type d’examen ; seuls le filtre
+et l’exercice choisi sont repris depuis la progression du langage de destination.
+Les fiches ne doivent jamais afficher le titre d’un exercice ni le bilan d’examen.
 
 ## Interface : sources et fichiers livrés
 
@@ -29,7 +32,8 @@ La fonction `window.getExamTimerContext` reste le contrat explicite avec le time
 | `exam-controller.js` | Série, échéance, soumission finale et bilan. |
 | `exercise-model.js` | Identifiants, sélection des niveaux et métadonnées d’exercice. |
 | `markdown.js` | Conversion Markdown et assainissement du HTML. |
-| `learning.js` | Chargement et navigation des fiches. |
+| `learning.js` | Chargement local et navigation des fiches par langage. |
+| `revisions.js` | Associations exercice/fiche et lecteur modal qui préserve le code. |
 | `catalog-loader.js` | Appels des quatre catalogues et restauration de la sélection. |
 | `catalog-view.js` | Filtres, liste des exercices et ouverture d’un exercice. |
 | `submission.js` | Requête de correction, résultat et protection contre les réponses tardives. |
@@ -229,3 +233,60 @@ validation visible, hors exemples et rendu final. L’animation ne bloque aucun
 clic, contient 32 petits éléments et se supprime après 2,1 secondes. Elle n’est
 pas créée lorsque `prefers-reduced-motion` est actif. Le changement de nuance
 n’altère ni les résultats ni les sessions.
+
+## Catalogue JavaScript officiel
+
+`backend/js_catalog.go` lit `/rouen/cursus-cda/checkpoint-js` dans le catalogue
+Zone01 partagé. Il valide les métadonnées et télécharge les consignes via un
+maximum de huit workers. Les fichiers attendus viennent du catalogue officiel.
+Les alias conservent les identifiants de progression et les aides historiques.
+
+Si le catalogue est indisponible, `LoadLocalJSExercises` charge le snapshot local.
+Si une seule consigne échoue, son fichier local est utilisé sans remplacer les
+métadonnées officielles. Le champ public `statementSource` vaut `zone01-api` ou
+`local` et alimente le libellé sous la consigne. Une nouvelle consigne sans copie
+locale manquante fait échouer le chargement API plutôt que publier un faux énoncé.
+Les échecs sont journalisés ; la copie locale ne se met pas à jour automatiquement.
+
+Après une synchronisation manuelle, comparer les contrats avant d’actualiser les
+empreintes des aides et les fixtures. Un changement API non relu garde l’aide
+suspendue. Vérification réelle :
+
+```sh
+RUN_JS_CATALOG_INTEGRATION=1 go -C backend test -run TestJSAPI -v .
+```
+
+## Copies de secours des quatre langages
+
+`backend/catalog_backup.go` enveloppe les chargements au démarrage. Il lit les
+snapshots versionnés, valide images/chemins/règles et conserve les métadonnées
+nécessaires aux corrections. En mode auto, la source API est prioritaire ; un
+échec global utilise le catalogue local complet. Un énoncé manquant peut utiliser
+la copie du même exercice et de la même URL, avec les métadonnées API courantes.
+
+`CATALOG_MODE=offline` empêche ces chargements API. Les snapshots ne sont pas un
+cache utilisateur : aucune soumission n’y est écrite et le démarrage n’écrit pas
+dans le dépôt. `cmd/sync-catalog` exporte volontairement quatre catalogues complets
+uniquement après validation de toutes les données live. Voir le README du dossier.
+
+```sh
+RUN_OFFLINE_CATALOG_INTEGRATION=1 go -C backend test -run TestOfflineCatalogCorrectionIntegration -v .
+```
+
+Ce test corrige un exercice de chaque langage depuis les métadonnées des copies.
+Le test `TestAllCatalogsStartOfflineWithoutNetwork` interdit les requêtes HTTP et
+vérifie les 175 exercices ; un autre test simule l’API en panne en mode automatique.
+
+## Fiches et références pédagogiques
+
+Le catalogue des 70 fiches et les associations des 175 exercices sont intégrés par
+`scripts/build-frontend.cjs` depuis `learning-content/manifest.json` et
+`learning-content/exercise-links.json`. Toute modification de ces JSON impose un
+rebuild. Le Markdown reste chargé à la demande et assaini avant affichage.
+Les sélections sont indépendantes par langage ; des compteurs de requêtes évitent
+qu’une réponse tardive s’affiche après un changement de langage, de mode ou la
+fermeture du lecteur. Le raccourci de correction est suspendu dans le lecteur.
+
+Voir [le guide de contribution des fiches](../learning-content/README.md) pour les
+associations et la compilation Docker des exemples Rust/Java. `npm test` couvre
+les exemples JavaScript, les références, les filtres et la conservation du code.
