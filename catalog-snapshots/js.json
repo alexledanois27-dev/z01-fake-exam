@@ -6,6 +6,7 @@
   "exercises": [
     {
       "id": "array-reverse-chunks",
+      "level": 2,
       "title": "Array Reverse Chunks",
       "statement": "## Array Reverse Chunks\n\n### Instructions\n\nWrite a function that takes:\n\n- An array (`arr`)\n- A number (`chunkSize`) **(must be bigger than 0)**\n\nThe function should:\n\n1. **Split the array into chunks** (groups) of size `chunkSize`.\n2. **Reverse the elements inside each chunk**.\n3. Put all the reversed chunks back into one array and return it.\n\n**If the last chunk is smaller than chunkSize, reverse whatever is left.**\n\n### Expected function\n\n```js\nfunction reverseChunks(arr, chunkSize) {}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```js\nconsole.log(reverseChunks([1, 2, 3, 4, 5, 6, 7], 3));\nconsole.log(reverseChunks([10, 20, 30, 40, 50], 2));\nconsole.log(reverseChunks([1, 2, 3, 4, 5], 4));\n```\n\nAnd its output:\n\n```console\n$ node main.js\n[3, 2, 1, 6, 5, 4, 7]\n[20, 10, 40, 30, 50]\n[4, 3, 2, 1, 5]\n$\n```\n\n### 💡 Tip\n\nHere’s how to think about it:\n\n1. Start at index `0`.\n2. Take a slice of the array from `i` to `i + chunkSize`.\n3. Reverse that slice.\n4. Add it to the final result.\n5. Move `i` forward by `chunkSize` and repeat until the end.",
       "statementSource": "zone01-api",
@@ -21,6 +22,7 @@
     },
     {
       "id": "bubble-sort-analyzer",
+      "level": 3,
       "title": "Bubble Sort Analyzer",
       "statement": "## Bubble Sort Analyzer\n\n### Instructions\n\nWrite a function that takes:\n\n- An array (`arr`)\n- A **comparator** function (`comparator`) to compare two numbers.\n\nYour function should:\n\n1. **Sort the array using the bubble sort algorithm**.\n2. Count:\n   - **iterations** → total number of comparisons/steps.\n   - **swaps** → total times two numbers were switched.\n\n3. Return an object with:\n   - The **sorted array**.\n   - The number of **iterations**.\n   - The number of **swaps**.\n\n### Expected function\n\n```js\nfunction bubbleSortAnalyzer(arr, comparator) {}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```js\nconst comparator = (a, b) =\u003e a - b;\n\nconst result = bubbleSortAnalyzer([4, 2, 7, 1, 3], comparator);\n\nconsole.log(result);\n```\n\nAnd its output:\n\n```console\n$ node main.js\n{\n  sortedArray: [1, 2, 3, 4, 7],\n  iterations: 10,\n  swaps: 6\n}\n$\n```\n\n### Tip — How Bubble Sort Works\n\n1. Compare each pair of items in the array.\n2. If they’re in the wrong order (according to the **comparator**), swap them.\n3. Repeat this process for the whole array multiple times until no swaps are needed.\n\n**On every pass, the largest item \"bubbles up\" to the end.**\n\n### Tip - About the Comparator\n\nThe **comparator** decides how to compare two numbers:\n\n```javascript\n(a, b) =\u003e a - b;\n```\n\n- If result `\u003c 0` → `a` comes **before** `b`.\n- If result `0` → `a` and `b` are **equal**.\n- If result `\u003e 0` → `a` comes **after** `b`.\n\n### Notes\n\n- The `comparator` function determines the sorting order:\n  - If `comparator(a, b)` returns a value \u003c 0, `a` is considered smaller than `b`.\n  - If it returns 0, `a` and `b` are considered equal.\n  - If it returns a value \u003e 0, `a` is considered greater than `b`.\n- You should implement a **step-by-step bubble sort**, counting both the number of iterations through the array and the number of swaps performed.",
       "statementSource": "zone01-api",
@@ -36,6 +38,7 @@
     },
     {
       "id": "character-maker",
+      "level": 4,
       "title": "Character Maker",
       "statement": "## Character Maker\n\n### Instructions\n\nWrite a function `createCurriedCharacterCreator(initialCharacter)` that:\n\n- Starts with an `initialCharacter` object as a base.\n- Returns a curried function that can be called multiple times, each time with either:\n  - An object representing new character attributes to be merged into the character.\n  - A transformation function `(char) =\u003e updatedChar` that transforms the current character.\n- The character object should be deeply merged when given an object. Conflicting keys should overwrite previous values.\n- When given a function, apply it to the current character object and replace the character with the returned value.\n- When called with no arguments, finalize and return the final character object.\n\n### Expected Function\n\n```js\nfunction createCurriedCharacterCreator(initialCharacter) {\n  // Your implementation here\n}\n```\n\n### Usage\n\n```js\nconst initialChar = {\n  name: \"Aria\",\n  stats: {\n    strength: 5,\n    intelligence: 10,\n  },\n};\n\nconst charBuilder = createCurriedCharacterCreator(initialChar);\n\ncharBuilder({\n  class: \"Wizard\",\n  stats: { strength: 7, mana: 50 },\n  equipment: { weapon: \"Staff\", robe: \"Silk Robe\" },\n});\ncharBuilder((char) =\u003e {\n  const updatedStats = {\n    ...char.stats,\n    strength: char.stats.strength + 3,\n    intelligence: char.stats.intelligence + 2,\n  };\n  return { ...char, stats: updatedStats };\n});\nconst result = charBuilder();\n\nconsole.log(result);\n```\n\n### Example Output\n\n```sh\n$ node main.js\n{\n    name: \"Aria\",\n    stats: {\n      strength: 10,\n      intelligence: 12,\n      mana: 50,\n    },\n    class: 'Wizard',\n    equipment: {\n      weapon: 'Staff',\n      robe: 'Silk Robe',\n    },\n}\n```\n\n### Notes\n\n- You can handle objects and functions differently by checking their type.\n- Once you call the curried function with no arguments, it should finalize the result and return the character.\n- Subsequent calls after the final call are not required.\n- Merging an object should preserve all existing properties inside nested objects (e.g., stats).",
       "statementSource": "zone01-api",
@@ -51,6 +54,7 @@
     },
     {
       "id": "deep-clone",
+      "level": 6,
       "title": "Deep Clone",
       "statement": "## Deep Clone\n\n### Instructions\n\nWrite a function `deepClone(obj)` that takes an object and returns a **deep clone** of it. The function should recursively copy all nested objects and arrays, ensuring that modifying the original object does not affect the cloned object.\n\nThe cloning process should:\n\n- Copy **all primitive values** (e.g., numbers, strings, booleans).\n- Recursively copy **nested objects**.\n- Recursively copy **arrays** while maintaining element order.\n- Ensure that objects with circular references are handled safely.\n\n### Expected Function\n\n```js\nfunction deepClone(obj) {\n  // Your implementation here\n}\n```\n\n### Usage\n\nGiven the following object:\n\n```js\nconst original = {\n  name: \"Alice\",\n  age: 25,\n  hobbies: [\"reading\", \"gaming\"],\n  address: {\n    city: \"Wonderland\",\n    zip: 12345,\n  },\n};\n\nconst cloned = deepClone(original);\n\ncloned.name = \"Bob\";\ncloned.hobbies.push(\"chess\");\ncloned.address.city = \"Nowhere\";\n\nconsole.log(original);\nconsole.log(cloned);\n```\n\n### Example Output\n\n```sh\nOriginal:\n{\n  name: \"Alice\",\n  age: 25,\n  hobbies: [\"reading\", \"gaming\"],\n  address: { city: \"Wonderland\", zip: 12345 }\n}\n\nCloned:\n{\n  name: \"Bob\",\n  age: 25,\n  hobbies: [\"reading\", \"gaming\", \"chess\"],\n  address: { city: \"Nowhere\", zip: 12345 }\n}\n```",
       "statementSource": "zone01-api",
@@ -66,6 +70,7 @@
     },
     {
       "id": "deep-equal",
+      "level": 6,
       "title": "Deep Equal",
       "statement": "## Deep Equal\n\n### Instructions\n\nWrite a function `deepEqual(obj1, obj2)` that checks whether two objects are **deeply equal**. Two objects are considered deeply equal if:\n\n- They have the same structure and content.\n- Their nested objects and arrays are also equal.\n- Primitive values (numbers, strings, booleans) are strictly equal.\n- Order matters for arrays but not for object properties.\n\nThe function should return `true` if `obj1` and `obj2` are deeply equal, and `false` otherwise.\n\n### Expected Function\n\n```js\nfunction deepEqual(obj1, obj2) {\n  // Your implementation here\n}\n```\n\n### Usage\n\nGiven the following objects:\n\n```js\nconst objA = {\n  name: \"Alice\",\n  age: 25,\n  hobbies: [\"reading\", \"gaming\"],\n  address: {\n    city: \"Wonderland\",\n    zip: 12345,\n  },\n};\n\nconst objB = {\n  name: \"Alice\",\n  age: 25,\n  hobbies: [\"reading\", \"gaming\"],\n  address: {\n    city: \"Wonderland\",\n    zip: 12345,\n  },\n};\n\nconst objC = {\n  name: \"Alice\",\n  age: 25,\n  hobbies: [\"reading\", \"gaming\", \"chess\"],\n  address: {\n    city: \"Wonderland\",\n    zip: 12345,\n  },\n};\n\nconsole.log(deepEqual(objA, objB)); // true\nconsole.log(deepEqual(objA, objC)); // false\n```\n\n### Example Output\n\n```sh\n$ node main.js\ntrue\nfalse\n```",
       "statementSource": "zone01-api",
@@ -81,6 +86,7 @@
     },
     {
       "id": "deep-find",
+      "level": 6,
       "title": "Deep Find",
       "statement": "## Deep Find\n\n### Instructions\n\nWrite a function `deepFind(obj, path)` that retrieves a deeply nested value from an object. The `path` is provided as a string using **dot notation**.\n\nThe function should:\n\n- Traverse the object following the provided path.\n- Return `undefined` if any part of the path is missing.\n- Support accessing nested objects and arrays.\n\n### Expected Function\n\n```js\nfunction deepFind(obj, path) {\n  // Your implementation here\n}\n```\n\n### Usage\n\n```js\nconst obj = {\n  user: {\n    profile: {\n      name: \"Alice\",\n      details: {\n        age: 25,\n        hobbies: [\"reading\", \"gaming\"],\n      },\n    },\n  },\n};\n\nconsole.log(deepFind(obj, \"user.profile.name\")); // \"Alice\"\nconsole.log(deepFind(obj, \"user.profile.details.age\")); // 25\nconsole.log(deepFind(obj, \"user.profile.details.hobbies.1\")); // \"gaming\"\nconsole.log(deepFind(obj, \"user.profile.address.city\")); // undefined\n```\n\n### Example Output\n\n```sh\n$ node main.js\nAlice\n25\ngaming\nundefined\n```",
       "statementSource": "zone01-api",
@@ -96,6 +102,7 @@
     },
     {
       "id": "deep-freeze",
+      "level": 6,
       "title": "Deep Freeze",
       "statement": "## Deep Freeze\n\n### Instructions\n\nWrite a function `deepFreeze(obj)` that makes an object **completely immutable**, preventing any modifications at all levels.\n\nThe function should:\n\n- Use `Object.freeze()` to prevent modifications to the object itself.\n- Recursively apply `Object.freeze()` to all nested objects and arrays.\n- Ensure that properties cannot be **added**, **deleted**, or **modified** at any depth.\n\nOnce frozen, any attempt to modify the object should **fail silently in non-strict mode** and **throw an error in strict mode**.\n\n### Expected Function\n\n```js\nfunction deepFreeze(obj) {\n  // Your implementation here\n}\n```\n\n### Usage\n\nGiven the following object:\n\n```js\nlet data = {\n  user: \"Alice\",\n  stats: {\n    score: 100,\n    achievements: [\"gold\", \"silver\"],\n  },\n};\n\ndeepFreeze(data);\n\ndata.user = \"Bob\"; // This should fail\ndata.stats.score = 200; // This should fail\ndata.stats.achievements[1] = \"bronze\"; // This should fail\n\nconsole.log(data);\n```\n\n### Example Output\n\n```sh\n$ node main.js\n{\n  user: \"Alice\",\n  stats: {\n    score: 100,\n    achievements: [\"gold\", \"silver\"]\n  }\n}\n```",
       "statementSource": "zone01-api",
@@ -111,6 +118,7 @@
     },
     {
       "id": "divisorfinder",
+      "level": 1,
       "title": "divisorFinder",
       "statement": "## divisorFinder\n\n### Instructions\n\nWrite a function that takes a number (`n`) and returns an **array of all its positive divisors**, **excluding itself**.\n\n**What’s a divisor?**\nA divisor is a number that divides `n` exactly (no remainder).\n\nFor example:\n\n- Divisors of `15` → `1, 3, 5` (not `15`)\n- Divisors of `28` → `1, 2, 4, 7, 14`\n- Divisors of `1` → none (`[]`)\n- For **negative numbers**, just use the positive divisors of the absolute value.\n\n### Expected function\n\n```javascript\nfunction divisors(n) {}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```javascript\nconsole.log(divisors(15));\nconsole.log(divisors(28));\nconsole.log(divisors(1));\nconsole.log(divisors(-15));\n```\n\nAnd its output:\n\n```console\n$ node main.js\n[1, 3, 5]\n[1, 2, 4, 7, 14]\n[]\n[1, 3, 5]\n$\n```\n\n### Tip\n\nTo find divisors:\n\n1. Make `n` positive (if it’s negative).\n2. Start with an empty array.\n3. For every number from `1` to `n - 1`:\n   - If it divides `n` exactly, add it to the array.\n\n4. Return the array.",
       "statementSource": "zone01-api",
@@ -126,6 +134,7 @@
     },
     {
       "id": "election-mix",
+      "level": 4,
       "title": "Election Mix",
       "statement": "## Election Mix\n\n### Instructions\n\nWrite a function `createCurriedFilterAndMap(criteria, mapper)` that:\n\n- Accepts a `criteria` function and a `mapper` function.\n  - `criteria(key, value)` returns `true` if the key-value pair should be included, `false` otherwise.\n  - `mapper(value)` transforms the value of each included key.\n- Returns a **curried function** that:\n  - Takes an object as input.\n  - Returns a new object containing only the key-value pairs that passed the criteria, with their values transformed by the mapper.\n- Alongside the filtered and transformed object, return:\n  - `keysKept`: The number of keys that passed the criteria.\n  - `keysFilteredOut`: The number of keys that were filtered out.\n\n### Expected Function\n\n```js\nfunction createCurriedFilterAndMap(criteria, mapper) {\n  // Your implementation here\n}\n```\n\n### Usage\n\n```js\nconst isNumberValue = (key, value) =\u003e typeof value === \"number\";\nconst increment = (val) =\u003e (typeof val === \"number\" ? val + 1 : val);\n\nconst filterAndIncrementNumbers = createCurriedFilterAndMap(\n  isNumberValue,\n  increment,\n);\n\nconst inputObject = {\n  name: \"Alice\",\n  age: 25,\n  score: 99,\n  active: true,\n};\n\nconst result = filterAndIncrementNumbers(inputObject);\n\nconsole.log(result);\n```\n\n### Example Output\n\n```sh\n$ node main.js\n{\n  filteredObject: { age: 26, score: 100 },\n  keysKept: 2,\n  keysFilteredOut: 2\n}\n```\n\n### Notes\n\n- Ensure your function returns a partially applied (curried) function. That means `createCurriedFilterAndMap(criteria, mapper)` returns a function that takes the object separately.\n- `criteria` receives `(key, value)` and returns a boolean.\n- `mapper` receives `(value)` and returns a transformed value.\n- Count `keysKept` and `keysFilteredOut` based on the object provided to the curried function.",
       "statementSource": "zone01-api",
@@ -141,6 +150,7 @@
     },
     {
       "id": "evensum",
+      "level": 1,
       "title": "evenSum",
       "statement": "## evenSum\n\n### Instructions\n\nWrite a function that takes a number (`n`) and returns the **sum of all even numbers from `0` to `n`**.\n\n**Even numbers** are numbers that can be divided by `2` with no remainder, like `0, 2, 4, 6, 8...`\n\nFor example:\n\n- `evenSum(5)` → `0 + 2 + 4` → `6`\n- `evenSum(1)` → `0` (because there are no even numbers between `0` and `1` except `0`)\n\n### Expected function\n\n```javascript\nfunction evenSum(nums) {}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```javascript\nconsole.log(evenSum(5));\nconsole.log(evenSum(1));\n```\n\nAnd its output:\n\n```console\n$ node main.js\n6\n0\n$\n```\n\n### Tip\n\nTo calculate the sum:\n\n1. Start with the total as `0`.\n2. Go through every number from `0` to `n`.\n3. If the number is even, add it to the total.\n4. At the end, return the total.",
       "statementSource": "zone01-api",
@@ -156,6 +166,7 @@
     },
     {
       "id": "exam-grader",
+      "level": 5,
       "title": "Exam Grader",
       "statement": "## Exam Grader\n\n### Instructions\n\nWrite a function `examGrader(timeout, exercises)` that:\n\n- Takes two parameters:\n  - `timeout`: A positive integer representing the maximum allowed time for the entire exam in milliseconds.\n  - `exercises`: An array of Promises, where each Promise represents an exercise in the exam. Each Promise resolves with an object containing:\n    - `note`: A number from `0` to `20` representing the grade for that exercise.\n- Executes the exercises in the same order they are provided.\n- Calculates the **final grade** by:\n  - Summing the grades (`note`) of all exercises that completed execution within the `timeout`.\n  - If the total time of the exercises exceeds the `timeout`, the function should immediately stop processing further exercises.\n- Returns the **final grade** as a number.\n\n### Expected Function\n\n```js\nfunction examGrader(timeout, exercises) {\n  // Your implementation here\n}\n```\n\n### Usage\n\n```js\nconst exercises = [\n  () =\u003e\n    new Promise((res) =\u003e setTimeout(() =\u003e res({ time: 1000, note: 15 }), 1000)),\n  () =\u003e\n    new Promise((res) =\u003e setTimeout(() =\u003e res({ time: 2000, note: 18 }), 2000)),\n  () =\u003e\n    new Promise((res) =\u003e setTimeout(() =\u003e res({ time: 500, note: 12 }), 500)),\n];\n\nexamGrader(3000, exercises).then((finalGrade) =\u003e {\n  console.log(`Final Grade: ${finalGrade}`);\n});\n\nexamGrader(4000, exercises).then((finalGrade) =\u003e {\n  console.log(`Final Grade: ${finalGrade}`);\n});\n```\n\n### Example Output\n\n```sh\n$ node main.js\nFinal Grade: 15\nFinal Grade: 45\n```",
       "statementSource": "zone01-api",
@@ -171,6 +182,7 @@
     },
     {
       "id": "factorial",
+      "level": 1,
       "title": "factorial",
       "statement": "## factorial\n\n### Instructions\n\nWrite a function that receives a number (`n`) and returns **its factorial**.\n\n**The factorial** of a number means multiplying all the numbers from `n` down to `1`.\nFor example:\n\n- `factorial(5)` → `5 * 4 * 3 * 2 * 1` → `120`\n- `factorial(0)` → `1` (By definition, factorial of `0` is always `1`.)\n\n### Expected function\n\n```javascript\nfunction factorial(n) {}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```javascript\nconsole.log(factorial(5));\nconsole.log(factorial(0));\n```\n\nAnd its output:\n\n```console\n$ node main.js\n120\n1\n$\n```\n\n### Tip\n\nIf you’re not sure how to start, try writing the steps in plain language first:\n\n1. Start with the result as `1`.\n2. Multiply it by each number from `n` down to `1`.\n3. Return the result.",
       "statementSource": "zone01-api",
@@ -186,6 +198,7 @@
     },
     {
       "id": "fibonacci",
+      "level": 1,
       "title": "fibonacci",
       "statement": "## fibonacci\n\n### Instructions\n\nWrite a function that takes a number (`n`) and returns the **n-th number** in the **Fibonacci sequence**.\n\n**What’s the Fibonacci sequence?**\n\nIt starts like this:\n\n```\n0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...\n```\n\n- The first two numbers are always `0` and `1`.\n- Every next number is the **sum of the two before it**.\n\nFor example:\n\n- `fibonacci(0)` → `0`\n- `fibonacci(1)` → `1`\n- `fibonacci(2)` → `1` (`0 + 1`)\n- `fibonacci(3)` → `2` (`1 + 1`)\n- `fibonacci(4)` → `3` (`2 + 1`)\n- and so on.\n\n### Expected function\n\n```javascript\nfunction fibonacci(n) {}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```javascript\nconsole.log(fibonacci(6));\nconsole.log(fibonacci(10));\n```\n\nAnd its output:\n\n```console\n$ node main.js\n8\n55\n$\n```\n\n### Tip\n\nTo get the Fibonacci number:\n\n1. Start from `0` and `1`.\n2. Add them to get the next number.\n3. Repeat this until you reach the `n`-th number.",
       "statementSource": "zone01-api",
@@ -201,6 +214,7 @@
     },
     {
       "id": "final-attempt",
+      "level": 5,
       "title": "Final Attempt",
       "statement": "## Final Attempt\n\n### Instructions\n\nWrite a function `FinalAttempt(callback, count)` that:\n\n- Takes two parameters:\n  - `callback`: An asynchronous function to be invoked.\n  - `count`: A positive integer representing the maximum number of retries.\n- Returns a function that:\n  - Accepts any number of arguments. These arguments are passed to the `callback` when invoked.\n  - Attempts to call the `callback` with the provided arguments. If the `callback` throws an error or rejects, retry the call until the `count` limit is reached.\n  - If all attempts fail, it should return `\"Final Attempt Fail\"`.\n  - If the `callback` succeeds within the retry limit, return the result of the `callback`.\n\n### Expected Function\n\n```js\nfunction FinalAttempt(callback, count) {\n  // Your implementation here\n}\n```\n\n### Usage\n\n```js\nconst unreliableAsyncFunction = async (param) =\u003e {\n  if (Math.random() \u003e 0.7) {\n    return `Success with ${param}`;\n  }\n  throw new Error(\"Failure\");\n};\n\nconst finalAttempt = FinalAttempt(unreliableAsyncFunction, 3);\n\nfinalAttempt(\"test\")\n  .then((result) =\u003e console.log(result))\n  .catch((err) =\u003e console.error(err));\n```\n\n### Example Output\n\n```sh\n$ node main.js\nSuccess with test\n\n$ node main.js\nFinal Attempt Fail\n```",
       "statementSource": "zone01-api",
@@ -216,6 +230,7 @@
     },
     {
       "id": "flat-object",
+      "level": 4,
       "title": "Flat Object",
       "statement": "## Flat Object\n\n### Instructions\n\nWrite a function `flattenAndMap(obj, mapper)` that:\n\n- Takes a deeply nested object `obj` where values might be objects or primitives.\n- Flattens this object so that each key in the resulting object represents the path to the value in the original object, using dot notation for nesting (e.g. `user.address.city`).\n- Applies a mapper function to each value (primitive) before placing it into the flattened result.\n- Returns an object with:\n  - `flattened`: The flattened object after mapping values.\n  - `originalKeysCount`: The total number of keys (including nested) found in the original object.\n  - `transformedKeysCount`: The total number of keys whose values were transformed by the mapper.\n\n### Expected Function\n\n```js\nfunction flattenAndMap(obj, mapper) {\n  // Your implementation here\n}\n```\n\n### Usage\n\n```js\nconst nestedObj = {\n  user: {\n    name: \"Alice\",\n    address: {\n      city: \"Wonderland\",\n      zip: 12345,\n    },\n  },\n  meta: {\n    roles: [\"admin\", \"editor\"],\n    active: true,\n  },\n};\n\nconst toUpperCaseStrings = (value) =\u003e\n  typeof value === \"string\" ? value.toUpperCase() : value;\n\nconst result = flattenAndMap(nestedObj, toUpperCaseStrings);\n\nconsole.log(result);\n```\n\n### Example Output\n\n```sh\n$ node main.js\n{\n  flattened: {\n    'user.name': 'ALICE',\n    'user.address.city': 'WONDERLAND',\n    'user.address.zip': 12345,\n    'meta.roles': ['ADMIN', 'EDITOR'],\n    'meta.active': true\n  },\n  originalKeysCount: 5,\n  transformedKeysCount: 5\n}\n```\n\n### Notes\n\n- The mapper function should be applied to every value, regardless of type. If it's not a string or the mapper doesn't change it, that's fine.\n- Arrays are considered values too, and should be mapped. If mapping arrays, apply the mapper to each element.\n- Count all final flattened paths as keys in the resulting object.\n- `originalKeysCount` is how many ultimate primitive or array-containing keys were found in the original nested structure.\n- `transformedKeysCount` is how many values ended up being transformed by the mapper (even if that transformation doesn't change the value).",
       "statementSource": "zone01-api",
@@ -231,6 +246,7 @@
     },
     {
       "id": "flatten-object",
+      "level": 7,
       "title": "Flatten Object",
       "statement": "## Flatten Object\n\n### Instructions\n\nWrite a function `flattenObject(obj)` that flattens a nested object into a single-level object where keys represent the nested path using dot notation (`.`).\n\nThe function should:\n\n- Convert all nested properties into a single-level object.\n- Use dot notation to represent the path of nested keys.\n- Maintain array indices in the key path when flattening arrays.\n\n### Expected Function\n\n```js\nfunction flattenObject(obj) {\n  // Your implementation here\n}\n```\n\n### Usage\n\nGiven the following object:\n\n```js\nconst obj = {\n  a: 1,\n  b: { c: 2, d: { e: 3 } },\n  f: [4, 5, { g: 6 }],\n};\n\nconst flattened = flattenObject(obj);\nconsole.log(flattened);\n```\n\n### Example Output\n\n```sh\n{\n  \"a\": 1,\n  \"b.c\": 2,\n  \"b.d.e\": 3,\n  \"f.0\": 4,\n  \"f.1\": 5,\n  \"f.2.g\": 6\n}\n```",
       "statementSource": "zone01-api",
@@ -246,6 +262,7 @@
     },
     {
       "id": "grid-words-finder",
+      "level": 2,
       "title": "Grid Words Finder",
       "statement": "## Grid Words Finder\n\n### Instructions\n\nWrite a function that takes:\n\n- A **grid** (2D array of letters).\n- An **array of words**.\n\nThe function should:\n\n- **Find and return** all the words from the array that can be traced:\n  - **Horizontally** (left to right).\n  - **Vertically** (top to bottom).\n\n_(You don’t need to check backwards or diagonal directions.)_\n\n### Expected function\n\n```js\nfunction gridWordsFinder(grid, words) {}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```js\nconst grid = [\n  [\"c\", \"a\", \"t\"],\n  [\"a\", \"a\", \"t\"],\n  [\"r\", \"a\", \"t\"],\n  [\"d\", \"o\", \"g\"],\n];\n\nconsole.log(\n  gridWordsFinder(grid, [\"cat\", \"dog\", \"rat\", \"tar\", \"car\", \"rac\", \"g\"]),\n);\nconsole.log(gridWordsFinder(grid, []));\n```\n\nAnd its output:\n\n```console\n$ node main.js\n[\"cat\", \"dog\", \"rat\", \"car\", \"g\"]\n[]\n$\n```\n\n### Tip\n\nTo solve it:\n\n1. For **each row**, join the letters into a word.\n2. For **each column**, join the letters into a word.\n3. For every word in the list, check if it appears in any row or column.\n4. Collect and return all matching words.",
       "statementSource": "zone01-api",
@@ -261,6 +278,7 @@
     },
     {
       "id": "grid-words-finder-2",
+      "level": 3,
       "title": "Grid Words Finder 2",
       "statement": "## Grid Words Finder 2\n\n### Instructions\n\nWrite a function that takes:\n\n- A **2D grid of letters** (`grid`)\n- A **word** to search for (`word`)\n\nYour function should:\n\n1. **Find all occurrences** of the word in the grid.\n2. For each occurrence, return an object:\n   - `x`: column index (starting position)\n   - `y`: row index (starting position)\n   - `direction`: `\"horizontal\"` or `\"vertical\"`\n\n\u003e Note: The word should be searched only in the positive direction, left to right for horizontal, and top to bottom for vertical.\n\n### Expected function\n\n```js\nfunction gridWordFinder2(grid, word) {}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```js\nconst grid = [\n  [\"c\", \"a\", \"t\"],\n  [\"d\", \"o\", \"g\"],\n  [\"r\", \"a\", \"t\"],\n];\n\nconsole.log(gridWordFinder2(grid, \"cat\"));\n```\n\nAnd its output:\n\n```console\n$ node main.js\n[{x:0, y:0, direction:\"horizontal\"}]\n$\n```\n\n### Tip\n\nTo solve this:\n\n1. **Horizontal search**:\n   - For each row (`y`), check if the row joined as a string contains the word.\n   - If yes, note down the starting `x` and `y`.\n\n2. **Vertical search**:\n   - Transpose the grid → turn columns into rows (can be done using `.map()`).\n   - Repeat the horizontal search on this new grid.\n   - When you find a word, swap `x` and `y` in the result.",
       "statementSource": "zone01-api",
@@ -276,6 +294,7 @@
     },
     {
       "id": "insertion-sort-analyzer",
+      "level": 3,
       "title": "Insertion Sort Analyzer",
       "statement": "## Insertion Sort Analyzer\n\n### Instructions\n\nWrite a function that takes:\n\n- An array (`arr`)\n- A **comparator** function (`comparator`) that tells how to compare two numbers\n\nYour function should:\n\n1. **Sort the array using the insertion sort algorithm**.\n2. Keep track of:\n   - **iterations** → how many steps (comparisons) it made.\n   - **swaps** → how many times two values were switched.\n\n3. Return an object containing:\n   - The **sorted array**.\n   - The number of **iterations**.\n   - The number of **swaps**.\n\n### Expected function\n\n```js\nfunction insertionSortAnalyzer(arr, comparator) {}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```js\nconst comparator = (a, b) =\u003e a - b;\n\nconst result = insertionSortAnalyzer([5, 2, 4, 6, 1, 3], comparator);\n\nconsole.log(result);\n```\n\nAnd its output:\n\n```console\n$ node main.js\n{\n  sortedArray: [1, 2, 3, 4, 5, 6],\n  iterations: 12,\n  swaps: 9\n}\n$\n```\n\n### Tip — How Insertion Sort Works\n\n1. Start from the second item (`i = 1`).\n2. Compare it with the previous items.\n3. If it’s smaller, **swap** it backward until it’s in the right spot.\n4. Count each step (iteration) and each time you swap two numbers.\n\n### Tip - About the Comparator\n\nThe **comparator** tells the function how to compare numbers:\n\n```javascript\n(a, b) =\u003e a - b;\n```\n\n- If the result is `\u003c 0`, `a` comes **before** `b`.\n- If it’s `0`, they are **equal**.\n- If it’s `\u003e 0`, `a` comes **after** `b`.\n\n### Notes\n\n- The `comparator` function determines the sorting order:\n  - If `comparator(a, b)` returns a value \u003c 0, `a` is considered smaller than `b`.\n  - If it returns 0, `a` and `b` are considered equal.\n  - If it returns a value \u003e 0, `a` is considered greater than `b`.\n- You should implement a **step-by-step insertion sort**, counting both the number of iterations through the array and the number of swaps performed.",
       "statementSource": "zone01-api",
@@ -291,6 +310,7 @@
     },
     {
       "id": "nested-array-reverser",
+      "level": 2,
       "title": "Nested Array Reverser",
       "statement": "## Nested Array Reverser\n\n### Instructions\n\nWrite a function that takes a **2D array of words** (an array that contains arrays of words).\n\nYour function should:\n\n1. **Reverse the order of the inner arrays**.\n2. **Reverse the order of the words inside each inner array**.\n3. **Join all the words** into a single string, separated by spaces.\n4. **Return the string**.\n\nIf the input array is empty (`[]`), return an empty string (`\"\"`).\n\n### Expected function\n\n```javascript\nnestedArrayReverser(words);\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```javascript\nconsole.log(\n  nestedArrayReverser([\n    [\"hello\", \"world\"],\n    [\"this\", \"is\"],\n    [\"a\", \"test\"],\n  ]),\n);\nconsole.log(nestedArrayReverser([[]]));\n```\n\nAnd its output:\n\n```console\n$ node main.js\ntest a is this world hello\n$\n$\n```\n\n### Tip\n\nTo solve it:\n\n1. Reverse the whole outer array → `.reverse()`.\n2. For each inner array, reverse it too.\n3. Flatten all the arrays into one → `.flat()`.\n4. Join the words into a string with `.join(\" \")`.",
       "statementSource": "zone01-api",
@@ -306,6 +326,7 @@
     },
     {
       "id": "object-lab",
+      "level": 4,
       "title": "Object Lab",
       "statement": "## Object Lab\n\n### Instructions\n\nWrite a function `mergeAndTransform(objects, transforms)` that:\n\n- Takes an array of objects `objects` and an array of transformation functions `transforms`.\n- Merges all objects into a single object:\n  - If there are conflicting keys, the value from the later object in the array overwrites the earlier one.\n  - Track how many keys are newly added and how many are overwritten during this merge process.\n- Once merged, apply each function in `transforms` in sequence. Each transform is a function that takes the object and returns a new (or modified) object.\n- Return an object with:\n  - `finalObject`: The final transformed object.\n  - `transformationsCount`: The total number of transformations applied.\n  - `keysAdded`: The total number of keys added during the merge.\n  - `keysOverwritten`: The total number of keys overwritten during the merge.\n\n### Expected Function\n\n```js\nfunction mergeAndTransform(objects, transforms) {\n  // Your implementation here\n}\n```\n\n### Usage\n\n```js\nconst objArray = [{ a: 1, b: 2 }, { b: 3, c: 4 }, { d: 5 }];\n\nconst transforms = [\n  (obj) =\u003e ({ ...obj, a: obj.a * 10 }),\n  (obj) =\u003e {\n    const { b, ...rest } = obj;\n    return rest;\n  },\n  (obj) =\u003e (obj.e ? obj : { ...obj, e: \"newKey\" }),\n];\n\nconst result = mergeAndTransform(objArray, transforms);\n\nconsole.log(result);\n```\n\n### Example Output\n\n```sh\n$ node main.js\n{\n  finalObject: { a: 10, c: 4, d: 5, e: 'newKey' },\n  transformationsCount: 3,\n  keysAdded: 2,\n  keysOverwritten: 1\n}\n```\n\n### Notes\n\n- Consider all transforms as functions that return an object.\n- **keysAdded**: New keys introduced during merging that did not exist in the object at index `0` before.\n- **keysOverwritten**: Keys that existed in an earlier object but were replaced by a later object's value.\n- Merging should be done before any transformations.\n- Functions can be pure or can mutate the object, but you should ensure counting keys is done correctly during the merge phase before transformations.\n- The Objects array will never be empty.",
       "statementSource": "zone01-api",
@@ -321,6 +342,7 @@
     },
     {
       "id": "palindromic-chains",
+      "level": 2,
       "title": "Palindromic Chains",
       "statement": "## Palindromic Chains\n\n### Instructions\n\nWrite a function that takes an array of numbers.\n\nFor **each number** in the array:\n\n1. **Check if it’s a palindrome** (reads the same forwards and backwards).\n2. If it’s not, **reverse it and add it to itself**.\n3. Repeat step 2 until:\n   - It becomes a palindrome, or\n   - You’ve tried **100 times**. (If it doesn’t work after 100 tries, return `0` for that number.)\n\nFinally, return an **array of the resulting palindromes**.\n\n### Expected function\n\n```js\nfunction palindromicChain(numbers) {}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```js\nconsole.log(palindromicChain([87, 33, 123, 196]));\n```\n\nAnd its output:\n\n```console\n$ node main.js\n[4884, 33, 444, 0]\n$\n```\n\n### 🔎 Explanation\n\n| Number | Steps                                       | Result |\n| ------ | ------------------------------------------- | ------ |\n| 87     | 87 + 78 = 165 → 726 → 1353 → 4884           | 4884   |\n| 33     | Already a palindrome                        | 33     |\n| 123    | 123 + 321 = 444                             | 444    |\n| 196    | Tried 100 times → never became a palindrome | 0      |\n\n---\n\n### Tip\n\nTo solve it:\n\n1. **Write a function to check if a number is a palindrome**.\n2. For each number:\n   - If it’s already a palindrome → keep it.\n   - Else → repeat reversing and adding up to 100 times.\n\n3. Collect the results in an array.",
       "statementSource": "zone01-api",
@@ -336,6 +358,7 @@
     },
     {
       "id": "perfectnum",
+      "level": 1,
       "title": "PerfectNum",
       "statement": "## PerfectNum\n\n### Instructions\n\nWrite a function that takes a number (`n`) and returns:\n\n- `true` → if the number **is a perfect number**.\n- `false` → if it’s **not** a perfect number.\n\n**What’s a perfect number?**\n\nA **perfect number** is a positive number where:\n\n- The sum of all its **proper divisors** (numbers that divide it _except itself_) equals the number.\n\nFor example:\n\n- `6` → divisors: `1, 2, 3` → `1 + 2 + 3 = 6` → **perfect!**\n- `28` → divisors: `1, 2, 4, 7, 14` → `1 + 2 + 4 + 7 + 14 = 28` → **perfect!**\n- `12` → divisors: `1, 2, 3, 4, 6` → `1 + 2 + 3 + 4 + 6 = 16` → **not perfect.**\n\n### Expected function\n\n```javascript\nfunction isPerfectNum(n) {}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```javascript\nconsole.log(isPerfectNum(6));\nconsole.log(isPerfectNum(28));\nconsole.log(isPerfectNum(12));\n```\n\nAnd its output:\n\n```console\n$ node main.js\ntrue\ntrue\nfalse\n$\n```\n\n### Tip\n\nTo check if a number is perfect:\n\n1. Start with the total as `0`.\n2. For every number less than `n` (from `1` to `n - 1`):\n   - If it divides `n` with no remainder, add it to the total.\n\n3. At the end, if the total equals `n`, it’s a perfect number.",
       "statementSource": "zone01-api",
@@ -351,6 +374,7 @@
     },
     {
       "id": "pipeline",
+      "level": 4,
       "title": "Pipeline",
       "statement": "## Pipeline\n\n### Instructions\n\nWrite a function `pipeline(initialValue, pipeline)` that:\n\n- Takes an initial value `initialValue` and an array of functions `functions`.\n- Each function in `functions` takes the current value and returns a new value.\n- After executing all pipeline functions in sequence, return an object with:\n  - `finalValue`: The final transformed value.\n  - `steps`: An array of objects, each describing a pipeline step:\n    - `index`: The step index.\n    - `input`: The input value to that step.\n    - `output`: The output value from that step.\n- The pipeline should be executed in a purely functional manner (no external side effects needed).\n\n### Expected Function\n\n```js\nfunction pipeline(initialValue, functions) {\n  // Your implementation here\n}\n```\n\n### Usage\n\n```js\nconst functions = [\n  (val) =\u003e val + 1,\n  (val) =\u003e val * 2,\n  (val) =\u003e `Result: ${val}`,\n];\n\nconst result = pipeline(0, functions);\n\nconsole.log(result);\n```\n\n### Example Output\n\n```sh\n$ node main.js\n{\n  finalValue: 'Result: 2',\n  steps: [\n    { index: 0, input: 0, output: 1 },\n    { index: 1, input: 1, output: 2 },\n    { index: 2, input: 2, output: 'Result: 2' }\n  ]\n}\n```\n\n### Notes\n\n- You can use `Array.prototype.reduce` or a similar approach to run through the pipeline.\n- Ensure that each step’s input and output is recorded accurately.\n- Keep the design purely functional as much as possible.",
       "statementSource": "zone01-api",
@@ -366,6 +390,7 @@
     },
     {
       "id": "sentencepyramid",
+      "level": 2,
       "title": "sentencePyramid",
       "statement": "## sentencePyramid\n\n### Instructions\n\nWrite a function that takes a string (`sentence`) and **prints a pyramid** where:\n\n- The **first line** prints the first word.\n- The **second line** prints the first two words.\n- The **third line** prints the first three words.\n- And so on… until the full sentence is printed.\n\n### Expected function\n\n```js\nfunction sentencePyramid(sentence) {}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```js\nsentencePyramid(\"This is a simple sentence pyramid\");\n```\n\nAnd its output:\n\n```console\n$ node main.js\nThis\nThis is\nThis is a\nThis is a simple\nThis is a simple sentence\nThis is a simple sentence pyramid\n$\n```\n\n### Tip\n\nTo build the pyramid:\n\n1. Split the sentence into words → use `.split(\" \")`.\n2. Start from the first word and print lines adding one more word each time.\n3. Stop when all words are printed.",
       "statementSource": "zone01-api",
@@ -381,6 +406,7 @@
     },
     {
       "id": "sleep-breaker",
+      "level": 5,
       "title": "Sleep Breaker",
       "statement": "## Sleep Breaker\n\n### Instructions\n\nWrite a function `sleepBreaker(delay, breaker)` that:\n\n- Takes two parameters:\n  - `delay`: A positive integer representing the delay time in milliseconds.\n  - `breaker`: An asynchronous function that will determine if the sleep should be interrupted.\n- Returns a `Promise` that:\n  - Resolves after the given `delay` in milliseconds.\n  - If the `breaker` function resolves before the delay is completed, the `Promise` should resolve immediately, interrupting the sleep.\n\n### Expected Function\n\n```js\nfunction sleepBreaker(delay, breaker) {\n  // Your implementation here\n}\n```\n\n### Usage\n\n```js\nconst breaker = async () =\u003e {\n  await new Promise((res) =\u003e setTimeout(res, 100));\n  return true;\n};\n\nsleepBreaker(1000, breaker).then(() =\u003e {\n  console.log(\"Wake up!\");\n});\n```\n\n### Example Output\n\n```sh\n$ node main.js\nWake up! // After ~100ms because the breaker resolved\n```",
       "statementSource": "zone01-api",
@@ -396,6 +422,7 @@
     },
     {
       "id": "snake-path-validator",
+      "level": 3,
       "title": "Snake Path Validator",
       "statement": "## Snake Path Validator\n\n### Instructions\n\nWrite a function `isSnakePath(grid)` that checks if all the `1`s in a 2D grid form **a single, connected snake** path.\n\nEach cell in the grid is either:\n\n- `1` → part of the snake\n- `0` → empty space\n\n#### ✅ Rules for a valid snake path\n\n1. All the `1`s must be **connected** — only **horizontally or vertically** (no diagonal connection).\n2. There must be **only one connected group of `1`s** — no disconnected parts.\n3. A snake of just **one single `1`** is also valid.\n4. ❗ You **cannot use**:\n   - `for`, `while`, `do while`\n   - Recursion\n   - Manual indexing\n\n5. ✅ You **can use**:\n   - `.map()`, `.filter()`, `.flatMap()`, `.reduce()` and other array methods\n\n### Expected function\n\n```js\nfunction isSnakePath(grid) {}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```js\nconst grid1 = [\n  [1, 0, 0, 0],\n  [1, 1, 0, 0],\n  [0, 1, 1, 0],\n  [0, 0, 1, 0],\n];\n\nconst grid2 = [\n  [1, 0, 0, 0],\n  [1, 0, 1, 0],\n  [0, 0, 1, 0],\n  [0, 0, 1, 0],\n];\n\nconsole.log(isSnakePath(grid1)); // true\nconsole.log(isSnakePath(grid2)); // false\n```\n\nAnd its output:\n\n```console\n$ node main.js\ntrue\nfalse\n$\n```\n\n### Tip\n\n- Use `.flatMap()` or `.map()` to collect all the positions of the `1`s.\n- Use `.some()` or `.every()` to check connections between them.\n- You can simulate a search or use sets to track visited `1`s — all using array methods!",
       "statementSource": "zone01-api",
@@ -411,6 +438,7 @@
     },
     {
       "id": "swappable-object",
+      "level": 7,
       "title": "Swappable Object",
       "statement": "## Swappable Object\n\n### Instructions\n\nWrite a function `swappableObject(obj)` that takes an object and returns a new object where keys and values are automatically swappable when accessed.\n\nThe returned object should:\n\n- Allow access using original keys (`obj.a` → `\"apple\"`).\n- Allow access using original values as keys (`obj.apple` → `\"a\"`).\n- Maintain this behavior dynamically for all properties.\n\n\u003e Looks like a Proxy 💡! you are allowed to use anything you want.\n\n### Expected Function\n\n```js\nfunction swappableObject(obj) {\n  // Your implementation here\n}\n```\n\n### Usage\n\n```js\nconst obj = swappableObject({ a: \"apple\", b: \"banana\" });\n\nconsole.log(obj.a); // \"apple\"\nconsole.log(obj.apple); // \"a\"\nconsole.log(obj.b); // \"banana\"\nconsole.log(obj.banana); // \"b\"\n```\n\n### Example Output\n\n```sh\n$ node main.js\napple\na\nbanana\nb\n```\n\n### Tips\n\nA **Proxy** is like a **wrapper** around an object that lets you **control or customize any action** performed on it — such as getting or setting a property — using special functions called **traps**.\n\n```js\nconst user = { name: \"Alice\", age: 25 };\n\nconst proxyUser = new Proxy(user, {\n  get(target, prop) {\n    console.log(`Getting ${prop}`);\n    return target[prop];\n  },\n  set(target, prop, value) {\n    console.log(`Setting ${prop} to ${value}`);\n    target[prop] = value;\n    return true;\n  },\n});\n\nproxyUser.name; // 👉 logs: Getting name\nproxyUser.age = 30; // 👉 logs: Setting age to 30\n```",
       "statementSource": "zone01-api",
@@ -426,6 +454,7 @@
     },
     {
       "id": "transform-keys",
+      "level": 7,
       "title": "Transform Keys",
       "statement": "## Transform Keys\n\n### Instructions\n\nWrite a function `transformKeys(obj, transformFn)` that recursively applies a transformation function to all keys of an object.\n\nThe function should:\n\n- Apply `transformFn` to every key in the object.\n- Recursively apply the transformation to all nested objects.\n- Preserve all values without modification.\n\n### Expected Function\n\n```js\nfunction transformKeys(obj, transformFn) {\n  // Your implementation here\n}\n```\n\n### Usage\n\nGiven the following object:\n\n```js\nconst obj = {\n  FirstName: \"Alice\",\n  LastName: \"Doe\",\n  Address: {\n    StreetName: \"Main St\",\n    ZipCode: 12345,\n  },\n};\n\nconst toSnakeCase = (key) =\u003e\n  key\n    .replace(/[A-Z]/g, (letter) =\u003e `_${letter.toLowerCase()}`)\n    .replace(/^_/, \"\");\nconst transformed = transformKeys(obj, toSnakeCase);\nconsole.log(transformed);\n```\n\n### Example Output\n\n```sh\n{\n  \"first_name\": \"Alice\",\n  \"last_name\": \"Doe\",\n  \"address\": {\n    \"street_name\": \"Main St\",\n    \"zip_code\": 12345\n  }\n}\n```",
       "statementSource": "zone01-api",
@@ -441,6 +470,7 @@
     },
     {
       "id": "trap-object",
+      "level": 7,
       "title": "Trap Object",
       "statement": "## Trap Object\n\n### Instructions\n\nWrite a function **`trapObject(obj, fn)`** that takes an object and a callback function.\nThe function should return a new object that behaves like the original, but **calls `fn` every time a property is accessed or modified.**\n\nThe callback **`fn`** should be invoked with the following arguments:\n\n- On **property access**: `\"get\"`, the property key, and its current value.\n- On **property modification**: `\"set\"`, the property key, the old value, and the new value.\n\n### Expected Function\n\n```js\nfunction trapObject(obj, fn) {\n  // Your implementation here\n}\n```\n\n### Usage\n\n```js\nconst logger = (action, key, value, newValue) =\u003e {\n  if (action === \"get\") {\n    console.log(`Accessed ${key}: ${value}`);\n  } else if (action === \"set\") {\n    console.log(`Modified ${key}: ${value} → ${newValue}`);\n  }\n};\n\nconst obj = trapObject({ name: \"Alice\", age: 25 }, logger);\n\nconsole.log(obj.name); // Logs: Accessed name: Alice\nobj.age = 30; // Logs: Modified age: 25 → 30\nconsole.log(obj.age); // Logs: Accessed age: 30\n```\n\n### Example Output\n\n```sh\n$ node main.js\nAccessed name: Alice\nAlice\nModified age: 25 → 30\nAccessed age: 30\n30\n```\n\n### Tips\n\nA **Proxy** is like a **wrapper** around an object that lets you **control or customize any action** performed on it — such as getting or setting a property — using special functions called **traps**.\n\n```js\nconst user = { name: \"Alice\", age: 25 };\n\nconst proxyUser = new Proxy(user, {\n  get(target, prop) {\n    console.log(`Getting ${prop}`);\n    return target[prop];\n  },\n  set(target, prop, value) {\n    console.log(`Setting ${prop} to ${value}`);\n    target[prop] = value;\n    return true;\n  },\n});\n\nproxyUser.name; // 👉 logs: Getting name\nproxyUser.age = 30; // 👉 logs: Setting age to 30\n```",
       "statementSource": "zone01-api",
@@ -456,6 +486,7 @@
     },
     {
       "id": "zoo-race",
+      "level": 5,
       "title": "Zoo Race",
       "statement": "## Zoo Race\n\n### Instructions\n\nWrite two functions, `animal` and `zooRace`, to simulate a race between animals:\n\n1. **Function `animal`**:\n   - Takes the following parameters:\n     - `name`: The name of the animal.\n     - `maxSpeed`: The maximum speed of the animal (in meters per second).\n     - `maxSpeedRange`: The distance (in meters) the animal can sustain its `maxSpeed`.\n     - `midSpeed`: The average speed of the animal (in meters per second).\n     - `midSpeedRange`: The distance (in meters) the animal can sustain its `midSpeed`.\n     - `speed`: The fallback speed of the animal after exceeding `maxSpeedRange` and `midSpeedRange`.\n     - `distance`: The total distance the animal needs to cover (in meters).\n   - Returns a Promise that:\n     - Resolves with the `name` of the animal.\n     - Resolves after the animal completes the race based on the calculated time.\n\n2. **Function `zooRace`**:\n   - Takes an array of `animal` Promises.\n   - Resolves with the name of the winning animal (the one that completes the race first).\n\n### Speed Calculation Formula\n\nThe total time for the animal to complete the race is calculated in segments:\n\n1. **If the distance is within `maxSpeedRange`:**\n   Time = distance / maxSpeed\n\n2. **If the distance exceeds `maxSpeedRange` but is within `maxSpeedRange + midSpeedRange`:**\n   Time = (maxSpeedRange / maxSpeed) + ((distance - maxSpeedRange) / midSpeed)\n\n3. **If the distance exceeds `maxSpeedRange + midSpeedRange`:**\n   Time = (maxSpeedRange / maxSpeed) + (midSpeedRange / midSpeed) + ((distance - maxSpeedRange - midSpeedRange) / speed)\n\nThe total time is the sum of the times for each segment, and the Promise for the `animal` function should resolve after this calculated time.\n\n### Expected Functions\n\n```js\nfunction animal(\n  name,\n  maxSpeed,\n  maxSpeedRange,\n  midSpeed,\n  midSpeedRange,\n  speed,\n  distance,\n) {\n  // Your implementation here\n}\n\nfunction zooRace(animals) {\n  // Your implementation here\n}\n```\n\n### Usage\n\n```js\nconst rabbit = animal(\"Rabbit\", 20, 50, 10, 100, 5, 200);\nconst turtle = animal(\"Turtle\", 5, 20, 3, 50, 1, 200);\nconst cheetah = animal(\"Cheetah\", 30, 80, 15, 100, 10, 200);\n\nzooRace([rabbit, turtle, cheetah]).then((winner) =\u003e {\n  console.log(`The winner is: ${winner}`);\n});\n```\n\n### Example Output\n\n```sh\n$ node main.js\nThe winner is: Cheetah\n```",
       "statementSource": "zone01-api",

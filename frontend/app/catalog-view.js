@@ -1,13 +1,25 @@
 function renderLevelFilters() {
   if (!levelFiltersEl) return;
   levelFiltersEl.innerHTML = "";
+  const levels = isJsTrack()
+    ? [
+        ...new Set(
+          getTrackExercises()
+            .map((ex) => ex.level)
+            .filter(Number.isInteger),
+        ),
+      ].sort((a, b) => a - b)
+    : Array.from({ length: 10 }, (_, i) => i + 1);
   const filters = [
     { id: "all", label: "Tous" },
-    ...Array.from({ length: 10 }, (_, i) => ({
-      id: String(i + 1),
-      label: `N${i + 1}`,
-    })),
+    ...levels.map((level) => ({ id: String(level), label: `N${level}` })),
+    ...(isJsTrack() && getTrackExercises().some((ex) => !ex.level)
+      ? [{ id: "unclassified", label: "Non classés" }]
+      : []),
   ];
+  if (!filters.some((filter) => filter.id === currentLevelFilter)) {
+    currentLevelFilter = "all";
+  }
   filters.forEach((f) => {
     const chip = document.createElement("button");
     chip.type = "button";
@@ -22,6 +34,9 @@ function renderLevelFilters() {
       count.className = "level-filter-count";
       count.textContent = String(getTrackExercises().length);
       chip.append(label, count);
+    } else if (f.id === "unclassified") {
+      chip.textContent = f.label;
+      chip.title = "Groupe non fourni par le catalogue";
     } else {
       const prefix = document.createElement("span");
       prefix.className = "level-prefix";
