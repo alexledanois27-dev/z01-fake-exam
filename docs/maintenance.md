@@ -251,3 +251,24 @@ suspendue. Vérification réelle :
 ```sh
 RUN_JS_CATALOG_INTEGRATION=1 go -C backend test -run TestJSAPI -v .
 ```
+
+## Copies de secours des quatre langages
+
+`backend/catalog_backup.go` enveloppe les chargements au démarrage. Il lit les
+snapshots versionnés, valide images/chemins/règles et conserve les métadonnées
+nécessaires aux corrections. En mode auto, la source API est prioritaire ; un
+échec global utilise le catalogue local complet. Un énoncé manquant peut utiliser
+la copie du même exercice et de la même URL, avec les métadonnées API courantes.
+
+`CATALOG_MODE=offline` empêche ces chargements API. Les snapshots ne sont pas un
+cache utilisateur : aucune soumission n’y est écrite et le démarrage n’écrit pas
+dans le dépôt. `cmd/sync-catalog` exporte volontairement quatre catalogues complets
+uniquement après validation de toutes les données live. Voir le README du dossier.
+
+```sh
+RUN_OFFLINE_CATALOG_INTEGRATION=1 go -C backend test -run TestOfflineCatalogCorrectionIntegration -v .
+```
+
+Ce test corrige un exercice de chaque langage depuis les métadonnées des copies.
+Le test `TestAllCatalogsStartOfflineWithoutNetwork` interdit les requêtes HTTP et
+vérifie les 175 exercices ; un autre test simule l’API en panne en mode automatique.

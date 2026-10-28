@@ -1,0 +1,578 @@
+{
+  "version": 1,
+  "track": "rust",
+  "savedAt": "2026-10-28T08:39:12Z",
+  "source": "https://zone01normandie.org/api/object/rouen",
+  "exercises": [
+    {
+      "id": "rust-checkpoint-blood-types-s",
+      "title": "blood_types_s",
+      "statement": "## blood_types_s\n\n### Instructions\n\nUse the following table to define the methods asked:\n\n| Blood Types | Donate Blood to  | Receive Blood From |\n| ----------- | ---------------- | ------------------ |\n| A+          | A+, AB+          | A+, A-, O+, O-     |\n| O+          | O+, A+, B+, AB+  | O+, O-             |\n| B+          | B+, AB+          | B+, B-, O+, O-     |\n| AB+         | AB+              | Everyone           |\n| A-          | A+, A-, AB+, AB- | A-, O-             |\n| O-          | Everyone         | O-                 |\n| B-          | B+, B-, AB+, AB- | B-, O-             |\n| AB-         | AB+, AB-         | AB-, A-, B-, O-    |\n\nImplement three methods for `BloodType`:\n\n- `can_receive_from`: returns `true` if `self` **can** receive blood from `other` blood type.\n- `donors`: which returns all the blood types that can give blood to `self`.\n- `recipients`: which returns all the blood types that can receive blood from `self`.\n\n### Expected Functions and Structures\n\n```rust\n#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]\npub enum Antigen {\n    A,\n    AB,\n    B,\n    O,\n}\n\n#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]\npub enum RhFactor {\n    Positive,\n    Negative,\n}\n\n#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]\npub struct BloodType {\n    pub antigen: Antigen,\n    pub rh_factor: RhFactor,\n}\n\nimpl BloodType {\n    pub fn can_receive_from(self, other: Self) -\u003e bool {\n        todo!()\n    }\n\n    pub fn donors(self) -\u003e Vec\u003cSelf\u003e {\n        todo!()\n    }\n\n    pub fn recipients(self) -\u003e Vec\u003cSelf\u003e {\n        todo!()\n    }\n}\n```\n\n### Usage\n\nHere is a program to test your function.\n\n```rust\nuse blood_types_s::*;\n\nfn main() {\n    let blood_type = BloodType {\n        antigen: Antigen::O,\n        rh_factor: RhFactor::Positive,\n    };\n\n    println!(\"recipients of O+ {:?}\", blood_type.recipients());\n    println!(\"donors of O+ {:?}\", blood_type.donors());\n\n    let another_blood_type = BloodType {\n        antigen: Antigen::O,\n        rh_factor: RhFactor::Positive,\n    };\n\n    println!(\n        \"donors of O+ can receive from {:?} {}\",\n        another_blood_type,\n        blood_type.can_receive_from(another_blood_type)\n    );\n}\n```\n\nAnd its output\n\n```console\n$ cargo run\nrecipients of O+ [BloodType { rh_factor: Positive, antigen: A }, BloodType { rh_factor: Positive, antigen: AB }, BloodType { rh_factor: Positive, antigen: B }, BloodType { rh_factor: Positive, antigen: O }]\ndonors of O+ [BloodType { rh_factor: Positive, antigen: O }, BloodType { rh_factor: Negative, antigen: O }]\ndonors of O+ can receive from BloodType { rh_factor: Positive, antigen: O } true\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use blood_types_s::*;\n\nfn main() {\n    let blood_type = BloodType {\n        antigen: Antigen::O,\n        rh_factor: RhFactor::Positive,\n    };\n\n    println!(\"recipients of O+ {:?}\", blood_type.recipients());\n    println!(\"donors of O+ {:?}\", blood_type.donors());\n\n    let another_blood_type = BloodType {\n        antigen: Antigen::O,\n        rh_factor: RhFactor::Positive,\n    };\n\n    println!(\n        \"donors of O+ can receive from {:?} {}\",\n        another_blood_type,\n        blood_type.can_receive_from(another_blood_type)\n    );\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "blood_types_s",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/blood-types-s/README.md"
+    },
+    {
+      "id": "rust-checkpoint-brackets-matching",
+      "title": "brackets_matching",
+      "statement": "## brackets_matching\n\n### Instructions\n\nCreate a **program** that takes an undefined number of command-line arguments. For each argument, if the expression is correctly bracketed, the program prints `OK` to the standard output, otherwise it prints `Error` followed by a newline.\n\nAll characters are ignored except for the following brackets:\n\n- parentheses `(` and `)`.\n- square brackets `[` and `]`.\n- curly braces `{` and `}`.\n\nOpening brackets must only be closed by the corresponding closing bracket. For example, a curly brace cannot close a square bracket.\n\nA `String` which does not contain any brackets is considered to be correctly bracketed.\n\nIf there are no arguments, the program must print nothing.\n\nYou'll need to get the command line arguments somehow, and this will get you started:\n\n```rust\nfn main() {\n    let args = std::env::args().collect::\u003cVec\u003c_\u003e\u003e();\n\n    //...\n}\n\n```\n\n### Usage\n\n```console\n$ cargo run '(johndoe)' | cat -e\nOK\n$ cargo run '([)]' | cat -e\nError\n$ cargo run\n$ cargo run '' '{[(0 + 0)(1 + 1)](3*(-1)){()}}' | cat -e\nOK\nOK\n```",
+      "statementSource": "zone01-api",
+      "example": "",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "brackets_matching",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/brackets-matching/README.md"
+    },
+    {
+      "id": "rust-checkpoint-brain-fuck",
+      "title": "brain_fuck",
+      "statement": "## brain_fuck\n\n### Instructions\n\nWrite a `Brainfuck` interpreter program.\nThe source code will be given as the first argument.\nThe code will always be valid.\n`Brainfuck` is a minimalist language. It consists of an array of bytes (in this exercise as many as 2048 bytes) all initialized with zero, and with a pointer to its first byte.\n\nEvery operator consists of a single character :\n\n- '\u003e' increment the pointer\n- '\u003c' decrement the pointer\n- '+' increment the pointed byte\n- '-' decrement the pointed byte\n- '.' print the pointed byte on standard output\n- '[' go to the matching ']' if the pointed byte is 0 (loop start)\n- ']' go to the matching '[' if the pointed byte is not 0 (loop end)\n\nAny other character is a comment.\n\n\u003e Use `std::env::args()` to get the program's arguments.\n\n### Usage\n\n```console\n$ cargo run \"++++++++++[\u003e+++++++\u003e++++++++++\u003e+++\u003e+\u003c\u003c\u003c\u003c-]\u003e++.\u003e+.+++++++..+++.\u003e++.\u003c\u003c+++++++++++++++.\u003e.+++.------.--------.\u003e+.\u003e.\"\nHello World!\n$ cargo run \"+++++[\u003e++++[\u003e++++H\u003e+++++i\u003c\u003c-]\u003e\u003e\u003e++\\n\u003c\u003c\u003c\u003c-]\u003e\u003e--------.\u003e+++++.\u003e.\"\nHi\n$ cargo run \"++++++++++[\u003e++++++++++\u003e++++++++++\u003e++++++++++\u003c\u003c\u003c-]\u003e---.\u003e--.\u003e-.\u003e++++++++++.\"\nabc\n```",
+      "statementSource": "zone01-api",
+      "example": "",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "brain_fuck",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/brain-fuck/README.md"
+    },
+    {
+      "id": "rust-checkpoint-car-rental",
+      "title": "car_rental",
+      "statement": "## car_rental\n\n### Instructions\n\nCreate a struct named `Car` and another one named `RentalBusiness`.\n\nThe scope of the exercise will be to modify and operate on the `Car` in the `RentalBusiness` even if this element is not declared as mutable, introducing the concept of interior mutability.\n\nTo accomplish that, you will create some methods for `RentalBusiness` that will return the field `car` in many different ways.\n\n### Expected Functions and Structures\n\n```rust\nuse std::cell::{Ref, RefCell, RefMut};\n\n#[derive(Debug, Default, PartialEq, Eq)]\npub struct Car {\n    pub color: String,\n    pub plate: String,\n}\n\n#[derive(Debug)]\npub struct RentalBusiness {\n    pub car: RefCell\u003cCar\u003e,\n}\n\nimpl RentalBusiness {\n    pub fn rent_car(\u0026self) -\u003e Ref\u003c'_, Car\u003e {\n        todo!()\n    }\n\n    pub fn sell_car(\u0026self) -\u003e Car {\n        todo!()\n    }\n\n    pub fn repair_car(\u0026self) -\u003e RefMut\u003c'_, Car\u003e {\n        todo!()\n    }\n\n    pub fn change_car(\u0026self, new_car: Car) {\n        todo!()\n    }\n}\n```\n\n### Usage\n\nHere is a program to test your function:\n\n```rust\nuse car_rental::*;\nuse std::cell::RefCell;\n\nfn main() {\n    let car_rental = RentalBusiness {\n        car: RefCell::new(Car {\n            color: \"red\".to_string(),\n            plate: \"AAA\".to_string(),\n        }),\n    };\n\n    println!(\"{:?}\", car_rental.rent_car());\n    println!(\"{:?}\", car_rental.repair_car());\n\n    {\n        let mut car = car_rental.repair_car();\n        car.color = \"blue\".to_string();\n    }\n\n    println!(\"{:?}\", car_rental.rent_car());\n\n    car_rental.change_car(Car {\n        color: \"pink\".to_string(),\n        plate: \"WWW\".to_string(),\n    });\n\n    println!(\"{:?}\", car_rental.rent_car());\n\n    println!(\"{:?}\", car_rental.sell_car());\n    println!(\"{:?}\", car_rental.sell_car());\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\nCar { color: \"red\", plate: \"AAA\" }\nCar { color: \"red\", plate: \"AAA\" }\nCar { color: \"blue\", plate: \"AAA\" }\nCar { color: \"pink\", plate: \"WWW\" }\nCar { color: \"pink\", plate: \"WWW\" }\nCar { color: \"\", plate: \"\" }\n$\n```\n\n### Notions\n\n- [std::cell::RefCell](https://doc.rust-lang.org/std/cell/struct.RefCell.html)\n- [Struct std::rc::Rc](https://doc.rust-lang.org/std/rc/struct.Rc.html)",
+      "statementSource": "zone01-api",
+      "example": "use car_rental::*;\nuse std::cell::RefCell;\n\nfn main() {\n    let car_rental = RentalBusiness {\n        car: RefCell::new(Car {\n            color: \"red\".to_string(),\n            plate: \"AAA\".to_string(),\n        }),\n    };\n\n    println!(\"{:?}\", car_rental.rent_car());\n    println!(\"{:?}\", car_rental.repair_car());\n\n    {\n        let mut car = car_rental.repair_car();\n        car.color = \"blue\".to_string();\n    }\n\n    println!(\"{:?}\", car_rental.rent_car());\n\n    car_rental.change_car(Car {\n        color: \"pink\".to_string(),\n        plate: \"WWW\".to_string(),\n    });\n\n    println!(\"{:?}\", car_rental.rent_car());\n\n    println!(\"{:?}\", car_rental.sell_car());\n    println!(\"{:?}\", car_rental.sell_car());\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "car_rental",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/car-rental/README.md"
+    },
+    {
+      "id": "rust-checkpoint-check-user-name",
+      "title": "check_user_name",
+      "statement": "## check_user_name\n\n### Instructions\n\nSometimes it is more desirable to catch the failure of some parts of a program instead of just calling panic.\n\nFor this exercise you will have to create a tool that manages users' access levels.\n\nYou will have to create an `AccessLevel` enum which could be `Guest`, `Normal`, `Admin`.\n\nYou will also have to create a `User` struct which has:\n\n- Fields:\n  - `name`: `String`\n  - `access_level`: `AccessLevel`\n- Associated functions:\n  - `new`: which initializes the struct.\n  - `send_name`: which takes `\u0026self` and returns an `Option\u003c\u0026str\u003e` with `None` if the user is a `Guest` or the `name` if the `AccessLevel` has any of the other options.\n\nAlso implement a function `check_user_name` which takes a `User`, calls `send_name` and returns a `tuple` with `true` and the user `name` if `send_name` returns the name or `false` and `\"ERROR: User is guest\"` if not.\n\n\u003e Remember to make your fields public!\n\n### Expected Functions and Data Structures\n\n```rust\npub enum AccessLevel {}\n\npub struct User {}\n\nimpl User {\n    pub fn new(name: String, level: AccessLevel) -\u003e Self {\n        todo!()\n    }\n\n    pub fn send_name(\u0026self) -\u003e Option\u003c\u0026str\u003e {\n        todo!()\n    }\n}\n\npub fn check_user_name(user: \u0026User) -\u003e (bool, \u0026str) {\n    todo!()\n}\n```\n\n### Usage\n\nHere is a program to test your function:\n\n```rust\nuse check_user_name::*;\n\nfn main() {\n    let user0 = User::new(\"Didier\".to_owned(), AccessLevel::Admin);\n    println!(\"{:?}\", check_user_name(\u0026user0));\n\n    let user1 = User::new(\"Mary\".to_owned(), AccessLevel::Normal);\n    println!(\"{:?}\", check_user_name(\u0026user1));\n\n    let user2 = User::new(\"John\".to_owned(), AccessLevel::Guest);\n    println!(\"{:?}\", check_user_name(\u0026user2));\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\n(true, \"Didier\")\n(true, \"Mary\")\n(false, \"ERROR: User is guest\")\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use check_user_name::*;\n\nfn main() {\n    let user0 = User::new(\"Didier\".to_owned(), AccessLevel::Admin);\n    println!(\"{:?}\", check_user_name(\u0026user0));\n\n    let user1 = User::new(\"Mary\".to_owned(), AccessLevel::Normal);\n    println!(\"{:?}\", check_user_name(\u0026user1));\n\n    let user2 = User::new(\"John\".to_owned(), AccessLevel::Guest);\n    println!(\"{:?}\", check_user_name(\u0026user2));\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "check_user_name",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/check-user-name/README.md"
+    },
+    {
+      "id": "rust-checkpoint-count-factorial-steps",
+      "title": "count_factorial_steps",
+      "statement": "## count_factorial_steps\n\n### Instructions\n\nCreate a **function** named `count_factorial_steps` that receives a factorial number and counts how many multiplications are necessary to have this number.\n\nIf the argument is not a factorial, or it is equal 0 or 1, then the function should return 0.\n\n```rust\npub fn count_factorial_steps(factorial: u64) -\u003e u64 {\n    todo!()\n}\n```\n\nAs a reminder, the factorial of a number is the product of all the integers from 1 to that number.\n\nExample: the factorial of 6 (written 6!) is 1 \\* 2 \\* 3 \\* 4 \\* 5 \\* 6 = 720. As such, the factorial steps of 720 are 6.\n\n### Usage\n\nHere is a possible program to test your function:\n\n```rust\nuse count_factorial_steps::*;\n\nfn main() {\n    println!(\n        \"The factorial steps of 720 = {}\",\n        count_factorial_steps(720)\n    );\n    println!(\"The factorial steps of 13 = {}\", count_factorial_steps(13));\n    println!(\"The factorial steps of 6 = {}\", count_factorial_steps(6));\n}\n\n```\n\nAnd its output:\n\n```console\n$ cargo run\nThe factorial steps of 720 = 6\nThe factorial steps of 13 = 0\nThe factorial steps of 6 = 3\n```",
+      "statementSource": "zone01-api",
+      "example": "use count_factorial_steps::*;\n\nfn main() {\n    println!(\n        \"The factorial steps of 720 = {}\",\n        count_factorial_steps(720)\n    );\n    println!(\"The factorial steps of 13 = {}\", count_factorial_steps(13));\n    println!(\"The factorial steps of 6 = {}\", count_factorial_steps(6));\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "count_factorial_steps",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/count-factorial-steps/README.md"
+    },
+    {
+      "id": "rust-checkpoint-counting-words",
+      "title": "counting_words",
+      "statement": "## counting_words\n\n### Instructions\n\nCreate a function named `counting_words`, that receives a `\u0026str`. It should return each word in the string and the number of times it appears on the string.\n\nEach of the following will count as **one** single word:\n\n- A number like \"0\" or \"1234\".\n- A word or letter like \"a\" or \"they\".\n- Two words joined by a single apostrophe like \"it's\" or \"they're\".\n\nThe function must respect the following rules:\n\n- The count is case insensitive, so that \"HELLO\", \"Hello\", and \"hello\" are 3 uses of the same word.\n- All forms of punctuation are to be ignored, except for the apostrophe if used like the example above.\n- The words can be separated by any form of ASCII whitespace (e.g. \"\\t\", \"\\n\", \" \").\n- On the resulting HashMap, every word occurrence should be in lowercase.\n\n### Expected Function\n\n```rust\nfn counting_words(words: \u0026str) -\u003e HashMap\u003cString, u32\u003e {\n    todo!()\n}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```rust\nuse counting_words::*;\n\nfn main() {\n    println!(\"{:?}\", counting_words(\"Hello, world!\"));\n    println!(\"{:?}\", counting_words(\"“Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.”\n    ― Albert Einstein \"));\n    println!(\"{:?}\", counting_words(\"Batman, BATMAN, batman, Stop stop\"));\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\n{\"world\": 1, \"hello\": 1}\n{\"are\": 1, \"about\": 1, \"stupidity\": 1, \"human\": 1, \"infinite\": 1, \"i'm\": 1, \"things\": 1, \"einstein\": 1, \"albert\": 1, \"sure\": 1, \"the\": 2, \"not\": 1, \"universe\": 2, \"and\": 2, \"two\": 1}\n{\"stop\": 2, \"batman\": 3}\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use counting_words::*;\n\nfn main() {\n    println!(\"{:?}\", counting_words(\"Hello, world!\"));\n    println!(\"{:?}\", counting_words(\"“Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.”\n    ― Albert Einstein \"));\n    println!(\"{:?}\", counting_words(\"Batman, BATMAN, batman, Stop stop\"));\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "counting_words",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/counting-words/README.md"
+    },
+    {
+      "id": "rust-checkpoint-display-table",
+      "title": "display_table",
+      "statement": "## display_table\n\n### Instructions\n\nDefine the `Table` struct below, and implement the associated functions `new` and `add_row`. You can see how they should work from the usage.\n\nImplement the `std::fmt::Display` trait for the `Table` structure so that the table is printed like in the usage. The length of each column must adjust to the longest element of the column, and the element must be centered in the \"cell\" when possible. If the element cannot be exactly centered, it must be offset one byte to the left of the center, as can be seen in the example output.\n\nIf the table is empty `println!` must not print anything.\n\n\u003e Our tests will always assume that, when calling `add_row`, the row has the same correct size as the headers.\n\n### Expected functions and Structures\n\n```rust\n#[derive(Clone, Debug, PartialEq)]\npub struct Table {\n    pub headers: Vec\u003cString\u003e,\n    pub body: Vec\u003cVec\u003cString\u003e\u003e,\n}\n\nimpl fmt::Display for Table {\n    fn fmt(\u0026self, f: \u0026mut fmt::Formatter) -\u003e fmt::Result {\n        todo!()\n    }\n}\n\nimpl Table {\n    pub fn new() -\u003e Table {\n        todo!()\n    }\n\n    pub fn add_row(\u0026mut self, row: \u0026[String]) {\n        todo!()\n    }\n}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```rust\nuse display_table::*;\n\nfn main() {\n    let mut table = Table::new();\n    println!(\"{}\", table);\n    table.headers = vec![\n        String::from(\"Model\"),\n        String::from(\"Piece N°\"),\n        String::from(\"In Stock\"),\n        String::from(\"Description\"),\n    ];\n    table.add_row(\u0026[\n        String::from(\"model 1\"),\n        String::from(\"43-EWQE304\"),\n        String::from(\"30\"),\n        String::from(\"Piece for x\"),\n    ]);\n    table.add_row(\u0026[\n        String::from(\"model 2\"),\n        String::from(\"98-QCVX5433\"),\n        String::from(\"100000000\"),\n        String::from(\"-\"),\n    ]);\n    table.add_row(\u0026[\n        String::from(\"model y\"),\n        String::from(\"78-NMNH\"),\n        String::from(\"60\"),\n        String::from(\"nothing\"),\n    ]);\n    println!(\"{}\", table);\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\n|  Model  |  Piece N°   | In Stock  | Description |\n|---------+-------------+-----------+-------------|\n| model 1 | 43-EWQE304  |    30     | Piece for x |\n| model 2 | 98-QCVX5433 | 100000000 |      -      |\n| model y |   78-NMNH   |    60     |   nothing   |\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use display_table::*;\n\nfn main() {\n    let mut table = Table::new();\n    println!(\"{}\", table);\n    table.headers = vec![\n        String::from(\"Model\"),\n        String::from(\"Piece N°\"),\n        String::from(\"In Stock\"),\n        String::from(\"Description\"),\n    ];\n    table.add_row(\u0026[\n        String::from(\"model 1\"),\n        String::from(\"43-EWQE304\"),\n        String::from(\"30\"),\n        String::from(\"Piece for x\"),\n    ]);\n    table.add_row(\u0026[\n        String::from(\"model 2\"),\n        String::from(\"98-QCVX5433\"),\n        String::from(\"100000000\"),\n        String::from(\"-\"),\n    ]);\n    table.add_row(\u0026[\n        String::from(\"model y\"),\n        String::from(\"78-NMNH\"),\n        String::from(\"60\"),\n        String::from(\"nothing\"),\n    ]);\n    println!(\"{}\", table);\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "display_table",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/display-table/README.md"
+    },
+    {
+      "id": "rust-checkpoint-dress-code",
+      "title": "dress_code",
+      "statement": "## dress_code\n\n### Instructions\n\nCreate a function called `choose_outfit` that receives the following input:\n\n- A `formality_level` as an `Option\u003cu32\u003e`.\n- An `invitation_message` as a `Result\u003c\u0026str, \u0026str\u003e`.\n\nThe function will return a struct `Outfit` which contains:\n\n- `jacket`, an `enum` `Jacket` that contains `Black`, `White` and `Flowers`.\n- `hat`, an `enum` `Hat` that contains `Snapback`, `Baseball`, `Fedora`.\n\n```rust\n#[derive(Debug, PartialEq, Eq)]\npub struct Outfit {\n    pub jacket: Jacket,\n    pub hat: Hat,\n}\n```\n\nFor the `jacket`:\n\n- The jacket should be `Flowers` when the `formality_level` is `None`.\n- The jacket should be `White` when the `formality_level` is more than 0.\n- Otherwise, it should be `Black`.\n\nFor the `hat`:\n\n- If the `invitation_message` is `Ok()` it should be `Fedora`.\n- Otherwise, it should be `Snapback`.\n\nIn the specific case where `formality_level` is `None` and `invitation_message` is not `Ok()` then the `jacket` should be `Flowers` and the `hat` should be `Baseball`.\n\nRemember that all the `enum` and `struct` used must be `pub`.\n\n### Expected functions\n\n```rust\npub fn choose_outfit(formality_level: Option\u003cu32\u003e, invitation_message: Result\u003c\u0026str, \u0026str\u003e) -\u003e Outfit {\n    todo!()\n}\n```\n\n### Usage\n\nHere is a program to test your function.\n\n```rust\nuse dress_code::*;\n\nfn main() {\n    println!(\n        \"My outfit will be: {:?}\",\n        choose_outfit(Some(0), Ok(\"Dear friend, ...\"))\n    );\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\nMy outfit will be: Outfit { jacket: Black, hat: Fedora }\n$\n```\n\n### Notions\n\n- [patterns](https://doc.rust-lang.org/book/ch18-00-patterns.html)",
+      "statementSource": "zone01-api",
+      "example": "use dress_code::*;\n\nfn main() {\n    println!(\n        \"My outfit will be: {:?}\",\n        choose_outfit(Some(0), Ok(\"Dear friend, ...\"))\n    );\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "dress_code",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/dress-code/README.md"
+    },
+    {
+      "id": "rust-checkpoint-drop-the-blog",
+      "title": "drop_the_blog",
+      "statement": "## drop_the_blog\n\n### Instructions\n\nDefine the following structures:\n\n- `Blog`: containing:\n  - `drops` that will save the number of dropped articles.\n  - `states` that will save the state of multiple articles. If the article is not dropped, the state will be `false`, otherwise it will be `true`.\n\n- `Article`: containing:\n  - `id` as `usize`.\n  - `body` as `String`.\n  - `parent` as a link to the structure `Blog`. (Tip: this should be a reference).\n\nYou'll need to also add the following associated functions to the structures:\n\n- `Blog`:\n  - `new` that creates an empty blog.\n  - `new_article` that receives a `String` for the body and returns a tuple with the `id` and a new `Article`.\n  - `is_dropped` that receives an `id` and returns a `bool` that indicates the state of the article.\n  - `new_id` which returns a `usize` representing the length of the `states` vector. (Which is also the first available id).\n  - `add_drop` which is **called by the `Drop` trait**. It will receive an `id` that will be used to change the state of the article. If the state of that article is `true` then it will panic with the message `\"X is already dropped\"`, where `X` represents the `id`). Otherwise it should change the state to `true` and increment the `drops` field by 1.\n\n- `Article`:\n  - `new` that initializes a new article.\n  - `discard` that drops the article.\n\n\u003e You must implement `Drop` for `Article`. In this trait you must call the function `add_drop` so that the state of the article changes.\n\n### Expected Functions\n\n```rust\nuse std::cell::{RefCell, Cell};\n\n#[derive(Debug, Clone, Eq, PartialEq)]\npub struct Blog {\n    pub drops: Cell\u003cusize\u003e,\n    pub states: RefCell\u003cVec\u003cbool\u003e\u003e\n}\n\nimpl Blog {\n    pub fn new() -\u003e Self {\n        todo!()\n    }\n\n    pub fn new_article(\u0026self, body: String) -\u003e (usize, Article\u003c'_\u003e) {\n        todo!()\n    }\n\n    pub fn new_id(\u0026self) -\u003e usize {\n        todo!()\n    }\n\n    pub fn is_dropped(\u0026self, id: usize) -\u003e bool {\n        todo!()\n    }\n\n    pub fn add_drop(\u0026self, id: usize) {\n        todo!()\n    }\n}\n\n#[derive(Debug, Clone, Eq, PartialEq)]\npub struct Article\u003c'a\u003e {\n\n}\n\nimpl\u003c'a\u003e Article\u003c'a\u003e {\n    pub fn new(id: usize, body: String, parent: \u0026'a Blog) -\u003e Self {\n        todo!()\n    }\n\n    pub fn discard(self) {\n        todo!()\n    }\n}\n```\n\n### Usage\n\nHere is a program to test your function,\n\n```rust\nuse drop_the_blog::*;\nuse std::rc::Rc;\n\nfn main() {\n    let blog = Blog::new();\n    let (id, article) = blog.new_article(String::from(\"Winter is coming\"));\n    let (id1, article1) = blog.new_article(String::from(\"The story of the universe\"));\n\n    article.discard();\n\n    println!(\"{:?}\", (blog.is_dropped(id), id, \u0026blog.drops));\n\n    article1.discard();\n    println!(\"{:?}\", (blog.is_dropped(id1), id1, \u0026blog.drops));\n\n    let (id2, article2) = blog.new_article(String::from(\"How to cook 101\"));\n    let article2 = Rc::new(article2);\n    let article2_clone = article2.clone();\n\n    drop(article2_clone);\n\n    println!(\n        \"{:?}\",\n        (\n            blog.is_dropped(id2),\n            id2,\n            \u0026blog.drops,\n            Rc::strong_count(\u0026article2)\n        )\n    );\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\n(true, 0, Cell { value: 1 })\n(true, 1, Cell { value: 2 })\n(false, 2, Cell { value: 2 }, 1)\n$\n```\n\n### Notions\n\n- [Trait std::ops::Drop](https://doc.bccnsoft.com/docs/rust-1.36.0-docs-html/std/ops/trait.Drop.html)\n- [Struct std::cell::RefCell](https://doc.rust-lang.org/std/cell/struct.RefCell.html)\n- [Interior Mutability](https://doc.rust-lang.org/book/ch15-05-interior-mutability.html)",
+      "statementSource": "zone01-api",
+      "example": "use drop_the_blog::*;\nuse std::rc::Rc;\n\nfn main() {\n    let blog = Blog::new();\n    let (id, article) = blog.new_article(String::from(\"Winter is coming\"));\n    let (id1, article1) = blog.new_article(String::from(\"The story of the universe\"));\n\n    article.discard();\n\n    println!(\"{:?}\", (blog.is_dropped(id), id, \u0026blog.drops));\n\n    article1.discard();\n    println!(\"{:?}\", (blog.is_dropped(id1), id1, \u0026blog.drops));\n\n    let (id2, article2) = blog.new_article(String::from(\"How to cook 101\"));\n    let article2 = Rc::new(article2);\n    let article2_clone = article2.clone();\n\n    drop(article2_clone);\n\n    println!(\n        \"{:?}\",\n        (\n            blog.is_dropped(id2),\n            id2,\n            \u0026blog.drops,\n            Rc::strong_count(\u0026article2)\n        )\n    );\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "drop_the_blog",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/drop-the-blog/README.md"
+    },
+    {
+      "id": "rust-checkpoint-filter-table",
+      "title": "filter_table",
+      "statement": "## filter_table\n\n### Instructions\n\n- Define the associated functions for the `Table` struct:\n  - `new`: which creates a new empty table.\n  - `add_rows`: which adds a new row to the table from a slice of strings.\n  - `filter_cols`: which receives a closure and returns a table with all the columns that yielded true when applying that closure. The closure will receive a `\u0026str` and return a `bool` value. `T` is a placeholder for the type of the closure. Change it to the correct type.\n  - `filter_rows`: which receives a closure and returns a table with all the rows that yielded true when applied to the elements of the selected column. The closure will receive a `\u0026str` and return a `bool` value. `T` is a placeholder for the type of the closure. Change it to the correct type.\n\n### Expected functions and Structures\n\n```rust\n#[derive(Clone, Debug, PartialEq)]\npub struct Table {\n    pub headers: Vec\u003cString\u003e,\n    pub body: Vec\u003cVec\u003cString\u003e\u003e,\n}\n\nimpl Table {\n    pub fn new() -\u003e Table {\n        todo!()\n    }\n\n    pub fn add_row(\u0026mut self, row: \u0026[String]) {\n        todo!()\n    }\n\n    pub fn filter_col(\u0026self, filter: T) -\u003e Option\u003cSelf\u003e {\n        todo!()\n    }\n\n    pub fn filter_row(\u0026self, col_name: \u0026str, filter: T) -\u003e Option\u003cSelf\u003e {\n        todo!()\n    }\n}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```rust\nuse filter_table::*;\n\nfn main() {\n    let mut table = Table::new();\n    table.headers = vec![\n        \"Name\".to_string(),\n        \"Last Name\".to_string(),\n        \"ID Number\".to_string(),\n    ];\n    table.add_row(\u0026[\n        \"Adam\".to_string(),\n        \"Philips\".to_string(),\n        \"123456789\".to_string(),\n    ]);\n    table.add_row(\u0026[\n        \"Adamaris\".to_string(),\n        \"Shelby\".to_string(),\n        \"1111123456789\".to_string(),\n    ]);\n    table.add_row(\u0026[\n        \"Ackerley\".to_string(),\n        \"Philips\".to_string(),\n        \"123456789\".to_string(),\n    ]);\n\n    println!(\"{:?}\", table.filter_col(|col| col == \"Name\"));\n    println!(\n        \"{:?}\",\n        table.filter_row(\"Last Name\", |lastname| lastname == \"Philips\")\n    );\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\nSome(Table { headers: [\"Name\"], body: [[\"Adam\"], [\"Adamaris\"], [\"Ackerley\"]] })\nSome(Table { headers: [\"Name\", \"Last Name\", \"ID Number\"], body: [[\"Adam\", \"Philips\", \"123456789\"], [\"Ackerley\", \"Philips\", \"123456789\"]] })\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use filter_table::*;\n\nfn main() {\n    let mut table = Table::new();\n    table.headers = vec![\n        \"Name\".to_string(),\n        \"Last Name\".to_string(),\n        \"ID Number\".to_string(),\n    ];\n    table.add_row(\u0026[\n        \"Adam\".to_string(),\n        \"Philips\".to_string(),\n        \"123456789\".to_string(),\n    ]);\n    table.add_row(\u0026[\n        \"Adamaris\".to_string(),\n        \"Shelby\".to_string(),\n        \"1111123456789\".to_string(),\n    ]);\n    table.add_row(\u0026[\n        \"Ackerley\".to_string(),\n        \"Philips\".to_string(),\n        \"123456789\".to_string(),\n    ]);\n\n    println!(\"{:?}\", table.filter_col(|col| col == \"Name\"));\n    println!(\n        \"{:?}\",\n        table.filter_row(\"Last Name\", |lastname| lastname == \"Philips\")\n    );\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "filter_table",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/filter-table/README.md"
+    },
+    {
+      "id": "rust-checkpoint-flat-tree",
+      "title": "flat_tree",
+      "statement": "## flat_tree\n\n### Instructions\n\nCreate the `flatten_tree` **function** which receives a `std::collections::BTreeSet` and returns a new `Vec` with the elements of the binary tree in order.\n\n### Expected function\n\n```rust\npub fn flatten_tree\u003cT: ToOwned\u003cOwned = T\u003e\u003e(tree: \u0026BTreeSet\u003cT\u003e) -\u003e Vec\u003cT\u003e {\n    todo!()\n}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```rust\nuse flat_tree::*;\nuse std::collections::BTreeSet;\n\nfn main() {\n    let tree = BTreeSet::from([34, 0, 9, 30]);\n    println!(\"{:?}\", flatten_tree(\u0026tree));\n\n    let tree = BTreeSet::from([\"Slow\", \"kill\", \"will\", \"Horses\"]);\n    println!(\"{:?}\", flatten_tree(\u0026tree));\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\n[0, 9, 30, 34]\n[\"Horses\", \"Slow\", \"kill\", \"will\"]\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use flat_tree::*;\nuse std::collections::BTreeSet;\n\nfn main() {\n    let tree = BTreeSet::from([34, 0, 9, 30]);\n    println!(\"{:?}\", flatten_tree(\u0026tree));\n\n    let tree = BTreeSet::from([\"Slow\", \"kill\", \"will\", \"Horses\"]);\n    println!(\"{:?}\", flatten_tree(\u0026tree));\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "flat_tree",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/flat-tree/README.md"
+    },
+    {
+      "id": "rust-checkpoint-format-me",
+      "title": "format_me",
+      "statement": "## format_me\n\n### Instructions\n\nIn this exercise you will implement the trait `Display` for the structure `Park` and the enum `ParkType`.\n\nHere are the public fields and possible variants for the two types:\n\n- `Park`:\n  - `name` as `Option\u003cString\u003e`\n  - `park_type` as `ParkType`\n  - `address` as `Option\u003cString\u003e`\n  - `cap` as `Option\u003cString\u003e`\n  - `state` as `Option\u003cString\u003e`\n- `ParkType`:\n  - `Garden`\n  - `Forest`\n  - `Playground`\n\nOn implementing the `Display` trait for `Park`, you should display the park's fields using the following format: `{park_type} - {name}, {address}, {cap} - {state}`. If any of the fields `name`, `address`, `cap` or `state` are missing, display `No name`, `No address`, `No cap`, or `No state` respectively instead.\n\nOn implementing the `Display` trait for `ParkType`, you should display the park type as a string, in all lowercase.\n\n### Expected Functions and Structures\n\n```rust\nuse std::fmt;\n\npub struct Park {}\n\npub enum ParkType {}\n\nimpl fmt::Display for Park {\n    fn fmt(\u0026self, f: \u0026mut fmt::Formatter\u003c'_\u003e) -\u003e fmt::Result {\n        todo!()\n    }\n}\n\nimpl fmt::Display for ParkType {\n    fn fmt(\u0026self, f: \u0026mut fmt::Formatter\u003c'_\u003e) -\u003e fmt::Result {\n        todo!()\n    }\n}\n```\n\n### Usage\n\nHere is a program to test your function:\n\n```rust\nuse format_me::*;\n\nfn main() {\n    println!(\n        \"{}\",\n        Park {\n            name: Some(\"Les Tuileries\".to_owned()),\n            park_type: ParkType::Garden,\n            address: Some(\"Pl. de la Concorde\".to_owned()),\n            cap: Some(\"75001\".to_owned()),\n            state: Some(\"France\".to_owned())\n        }\n    );\n    println!(\n        \"{}\",\n        Park {\n            name: None,\n            park_type: ParkType::Playground,\n            address: None,\n            cap: None,\n            state: None\n        }\n    );\n}\n```\n\nAnd its output\n\n```console\n$ cargo run\ngarden - Les Tuileries, Pl. de la Concorde, 75001 - France\nplayground - No name, No address, No cap - No state\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use format_me::*;\n\nfn main() {\n    println!(\n        \"{}\",\n        Park {\n            name: Some(\"Les Tuileries\".to_owned()),\n            park_type: ParkType::Garden,\n            address: Some(\"Pl. de la Concorde\".to_owned()),\n            cap: Some(\"75001\".to_owned()),\n            state: Some(\"France\".to_owned())\n        }\n    );\n    println!(\n        \"{}\",\n        Park {\n            name: None,\n            park_type: ParkType::Playground,\n            address: None,\n            cap: None,\n            state: None\n        }\n    );\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "format_me",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/format-me/README.md"
+    },
+    {
+      "id": "rust-checkpoint-get-document-id",
+      "title": "get_document_id",
+      "statement": "## get_document_id\n\n### Instructions\n\nCreate the following structures which will help you get the `document_id` of the document you need.\n\n- `OfficeOne`: `next_office` as type `Result\u003cOfficeTwo, ErrorOffice\u003e`.\n- `OfficeTwo`: `next_office` as type `Result\u003cOfficeThree, ErrorOffice\u003e`.\n- `OfficeThree`: `next_office` as type `Result\u003cOfficeFour, ErrorOffice\u003e`.\n- `OfficeFour`: `document_id` as type `Result\u003cu32, ErrorOffice\u003e`.\n\n`ErrorOffice` is an `enum` with `OfficeClose(u32)`, `OfficeNotFound(u32)` or `OfficeFull(u32)`.\n\nThe `u32` is the `id` of the office generating the error.\n\nBeside the structures, you must create a **function** named `get_document_id`, and associate it to the `OfficeOne` structure.\n\nThis **function** should return the `Result` value in the `OfficeFour` structure or the first `Err` it finds in the chain.\n\n### Expected Function and structures\n\n```rust\n#[derive(Debug, PartialEq, Eq, Clone, Copy)]\npub enum ErrorOffice {\n    OfficeClose(u32),\n    OfficeNotFound(u32),\n    OfficeFull(u32),\n}\n\n#[derive(PartialEq, Eq, Clone, Copy)]\npub struct OfficeOne {\n    pub next_office: Result\u003cOfficeTwo, ErrorOffice\u003e,\n}\n\n#[derive(PartialEq, Eq, Clone, Copy)]\npub struct OfficeTwo {\n    pub next_office: Result\u003cOfficeThree, ErrorOffice\u003e,\n}\n\n#[derive(PartialEq, Eq, Clone, Copy)]\npub struct OfficeThree {\n    pub next_office: Result\u003cOfficeFour, ErrorOffice\u003e,\n}\n\n#[derive(PartialEq, Eq, Clone, Copy)]\npub struct OfficeFour {\n    pub document_id: Result\u003cu32, ErrorOffice\u003e,\n}\n\nimpl OfficeOne {\n    pub fn get_document_id(\u0026self) -\u003e Result\u003cu32, ErrorOffice\u003e {\n        todo!()\n    }\n}\n```\n\n### Usage\n\nHere is a program to test your function.\n\n```rust\nuse get_document_id::*;\n\nfn main() {\n    let office_ok = OfficeOne {\n        next_office: Ok(OfficeTwo {\n            next_office: Ok(OfficeThree {\n                next_office: Ok(OfficeFour {\n                    document_id: Ok(13),\n                }),\n            }),\n        }),\n    };\n\n    let office_closed = {\n        OfficeOne {\n            next_office: Ok(OfficeTwo {\n                next_office: Err(ErrorOffice::OfficeClose(23)),\n            }),\n        }\n    };\n\n    match office_ok.get_document_id() {\n        Ok(id) =\u003e println!(\"Found a document with id {}\", id),\n        Err(err) =\u003e println!(\"Error: {:?}\", err),\n    };\n\n    match office_closed.get_document_id() {\n        Ok(id) =\u003e println!(\"Found a document with id {}\", id),\n        Err(err) =\u003e println!(\"Error: {:?}\", err),\n    };\n}\n\n```\n\nAnd its output:\n\n```console\n$ cargo run\nFound a document with id 13\nError: OfficeClose(23)\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use get_document_id::*;\n\nfn main() {\n    let office_ok = OfficeOne {\n        next_office: Ok(OfficeTwo {\n            next_office: Ok(OfficeThree {\n                next_office: Ok(OfficeFour {\n                    document_id: Ok(13),\n                }),\n            }),\n        }),\n    };\n\n    let office_closed = {\n        OfficeOne {\n            next_office: Ok(OfficeTwo {\n                next_office: Err(ErrorOffice::OfficeClose(23)),\n            }),\n        }\n    };\n\n    match office_ok.get_document_id() {\n        Ok(id) =\u003e println!(\"Found a document with id {}\", id),\n        Err(err) =\u003e println!(\"Error: {:?}\", err),\n    };\n\n    match office_closed.get_document_id() {\n        Ok(id) =\u003e println!(\"Found a document with id {}\", id),\n        Err(err) =\u003e println!(\"Error: {:?}\", err),\n    };\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "get_document_id",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/get-document-id/README.md"
+    },
+    {
+      "id": "rust-checkpoint-insertion-sort",
+      "title": "insertion_sort",
+      "statement": "## insertion_sort\n\n### Instructions\n\nImplement the insertion-sort algorithm by creating a function named `insertion_sort`. It should execute the iterations of the algorithm **up to** the number indicated by `steps`. See the **Usage** for more information.\n\nThe insertion-sort algorithm sorts an array of size `n` in ascending order.\n\n1. Iterates over the slice from `slice[1]` to `slice[n]`.\n\n2. Compares the current element (`slice[key]`) to its predecessor (`slice[key-1]`).\n\n3. If `slice[key]` is smaller than `slice[key-1]`, then `slice[key]` is compared to `slice[key-2]` and so on.\n\n4. All of the elements with values greater than `slice[key]` are shifted right to fit `slice[key]` into its new position.\n\nA step-by-step example of insertion-sort:\n\n![image.png](Insertion-Sort-demo.png)\n\n**Figure 1** - Step-by-step execution of the algorithm insertion sort\n\n### Expected Function\n\n```rust\npub fn insertion_sort(slice: \u0026mut [i32], steps: usize) {\n    todo!()\n}\n```\n\n### Usage\n\nHere is a possible program to test your function,\n\n```rust\nuse insertion_sort::*;\n\nfn main() {\n    let mut target = [5, 3, 7, 2, 1, 6, 8, 4];\n    // executes the first iteration of the algorithm\n    insertion_sort(\u0026mut target, 1);\n    println!(\"{:?}\", target);\n\n    let mut target = [5, 3, 7, 2, 1, 6, 8, 4];\n    // executes len - 1 iterations of the algorithm (sorts the slice)\n    let len = target.len() - 1;\n    insertion_sort(\u0026mut target, len);\n    println!(\"{:?}\", target);\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\n[3, 5, 7, 2, 1, 6, 8, 4]\n[1, 2, 3, 4, 5, 6, 7, 8]\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use insertion_sort::*;\n\nfn main() {\n    let mut target = [5, 3, 7, 2, 1, 6, 8, 4];\n    // executes the first iteration of the algorithm\n    insertion_sort(\u0026mut target, 1);\n    println!(\"{:?}\", target);\n\n    let mut target = [5, 3, 7, 2, 1, 6, 8, 4];\n    // executes len - 1 iterations of the algorithm (sorts the slice)\n    let len = target.len() - 1;\n    insertion_sort(\u0026mut target, len);\n    println!(\"{:?}\", target);\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "insertion_sort",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/insertion-sort/README.md"
+    },
+    {
+      "id": "rust-checkpoint-inv-pyramid",
+      "title": "inv_pyramid",
+      "statement": "## inv_pyramid\n\n### Instructions\n\nCreate a function named `inv_pyramid` that takes a string and an integer as input and returns a vector of strings.\nThis function should create a pyramid structure. Each element of the vector must be the given string after indentation represented as spaces.\n\n### Example\n\nFor i = 5,\n\n```console\n[\n    \" \u003e\",\n    \"  \u003e\u003e\",\n    \"   \u003e\u003e\u003e\",\n    \"    \u003e\u003e\u003e\u003e\",\n    \"     \u003e\u003e\u003e\u003e\u003e\",\n    \"    \u003e\u003e\u003e\u003e\",\n    \"   \u003e\u003e\u003e\",\n    \"  \u003e\u003e\",\n    \" \u003e\"\n]\n```\n\n### Expected Functions\n\n```rust\npub fn inv_pyramid(v: String, i: usize) -\u003e Vec\u003cString\u003e {\n    todo!()\n}\n```\n\n### Usage\n\nHere is a program to test your function\n\n```rust\nuse inv_pyramid::*;\n\nfn main() {\n    println!(\"{:#?}\", inv_pyramid(String::from(\"#\"), 1));\n    println!(\"{:#?}\", inv_pyramid(String::from(\"a\"), 2));\n    println!(\"{:#?}\", inv_pyramid(String::from(\"\u003e\"), 5));\n    println!(\"{:#?}\", inv_pyramid(String::from(\"\u0026\"), 8));\n}\n```\n\nAnd its output\n\n```console\n$ cargo run\n[\n    \" #\",\n]\n[\n    \" a\",\n    \"  aa\",\n    \" a\",\n]\n[\n    \" \u003e\",\n    \"  \u003e\u003e\",\n    \"   \u003e\u003e\u003e\",\n    \"    \u003e\u003e\u003e\u003e\",\n    \"     \u003e\u003e\u003e\u003e\u003e\",\n    \"    \u003e\u003e\u003e\u003e\",\n    \"   \u003e\u003e\u003e\",\n    \"  \u003e\u003e\",\n    \" \u003e\",\n]\n[\n    \" \u0026\",\n    \"  \u0026\u0026\",\n    \"   \u0026\u0026\u0026\",\n    \"    \u0026\u0026\u0026\u0026\",\n    \"     \u0026\u0026\u0026\u0026\u0026\",\n    \"      \u0026\u0026\u0026\u0026\u0026\u0026\",\n    \"       \u0026\u0026\u0026\u0026\u0026\u0026\u0026\",\n    \"        \u0026\u0026\u0026\u0026\u0026\u0026\u0026\u0026\",\n    \"       \u0026\u0026\u0026\u0026\u0026\u0026\u0026\",\n    \"      \u0026\u0026\u0026\u0026\u0026\u0026\",\n    \"     \u0026\u0026\u0026\u0026\u0026\",\n    \"    \u0026\u0026\u0026\u0026\",\n    \"   \u0026\u0026\u0026\",\n    \"  \u0026\u0026\",\n    \" \u0026\",\n]\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use inv_pyramid::*;\n\nfn main() {\n    println!(\"{:#?}\", inv_pyramid(String::from(\"#\"), 1));\n    println!(\"{:#?}\", inv_pyramid(String::from(\"a\"), 2));\n    println!(\"{:#?}\", inv_pyramid(String::from(\"\u003e\"), 5));\n    println!(\"{:#?}\", inv_pyramid(String::from(\"\u0026\"), 8));\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "inv_pyramid",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/inv-pyramid/README.md"
+    },
+    {
+      "id": "rust-checkpoint-lucas-number",
+      "title": "lucas_number",
+      "statement": "## lucas_number\n\n### Instructions\n\nComplete the body of the **function** `lucas_number`.\n\n```rust\npub fn lucas_number(n: u32) -\u003e u32 {\n    todo!()\n}\n```\n\nThis function receives a number `n` and returns the `n`th number in the Lucas Numbers where the `n`th number is the sum of the previous two numbers in the series.\n\nThe Lucas Numbers start like this: 2, 1, 3, 4, 7, 11, 18, 29, 47, 76, 123, etc...\n\n### Usage\n\nHere is a possible test for your function:\n\n```rust\nuse lucas_number::*;\n\nfn main() {\n    println!(\n        \"The element in the position {} in Lucas Numbers is {}\",\n        2,\n        lucas_number(2)\n    );\n    println!(\n        \"The element in the position {} in Lucas Numbers is {}\",\n        5,\n        lucas_number(5)\n    );\n    println!(\n        \"The element in the position {} in Lucas Numbers is {}\",\n        10,\n        lucas_number(10)\n    );\n    println!(\n        \"The element in the position {} in Lucas Numbers is {}\",\n        13,\n        lucas_number(13)\n    );\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\nThe element in the position 2 in Lucas Numbers is 3\nThe element in the position 5 in Lucas Numbers is 11\nThe element in the position 10 in Lucas Numbers is 123\nThe element in the position 13 in Lucas Numbers is 521\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use lucas_number::*;\n\nfn main() {\n    println!(\n        \"The element in the position {} in Lucas Numbers is {}\",\n        2,\n        lucas_number(2)\n    );\n    println!(\n        \"The element in the position {} in Lucas Numbers is {}\",\n        5,\n        lucas_number(5)\n    );\n    println!(\n        \"The element in the position {} in Lucas Numbers is {}\",\n        10,\n        lucas_number(10)\n    );\n    println!(\n        \"The element in the position {} in Lucas Numbers is {}\",\n        13,\n        lucas_number(13)\n    );\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "lucas_number",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/lucas-number/README.md"
+    },
+    {
+      "id": "rust-checkpoint-lunch-queue",
+      "title": "lunch_queue",
+      "statement": "## lunch_queue\n\n### Instructions\n\nYou will need to create an API, so that a program can organize a queue of people.\n\nThe program requires the following functions. Add them as associated functions to the `Queue` structure:\n\n- `new`: which will initialize the `Queue`.\n- `add`: which adds a person to the queue.\n- `invert_queue`: which reverses the queue.\n- `rm`: which removes the person who finished ordering their food. The removal should respect the FIFO method (first in first out). It should return the person's details (as `(name, discount)`).\n- `search`: which returns the details for a given person's `name` (as `(name, discount)`).\n\nYou must also create a type named `Link`. This will be the connection of the structures `Queue` and `Person`. This will be a recursion type, and must point to `None` if there is no `Person` to point to.\n\n### Expected Function and Structures\n\n```rust\n#[derive(Debug, Clone)]\npub struct Queue {\n    pub node: Link,\n}\n\npub type Link =\n\n#[derive(Debug, Clone)]\npub struct Person {\n    pub name: String,\n    pub discount: i32,\n    pub next_person: Link,\n}\n\nimpl Queue {\n    pub fn new() -\u003e Queue {\n        todo!()\n    }\n\n    pub fn add(\u0026mut self, name: String, discount: i32) {\n        todo!()\n    }\n\n    pub fn invert_queue(\u0026mut self) {\n        todo!()\n    }\n\n    pub fn rm(\u0026mut self) -\u003e Option\u003c(String, i32)\u003e {\n        todo!()\n    }\n\n    pub fn search(\u0026self, name: \u0026str) -\u003e Option\u003c(\u0026String, \u0026i32)\u003e {\n        todo!()\n    }\n}\n```\n\n### Usage\n\nHere is a program to test your function:\n\n```rust\nuse lunch_queue::*;\n\nfn main() {\n    let mut list = Queue::new();\n    list.add(String::from(\"Marie\"), 20);\n    list.add(String::from(\"Monica\"), 15);\n    list.add(String::from(\"Ana\"), 5);\n    list.add(String::from(\"Alice\"), 35);\n    println!(\"{:?}\", list);\n\n    println!(\"{:?}\", list.search(\"Marie\"));\n    println!(\"{:?}\", list.search(\"Alice\"));\n    println!(\"{:?}\", list.search(\"someone\"));\n\n    println!(\"removed {:?}\", list.rm());\n    println!(\"list {:?}\", list);\n    list.invert_queue();\n    println!(\"invert {:?}\", list);\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\nQueue { node: Some(Person { name: \"Alice\", discount: 35, next_person: Some(Person { name: \"Ana\", discount: 5, next_person: Some(Person { name: \"Monica\", discount: 15, next_person: Some(Person { name: \"Marie\", discount: 20, next_person: None }) }) }) }) }\nSome((\"Marie\", 20))\nSome((\"Alice\", 35))\nNone\nremoved Some((\"Marie\", 20))\nlist Queue { node: Some(Person { name: \"Alice\", discount: 35, next_person: Some(Person { name: \"Ana\", discount: 5, next_person: Some(Person { name: \"Monica\", discount: 15, next_person: None }) }) }) }\ninvert Queue { node: Some(Person { name: \"Monica\", discount: 15, next_person: Some(Person { name: \"Ana\", discount: 5, next_person: Some(Person { name: \"Alice\", discount: 35, next_person: None }) }) }) }\n$\n```\n\n### Notions\n\n- [enum](https://doc.rust-lang.org/rust-by-example/custom_types/enum.html)\n- [Box](https://doc.rust-lang.org/book/ch15-01-box.html)\n- [std::option](https://doc.rust-lang.org/std/option/)",
+      "statementSource": "zone01-api",
+      "example": "use lunch_queue::*;\n\nfn main() {\n    let mut list = Queue::new();\n    list.add(String::from(\"Marie\"), 20);\n    list.add(String::from(\"Monica\"), 15);\n    list.add(String::from(\"Ana\"), 5);\n    list.add(String::from(\"Alice\"), 35);\n    println!(\"{:?}\", list);\n\n    println!(\"{:?}\", list.search(\"Marie\"));\n    println!(\"{:?}\", list.search(\"Alice\"));\n    println!(\"{:?}\", list.search(\"someone\"));\n\n    println!(\"removed {:?}\", list.rm());\n    println!(\"list {:?}\", list);\n    list.invert_queue();\n    println!(\"invert {:?}\", list);\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "lunch_queue",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/lunch-queue/README.md"
+    },
+    {
+      "id": "rust-checkpoint-matrix-determinant",
+      "title": "matrix_determinant",
+      "statement": "## matrix_determinant\n\n### Instructions\n\nCreate a **function** which receives a 3x3 matrix (`[[isize; 3]; 3]`) and returns its determinant `isize`.\n\nThis is how you calculate a 2x2 matrix determinant:\n\n```sh\n|a b|\n|c d|\n\na*d - b*c\n```\n\nTo calculate a 3x3 matrix determinant you have to take 'a' and multiply it by the determinant of the matrix you get if you get rid of the 'a' column and the 'a' row. Then you subtract the multiplication of 'b' and the determinant of the matrix you get if you get rid of the 'b' column and row. And finally, you do the same process for 'c' and add it to the previous result.\n\n```sh\n|a b c|\n|d e f|\n|g h i|\n```\n\n![imagem](determinant-of-a-3x3-matrix-formula-3.png)\n\n### Expected Function\n\n```rust\npub fn matrix_determinant(matrix: [[isize; 3]; 3]) -\u003e isize {\n    todo!()\n}\n```\n\n### Example\n\nHere is a program to test your function:\n\n```rust\nuse matrix_determinant::*;\n\nfn main() {\n    let matrix = [[1, 2, 4], [2, -1, 3], [4, 0, 1]];\n\n    println!(\n        \"The determinant of the matrix:\\n|1  2  4|\\n|2 -1  3|  = {}\\n|4  0  1|\",\n        matrix_determinant(matrix)\n    );\n}\n```\n\nAnd its output:\n\n```sh\n$ cargo run\nThe determinant of the matrix:\n|1  2  4|\n|2 -1  3|  = 35\n|4  0  1|\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use matrix_determinant::*;\n\nfn main() {\n    let matrix = [[1, 2, 4], [2, -1, 3], [4, 0, 1]];\n\n    println!(\n        \"The determinant of the matrix:\\n|1  2  4|\\n|2 -1  3|  = {}\\n|4  0  1|\",\n        matrix_determinant(matrix)\n    );\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "matrix_determinant",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/matrix-determinant/README.md"
+    },
+    {
+      "id": "rust-checkpoint-matrix-display",
+      "title": "matrix_display",
+      "statement": "## matrix_display\n\n### Instructions\n\nComplete the `Matrix` struct below.\n\nYou will need to create the `new` associated function which initializes the struct.\n\nYou will also need to implement the `std::fmt::Display` trait, so that it prints like the example in the usage.\n\n### Expected Functions and Struct\n\n```rust\nuse std::fmt;\n\n#[derive(Debug, Clone)]\npub struct Matrix(pub Vec\u003cVec\u003ci32\u003e\u003e);\n\nimpl Matrix {\n    pub fn new(slice: \u0026[\u0026[i32]]) -\u003e Self {\n        todo!()\n    }\n}\n\nimpl fmt::Display for Matrix {\n    fn fmt(\u0026self, f: \u0026mut fmt::Formatter\u003c'_\u003e) -\u003e fmt::Result {\n        todo!()\n    }\n}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```rust\nuse matrix_display::*;\n\nfn main() {\n    let matrix = Matrix::new(\u0026[\u0026[1, 2, 3], \u0026[4, 5, 6], \u0026[7, 8, 9]]);\n    println!(\"{}\", matrix);\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\n(1 2 3)\n(4 5 6)\n(7 8 9)\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use matrix_display::*;\n\nfn main() {\n    let matrix = Matrix::new(\u0026[\u0026[1, 2, 3], \u0026[4, 5, 6], \u0026[7, 8, 9]]);\n    println!(\"{}\", matrix);\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "matrix_display",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/matrix-display/README.md"
+    },
+    {
+      "id": "rust-checkpoint-modify-letter",
+      "title": "modify_letter",
+      "statement": "## modify_letter\n\n### Instructions\n\nCreate a **function** `remove_letter_sensitive` that returns a string without the letter specified as argument.\n\nCreate a **function** `remove_letter_insensitive` that returns a string without the letter specified as argument (ignoring case).\n\nCreate a **function** `swap_letter_case` that returns a string swapping the case for the chosen letter.\n\n\u003e Our tests will only use ASCII characters.\n\n### Expected Functions\n\n```rust\npub fn remove_letter_sensitive(s: \u0026str, letter: char) -\u003e String {\n    todo!()\n}\n\npub fn remove_letter_insensitive(s: \u0026str, letter: char) -\u003e String {\n    todo!()\n}\n\npub fn swap_letter_case(s: \u0026str, letter: char) -\u003e String {\n    todo!()\n}\n```\n\n### Usage\n\nHere is a program to test your functions.\n\n```rust\nuse modify_letter::*;\n\nfn main() {\n    println!(\"{}\", remove_letter_sensitive(\"Jojhn jis sljeepjjing\", 'j'));\n    println!(\n        \"{}\",\n        remove_letter_insensitive(\"JaimA ais swiaAmmingA\", 'A')\n    );\n    println!(\"{}\", swap_letter_case(\"byE bye\", 'e'));\n}\n```\n\nAnd its output\n\n```console\n$ cargo run\nJohn is sleeping\nJim is swimming\nbye byE\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use modify_letter::*;\n\nfn main() {\n    println!(\"{}\", remove_letter_sensitive(\"Jojhn jis sljeepjjing\", 'j'));\n    println!(\n        \"{}\",\n        remove_letter_insensitive(\"JaimA ais swiaAmmingA\", 'A')\n    );\n    println!(\"{}\", swap_letter_case(\"byE bye\", 'e'));\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "modify_letter",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/modify-letter/README.md"
+    },
+    {
+      "id": "rust-checkpoint-moving-targets",
+      "title": "moving_targets",
+      "statement": "## moving_targets\n\n### Instructions\n\nYou will have a linked list of `Target` named `Field`.\n\nYou will handle recursive types and ownership and implement the following **associated functions**:\n\n- `new`: which will initialize the `Field` with `head` set to `None`.\n- `push`: which receives a `Target` and add it as a `Node` at the head of the list.\n- `pop`: which returns the last added `Target` wrapped in an `Option` and removes it from the list.\n- `peek`: which returns the last added `Target` as a reference wrapped in an `Option` but does not remove it from the list.\n- `peek_mut`: which returns the last added `Target` as a mutable reference wrapped in an `Option` and also does not remove it from the list.\n\nYou must also implement a type named `Link`. This will be the connection between the `Field` and `Target` structures. This will be a recursion type, and it must point to `None` if there is no `Target` to point to.\n\n### Expected Functions and structures\n\n```rust\n#[derive(Debug, PartialEq, Eq)]\npub struct Target {\n    pub size: u32,\n    pub xp: u32,\n}\n\npub struct Field {\n    head: Link,\n}\n\ntype Link = // To be implemented\n\nstruct Node {\n    elem: Target,\n    next: Link,\n}\n\nimpl Field {\n    pub fn new() -\u003e Self {\n        todo!()\n    }\n\n    pub fn push(\u0026mut self, target: Target) {\n        todo!()\n    }\n\n    pub fn pop(\u0026mut self) -\u003e Option\u003cTarget\u003e {\n        todo!()\n    }\n\n    pub fn peek(\u0026self) -\u003e Option\u003c\u0026Target\u003e {\n        todo!()\n    }\n\n    pub fn peek_mut(\u0026mut self) -\u003e Option\u003c\u0026mut Target\u003e {\n        todo!()\n    }\n}\n```\n\n### Usage\n\nHere is a program to test your function:\n\n```rust\nuse moving_targets::*;\n\nfn main() {\n    let mut field = Field::new();\n\n    println!(\"{:?}\", field.pop());\n    field.push(Target { size: 12, xp: 2 });\n    println!(\"{:?}\", *field.peek().unwrap());\n    field.push(Target { size: 24, xp: 4 });\n    println!(\"{:?}\", field.pop());\n    let last_target = field.peek_mut().unwrap();\n    *last_target = Target { size: 2, xp: 0 };\n    println!(\"{:?}\", field.pop());\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\nNone\nTarget { size: 12, xp: 2 }\nSome(Target { size: 24, xp: 4 })\nSome(Target { size: 2, xp: 0 })\n$\n```\n\n### Notions\n\n- [Box\\\u003cT\\\u003e](https://doc.rust-lang.org/book/ch15-01-box.html)\n- [Linked lists in Rust](https://rust-unofficial.github.io/too-many-lists/index.html)",
+      "statementSource": "zone01-api",
+      "example": "use moving_targets::*;\n\nfn main() {\n    let mut field = Field::new();\n\n    println!(\"{:?}\", field.pop());\n    field.push(Target { size: 12, xp: 2 });\n    println!(\"{:?}\", *field.peek().unwrap());\n    field.push(Target { size: 24, xp: 4 });\n    println!(\"{:?}\", field.pop());\n    let last_target = field.peek_mut().unwrap();\n    *last_target = Target { size: 2, xp: 0 };\n    println!(\"{:?}\", field.pop());\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "moving_targets",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/moving-targets/README.md"
+    },
+    {
+      "id": "rust-checkpoint-negative-spelling",
+      "title": "negative_spelling",
+      "statement": "## negative_spelling\n\n### Instructions\n\nIn this exercise, you'll create the function `negative_spell` that will spell a negative number.\n\nHere are some examples of what your function should return:\n\n- `-1` -\u003e `\"minus one\"`\n- `-14` -\u003e `\"minus fourteen\"`\n- `-348` -\u003e `\"minus three hundred forty-eight\"`\n- `-1002` -\u003e `\"minus one thousand two\"`\n\n\u003e Only negative numbers will be accepted, up to `\"minus one million\"`.\n\u003e If a positive number is passed the function should return `\"error: positive number\"`.\n\n### Expected function\n\n```rust\npub fn negative_spell(n: i64) -\u003e String {\n    todo!()\n}\n```\n\n### Usage\n\nHere is a program to test your function.\n\n```rust\nuse negative_spelling::*;\n\nfn main() {\n    println!(\"{}\", negative_spell(-1234));\n    println!(\"{}\", negative_spell(100));\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\nminus one thousand two hundred thirty-four\nerror: positive number\n$\n```\n\n### Notions\n\n- [patterns](https://doc.rust-lang.org/book/ch18-00-patterns.html)",
+      "statementSource": "zone01-api",
+      "example": "use negative_spelling::*;\n\nfn main() {\n    println!(\"{}\", negative_spell(-1234));\n    println!(\"{}\", negative_spell(100));\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "negative_spelling",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/negative-spelling/README.md"
+    },
+    {
+      "id": "rust-checkpoint-nextprime",
+      "title": "nextprime",
+      "statement": "## nextprime\n\n### Instructions\n\nCreate a **function** which returns the first prime number which is greater than or equal to the `u64` passed as an argument.\n\nThe function must be optimized, so as to avoid time-outs.\n\n\u003e We consider that only positive numbers can be prime numbers.\n\n### Expected function\n\n```rust\npub fn next_prime(nbr: usize) -\u003e usize {\n    todo!()\n}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```rust\nuse nextprime::*;\n\nfn main() {\n    println!(\"The next prime after 4 is: {}\", next_prime(4));\n    println!(\"The next prime after 11 is: {}\", next_prime(11));\n}\n```\n\nAnd its output :\n\n```console\n$ cargo run\nThe next prime after 4 is: 5\nThe next prime after 11 is: 11\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use nextprime::*;\n\nfn main() {\n    println!(\"The next prime after 4 is: {}\", next_prime(4));\n    println!(\"The next prime after 11 is: {}\", next_prime(11));\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "nextprime",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/nextprime/README.md"
+    },
+    {
+      "id": "rust-checkpoint-office-worker",
+      "title": "office_worker",
+      "statement": "## office_worker\n\n### Instructions\n\nCreate a structure `OfficeWorker` with the following public fields:\n\n- `name` as `String`.\n- `age` as `u32`.\n- `role` as `WorkerRole`.\n\nCreate an enum `WorkerRole` which can be `Admin`, `User` or `Guest`.\n\nImplement the trait `From\u003c\u0026str\u003e` for both `OfficeWorker` and `WorkerRole`.\nFor `OfficeWorker` the string will have the format `{name},{age},{role}`.\nFor `WorkerRole` the format of the string will be `{role}` in lowercase.\n\n\u003e Invalid inputs won't be tested.\n\n### Expected Functions and Data Structures\n\n```rust\n#[derive(Debug, PartialEq, Eq)]\npub struct OfficeWorker {\n}\n\n#[derive(Debug, PartialEq, Eq)]\npub enum WorkerRole {\n}\n\nimpl From\u003c\u0026str\u003e for OfficeWorker {\n    fn from(s: \u0026str) -\u003e Self {\n        todo!()\n    }\n}\n\nimpl From\u003c\u0026str\u003e for WorkerRole {\n    fn from(s: \u0026str) -\u003e Self {\n        todo!()\n    }\n}\n```\n\n### Usage\n\nHere is a program to test your function.\n\n```rust\nuse office_worker::*;\n\nfn main() {\n    println!(\"New worker: {:?}\", OfficeWorker::from(\"Manuel,23,admin\"));\n    println!(\n        \"New worker: {:?}\",\n        OfficeWorker::from(\"Jean Jacques,44,guest\")\n    );\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\nNew worker: OfficeWorker { name: \"Manuel\", age: 23, role: Admin }\nNew worker: OfficeWorker { name: \"Jean Jacques\", age: 44, role: Guest }\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use office_worker::*;\n\nfn main() {\n    println!(\"New worker: {:?}\", OfficeWorker::from(\"Manuel,23,admin\"));\n    println!(\n        \"New worker: {:?}\",\n        OfficeWorker::from(\"Jean Jacques,44,guest\")\n    );\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "office_worker",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/office-worker/README.md"
+    },
+    {
+      "id": "rust-checkpoint-order-books",
+      "title": "order_books",
+      "statement": "## order_books\n\n### Instructions\n\nBuild a module named `library` which contains two sub-modules:\n\n- `writers`: which contains:\n  - `Writer`: a structure with:\n    - `first_name`: `String`\n    - `last_name`: `String`\n    - `books`: `Vec\u003cBook\u003e`\n- `books`: which contains:\n  - `Book`: a structure with:\n    - `title`: `String`\n    - `year`: `u32` as its year of publication\n\nA function `order_books` should be created outside of the previous modules which receives a `Writer`, and orders the set of books alphabetically (case insensitive!).\n\n### Expected Functions and Structs\n\n\u003e You'll need to complete the function and structs, and add them to the appropriate place, so that the `main` in the usage can be successfully compiled and run.\n\n```rs\npub struct Writer {\n\n}\n```\n\n```rs\npub struct Book {\n\n}\n```\n\n```rs\npub fn order_books(writer: \u0026mut Writer) {\n    todo!()\n}\n```\n\n### Example\n\nHere is a program to test your function and structs:\n\n```rs\npub use order_books::{\n    library::{books::Book, writers::Writer},\n    order_books,\n};\n\nfn main() {\n    let mut writer_a = Writer {\n        first_name: \"William\".to_owned(),\n        last_name: \"Shakespeare\".to_owned(),\n        books: vec![\n            Book {\n                title: \"Hamlet\".to_owned(),\n                year: 1600,\n            },\n            Book {\n                title: \"Othelo\".to_owned(),\n                year: 1603,\n            },\n            Book {\n                title: \"Romeo and Juliet\".to_owned(),\n                year: 1593,\n            },\n            Book {\n                title: \"MacBeth\".to_owned(),\n                year: 1605,\n            },\n        ],\n    };\n\n    println!(\"Before ordering\");\n    for b in \u0026writer_a.books {\n        println!(\"{:?}\", b.title);\n    }\n\n    order_books(\u0026mut writer_a);\n\n    println!(\"\\nAfter ordering\");\n    for b in writer_a.books {\n        println!(\"{:?}\", b.title);\n    }\n}\n```\n\nAnd its output:\n\n```sh\n$ cargo run\nBefore ordering\n\"Hamlet\"\n\"Othelo\"\n\"Romeo and Juliet\"\n\"MacBeth\"\n\nAfter ordering\n\"Hamlet\"\n\"MacBeth\"\n\"Othelo\"\n\"Romeo and Juliet\"\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "pub use order_books::{\n    library::{books::Book, writers::Writer},\n    order_books,\n};\n\nfn main() {\n    let mut writer_a = Writer {\n        first_name: \"William\".to_owned(),\n        last_name: \"Shakespeare\".to_owned(),\n        books: vec![\n            Book {\n                title: \"Hamlet\".to_owned(),\n                year: 1600,\n            },\n            Book {\n                title: \"Othelo\".to_owned(),\n                year: 1603,\n            },\n            Book {\n                title: \"Romeo and Juliet\".to_owned(),\n                year: 1593,\n            },\n            Book {\n                title: \"MacBeth\".to_owned(),\n                year: 1605,\n            },\n        ],\n    };\n\n    println!(\"Before ordering\");\n    for b in \u0026writer_a.books {\n        println!(\"{:?}\", b.title);\n    }\n\n    order_books(\u0026mut writer_a);\n\n    println!(\"\\nAfter ordering\");\n    for b in writer_a.books {\n        println!(\"{:?}\", b.title);\n    }\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "order_books",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/order-books/README.md"
+    },
+    {
+      "id": "rust-checkpoint-organize-garage",
+      "title": "organize_garage",
+      "statement": "## organize_garage\n\n### Instructions\n\nCreate a structure `Garage` with generic values. It must derive at least `Debug`, `PartialEq`, and `Eq`, and will have the following public fields:\n\n- `left` as `Option\u003cT\u003e`.\n- `right` as `Option\u003cT\u003e`.\n\nIt will implement the following public methods:\n\n- `move_to_right`: Moves the values from left to right.\n- `move_to_left`: Moves the values from right to left.\n\n\u003e The generic type will need to have `Add` and `Copy` traits implemented.\n\n### Usage\n\nHere is a program to test your function.\n\n```rust\nuse organize_garage::*;\n\nfn main() {\n    let mut garage = Garage {\n        left: Some(5),\n        right: Some(2),\n    };\n\n    println!(\"{:?}\", garage);\n    garage.move_to_right();\n    println!(\"{:?}\", garage);\n    garage.move_to_left();\n    println!(\"{:?}\", garage);\n}\n```\n\nAnd its output\n\n```console\n$ cargo run\nGarage { left: Some(5), right: Some(2) }\nGarage { left: None, right: Some(7) }\nGarage { left: Some(7), right: None }\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use organize_garage::*;\n\nfn main() {\n    let mut garage = Garage {\n        left: Some(5),\n        right: Some(2),\n    };\n\n    println!(\"{:?}\", garage);\n    garage.move_to_right();\n    println!(\"{:?}\", garage);\n    garage.move_to_left();\n    println!(\"{:?}\", garage);\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "organize_garage",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/organize-garage/README.md"
+    },
+    {
+      "id": "rust-checkpoint-own-and-return",
+      "title": "own_and_return",
+      "statement": "## own_and_return\n\n### Instructions\n\nCreate a struct `Film` that has one field `name` of type `String`.\n\nCreate the following two functions:\n\n- Create a function `take_film_name`, it will return the name and consume the film (you should not be able to reuse it after you passed it to the function).\n- Create a function `read_film_name`, it will return the name without consuming the film (you can call the function multiple times with the same argument).\n\n### Expected functions\n\n```rust\npub struct Film {\n    pub name: String,\n}\n\npub fn read_film_name(/* to be implemented */) -\u003e String {\n    todo!()\n}\n\npub fn take_film_name(/* to be implemented */) -\u003e String {\n    todo!()\n}\n\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```rust\nuse own_and_return::*;\n\nfn main() {\n    let my_film = Film {\n        name: \"Terminator\".to_owned(),\n    };\n\n    // println!(\"{}\", take_film_name(/* to be implemented */));\n\n    println!(\"{}\", read_film_name(/* to be implemented */));\n    println!(\"{}\", take_film_name(/* to be implemented */));\n\n    // the order of the print statements is intentional.\n    // you can test this exercise properly by uncommenting out the first print statement,\n    // you should get a compilation error then if your implementation is correct.\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\nTerminator\nTerminator\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use own_and_return::*;\n\nfn main() {\n    let my_film = Film {\n        name: \"Terminator\".to_owned(),\n    };\n\n    // println!(\"{}\", take_film_name(/* to be implemented */));\n\n    println!(\"{}\", read_film_name(/* to be implemented */));\n    println!(\"{}\", take_film_name(/* to be implemented */));\n\n    // the order of the print statements is intentional.\n    // you can test this exercise properly by uncommenting out the first print statement,\n    // you should get a compilation error then if your implementation is correct.\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "own_and_return",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/own-and-return/README.md"
+    },
+    {
+      "id": "rust-checkpoint-partial-sums",
+      "title": "partial_sums",
+      "statement": "## partial_sums\n\n### Instructions\n\nCreate a function named `parts_sums`, that receives a slice of `u64`, and returns a vector with the partial sums of the received array.\n\nThis is how partial sums work:\n\n1- First you split the array in its partitions:\n\n```sh\n[1, 2, 3, 4, 5]\n      |\n      V\n[1, 2, 3, 4, 5]\n[1, 2, 3, 4]\n[1, 2, 3]\n[1, 2]\n[1]\n[]\n```\n\n2- Then you add each partition together:\n\n```sh\n[1, 2, 3, 4, 5] = 15\n[1, 2, 3, 4]    = 10\n[1, 2, 3]       = 6\n[1, 2]          = 3\n[1]             = 1\n[]              = 0\n```\n\n3- So, in conclusion:\n\n```rs\nparts_sums(\u0026[1, 2, 3, 4, 5]) // == [15, 10, 6, 3 ,1, 0]\n```\n\n### Expected Functions\n\n```rs\npub fn parts_sums(arr: \u0026[u64]) -\u003e Vec\u003cu64\u003e {\n    todo!()\n}\n```\n\n### Example\n\nHere is a program to test your function:\n\n```rs\nuse partial_sums::*;\n\nfn main() {\n    println!(\n        \"Partial sums of [5, 18, 3, 23] is: {:?}\",\n        parts_sums(\u0026[5, 18, 3, 23])\n    );\n}\n```\n\nAnd its output:\n\n```sh\n$ cargo run\nPartial sums of [5, 18, 3, 23] is: [49, 26, 23, 5, 0]\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use partial_sums::*;\n\nfn main() {\n    println!(\n        \"Partial sums of [5, 18, 3, 23] is: {:?}\",\n        parts_sums(\u0026[5, 18, 3, 23])\n    );\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "partial_sums",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/partial-sums/README.md"
+    },
+    {
+      "id": "rust-checkpoint-previousprime",
+      "title": "previousprime",
+      "statement": "## prev_prime\n\n### Instructions\n\nCreate a **function** which returns the biggest prime number which is smaller than the `u64` passed as an argument.\n\nIf there are no smaller primes, the function should return `0`.\n\n\u003e A prime number is a natural number greater than 1 that is a not a product of two smaller natural numbers.\n\u003e 4 is not a prime number (so it's called a composite number) because it can be represented as 2 \\* 2. 5 is a prime number as it can only be represented by 5 \\* 1 or 1 \\* 5.\n\n### Expected function\n\n```rust\npub fn prev_prime(nbr: u64) -\u003e u64  {\n    todo!()\n}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```rust\nuse previousprime::*;\n\nfn main() {\n    println!(\"The previous prime number before 34 is: {}\", prev_prime(34));\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\nThe previous prime number before 34 is: 31\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use previousprime::*;\n\nfn main() {\n    println!(\"The previous prime number before 34 is: {}\", prev_prime(34));\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "previousprime",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/previousprime/README.md"
+    },
+    {
+      "id": "rust-checkpoint-prime-checker",
+      "title": "prime_checker",
+      "statement": "## prime_checker\n\n### Instructions\n\nCreate a **function** `prime_checker` that takes an `usize` and check if it is a prime number.\n\nThe result will be `None` if the argument is less than or equal to one, otherwise it will return a `Result`.\nIf the `usize` is prime, the function will return an `Ok(usize)`. For any other case it will return an `Err(PrimeErr)`.\nThe `enum` `PrimeErr` will be `Even` if the number is a multiple of two, or `Divider(usize)` where the `usize` is the smallest divider of the number.\n\n\u003e Your solution should be optimized to a certain degree.\n\n### Expected Function and structure\n\n```rust\n#[derive(PartialEq, Eq, Debug)]\npub enum PrimeErr {\n    Even,\n    Divider(usize),\n}\n\npub fn prime_checker(nb: usize) -\u003e  /* Implement return type here */ {\n    todo!()\n}\n```\n\n### Usage\n\nHere is a program to test your function:\n\n```rust\nuse prime_checker::*;\n\nfn main() {\n    println!(\"Is {} prime? {:?}\", 2, prime_checker(2));\n    println!(\"Is {} prime? {:?}\", 14, prime_checker(14));\n    println!(\"Is {} prime? {:?}\", 2147483647, prime_checker(2147483647));\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\nIs 2 prime? Some(Ok(2))\nIs 14 prime? Some(Err(Even))\nIs 2147483647 prime? Some(Ok(2147483647))\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use prime_checker::*;\n\nfn main() {\n    println!(\"Is {} prime? {:?}\", 2, prime_checker(2));\n    println!(\"Is {} prime? {:?}\", 14, prime_checker(14));\n    println!(\"Is {} prime? {:?}\", 2147483647, prime_checker(2147483647));\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "prime_checker",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/prime-checker/README.md"
+    },
+    {
+      "id": "rust-checkpoint-profanity-filter",
+      "title": "profanity_filter",
+      "statement": "## profanity-filter\n\n### Instructions\n\nGenerally it is more desirable to catch the failure of some parts of a program instead of panicking.\n\nFor this exercise you will have to create a message blocker.\n\nYou will need to create a **function** named `check_ms` which accepts a string and returns a `Result`. It should return an error with the message `\"ERROR: illegal\"` if the message is either empty or contains the word `stupid`. Otherwise, it should return the content of the message.\n\n##### Expected Function\n\n```rust\npub fn check_ms(message: \u0026str) -\u003e Result\u003c\u0026str, \u0026str\u003e {\n    todo!()\n}\n```\n\n### Usage\n\nHere is a program to test your function\n\n```rust\nuse profanity_filter::*;\n\nfn main() {\n    [\"hello there\", \"\", \"you are stupid\", \"stupid\"]\n        .into_iter()\n        .for_each(|m| println!(\"{:?}\", check_ms(m)));\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\nOk(\"hello there\")\nErr(\"ERROR: illegal\")\nErr(\"ERROR: illegal\")\nErr(\"ERROR: illegal\")\n$\n```\n\n### Notions\n\n- [Result Definition](https://doc.rust-lang.org/stable/book/ch09-02-recoverable-errors-with-result.html?highlight=result#recoverable-errors-with-result)",
+      "statementSource": "zone01-api",
+      "example": "use profanity_filter::*;\n\nfn main() {\n    [\"hello there\", \"\", \"you are stupid\", \"stupid\"]\n        .into_iter()\n        .for_each(|m| println!(\"{:?}\", check_ms(m)));\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "profanity_filter",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/profanity-filter/README.md"
+    },
+    {
+      "id": "rust-checkpoint-queens",
+      "title": "queens",
+      "statement": "## queens\n\n### Instructions\n\nIn a chess game, a queen can attack pieces which are on the same rank (row), file (column), or diagonal.\n\nThe purpose of this exercise is to find out if two queens can attack each other.\n\nThe position of a chess piece on a chessboard will be represented by the struct `ChessPosition`. You must implement the associated function `new` which will return the position if it is valid, otherwise it will return `None`.\n\n\u003e Remember, chessboards have 8 files and 8 ranks (0 to 7).\n\nYou will create the `Queen` struct with the associate function `can_attack`, which will return `true` if the queens can attack each other or not. You also need to implement the function `new` which creates a new `Queen` with a `ChessPosition`.\n\n### Example\n\nIf the white queen is at (2, 3) and the black queen is at (5, 6), then the set-up would be like the below. In this case, the two queens can attack each other because both pieces share a diagonal:\n\n```\n_ _ _ _ _ _ _ _\n_ _ _ _ _ _ _ _\n_ _ _ W _ _ _ _\n_ _ _ _ _ _ _ _\n_ _ _ _ _ _ _ _\n_ _ _ _ _ _ B _\n_ _ _ _ _ _ _ _\n_ _ _ _ _ _ _ _\n```\n\n### Expected Function and Structures\n\n```rust\n#[derive(Debug, Clone, Copy)]\npub struct ChessPosition {\n    pub rank: usize,\n    pub file: usize,\n}\n\nimpl ChessPosition {\n    pub fn new(rank: usize, file: usize) -\u003e Option\u003cSelf\u003e {\n        todo!()\n    }\n}\n\n#[derive(Debug, Clone, Copy)]\npub struct Queen {\n    pub position: ChessPosition,\n}\n\nimpl Queen {\n    pub fn new(position: ChessPosition) -\u003e Self {\n        todo!()\n    }\n\n    pub fn can_attack(self, other: Self) -\u003e bool {\n        todo!()\n    }\n}\n```\n\n### Usage\n\nHere is a possible program to test your function:\n\n```rust\nuse queens::*;\n\nfn main() {\n    let white_queen = Queen::new(ChessPosition::new(2, 2).unwrap());\n    let black_queen = Queen::new(ChessPosition::new(0, 4).unwrap());\n\n    println!(\n        \"Is it possible for the queens to attack each other? {}\",\n        white_queen.can_attack(black_queen)\n    );\n\n    let white_queen = Queen::new(ChessPosition::new(1, 2).unwrap());\n    let black_queen = Queen::new(ChessPosition::new(0, 4).unwrap());\n\n    println!(\n        \"Is it possible for the queens to attack each other? {}\",\n        white_queen.can_attack(black_queen)\n    );\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\nIs it possible for the queens to attack each other? true\nIs it possible for the queens to attack each other? false\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use queens::*;\n\nfn main() {\n    let white_queen = Queen::new(ChessPosition::new(2, 2).unwrap());\n    let black_queen = Queen::new(ChessPosition::new(0, 4).unwrap());\n\n    println!(\n        \"Is it possible for the queens to attack each other? {}\",\n        white_queen.can_attack(black_queen)\n    );\n\n    let white_queen = Queen::new(ChessPosition::new(1, 2).unwrap());\n    let black_queen = Queen::new(ChessPosition::new(0, 4).unwrap());\n\n    println!(\n        \"Is it possible for the queens to attack each other? {}\",\n        white_queen.can_attack(black_queen)\n    );\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "queens",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/queens/README.md"
+    },
+    {
+      "id": "rust-checkpoint-reverse-it",
+      "title": "reverse_it",
+      "statement": "## reverse_it\n\n### Instructions\n\nCreate a function named `reverse_it`, that takes a number. It should return a string with the number reversed, followed by the original number. If the number is negative, a `-` should be added to the beginning of the string.\n\n### Expected Functions\n\n```rust\npub fn reverse_it(v: i32) -\u003e String {\n    todo!()\n}\n```\n\n### Usage\n\nHere is a program to test your function:\n\n```rust\nuse reverse_it::*;\n\nfn main() {\n    println!(\"{}\", reverse_it(123));\n    println!(\"{}\", reverse_it(-123));\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\n321123\n-321123\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use reverse_it::*;\n\nfn main() {\n    println!(\"{}\", reverse_it(123));\n    println!(\"{}\", reverse_it(-123));\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "reverse_it",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/reverse-it/README.md"
+    },
+    {
+      "id": "rust-checkpoint-rot21",
+      "title": "rot21",
+      "statement": "## rot21\n\n### Instructions\n\nThe purpose of this exercise is to create a `rot21` function that works like the ROT13 cipher.\n\nThis function will receive a `string` and will rotate each letter of that `string` 21 times to the right.\n\nThe function should only rotate **ASCII letters**. Everything should remain the unchanged.\n\n### Expected functions\n\n```rust\npub fn rot21(input: \u0026str) -\u003e String {\n    todo!()\n}\n```\n\n### Usage\n\nHere is a program to test your function.\n\n```rust\nuse rot21::*;\n\nfn main() {\n    println!(\"The letter \\\"a\\\" becomes: {}\", rot21(\"a\"));\n    println!(\"The letter \\\"m\\\" becomes: {}\", rot21(\"m\"));\n    println!(\"The word \\\"MISS\\\" becomes: {}\", rot21(\"MISS\"));\n    println!(\"Your cypher will be: {}\", rot21(\"Testing numbers 1 2 3\"));\n    println!(\"Your cypher will be: {}\", rot21(\"rot21 works!\"));\n}\n```\n\nAnd its output:\n\n```console\n$ cargo run\nThe letter \"a\" becomes: v\nThe letter \"m\" becomes: h\nThe word \"MISS\" becomes: HDNN\nYour cypher will be: Oznodib iphwzmn 1 2 3\nYour cypher will be: mjo21 rjmfn!\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use rot21::*;\n\nfn main() {\n    println!(\"The letter \\\"a\\\" becomes: {}\", rot21(\"a\"));\n    println!(\"The letter \\\"m\\\" becomes: {}\", rot21(\"m\"));\n    println!(\"The word \\\"MISS\\\" becomes: {}\", rot21(\"MISS\"));\n    println!(\"Your cypher will be: {}\", rot21(\"Testing numbers 1 2 3\"));\n    println!(\"Your cypher will be: {}\", rot21(\"rot21 works!\"));\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "rot21",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/rot21/README.md"
+    },
+    {
+      "id": "rust-checkpoint-rpn",
+      "title": "rpn",
+      "statement": "## rpn\n\n### Instructions\n\nWrite a **program** which takes a `\u0026str` containing an equation written in `Reverse Polish Notation` (RPN). It should evaluate the expression, and print the result on the standard output followed by a newline.\n\n- If the expression is not valid, or if there is not exactly one argument, `Error` must be printed on the standard output followed by a newline.\n\n\u003e Extra spaces on the expression should be ignored.\n\n`Reverse Polish Notation` is a mathematical notation in which every operator follows all of its operands. In RPN, every operator encountered evaluates the previous 2 operands, and the result of this operation then becomes the first of the two operands for the subsequent operator. Operands and operators must be spaced by at least one space.\n\nThe following operators must be implemented : `+`, `-`, `*`, `/`, and `%` (modulo).\n\nAll the given operands must fit in a `i64`.\n\nExamples of formulas converted in RPN:\n\n3 + 4 \u003e\u003e 3 4 +\n\n((1 \\* 2) \\* 3) - 4 \u003e\u003e 1 2 \\* 3 \\* 4 - or 3 1 2 \\* \\* 4 -\n\n50 \\* (5 - (10 / 9)) \u003e\u003e 5 10 9 / - 50 \\*\n\nHere is how to evaluate a formula in RPN:\n\n```console\n1 2 * 3 * 4 -\n2 3 * 4 -\n6 4 -\n2\n```\n\nOr:\n\n```console\n3 1 2 * * 4 -\n3 2 * 4 -\n6 4 -\n2\n```\n\n\u003e Use `std::env::args()` to get the program's arguments.\n\n### Usage\n\n```console\n$ cargo run \"1 2 * 3 * 4 +\"\n10\n$ cargo run \"1 2 3 4 +\"\nError\n$ cargo run \"\"\nError\n$ cargo run\nError\n$ cargo run \"2\" \"4\"\nError\n$ cargo run \"     1      3 * 2 -\"\n1\n$ cargo run \"     1      3 * ksd 2 -\"\nError\n```",
+      "statementSource": "zone01-api",
+      "example": "",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "rpn",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/rpn/README.md"
+    },
+    {
+      "id": "rust-checkpoint-scytale-decoder",
+      "title": "scytale_decoder",
+      "statement": "## scytale_decoder\n\n### Instructions\n\nCreate a **function** which **decodes** a scytale cipher (also known as spartan cipher).\n\nYour function will receive a `String` representing the ciphered message, and a `usize` representing the number of letters per turn of the strip around the cylinder.\n\n\u003e If the ciphered message is empty or the letters per turn are 0 the function will return `None`.\n\n### Example\n\n**letters_per_turn 2:** `\"sec yCtoadle\"` -\u003e `\"scytale Code\"`\n\n```console\n--------------------------------\n  |s|  |c|  |y|  |t|  |a|  |l|\n  |e|  | |  |C|  |o|  |d|  |e|\n--------------------------------\n```\n\n**letters_per_turn 4:** `\"steoca dylCe\"` -\u003e `\"scytale Code\"`\n\n```console\n------------------------------------------\n  |s|  |c|  |y|\n  |t|  |a|  |l|\n  |e|  | |  |C|\n  |o|  |d|  |e|\n------------------------------------------\n```\n\n### Expected Functions\n\n```rust\npub fn scytale_decoder(s: String, letters_per_turn: usize) -\u003e Option\u003cString\u003e {\n    todo!()\n}\n```\n\n### Usage\n\nHere is a program to test your function:\n\n```rust\nuse scytale_decoder::*;\n\nfn main() {\n    println!(\n        \"\\\"sec yCtoadle\\\" size=2 -\u003e {:?}\",\n        scytale_decoder(\"sec yCtoadle\".to_owned(), 2)\n    );\n\n    println!(\n        \"\\\"steoca dylCe\\\" size=4 -\u003e {:?}\",\n        scytale_decoder(\"steoca dylCe\".to_owned(), 4)\n    );\n}\n```\n\nAnd its output\n\n```console\n$ cargo run\n\"sec yCtoadle\" size=2 -\u003e Some(\"scytale Code\")\n\"steoca dylCe\" size=4 -\u003e Some(\"scytale Code\")\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "use scytale_decoder::*;\n\nfn main() {\n    println!(\n        \"\\\"sec yCtoadle\\\" size=2 -\u003e {:?}\",\n        scytale_decoder(\"sec yCtoadle\".to_owned(), 2)\n    );\n\n    println!(\n        \"\\\"steoca dylCe\\\" size=4 -\u003e {:?}\",\n        scytale_decoder(\"steoca dylCe\".to_owned(), 4)\n    );\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "scytale_decoder",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/scytale-decoder/README.md"
+    },
+    {
+      "id": "rust-checkpoint-smallest",
+      "title": "smallest",
+      "statement": "## smallest\n\n### Instructions\n\nCreate a function named `smallest` that gets the smallest number in the `HashMap`.\n\nIf the `HashMap` is empty, return the maximum `i32`.\n\n### Expected Function\n\n```rust\npub fn smallest(h: HashMap\u003c\u0026str, i32\u003e) -\u003e i32 {\n    todo!()\n}\n```\n\n### Usage\n\nHere is a program to test your function.\n\n```rust\nuse smallest::smallest;\nuse std::collections::HashMap;\n\nfn main() {\n    let hash = HashMap::from([\n        (\"Cat\", 122),\n        (\"Dog\", 333),\n        (\"Elephant\", 334),\n        (\"Gorilla\", 14),\n    ]);\n\n    println!(\n        \"The smallest of the elements in the HashMap is {}\",\n        smallest(hash)\n    );\n}\n\n```\n\nAnd its output\n\n```console\n$ cargo run\nThe smallest of the elements in the HashMap is 14\n$\n```\n\n### Notions\n\n- [hash maps](https://doc.rust-lang.org/book/ch08-03-hash-maps.html)",
+      "statementSource": "zone01-api",
+      "example": "use smallest::smallest;\nuse std::collections::HashMap;\n\nfn main() {\n    let hash = HashMap::from([\n        (\"Cat\", 122),\n        (\"Dog\", 333),\n        (\"Elephant\", 334),\n        (\"Gorilla\", 14),\n    ]);\n\n    println!(\n        \"The smallest of the elements in the HashMap is {}\",\n        smallest(hash)\n    );\n}\n",
+      "template": "// Écris ta solution ici.\n",
+      "runner": "smallest",
+      "expectedFiles": [
+        "src/lib.rs"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-rust@sha256:9ca5ae6054ac27683d67e261016c3f9d2029c5e6417bc12ea3bc48b1d1f317dd",
+      "subjectURL": "/api/content/root/01-edu_module/content/smallest/README.md"
+    }
+  ]
+}

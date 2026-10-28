@@ -138,11 +138,14 @@ Catalogue Zone01 partagé
   elle existe ; les métadonnées du catalogue restent celles de l’API.
 - **Catalogue absent, vide, inaccessible ou métadonnées invalides :** retour à
   l’ensemble des exercices locaux disponibles, avec un message dans les logs.
+  Au démarrage de l’application, l’enveloppe commune privilégie les métadonnées
+  complètes du snapshot JSON ; les Markdown JS restent un dernier secours local.
 - **Aucune source utilisable :** erreur de chargement plutôt qu’un faux énoncé.
 
 Le champ public `statementSource` vaut `zone01-api` ou `local` pour JavaScript.
-Il alimente le libellé sous la consigne. Ce champ n’est pas encore un indicateur
-généralisé pour les autres langages.
+Il alimente le libellé sous la consigne. Ce champ est également renseigné pour Go, Rust et Java. Une copie des quatre
+catalogues dans `catalog-snapshots/` sert de secours général, avec la date
+`snapshotDate` dans notre API.
 
 La copie locale a été synchronisée le 28 octobre 2026. Elle ne se met pas à jour
 automatiquement. Les aides utilisent une empreinte du texte : un changement
@@ -209,7 +212,10 @@ Le catalogue racine téléchargé avec succès est mis en cache **en mémoire**,
 par Go, JavaScript, Rust et Java. Un échec de récupération n’est pas mémorisé.
 Les catalogues sont construits au démarrage : ils ne sont pas rafraîchis à chaque
 visite ni automatiquement à intervalle régulier. Redémarrer le serveur pour
-recharger les données. Il n’existe pas de cache disque du catalogue distant.
+recharger les données. Il n’existe pas de cache disque automatiquement actualisé du catalogue distant.
+Des copies complètes versionnées sont disponibles dans `catalog-snapshots/`.
+`CATALOG_MODE=offline` ignore les API ; la commande `cmd/sync-catalog` permet une
+mise à jour volontaire. Voir [le guide des snapshots](../catalog-snapshots/README.md).
 
 Les requêtes de chargement utilisent un contexte avec le délai du runner, dix
 secondes par défaut. Le lecteur de consigne est limité à 2 Mio. Les métadonnées

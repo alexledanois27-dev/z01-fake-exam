@@ -33,7 +33,8 @@ Sans `PORT`, le port par défaut est 8080. Le lancement local ne déploie rien.
 
 Le serveur a besoin d’Internet pour récupérer les catalogues et les images Docker
 manquantes. Les programmes soumis s’exécutent ensuite sans réseau dans Docker.
-Les catalogues externes ne sont pas intégralement disponibles hors ligne.
+Des snapshots locaux des 175 exercices permettent un démarrage sans API.
+Les images Docker doivent avoir été téléchargées pour corriger sans Internet.
 
 ## Parcours disponibles
 
@@ -95,7 +96,7 @@ Le serveur reçoit le code pour l’exécuter ; les fichiers temporaires sont su
 Les énoncés/catalogues des quatre langages viennent des ressources Zone01/01-edu.
 JavaScript utilise le checkpoint `/rouen/cursus-cda/checkpoint-js` et ses fichiers
 attendus officiels. Les 31 identifiants historiques sont conservés. En cas de
-panne du catalogue ou d’un énoncé, une copie locale JavaScript sert de secours ;
+panne du catalogue ou d’un énoncé, des copies locales des quatre langages servent de secours ;
 la source effective est indiquée sous la consigne. La correction utilise des images publiques 01-edu **épinglées
 par digest**, et non une API privée de correction. Les tests de l’établissement
 peuvent différer. Voir [les contrats des moulinettes](docs/moulinettes.md).
@@ -125,6 +126,25 @@ flowchart LR
 `frontend/build.json` définit l’assemblage. **Ne pas modifier directement `app.js`
 ou `style.css`** : ces bundles sont générés et versionnés. Le backend peut démarrer
 en monolithe ou en services Web/Catalogue/Runner : [architecture des services](docs/architecture-services.md) et [contrats HTTP](docs/http-api.md).
+
+## Copies locales et mode hors ligne
+
+Les copies versionnées sont dans [`catalog-snapshots/`](catalog-snapshots/README.md).
+Le serveur tente d’abord l’API, puis utilise le secours local en cas d’échec.
+La provenance et la date de la copie sont affichées sous la consigne.
+
+```sh
+# Aucune requête vers les API Zone01 au démarrage
+CATALOG_MODE=offline PORT=8092 make start
+
+# Actualiser volontairement les copies, depuis la racine
+# Refus si l’un des catalogues ou énoncés n’a pas pu être récupéré depuis l’API
+go -C backend run ./cmd/sync-catalog -output ../catalog-snapshots
+```
+
+Ce mode ne fournit ni Go ni Docker ni les images officielles : les installer et
+précharger les images avant une utilisation sans Internet. Les copies peuvent
+vieillir ; leur mise à jour doit être relue et versionnée.
 
 ## Développer et vérifier
 
@@ -174,6 +194,7 @@ Aucun site n’est automatiquement publié en fusionnant une branche.
 
 | Variable | Usage |
 | --- | --- |
+| `CATALOG_MODE` | `auto` par défaut ; `offline` force les copies locales des quatre langages. |
 | `PORT` | Port local, 8080 par défaut. |
 | `LISTEN_ADDR` | Adresse d’écoute ; locale par défaut. |
 | `RUNNER_MODE` | `docker` obligatoire ; activé par `cmd/dev` si absent. |

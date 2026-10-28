@@ -1,5 +1,13 @@
 # Historique fonctionnel
 
+## 28 octobre 2026 — secours local des quatre langages
+
+- Copies complètes de 175 exercices, avec consignes et métadonnées de correction.
+- Secours automatique si l’API est indisponible, sans restaurer de faux énoncés
+  lorsqu’une copie correspondante existe.
+- `CATALOG_MODE=offline` pour démarrer sans appeler les API.
+- Synchronisation manuelle validée, provenance/date visibles et tests sans API.
+
 ## 28 octobre 2026 — catalogue JavaScript depuis l’API
 
 - Chargement prioritaire des 31 exercices du checkpoint JavaScript Zone01.
