@@ -23,6 +23,7 @@ type zoneRustNode struct {
 }
 
 type zoneRustAttrs struct {
+	Group            int      `json:"group"`
 	Subject          string   `json:"subject"`
 	ExpectedFiles    []string `json:"expectedFiles"`
 	AllowedFunctions []string `json:"allowedFunctions"`

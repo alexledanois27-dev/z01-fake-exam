@@ -58,7 +58,7 @@ func loadAPIJSExercises(ctx context.Context, root zoneRustNode, local []Exercise
 	for _, item := range found {
 		runner := strings.TrimPrefix(item.node.Key, "js-")
 		id := jsSubjectIDForRunner(runner)
-		ex := Exercise{ID: id, Title: runner, Runner: runner, Image: item.image, SubjectURL: item.node.Attrs.Subject, ExpectedFiles: item.node.Attrs.ExpectedFiles, AllowedFunctions: item.node.Attrs.AllowedFunctions, Template: "function solve(input) {\n  return input;\n}\n\nmodule.exports = { solve };\n", StatementSource: "zone01-api"}
+		ex := Exercise{Level: item.node.Attrs.Group, ID: id, Title: runner, Runner: runner, Image: item.image, SubjectURL: item.node.Attrs.Subject, ExpectedFiles: item.node.Attrs.ExpectedFiles, AllowedFunctions: item.node.Attrs.AllowedFunctions, Template: "function solve(input) {\n  return input;\n}\n\nmodule.exports = { solve };\n", StatementSource: "zone01-api"}
 		if old, ok := byID[id]; ok {
 			ex.Title = old.Title
 			ex.Template = old.Template

@@ -50,6 +50,9 @@ Le plein écran est demandé ; une sortie de plein écran ou un changement d’o
 impose un écran de reprise, sans arrêter le temps. Le navigateur conserve ses
 commandes système : cela ne constitue pas une protection anti-triche.
 
+Les niveaux JavaScript correspondent aux groupes d’examen de l’API (N1 à N7),
+également conservés dans les copies locales.
+
 ### Réviser pendant l’entraînement
 
 Les 70 fiches couvrent Go (34), Rust (12), JavaScript (11) et Java (13).
