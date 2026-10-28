@@ -10,7 +10,7 @@ Il n’est ni édité ni validé par Zone01.
 
 [Prise en main](#démarrer-en-local) · [Architecture](docs/maintenance.md) ·
 [Sécurité](SECURITY.md) · [Mise en ligne](docs/mise-en-ligne.md) ·
-[Provenance](docs/provenance.md) · [Changements](CHANGELOG.md) · [Dépôt GitHub](docs/depot-github.md)
+[API Zone01 et chemins](docs/api-zone01.md) · [Provenance](docs/provenance.md) · [Changements](CHANGELOG.md) · [Dépôt GitHub](docs/depot-github.md)
 
 ![Vue de l’espace d’entraînement](docs/images/workspace.png)
 

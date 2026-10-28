@@ -20,7 +20,7 @@ var (
 )
 
 // zoneCatalog télécharge le catalogue une seule fois par démarrage : Go,
-// Rust et Java le partagent. Un échec n'est pas mémorisé.
+// JavaScript, Rust et Java le partagent. Un échec n'est pas mémorisé.
 func zoneCatalog(ctx context.Context) (zoneRustNode, error) {
 	zoneCatalogMu.Lock()
 	defer zoneCatalogMu.Unlock()

@@ -4,6 +4,8 @@ Le navigateur utilise la même origine pour les pages et les API. Les services
 séparés restent derrière le composant Web. En production, les accès utilisent
 les identifiants HTTP Basic configurés ; ne pas les placer dans les URL.
 
+Pour les endpoints externes et checkpoints, voir [API Zone01 et chemins](api-zone01.md).
+
 ## GET /api/exercises
 
 `?track=go`, `js`, `rust` ou `java` sélectionne le catalogue (Go par défaut).
