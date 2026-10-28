@@ -10,7 +10,7 @@ Il n’est ni édité ni validé par Zone01.
 
 [Prise en main](#démarrer-en-local) · [Architecture](docs/maintenance.md) ·
 [Sécurité](SECURITY.md) · [Mise en ligne](docs/mise-en-ligne.md) ·
-[Provenance](docs/provenance.md) · [Changements](CHANGELOG.md) · [Dépôt GitHub](docs/depot-github.md)
+[API Zone01 et chemins](docs/api-zone01.md) · [Provenance](docs/provenance.md) · [Évolutions depuis la base](docs/evolutions-base.md) · [Changements](CHANGELOG.md) · [Dépôt GitHub](docs/depot-github.md)
 
 ![Vue de l’espace d’entraînement](docs/images/workspace.png)
 
@@ -33,7 +33,8 @@ Sans `PORT`, le port par défaut est 8080. Le lancement local ne déploie rien.
 
 Le serveur a besoin d’Internet pour récupérer les catalogues et les images Docker
 manquantes. Les programmes soumis s’exécutent ensuite sans réseau dans Docker.
-Les catalogues externes ne sont pas intégralement disponibles hors ligne.
+Des snapshots locaux des 175 exercices permettent un démarrage sans API.
+Les images Docker doivent avoir été téléchargées pour corriger sans Internet.
 
 ## Parcours disponibles
 
@@ -49,10 +50,22 @@ Le plein écran est demandé ; une sortie de plein écran ou un changement d’o
 impose un écran de reprise, sans arrêter le temps. Le navigateur conserve ses
 commandes système : cela ne constitue pas une protection anti-triche.
 
+### Réviser pendant l’entraînement
+
+Les 70 fiches couvrent Go (34), Rust (12), JavaScript (11) et Java (13).
+Chacun des 175 exercices propose des **Fiches utiles** adaptées aux notions du sujet.
+Elles s’ouvrent dans un lecteur superposé : le code en cours reste intact.
+L’onglet Fiches filtre aussi les leçons selon le langage sélectionné.
+Changer de langage conserve l’onglet actuel ; le bilan d’examen et le titre de
+l’exercice restent réservés à leur vue respective.
+Ces références complètent les aides progressives et sont masquées en examen.
+Les nouvelles fiches contiennent syntaxe, exemples autonomes, pièges et checklist,
+sans solution complète du sujet. Voir [le guide des fiches](learning-content/README.md).
+
 ### Tester et corriger
 
 - **Tester** exécute ton programme et affiche sa sortie ou ses erreurs, sans point
-  ni validation. Le champ **Args** accepte par exemple `"bonjour monde" 42` ; les
+  ni validation. Le champ **Args** accepte par exemple `"Hello World" 42` ; les
   arguments restent littéraux, sans exécuter une commande shell.
 - Pour une fonction seule, Tester utilise le programme d’appel de la consigne
   lorsqu’il existe. Sans programme d’appel, un message explique la limite. Un
@@ -92,8 +105,11 @@ ou d’un rechargement. En examen, le brouillon et l’échéance sont restaurab
 Le serveur reçoit le code pour l’exécuter ; les fichiers temporaires sont supprimés
 à la fin de l’exécution normale ou à l’expiration du runner.
 
-Les énoncés/catalogues viennent des ressources Zone01/01-edu et de contenus locaux
-pour JavaScript. La correction utilise des images publiques 01-edu **épinglées
+Les énoncés/catalogues des quatre langages viennent des ressources Zone01/01-edu.
+JavaScript utilise le checkpoint `/rouen/cursus-cda/checkpoint-js` et ses fichiers
+attendus officiels. Les 31 identifiants historiques sont conservés. En cas de
+panne du catalogue ou d’un énoncé, des copies locales des quatre langages servent de secours ;
+la source effective est indiquée sous la consigne. La correction utilise des images publiques 01-edu **épinglées
 par digest**, et non une API privée de correction. Les tests de l’établissement
 peuvent différer. Voir [les contrats des moulinettes](docs/moulinettes.md).
 
@@ -122,6 +138,25 @@ flowchart LR
 `frontend/build.json` définit l’assemblage. **Ne pas modifier directement `app.js`
 ou `style.css`** : ces bundles sont générés et versionnés. Le backend peut démarrer
 en monolithe ou en services Web/Catalogue/Runner : [architecture des services](docs/architecture-services.md) et [contrats HTTP](docs/http-api.md).
+
+## Copies locales et mode hors ligne
+
+Les copies versionnées sont dans [`catalog-snapshots/`](catalog-snapshots/README.md).
+Le serveur tente d’abord l’API, puis utilise le secours local en cas d’échec.
+La provenance et la date de la copie sont affichées sous la consigne.
+
+```sh
+# Aucune requête vers les API Zone01 au démarrage
+CATALOG_MODE=offline PORT=8092 make start
+
+# Actualiser volontairement les copies, depuis la racine
+# Refus si l’un des catalogues ou énoncés n’a pas pu être récupéré depuis l’API
+go -C backend run ./cmd/sync-catalog -output ../catalog-snapshots
+```
+
+Ce mode ne fournit ni Go ni Docker ni les images officielles : les installer et
+précharger les images avant une utilisation sans Internet. Les copies peuvent
+vieillir ; leur mise à jour doit être relue et versionnée.
 
 ## Développer et vérifier
 
@@ -171,6 +206,7 @@ Aucun site n’est automatiquement publié en fusionnant une branche.
 
 | Variable | Usage |
 | --- | --- |
+| `CATALOG_MODE` | `auto` par défaut ; `offline` force les copies locales des quatre langages. |
 | `PORT` | Port local, 8080 par défaut. |
 | `LISTEN_ADDR` | Adresse d’écoute ; locale par défaut. |
 | `RUNNER_MODE` | `docker` obligatoire ; activé par `cmd/dev` si absent. |

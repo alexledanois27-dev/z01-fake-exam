@@ -1,0 +1,697 @@
+{
+  "version": 1,
+  "track": "java",
+  "savedAt": "2026-10-28T08:39:12Z",
+  "source": "https://zone01normandie.org/api/object/rouen",
+  "exercises": [
+    {
+      "id": "java-age-finder",
+      "title": "AgeFinder",
+      "statement": "## Age Finder\n\n### Instructions\n\nCreate a class `AgeFinder` that provides a method to calculate the age from a given date. The date will be provided in the format `yyyy-MM-dd`.\n\nIn case of any error the method `calculateAge` should return `-1`\n\n\u003e 💡 Have you ever seen someone with a negative age???\n\n### Expected Class\n\n```java\nimport java.time.LocalDate;\nimport java.time.Period;\nimport java.time.format.DateTimeFormatter;\n\npublic class AgeFinder {\n    public int calculateAge(String date) {\n        // Implementation to calculate the age from the given date\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        AgeFinder AgeFinder = new AgeFinder();\n\n        // Test case 1\n        String date1 = \"2000-01-01\";\n        System.out.println(\"Age: \" + AgeFinder.calculateAge(date1));\n\n        // Test case 2\n        String date2 = \"1990-06-15\";\n        System.out.println(\"Age: \" + AgeFinder.calculateAge(date2));\n\n        // Test case 3\n        String date3 = \"2010-12-25\";\n        System.out.println(\"Age: \" + AgeFinder.calculateAge(date3));\n    }\n}\n```\n\n### Expected Output\n\n\u003e **Note:** The displayed ages depend on when the subject was created. Your solution should calculate and show the current age.\n\n```shell\n$ date\nTue Jul  9 03:58:06 PM UTC 2024\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nAge: 24\nAge: 34\nAge: 13\n$\n```\n\n### Tips\n\n```java\n// ✅ Parse a date (String → LocalDate)\nDateTimeFormatter fmt = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\nLocalDate date = LocalDate.parse(\"2025-10-12\", fmt);\n// Tip: Match the formatter pattern to your input format.\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        AgeFinder AgeFinder = new AgeFinder();\n\n        // Test case 1\n        String date1 = \"2000-01-01\";\n        System.out.println(\"Age: \" + AgeFinder.calculateAge(date1));\n\n        // Test case 2\n        String date2 = \"1990-06-15\";\n        System.out.println(\"Age: \" + AgeFinder.calculateAge(date2));\n\n        // Test case 3\n        String date3 = \"2010-12-25\";\n        System.out.println(\"Age: \" + AgeFinder.calculateAge(date3));\n    }\n}\n",
+      "template": "public class AgeFinder {\n    // Écris ta solution ici.\n}\n",
+      "runner": "AgeFinder",
+      "expectedFiles": [
+        "AgeFinder.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/age-finder/README.md"
+    },
+    {
+      "id": "java-almost-palindrome",
+      "title": "AlmostPalindrome",
+      "statement": "## AlmostPalindrome\n\n### Instructions\n\nIn a file named `AlmostPalindrome.java` write a function `isAlmostPalindrome` that returns true if the String in parameter is almost palindrome.\nA word is considered \"almost a palindrome\" if removing one letter from the word makes it a palindrome.\n\n\u003e 💡 The input String will contain at least 3 letters.\n\n### Expected Functions\n\n```java\npublic class AlmostPalindrome {\n    public static boolean isAlmostPalindrome(String s) {\n        // your code here\n        // s = s.toLowerCase()...\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(AlmostPalindrome.isAlmostPalindrome(\"Racedcar\"));\n        System.out.println(AlmostPalindrome.isAlmostPalindrome(\"level\"));\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\ntrue\nfalse\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(AlmostPalindrome.isAlmostPalindrome(\"Racedcar\"));\n        System.out.println(AlmostPalindrome.isAlmostPalindrome(\"level\"));\n    }\n}\n",
+      "template": "public class AlmostPalindrome {\n    // Écris ta solution ici.\n}\n",
+      "runner": "AlmostPalindrome",
+      "expectedFiles": [
+        "AlmostPalindrome.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/almost-palindrome/README.md"
+    },
+    {
+      "id": "java-area-calculator",
+      "title": "AreaCalculator",
+      "statement": "## Area Calculator\n\n### Instructions\n\nCreate a class `AreaCalculator` that has an overloaded method `calculate` to calculate the area of different shapes. The method should be able to calculate the area for:\n\n- A circle (given the radius)\n- A rectangle (given the width and height)\n- A triangle (given the base and height)\n- A square (given the side length)\n\n#### Formulas for area calculations:\n\n- Circle: Area = 𝜋 × radius²\n\n- Rectangle: Area = width × height\n\n- Triangle: Area = ½ × base × height\n\n- Square: Area = side²\n\n\u003e you can use `Math.PI`\n\n### Expected Class\n\n```java\nimport java.lang.Math;\n\npublic class AreaCalculator {\n    public double calculate(double radius) {\n        // calculate area of circle\n    }\n\n    public double calculate(double width, double height) {\n        // calculate area of rectangle\n    }\n\n    public double calculate(double base, double height, boolean isTriangle) {\n        // calculate area of triangle\n    }\n\n    public double calculate(double side, boolean isSquare) {\n        // calculate area of square\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        AreaCalculator calculator = new AreaCalculator();\n\n        // Test calculate area of a circle\n        double circleArea = calculator.calculate(5.0);\n        System.out.println(\"Area of circle: \" + circleArea);\n\n        // Test calculate area of a rectangle\n        double rectangleArea = calculator.calculate(4.0, 6.0);\n        System.out.println(\"Area of rectangle: \" + rectangleArea);\n\n        // Test calculate area of a triangle\n        double triangleArea = calculator.calculate(4.0, 6.0, true);\n        System.out.println(\"Area of triangle: \" + triangleArea);\n\n        // Test calculate area of a square\n        double squareArea = calculator.calculate(4.0, true);\n        System.out.println(\"Area of square: \" + squareArea);\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nArea of circle: 78.54\nArea of rectangle: 24.0\nArea of triangle: 12.0\nArea of square: 16.0\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        AreaCalculator calculator = new AreaCalculator();\n\n        // Test calculate area of a circle\n        double circleArea = calculator.calculate(5.0);\n        System.out.println(\"Area of circle: \" + circleArea);\n\n        // Test calculate area of a rectangle\n        double rectangleArea = calculator.calculate(4.0, 6.0);\n        System.out.println(\"Area of rectangle: \" + rectangleArea);\n\n        // Test calculate area of a triangle\n        double triangleArea = calculator.calculate(4.0, 6.0, true);\n        System.out.println(\"Area of triangle: \" + triangleArea);\n\n        // Test calculate area of a square\n        double squareArea = calculator.calculate(4.0, true);\n        System.out.println(\"Area of square: \" + squareArea);\n    }\n}\n",
+      "template": "public class AreaCalculator {\n    // Écris ta solution ici.\n}\n",
+      "runner": "AreaCalculator",
+      "expectedFiles": [
+        "AreaCalculator.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/area-calculator/README.md"
+    },
+    {
+      "id": "java-is-armstrong",
+      "title": "ArmstrongNumber",
+      "statement": "## Armstrong Number\n\n### Instructions\n\nWrite a program to check if a given number is an Armstrong number. An Armstrong number of n digits is an integer such that the sum of its digits raised to the power n is equal to the number itself.\n\nExample: 153 is an Armstrong number bacause `1^3 + 5^3 + 3^3 = 153`\n\n### Expected Class\n\n```java\npublic class ArmstrongNumber {\n    public boolean isArmstrong(int number) {\n        // Implementation to check if the given number is an Armstrong number\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        ArmstrongNumber armstrongNumber = new ArmstrongNumber();\n\n        // Test case 1\n        int number1 = 153;\n        System.out.println(\"Is \" + number1 + \" an Armstrong number? \" + armstrongNumber.isArmstrong(number1)); // Expected output: true\n\n        // Test case 2\n        int number2 = 123;\n        System.out.println(\"Is \" + number2 + \" an Armstrong number? \" + armstrongNumber.isArmstrong(number2)); // Expected output: false\n\n        // Test case 3\n        int number3 = 9474;\n        System.out.println(\"Is \" + number3 + \" an Armstrong number? \" + armstrongNumber.isArmstrong(number3)); // Expected output: true\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nIs 153 an Armstrong number? true\nIs 123 an Armstrong number? false\nIs 9474 an Armstrong number? true\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        ArmstrongNumber armstrongNumber = new ArmstrongNumber();\n\n        // Test case 1\n        int number1 = 153;\n        System.out.println(\"Is \" + number1 + \" an Armstrong number? \" + armstrongNumber.isArmstrong(number1)); // Expected output: true\n\n        // Test case 2\n        int number2 = 123;\n        System.out.println(\"Is \" + number2 + \" an Armstrong number? \" + armstrongNumber.isArmstrong(number2)); // Expected output: false\n\n        // Test case 3\n        int number3 = 9474;\n        System.out.println(\"Is \" + number3 + \" an Armstrong number? \" + armstrongNumber.isArmstrong(number3)); // Expected output: true\n    }\n}\n",
+      "template": "public class ArmstrongNumber {\n    // Écris ta solution ici.\n}\n",
+      "runner": "ArmstrongNumber",
+      "expectedFiles": [
+        "ArmstrongNumber.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/is-armstrong/README.md"
+    },
+    {
+      "id": "java-average-calc",
+      "title": "AverageCalc",
+      "statement": "## AverageCalc\n\n### Instructions\n\nIn a file named `AverageCalc`, implement a function called average that takes three parameters: start, end, and step. The function should calculate and return the average of all numbers starting from start up to end, where each subsequent number increases by the value of step.\n\n- If any error occurs (for example, an infinite loop), the function should return 0.\n\n\u003e ⚠️ Be careful when dealing with negative numbers — the sequence may progress in reverse if step is negative.\n\n### Expected Functions\n\n```java\npublic class AverageCalc {\n    public static int average(int start, int end, int step) {\n        // your code here\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(AverageCalc.average(1,5,1));\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\n3\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(AverageCalc.average(1,5,1));\n    }\n}\n",
+      "template": "public class AverageCalc {\n    // Écris ta solution ici.\n}\n",
+      "runner": "AverageCalc",
+      "expectedFiles": [
+        "AverageCalc.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/average-calc/README.md"
+    },
+    {
+      "id": "java-breakdown-url",
+      "title": "BreakdownURL",
+      "statement": "## Breakdown URL\n\n### Instructions\n\nCreate a class `BreakdownURL` with a method that uses a regular expression to parse a URL and return its components.\n\n**Requirements**\n\n- Extract the following components when present: `protocol`, `domain`, `port`, `path`, `query`.\n- Assume the input URL is valid (well-formed).\n- Return only the components that actually exist in the given URL (omit absent ones).\n\n\u003e 💡 Have you ever seen a URL without Path ???\n\n### Expected Class\n\n```java\nimport java.util.*;\nimport java.util.regex.*;\n\npublic class BreakdownURL {\n    public Map\u003cString, String\u003e parseURL(String url) {\n        // Implementation to parse and validate URLs using regex\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\nimport java.util.Map;\n\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        BreakdownURL parser = new BreakdownURL();\n\n        // Test case 1\n        String URL1 = \"https://www.example.com:8080/path?name=value\";\n        Map\u003cString, String\u003e components1 = parser.parseURL(URL1);\n        System.out.println(\"Components of URL 1: \" + components1);\n\n        // Test case 2\n        String URL2 = \"http://example.com/\";\n        Map\u003cString, String\u003e components2 = parser.parseURL(URL2);\n        System.out.println(\"Components of URL 2: \" + components2);\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nComponents of URL 1: {protocol=https, domain=www.example.com, port=8080, path=/path, query=name=value}\nComponents of URL 2: {protocol=http, domain=example.com, path=/}\n$\n```\n\n### Tips\n\n```java\n// ✅ Creation of HashMap\nMap\u003cString, String\u003e map = new LinkedHashMap\u003c\u003e();\nmap.put(\"key\", \"value\") // insertion to the map\n\n// ✅ Create a regex with groups\nPattern pattern = Pattern.compile(\"(\\\\d{4})-(\\\\d{2})-(\\\\d{2})\"); // yyyy-mm-dd format\nMatcher matcher = pattern.matcher(\"Date: 2025-10-12\");\n\n// ✅ Check and extract groups\nif (matcher.find()) {\n    String fullMatch = matcher.group(0); // \"2025-10-12\"\n    String year = matcher.group(1);      // \"2025\"\n    String month = matcher.group(2);     // \"10\"\n    String day = matcher.group(3);       // \"12\"\n}\n\n// 💡 Tips:\n// - Use parentheses () to create capturing groups.\n// - group(0) → entire match; group(1), group(2), ... → specific parts.\n// - Always call matcher.find() before accessing groups.\n```",
+      "statementSource": "zone01-api",
+      "example": "import java.util.Map;\n\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        BreakdownURL parser = new BreakdownURL();\n\n        // Test case 1\n        String URL1 = \"https://www.example.com:8080/path?name=value\";\n        Map\u003cString, String\u003e components1 = parser.parseURL(URL1);\n        System.out.println(\"Components of URL 1: \" + components1);\n\n        // Test case 2\n        String URL2 = \"http://example.com/\";\n        Map\u003cString, String\u003e components2 = parser.parseURL(URL2);\n        System.out.println(\"Components of URL 2: \" + components2);\n    }\n}\n",
+      "template": "public class BreakdownURL {\n    // Écris ta solution ici.\n}\n",
+      "runner": "BreakdownURL",
+      "expectedFiles": [
+        "BreakdownURL.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/breakdown-url/README.md"
+    },
+    {
+      "id": "java-builder-blueprint",
+      "title": "BuilderBlueprint",
+      "statement": "## Builder Blueprint\n\n### Instructions\n\nYou are given an incomplete Builder design pattern implementation with some incorrect parts. Complete and fix the classes to demonstrate your understanding of how the Builder design pattern works.\n\nRegex component required:\n\n- Any Character: `.`\n- Digit: `\\d`\n- Whitespace : `\\s`\n- Word Character: `\\w`\n\n### Expected Classes\n\n```java\nimport java.util.ArrayList;\nimport java.util.List;\n\n// Regex class\npublic class Regex {\n    private StringBuilder pattern;\n\n    public Regex(List\u003cString\u003e component) {\n       ...\n    }\n\n    public String getPattern() {\n        return pattern.toString();\n    }\n}\n\n// Builder interface\npublic ... RegexBuilder {\n    void buildLiteral(String literal);\n    void buildAnyCharacter();\n    void buildDigit();\n    void buildWhitespace();\n    void buildWordCharacter();\n    Regex getResult();\n}\n\n// ConcreteRegexBuilder class\npublic class ConcreteRegexBuilder {\n    List\u003cString\u003e component;\n\n    ...\n\n    @Override\n    public Regex getResult() {\n        // Missing return statement\n    }\n}\n\n// RegexDirector class\npublic class RegexDirector {\n    private RegexBuilder builder;\n\n    public void setBuilder(RegexBuilder builder) {\n        this.builder = builder;\n    }\n\n    public Regex construct() {\n        builder.buildLiteral(\"Hello\");\n        builder.buildWhitespace();\n        builder.buildWordCharacter();\n        builder.buildAnyCharacter();\n        return builder.getResult();\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your classes:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        RegexDirector director = new RegexDirector();\n        RegexBuilder builder = new ConcreteRegexBuilder();\n\n        director.setBuilder(builder);\n        Regex regex = director.construct();\n\n        System.out.println(regex);\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nHello\\s\\w.\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        RegexDirector director = new RegexDirector();\n        RegexBuilder builder = new ConcreteRegexBuilder();\n\n        director.setBuilder(builder);\n        Regex regex = director.construct();\n\n        System.out.println(regex);\n    }\n}\n",
+      "template": "// Fichiers attendus : Regex.java, RegexBuilder.java, ConcreteRegexBuilder.java, RegexDirector.java.\n// Écris toutes les classes ici : chacune sera placée dans son propre fichier.\n\npublic class Regex {\n    // Écris ta solution ici.\n}\n\npublic class RegexBuilder {\n    // Écris ta solution ici.\n}\n\npublic class ConcreteRegexBuilder {\n    // Écris ta solution ici.\n}\n\npublic class RegexDirector {\n    // Écris ta solution ici.\n}\n",
+      "runner": "BuilderBlueprint",
+      "expectedFiles": [
+        "Regex.java",
+        "RegexBuilder.java",
+        "ConcreteRegexBuilder.java",
+        "RegexDirector.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/builder-blueprint/README.md"
+    },
+    {
+      "id": "java-circular-linked-list",
+      "title": "CircularLinkedList",
+      "statement": "## Circular Linked List\n\n### Instructions\n\nCreate a circular single linked list data structure that implements the following methods:\n\n- `at(int index)`: to access an element by its index. if the index is negative or if the list is empty return -1.\n- `add(int value)`: to add an element at the end of the list.\n- `remove(int index)`: to remove an element by its index.\n- `size()`: to return the size of the list.\n\nDefine these methods in an interface called `LinkedList`, and implement this interface in a class called `CircularLinkedList`. Additionally, add a private method `next(Node node)` in this class to use it for travers the list in other methods. This method should print the message \"Go to next node\\n\" each time it is called.\n\nIf the index is over the size then you have to keep going using `next` method to achieve the given index.\n\n### Explanation\n\nA circular linked list is a linear data structure where each element is a separate object called a node. Each node contains two fields:\n\n- `value`: stores the data.\n- `next`: stores a reference to the next node in the list.\n\nThe first node is called the head of the list and the last node in a circular linked list points back to the first node, forming a circle. The list allows for efficient insertion and deletion of elements. However, accessing an element by its index requires traversing the list from the head to the desired position.\n\n### Expected Interface\n\n```java\npublic interface LinkedList {\n    int at(int index);\n    void add(int value);\n    void remove(int index);\n    int size();\n}\n```\n\n### Expected Class\n\n```java\npublic class CircularLinkedList implements LinkedList {\n    private Node head;\n\n    private class Node {\n        int value;\n        Node next;\n\n        Node(int value) {\n            this.value = value;\n            this.next = null;\n        }\n    }\n\n    @Override\n    public int at(int index) {\n        // Implementation for accessing an element by its index\n    }\n\n    @Override\n    public void add(int value) {\n        // Implementation for adding an element at the end of the list\n    }\n\n    @Override\n    public void remove(int index) {\n        // Implementation for removing an element by its index\n    }\n\n    @Override\n    public int size() {\n        // Implementation getting the size of the list\n    }\n\n    private Node next(Node node) {\n        // Print the message \"Go to next node\"\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        LinkedList list = new CircularLinkedList();\n\n        // Add elements to the list\n        list.add(1);\n        list.add(2);\n        list.add(3);\n\n        // Access elements by index\n        System.out.println(\"Element at index 0: \" + list.at(0)); // Expected output: 1\n        System.out.println(\"Element at index 1: \" + list.at(1)); // Expected output: 2\n        System.out.println(\"Element at index 2: \" + list.at(2)); // Expected output: 3\n\n        // Remove an element by index\n        list.remove(1);\n        System.out.println(\"Element at index 1 after removal: \" + list.at(1)); // Expected output: 3\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nGo to next node\nElement at index 0: 1\nGo to next node\nElement at index 1: 2\nGo to next node\nGo to next node\nElement at index 2: 3\nGo to next node\nGo to next node\nElement at index 1 after removal: 3\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        LinkedList list = new CircularLinkedList();\n\n        // Add elements to the list\n        list.add(1);\n        list.add(2);\n        list.add(3);\n\n        // Access elements by index\n        System.out.println(\"Element at index 0: \" + list.at(0)); // Expected output: 1\n        System.out.println(\"Element at index 1: \" + list.at(1)); // Expected output: 2\n        System.out.println(\"Element at index 2: \" + list.at(2)); // Expected output: 3\n\n        // Remove an element by index\n        list.remove(1);\n        System.out.println(\"Element at index 1 after removal: \" + list.at(1)); // Expected output: 3\n    }\n}\n",
+      "template": "// Fichiers attendus : LinkedList.java, CircularLinkedList.java.\n// Écris toutes les classes ici : chacune sera placée dans son propre fichier.\n\npublic class LinkedList {\n    // Écris ta solution ici.\n}\n\npublic class CircularLinkedList {\n    // Écris ta solution ici.\n}\n",
+      "runner": "CircularLinkedList",
+      "expectedFiles": [
+        "LinkedList.java",
+        "CircularLinkedList.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/circular-linked-list/README.md"
+    },
+    {
+      "id": "java-config-protector",
+      "title": "ConfigProtector",
+      "statement": "## Config Protector\n\n### Instructions\n\nCreate a class named `ConfigProtector` that provides functionality to mask sensitive data in a configuration file using regular expressions (`Regex`). This class should expose a method that replaces sensitive values with asterisks.\n\nThe configuration file will be supplied as a `String`, while the sensitive keys will be provided as a `List`.\n\nThe format of the configuration file will always follow this structure:\n\n```\nusername=admin\nnpassword=secret\n...\n```\n\n### Expected Class\n\n```java\nimport java.util.List;\nimport java.util.regex.Matcher;\nimport java.util.regex.Pattern;\n\npublic class ConfigProtector {\n    public String hideSensitiveData(String configFile, List\u003cString\u003e sensitiveKeys) {\n        // Implementation to hide sensitive data in the configuration file using regex\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\nimport java.util.List;\nimport java.util.Arrays;\n\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        ConfigProtector protector = new ConfigProtector();\n\n        String configFile1 = \"username=admin\\npassword=secret\\nhost=localhost\\n\";\n        List\u003cString\u003e sensitiveKeys1 = Arrays.asList(\"password\");\n        System.out.println(\"Protected Config 1:\\n\" + protector.hideSensitiveData(configFile1, sensitiveKeys1));\n\n        String configFile2 = \"apiKey=12345\\napiSecret=abcdef\\nendpoint=https://api.example.com\\n\";\n        List\u003cString\u003e sensitiveKeys2 = Arrays.asList(\"apiKey\", \"apiSecret\");\n        System.out.println(\"Protected Config 2:\\n\" + protector.hideSensitiveData(configFile2, sensitiveKeys2));\n\n        String configFile3 = \"username=user\\npassword=pass\\n\";\n        List\u003cString\u003e sensitiveKeys3 = Arrays.asList(\"username\", \"password\");\n        System.out.println(\"Protected Config 3:\\n\" + protector.hideSensitiveData(configFile3, sensitiveKeys3));\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nProtected Config 1:\nusername=admin\npassword=******\nhost=localhost\n\nProtected Config 2:\napiKey=*****\napiSecret=******\nendpoint=https://api.example.com\n\nProtected Config 3:\nusername=****\npassword=****\n$\n```\n\n### Tips\n\n```java\n// ✅ Create a regex with groups\nPattern pattern = Pattern.compile(\"(\\\\d{4})-(\\\\d{2})-(\\\\d{2})\"); // yyyy-mm-dd format\nMatcher matcher = pattern.matcher(\"Date: 2025-10-12\");\n\n// ✅ Check and extract groups\nif (matcher.find()) {\n    String fullMatch = matcher.group(0); // \"2025-10-12\"\n    String year = matcher.group(1);      // \"2025\"\n    String month = matcher.group(2);     // \"10\"\n    String day = matcher.group(3);       // \"12\"\n}\n\n// 💡 Tips:\n// - Use parentheses () to create capturing groups.\n// - group(0) → entire match; group(1), group(2), ... → specific parts.\n// - Always call matcher.find() before accessing groups.\n```",
+      "statementSource": "zone01-api",
+      "example": "import java.util.List;\nimport java.util.Arrays;\n\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        ConfigProtector protector = new ConfigProtector();\n\n        String configFile1 = \"username=admin\\npassword=secret\\nhost=localhost\\n\";\n        List\u003cString\u003e sensitiveKeys1 = Arrays.asList(\"password\");\n        System.out.println(\"Protected Config 1:\\n\" + protector.hideSensitiveData(configFile1, sensitiveKeys1));\n\n        String configFile2 = \"apiKey=12345\\napiSecret=abcdef\\nendpoint=https://api.example.com\\n\";\n        List\u003cString\u003e sensitiveKeys2 = Arrays.asList(\"apiKey\", \"apiSecret\");\n        System.out.println(\"Protected Config 2:\\n\" + protector.hideSensitiveData(configFile2, sensitiveKeys2));\n\n        String configFile3 = \"username=user\\npassword=pass\\n\";\n        List\u003cString\u003e sensitiveKeys3 = Arrays.asList(\"username\", \"password\");\n        System.out.println(\"Protected Config 3:\\n\" + protector.hideSensitiveData(configFile3, sensitiveKeys3));\n    }\n}\n",
+      "template": "public class ConfigProtector {\n    // Écris ta solution ici.\n}\n",
+      "runner": "ConfigProtector",
+      "expectedFiles": [
+        "ConfigProtector.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/config-protector/README.md"
+    },
+    {
+      "id": "java-count-char",
+      "title": "CountChar",
+      "statement": "## CountChar\n\n### Instructions\n\nIn a file named `CountChar.java` write a function `count` that takes two parameters a string and a char, then return the count of that char in the given string.\n\n### Expected Functions\n\n```java\npublic class CountChar {\n    public static int count(String s, char c) {\n        // your code here\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(CountChar.count(\"Hello World !\", ' '));\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\n2\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(CountChar.count(\"Hello World !\", ' '));\n    }\n}\n",
+      "template": "public class CountChar {\n    // Écris ta solution ici.\n}\n",
+      "runner": "CountChar",
+      "expectedFiles": [
+        "CountChar.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/count-char/README.md"
+    },
+    {
+      "id": "java-date-formatter",
+      "title": "DateFormatter",
+      "statement": "## Date Formatter\n\n### Instructions\n\nCreate a class named **`DateFormatter`** with the following specifications:\n\n##### Attributes\n\n- **`date`**: the date to be formatted, stored as a UNIX timestamp in seconds.\n- **`format`**: the format string to which the date should be converted.\n- **`formattedDate`**: the result of converting the `date` into the specified `format` (always in the **UTC** timezone).\n\n##### Behavior\n\n- Provide **getters** for all attributes.\n- Provide **setters** for `date` and `format`.\n  - When either `date` or `format` is updated, the conversion should run automatically.\n  - If the `format` is invalid, the conversion must be skipped (the previous `formattedDate` should remain unchanged).\n\n##### Constructors\n\n- A constructor with only `date`.\n- A constructor with `date` and `format`.\n- A default constructor:\n  - The default `date` is the current date (current UNIX time).\n  - The default `format` is **`DD/MM/YYYY`** (case-insensitive).\n\n\u003e Note: You may use standard Java libraries for converting UNIX timestamps to dates and extracting date components.\n\n#### The accepted date formats are:\n\n- `DD/MM/YYYY`\n- `DD Month YYYY`\n- `DD.MM.YYYY`\n\n### Expected Functions\n\n```java\nimport java.util.Date;\nimport java.util.Calendar;\nimport java.util.HashMap;\nimport java.util.Map;\nimport java.util.TimeZone;\n\npublic class DateFormatter {\n    private long date;\n    private String formattedDate;\n    private String format;\n\n    ...\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        DateFormatter df = new DateFormatter(1656374400, \"DD/MM/YYYY\");\n        System.out.println(df.getFormattedDate());\n\n        df.setFormat(\"dd.MM.yyyy\");\n        System.out.println(df.getFormattedDate());\n\n        df.setDate(1672531199);\n        System.out.println(df.getFormattedDate());\n\n        df.setFormat(\"DD month yyyy\");\n        System.out.println(df.getFormattedDate());\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\n28/06/2022\n28.06.2022\n31.12.2022\n31 December 2022\n$\n```\n\n### Tip — How to Extract Day, Month, and Year from a Date\n\n```java\n// Get the current time in seconds since the epoch (UTC)\nlong currentDateInSeconds = System.currentTimeMillis() / 1000L;\n\n// Create a Date from the UTC timestamp (convert seconds to milliseconds)\nDate dateObj = new Date(currentDateInSeconds * 1000);\n\n// Create a Calendar in the UTC time zone and set the date\nCalendar calendar = Calendar.getInstance(TimeZone.getTimeZone(\"UTC\"));\ncalendar.setTime(dateObj);\n\n// Extract the date components\nint day = calendar.get(Calendar.DAY_OF_MONTH);\nString month = getMonth(calendar.get(Calendar.MONTH));\nint year = calendar.get(Calendar.YEAR);\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        DateFormatter df = new DateFormatter(1656374400, \"DD/MM/YYYY\");\n        System.out.println(df.getFormattedDate());\n\n        df.setFormat(\"dd.MM.yyyy\");\n        System.out.println(df.getFormattedDate());\n\n        df.setDate(1672531199);\n        System.out.println(df.getFormattedDate());\n\n        df.setFormat(\"DD month yyyy\");\n        System.out.println(df.getFormattedDate());\n    }\n}\n",
+      "template": "public class DateFormatter {\n    // Écris ta solution ici.\n}\n",
+      "runner": "DateFormatter",
+      "expectedFiles": [
+        "DateFormatter.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/date-formatter/README.md"
+    },
+    {
+      "id": "java-day-of-week",
+      "title": "DayOfWeek",
+      "statement": "## Day Of Week\n\n### Instructions\n\nCreate a class `DayOfWeekFinder` that provides a method to find the date of the next specified day of the week from a given date. The date will be provided in the format `yyyy-MM-dd`, and the day of the week will be provided as a string (\"Sunday\",\"Monday\",\"Tuesday\",\"Wednesday\",\"Thursday\",\"Friday\",\"Saturday\").\n\nYou should return 'Error' in case of any error.\n\n### Expected Class\n\n```java\nimport java.time.DayOfWeek;\nimport java.time.LocalDate;\nimport java.time.format.DateTimeFormatter;\nimport java.time.format.DateTimeParseException;\n\npublic class DayOfWeekFinder {\n    public String findNextDayOfWeek(String startDate, String dayOfWeek) {\n        ...\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        DayOfWeekFinder finder = new DayOfWeekFinder();\n\n        // Test case 1\n        String startDate1 = \"2023-06-22\";\n        String dayOfWeek1 = \"Monday\";\n        System.out.println(\"Next \" + dayOfWeek1 + \" after \" + startDate1 + \": \" + finder.findNextDayOfWeek(startDate1, dayOfWeek1));\n\n        // Test case 2\n        String startDate2 = \"2023-06-22\";\n        String dayOfWeek2 = \"Friday\";\n        System.out.println(\"Next \" + dayOfWeek2 + \" after \" + startDate2 + \": \" + finder.findNextDayOfWeek(startDate2, dayOfWeek2));\n\n        // Test case 3\n        String startDate3 = \"2023-06-22\";\n        String dayOfWeek3 = \"Sunday\";\n        System.out.println(\"Next \" + dayOfWeek3 + \" after \" + startDate3 + \": \" + finder.findNextDayOfWeek(startDate3, dayOfWeek3));\n\n        // Error case: invalid date format\n        String startDate4 = \"invalid-date\";\n        String dayOfWeek4 = \"Monday\";\n        System.out.println(\"Next \" + dayOfWeek4 + \" after \" + startDate4 + \": \" + finder.findNextDayOfWeek(startDate4, dayOfWeek4));\n\n        // Error case: invalid day of the week\n        String startDate5 = \"2023-06-22\";\n        String dayOfWeek5 = \"Funday\";\n        System.out.println(\"Next \" + dayOfWeek5 + \" after \" + startDate5 + \": \" + finder.findNextDayOfWeek(startDate5, dayOfWeek5));\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nNext Monday after 2023-06-22: 2023-06-26\nNext Friday after 2023-06-22: 2023-06-23\nNext Sunday after 2023-06-22: 2023-06-25\nNext Monday after invalid-date: Error\nNext Funday after 2023-06-22: Error\n$\n```\n\n### Tips\n\n```java\n// ✅ Parse a date (String → LocalDate)\nDateTimeFormatter fmt = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\nLocalDate date = LocalDate.parse(\"2025-10-12\", fmt);\n// Tip: Match the formatter pattern to your input format.\n\n// ✅ Get the day of week\nDayOfWeek day = date.getDayOfWeek();  // e.g., MONDAY\nint value = day.getValue();           // 1 = Monday … 7 = Sunday\n// Tip: Use getDayOfWeek() to get the enum, getValue() for numeric day.\n\n// ✅ Format a date (LocalDate → String)\nString text = date.format(fmt);  // \"2025-10-12\"\n// Tip: Use the same DateTimeFormatter for parsing and formatting.\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        DayOfWeekFinder finder = new DayOfWeekFinder();\n\n        // Test case 1\n        String startDate1 = \"2023-06-22\";\n        String dayOfWeek1 = \"Monday\";\n        System.out.println(\"Next \" + dayOfWeek1 + \" after \" + startDate1 + \": \" + finder.findNextDayOfWeek(startDate1, dayOfWeek1));\n\n        // Test case 2\n        String startDate2 = \"2023-06-22\";\n        String dayOfWeek2 = \"Friday\";\n        System.out.println(\"Next \" + dayOfWeek2 + \" after \" + startDate2 + \": \" + finder.findNextDayOfWeek(startDate2, dayOfWeek2));\n\n        // Test case 3\n        String startDate3 = \"2023-06-22\";\n        String dayOfWeek3 = \"Sunday\";\n        System.out.println(\"Next \" + dayOfWeek3 + \" after \" + startDate3 + \": \" + finder.findNextDayOfWeek(startDate3, dayOfWeek3));\n\n        // Error case: invalid date format\n        String startDate4 = \"invalid-date\";\n        String dayOfWeek4 = \"Monday\";\n        System.out.println(\"Next \" + dayOfWeek4 + \" after \" + startDate4 + \": \" + finder.findNextDayOfWeek(startDate4, dayOfWeek4));\n\n        // Error case: invalid day of the week\n        String startDate5 = \"2023-06-22\";\n        String dayOfWeek5 = \"Funday\";\n        System.out.println(\"Next \" + dayOfWeek5 + \" after \" + startDate5 + \": \" + finder.findNextDayOfWeek(startDate5, dayOfWeek5));\n    }\n}\n",
+      "template": "public class DayOfWeekFinder {\n    // Écris ta solution ici.\n}\n",
+      "runner": "DayOfWeek",
+      "expectedFiles": [
+        "DayOfWeekFinder.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/day-of-week/README.md"
+    },
+    {
+      "id": "java-digitcount",
+      "title": "Digitlen",
+      "statement": "## Digitlen\n\n### Instructions\n\nIn a file named `Digitlen.java` write a function `digitlen` that returns the count of digits in the number passed as a parameter.\n\n### Expected Functions\n\n```java\npublic class Digitlen {\n    public static int digitlen(long number) {\n        // your code here\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(Digitlen.digitlen(9989898878));\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\n10\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(Digitlen.digitlen(9989898878));\n    }\n}\n",
+      "template": "public class Digitlen {\n    // Écris ta solution ici.\n}\n",
+      "runner": "Digitlen",
+      "expectedFiles": [
+        "Digitlen.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/digitcount/README.md"
+    },
+    {
+      "id": "java-distinct-substring-length",
+      "title": "DistinctSubstringLength",
+      "statement": "## Distinct Substring length\n\n### Instructions\n\nCreate a class named `DistinctSubstringLength` that provides a method to determine the length of the longest substring in a given string that contains no repeating characters.\n\nCharacter comparison must be case-sensitive.\n\n### Expected Class\n\n```java\npublic class DistinctSubstringLength {\n    public int maxLength(String s) {\n        // Implementation to find the length of the longest substring without repeating characters\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        DistinctSubstringLength finder = new DistinctSubstringLength();\n\n        // Test cases\n        System.out.println(finder.maxLength(\"abcabcbb\")); // Expected output: 3\n        System.out.println(finder.maxLength(\"bbbbb\")); // Expected output: 1\n        System.out.println(finder.maxLength(\"pwwkew\")); // Expected output: 3\n        System.out.println(finder.maxLength(\"\")); // Expected output: 0\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\n3\n1\n3\n0\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        DistinctSubstringLength finder = new DistinctSubstringLength();\n\n        // Test cases\n        System.out.println(finder.maxLength(\"abcabcbb\")); // Expected output: 3\n        System.out.println(finder.maxLength(\"bbbbb\")); // Expected output: 1\n        System.out.println(finder.maxLength(\"pwwkew\")); // Expected output: 3\n        System.out.println(finder.maxLength(\"\")); // Expected output: 0\n    }\n}\n",
+      "template": "public class DistinctSubstringLength {\n    // Écris ta solution ici.\n}\n",
+      "runner": "DistinctSubstringLength",
+      "expectedFiles": [
+        "DistinctSubstringLength.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/distinct-substring-length/README.md"
+    },
+    {
+      "id": "java-double-linked-list",
+      "title": "DoubleLinkedList",
+      "statement": "## Double Linked List\n\n### Instructions\n\nCreate a double linked list data structure that implements the following methods:\n\n- `at(int index)`: to access an element by its index. If the index is out of bound return -1.\n- `add(int value)`: to add an element at the end of the list.\n- `remove(int index)`: to remove an element by its index. If the index is out of bound nothing happen.\n- `size()`: to get the size of the list.\n\nDefine these methods in an interface called `LinkedList`, and implement this interface in a class that you will create. Additionally, add private methods `next(Node node)` and `prev(Node node)` in your class that will be used in the other methods. These methods should print the messages \"Go to next node\\n\" and \"Go to previous node\\n\" each time they are called, respectively.\n\n### Explanation\n\nA double linked list is a linear data structure where each element is a separate object called a node. Each node contains three fields:\n\n- `value`: stores the data.\n- `next`: stores a reference to the next node in the list.\n- `prev`: stores a reference to the previous node in the list.\n\nThe first node is called the head of the list and the last node always has next pointing to null. The list allows for efficient insertion and deletion of elements. However, accessing an element by its index requires traversing the list from the head to the desired position.\n\n### Given Interface\n\n```java\npublic interface LinkedList {\n    int at(int index);\n    void add(int value);\n    void remove(int index);\n    int size();\n\n}\n```\n\n### Expected Class\n\n```java\npublic class DoubleLinkedList implements LinkedList {\n    private Node head;\n    private Node tail;\n\n    private class Node {\n        int value;\n        Node next;\n        Node prev;\n\n        Node(int value) {\n            this.value = value;\n            this.next = null;\n            this.prev = null;\n        }\n    }\n\n    @Override\n    public int at(int index) {\n        // Implementation for accessing an element by its index\n    }\n\n    @Override\n    public void add(int value) {\n        // Implementation for adding an element at the end of the list\n    }\n\n    @Override\n    public void remove(int index) {\n        // Implementation for removing an element by its index\n    }\n\n    @Override\n    public int size() {\n        // Implementation for getting the size of the list\n    }\n\n    private Node next(Node node) {\n        // Implementation for going to the next\n    }\n\n    private Node prev(Node node) {\n        // Implementation for going to the prev\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        LinkedList list = new DoubleLinkedList();\n\n        // Add elements to the list\n        list.add(1);\n        list.add(2);\n        list.add(3);\n\n        // Access elements by index\n        System.out.println(\"Element at index 0: \" + list.at(0)); // Expected output: 1\n        System.out.println(\"Element at index 1: \" + list.at(1)); // Expected output: 2\n        System.out.println(\"Element at index 2: \" + list.at(2)); // Expected output: 3\n\n        list.add(4);\n\n        // Access elements by index\n        System.out.println(\"Element at index 0: \" + list.at(0)); // Expected output: 1\n        System.out.println(\"Element at index 1: \" + list.at(1)); // Expected output: 2\n        System.out.println(\"Element at index 2: \" + list.at(2)); // Expected output: 3\n        System.out.println(\"Element at index 3: \" + list.at(3)); // Expected output: 4\n\n        // Remove an element by index\n        list.remove(1);\n        list.remove(2);\n        System.out.println(\"List size : \" + list.size()); // Expected output: 2\n        System.out.println(\"Element at index 1 after removal: \" + list.at(1)); // Expected output: 3\n    }\n}\n```\n\n### Expected Output\n\n```java\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nElement at index 0: 1\nGo to next node\nElement at index 1: 2\nElement at index 2: 3\nElement at index 0: 1\nGo to next node\nElement at index 1: 2\nGo to previous node\nElement at index 2: 3\nElement at index 3: 4\nGo to next node\nList size : 2\nElement at index 1 after removal: 3\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        LinkedList list = new DoubleLinkedList();\n\n        // Add elements to the list\n        list.add(1);\n        list.add(2);\n        list.add(3);\n\n        // Access elements by index\n        System.out.println(\"Element at index 0: \" + list.at(0)); // Expected output: 1\n        System.out.println(\"Element at index 1: \" + list.at(1)); // Expected output: 2\n        System.out.println(\"Element at index 2: \" + list.at(2)); // Expected output: 3\n\n        list.add(4);\n\n        // Access elements by index\n        System.out.println(\"Element at index 0: \" + list.at(0)); // Expected output: 1\n        System.out.println(\"Element at index 1: \" + list.at(1)); // Expected output: 2\n        System.out.println(\"Element at index 2: \" + list.at(2)); // Expected output: 3\n        System.out.println(\"Element at index 3: \" + list.at(3)); // Expected output: 4\n\n        // Remove an element by index\n        list.remove(1);\n        list.remove(2);\n        System.out.println(\"List size : \" + list.size()); // Expected output: 2\n        System.out.println(\"Element at index 1 after removal: \" + list.at(1)); // Expected output: 3\n    }\n}\n",
+      "template": "// Fichiers attendus : LinkedList.java, DoubleLinkedList.java.\n// Écris toutes les classes ici : chacune sera placée dans son propre fichier.\n\npublic class LinkedList {\n    // Écris ta solution ici.\n}\n\npublic class DoubleLinkedList {\n    // Écris ta solution ici.\n}\n",
+      "runner": "DoubleLinkedList",
+      "expectedFiles": [
+        "LinkedList.java",
+        "DoubleLinkedList.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/double-linked-list/README.md"
+    },
+    {
+      "id": "java-factorial",
+      "title": "Factorial",
+      "statement": "## Factorial\n\n### Instructions\n\nIn a file named `Factorial.java` write a function `factorial` that calculates the factorial of a non-negative integer given as a parameter.\n\n\u003e The factorial of a non-negative integer n (denoted as n!) is the product of all positive integers less than or equal to n. For example, 5! = 5 × 4 × 3 × 2 × 1 = 120.\n\n\u003e Note: The factorial of 0 is 1, according to the [convention](https://www.chilimath.com/lessons/intermediate-algebra/zero-factorial/)\n\n### Expected Functions\n\n```java\npublic class Factorial {\n    public static Integer factorial(Integer n) {\n        // your code here\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(Factorial.factorial(3));\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\n6\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(Factorial.factorial(3));\n    }\n}\n",
+      "template": "public class Factorial {\n    // Écris ta solution ici.\n}\n",
+      "runner": "Factorial",
+      "expectedFiles": [
+        "Factorial.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/factorial/README.md"
+    },
+    {
+      "id": "java-factorial-master",
+      "title": "FactorialMaster",
+      "statement": "## Factorial Master\n\n### Instructions\n\nCreate an abstract class `Factorial` that will serve as the base class for calculating the factorial of a number. This class should have an abstract method `calculate` that will be implemented by its child classes.\n\nImplement two child classes:\n\n- `IterativeFactorial` which implements the factorial calculation using an iterative approach.\n- `RecursiveFactorial` which implements the factorial calculation using a recursive approach.\n\n\u003e Note: The factorial of 0 is 1, according to the [convention](https://www.chilimath.com/lessons/intermediate-algebra/zero-factorial/)\n\n#### Formula for factorial calculation:\n\nn! = n × (n−1) × (n−2) × … × 1\n\nAnd an example:\n5! = 5 × 4 × 3 × 2 × 1 = 120\n\n### Expected Abstract Class\n\n```java\npublic abstract class Factorial {\n    public abstract long calculate(int n);\n}\n\npublic class IterativeFactorial extends Factorial {\n    @Override\n    public long calculate(int n) {\n        // iterative factorial calculation\n    }\n}\n\npublic class RecursiveFactorial extends Factorial {\n    @Override\n    public long calculate(int n) {\n        // recursive factorial calculation\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your classes:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        Factorial iterativeFactorial = new IterativeFactorial();\n        Factorial recursiveFactorial = new RecursiveFactorial();\n\n        // Test iterative factorial\n        int number = 5;\n        long iterativeResult = iterativeFactorial.calculate(number);\n        System.out.println(\"Iterative Factorial of \" + number + \" is: \" + iterativeResult); // Expected output: 120\n\n        // Test recursive factorial\n        long recursiveResult = recursiveFactorial.calculate(number);\n        System.out.println(\"Recursive Factorial of \" + number + \" is: \" + recursiveResult); // Expected output: 120\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nIterative Factorial of 5 is: 120\nRecursive Factorial of 5 is: 120\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        Factorial iterativeFactorial = new IterativeFactorial();\n        Factorial recursiveFactorial = new RecursiveFactorial();\n\n        // Test iterative factorial\n        int number = 5;\n        long iterativeResult = iterativeFactorial.calculate(number);\n        System.out.println(\"Iterative Factorial of \" + number + \" is: \" + iterativeResult); // Expected output: 120\n\n        // Test recursive factorial\n        long recursiveResult = recursiveFactorial.calculate(number);\n        System.out.println(\"Recursive Factorial of \" + number + \" is: \" + recursiveResult); // Expected output: 120\n    }\n}\n",
+      "template": "// Fichiers attendus : Factorial.java, IterativeFactorial.java, RecursiveFactorial.java.\n// Écris toutes les classes ici : chacune sera placée dans son propre fichier.\n\npublic class Factorial {\n    // Écris ta solution ici.\n}\n\npublic class IterativeFactorial {\n    // Écris ta solution ici.\n}\n\npublic class RecursiveFactorial {\n    // Écris ta solution ici.\n}\n",
+      "runner": "FactorialMaster",
+      "expectedFiles": [
+        "Factorial.java",
+        "IterativeFactorial.java",
+        "RecursiveFactorial.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/factorial-master/README.md"
+    },
+    {
+      "id": "java-factory-blueprint",
+      "title": "FactoryBlueprint",
+      "statement": "## Factory Blueprint\n\n### Instructions\n\nYou are given an incomplete Factory design pattern implementation with some incorrect parts. Complete and fix the class to demonstrate your understanding of how the Factory design pattern works.\n\n### Expected Classes\n\n```java\n// Product interface\npublic interface Product {\n    void showDetails();\n}\n\n// ConcreteProductA class\npublic class ConcreteProductA {\n    ...\n}\n\n// ConcreteProductB class\npublic class ConcreteProductB {\n    ...\n}\n\n// Factory class\npublic class Factory {\n    public ???? createProduct(String type) {\n\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your classes:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        Factory factory = new Factory();\n\n        ConcreteProductA productA = factory.createProduct(\"A\");\n        if (productA != null) {\n            productA.showDetails();\n        } else {\n            System.out.println(\"Invalid product type\");\n        }\n\n        ConcreteProductB productB = factory.createProduct(\"B\");\n        if (productB != null) {\n            productB.showDetails();\n        } else {\n            System.out.println(\"Invalid product type\");\n        }\n\n        Object invalidProduct = factory.createProduct(\"C\");\n        if (invalidProduct != null) {\n            System.out.println(\"Invalid product type should return null\");\n        } else {\n            System.out.println(\"Invalid product type\");\n        }\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nThis is ConcreteProductA.\nThis is ConcreteProductB.\nInvalid product type\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        Factory factory = new Factory();\n\n        ConcreteProductA productA = factory.createProduct(\"A\");\n        if (productA != null) {\n            productA.showDetails();\n        } else {\n            System.out.println(\"Invalid product type\");\n        }\n\n        ConcreteProductB productB = factory.createProduct(\"B\");\n        if (productB != null) {\n            productB.showDetails();\n        } else {\n            System.out.println(\"Invalid product type\");\n        }\n\n        Object invalidProduct = factory.createProduct(\"C\");\n        if (invalidProduct != null) {\n            System.out.println(\"Invalid product type should return null\");\n        } else {\n            System.out.println(\"Invalid product type\");\n        }\n    }\n}\n",
+      "template": "// Fichiers attendus : Product.java, ConcreteProductA.java, ConcreteProductB.java, Factory.java.\n// Écris toutes les classes ici : chacune sera placée dans son propre fichier.\n\npublic class Product {\n    // Écris ta solution ici.\n}\n\npublic class ConcreteProductA {\n    // Écris ta solution ici.\n}\n\npublic class ConcreteProductB {\n    // Écris ta solution ici.\n}\n\npublic class Factory {\n    // Écris ta solution ici.\n}\n",
+      "runner": "FactoryBlueprint",
+      "expectedFiles": [
+        "Product.java",
+        "ConcreteProductA.java",
+        "ConcreteProductB.java",
+        "Factory.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/factory-blueprint/README.md"
+    },
+    {
+      "id": "java-first-unique",
+      "title": "FirstUnique",
+      "statement": "## First Unique\n\n### Instructions\n\nWrite a function that finds the first non-repeating character in a string. If there is no such character, return an underscore (\\_).\n\n### Expected Class\n\n```java\npublic class FirstUnique {\n    public char findFirstUnique(String s) {\n        // Implementation to find the first non-repeating character\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        FirstUnique firstUnique = new FirstUnique();\n\n        // Test case 1\n        String s1 = \"leetcode\";\n        System.out.println(\"First unique character: \" + firstUnique.findFirstUnique(s1)); // Expected output: 'l'\n\n        // Test case 2\n        String s2 = \"loveleetcode\";\n        System.out.println(\"First unique character: \" + firstUnique.findFirstUnique(s2)); // Expected output: 'v'\n\n        // Test case 3\n        String s3 = \"aabbcc\";\n        System.out.println(\"First unique character: \" + firstUnique.findFirstUnique(s3)); // Expected output: '_'\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nFirst unique character: l\nFirst unique character: v\nFirst unique character: _\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        FirstUnique firstUnique = new FirstUnique();\n\n        // Test case 1\n        String s1 = \"leetcode\";\n        System.out.println(\"First unique character: \" + firstUnique.findFirstUnique(s1)); // Expected output: 'l'\n\n        // Test case 2\n        String s2 = \"loveleetcode\";\n        System.out.println(\"First unique character: \" + firstUnique.findFirstUnique(s2)); // Expected output: 'v'\n\n        // Test case 3\n        String s3 = \"aabbcc\";\n        System.out.println(\"First unique character: \" + firstUnique.findFirstUnique(s3)); // Expected output: '_'\n    }\n}\n",
+      "template": "public class FirstUnique {\n    // Écris ta solution ici.\n}\n",
+      "runner": "FirstUnique",
+      "expectedFiles": [
+        "FirstUnique.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/first-unique/README.md"
+    },
+    {
+      "id": "java-flexisort",
+      "title": "Flexisort",
+      "statement": "## Flexisort\n\n### Instructions\n\nCreate an abstract class `Sorter` that will be used as a base class for sorting algorithms. This class should have an abstract method `sort` that will be implemented by its child classes. Additionally, it should have methods to set and get the array to sort.\n\nImplement two child classes:\n\n- `BubbleSort` which implements the bubble sort algorithm.\n- `InsertionSort` which implements the insertion sort algorithm.\n\n### Expected Classes\n\n```java\npublic abstract class Sorter {\n    private int[] array;\n\n    public int[] getArray() {\n        // getter method\n    }\n\n    public void setArray(int[] array) {\n        // setter method\n    }\n\n    public abstract void sort();\n}\n\npublic class BubbleSort extends Sorter {\n    @Override\n    public void sort() {\n        // bubble sort algorithm implementation\n    }\n}\n\npublic class InsertionSort extends Sorter {\n    @Override\n    public void sort() {\n        // insertion sort algorithm implementation\n    }\n}\n```\n\n### Usage\n\nHere is a possible ExerciseRunner.java to test your classes:\n\n```java\nimport java.util.Arrays;\n\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        int[] array = {64, 34, 25, 12, 22, 11, 90};\n\n        // Test BubbleSort\n        Sorter bubbleSorter = new BubbleSort();\n        bubbleSorter.setArray(array.clone());\n        bubbleSorter.sort();\n        System.out.println(\"BubbleSorted array: \" + Arrays.toString(bubbleSorter.getArray()));\n\n        // Test InsertionSort\n        Sorter insertionSorter = new InsertionSort();\n        insertionSorter.setArray(array.clone());\n        insertionSorter.sort();\n        System.out.println(\"InsertionSorted array: \" + Arrays.toString(insertionSorter.getArray()));\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nBubbleSorted array: [11, 12, 22, 25, 34, 64, 90]\nInsertionSorted array: [11, 12, 22, 25, 34, 64, 90]\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "import java.util.Arrays;\n\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        int[] array = {64, 34, 25, 12, 22, 11, 90};\n\n        // Test BubbleSort\n        Sorter bubbleSorter = new BubbleSort();\n        bubbleSorter.setArray(array.clone());\n        bubbleSorter.sort();\n        System.out.println(\"BubbleSorted array: \" + Arrays.toString(bubbleSorter.getArray()));\n\n        // Test InsertionSort\n        Sorter insertionSorter = new InsertionSort();\n        insertionSorter.setArray(array.clone());\n        insertionSorter.sort();\n        System.out.println(\"InsertionSorted array: \" + Arrays.toString(insertionSorter.getArray()));\n    }\n}\n",
+      "template": "// Fichiers attendus : Sorter.java, BubbleSort.java, InsertionSort.java.\n// Écris toutes les classes ici : chacune sera placée dans son propre fichier.\n\npublic class Sorter {\n    // Écris ta solution ici.\n}\n\npublic class BubbleSort {\n    // Écris ta solution ici.\n}\n\npublic class InsertionSort {\n    // Écris ta solution ici.\n}\n",
+      "runner": "Flexisort",
+      "expectedFiles": [
+        "Sorter.java",
+        "BubbleSort.java",
+        "InsertionSort.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/flexisort/README.md"
+    },
+    {
+      "id": "java-goodbye-mars",
+      "title": "GoodbyeMars",
+      "statement": "## GoodbyeMars\n\n### Instructions\n\nIn a file named `GoodbyeMars.java` write a function `goodbyeMars` that returns the string 'Goodbye Mars !'.\n\n### Expected Functions\n\n```java\npublic class GoodbyeMars {\n    public static String goodbyeMars() {\n        // your code here\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(GoodbyeMars.goodbyeMars());\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nGoodbye Mars !\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(GoodbyeMars.goodbyeMars());\n    }\n}\n",
+      "template": "public class GoodbyeMars {\n    // Écris ta solution ici.\n}\n",
+      "runner": "GoodbyeMars",
+      "expectedFiles": [
+        "GoodbyeMars.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/goodbye-mars/README.md"
+    },
+    {
+      "id": "java-harmonious-fusion",
+      "title": "HarmoniousFusion",
+      "statement": "## Harmonious Fusion\n\n### Instructions\n\nCreate a class `HarmoniousFusion` that provides a method to merge two sorted arrays into one sorted array. The merged array should also be sorted.\n\n### Expected Class\n\n```java\npublic class HarmoniousFusion {\n    public int[] merge(int[] arr1, int[] arr2) {\n        // Implementation to merge two sorted arrays into one sorted array\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\nimport java.util.Arrays;\n\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        HarmoniousFusion merger = new HarmoniousFusion();\n\n        // Test case 1\n        int[] arr1 = {1, 3, 5};\n        int[] arr2 = {2, 4, 6};\n        int[] mergedArray = merger.merge(arr1, arr2);\n        System.out.println(Arrays.toString(mergedArray)); // Expected output: [1, 2, 3, 4, 5, 6]\n\n        // Test case 2\n        int[] arr3 = {1, 3, 5, 7};\n        int[] arr4 = {2, 4, 6};\n        mergedArray = merger.merge(arr3, arr4);\n        System.out.println(Arrays.toString(mergedArray)); // Expected output: [1, 2, 3, 4, 5, 6, 7]\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\n[1, 2, 3, 4, 5, 6]\n[1, 2, 3, 4, 5, 6, 7]\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "import java.util.Arrays;\n\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        HarmoniousFusion merger = new HarmoniousFusion();\n\n        // Test case 1\n        int[] arr1 = {1, 3, 5};\n        int[] arr2 = {2, 4, 6};\n        int[] mergedArray = merger.merge(arr1, arr2);\n        System.out.println(Arrays.toString(mergedArray)); // Expected output: [1, 2, 3, 4, 5, 6]\n\n        // Test case 2\n        int[] arr3 = {1, 3, 5, 7};\n        int[] arr4 = {2, 4, 6};\n        mergedArray = merger.merge(arr3, arr4);\n        System.out.println(Arrays.toString(mergedArray)); // Expected output: [1, 2, 3, 4, 5, 6, 7]\n    }\n}\n",
+      "template": "public class HarmoniousFusion {\n    // Écris ta solution ici.\n}\n",
+      "runner": "HarmoniousFusion",
+      "expectedFiles": [
+        "HarmoniousFusion.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/harmonious-fusion/README.md"
+    },
+    {
+      "id": "java-html-validator",
+      "title": "HTMLValidator",
+      "statement": "## HTML Validator\n\n### Instructions\n\nCreate a class `HTMLValidator` that provides a method to validate whether a given HTML string is correctly formatted. The method should support a few basic HTML tags (`\u003chtml\u003e`, `\u003cbody\u003e`, `\u003cdiv\u003e`, `\u003cp\u003e`, `\u003cb\u003e`, `\u003ci\u003e`, `\u003ch1\u003e`, `\u003ch2\u003e`). If the HTML is valid, the method should return `true`. If the HTML is invalid, the method should return `false`.\n\n### Expected Class\n\n```java\npublic class HTMLValidator {\n    public boolean validateHTML(String html) {\n        // Implementation to validate if the given HTML is correctly formatted\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        HTMLValidator validator = new HTMLValidator();\n\n        // Test case 1: Valid HTML\n        String html1 = \"\u003chtml\u003e\u003cbody\u003e\u003ch1\u003eHello, World!\u003c/h1\u003e\u003c/body\u003e\u003c/html\u003e\";\n        System.out.println(\"Is HTML valid? \" + validator.validateHTML(html1)); // Expected output: true\n\n        // Test case 2: Invalid HTML (missing closing tag)\n        String html2 = \"\u003chtml\u003e\u003cbody\u003e\u003ch1\u003eHello, World!\u003c/body\u003e\u003c/html\u003e\";\n        System.out.println(\"Is HTML valid? \" + validator.validateHTML(html2)); // Expected output: false\n\n        // Test case 3: Invalid HTML (incorrect nesting)\n        String html3 = \"\u003chtml\u003e\u003cbody\u003e\u003ch1\u003e\u003cdiv\u003eHello, World!\u003c/h1\u003e\u003c/div\u003e\u003c/body\u003e\u003c/html\u003e\";\n        System.out.println(\"Is HTML valid? \" + validator.validateHTML(html3)); // Expected output: false\n\n        // Test case 4: Valid HTML with multiple tags\n        String html4 = \"\u003chtml\u003e\u003cbody\u003e\u003cdiv\u003e\u003cp\u003eThis is a \u003cb\u003ebold\u003c/b\u003e word and this is \u003ci\u003eitalic\u003c/i\u003e.\u003c/p\u003e\u003c/div\u003e\u003c/body\u003e\u003c/html\u003e\";\n        System.out.println(\"Is HTML valid? \" + validator.validateHTML(html4)); // Expected output: true\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nIs HTML valid? true\nIs HTML valid? false\nIs HTML valid? false\nIs HTML valid? true\n$\n```\n\n### Tips\n\n```java\n// ✅ ArrayDeque (Double-Ended Queue)\nArrayDeque\u003cString\u003e deque = new ArrayDeque\u003c\u003e();\ndeque.add(\"A\");          // add at tail\ndeque.addFirst(\"B\");     // add at head\ndeque.addLast(\"C\");      // add at tail\ndeque.removeFirst();     // remove from head\ndeque.removeLast();      // remove from tail\n// Tip: Use ArrayDeque as a faster stack or queue alternative (no null elements allowed).\n\n// ✅ Set (Unique Collection)\nSet\u003cString\u003e set = new HashSet\u003c\u003e();\nset.add(\"apple\");\nset.add(\"banana\");\nset.add(\"apple\"); // duplicate ignored\nset.contains(\"banana\");  // true\nset.remove(\"apple\");     // removes element\n// Tip: Set stores unique elements only — ideal for avoiding duplicates.\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        HTMLValidator validator = new HTMLValidator();\n\n        // Test case 1: Valid HTML\n        String html1 = \"\u003chtml\u003e\u003cbody\u003e\u003ch1\u003eHello, World!\u003c/h1\u003e\u003c/body\u003e\u003c/html\u003e\";\n        System.out.println(\"Is HTML valid? \" + validator.validateHTML(html1)); // Expected output: true\n\n        // Test case 2: Invalid HTML (missing closing tag)\n        String html2 = \"\u003chtml\u003e\u003cbody\u003e\u003ch1\u003eHello, World!\u003c/body\u003e\u003c/html\u003e\";\n        System.out.println(\"Is HTML valid? \" + validator.validateHTML(html2)); // Expected output: false\n\n        // Test case 3: Invalid HTML (incorrect nesting)\n        String html3 = \"\u003chtml\u003e\u003cbody\u003e\u003ch1\u003e\u003cdiv\u003eHello, World!\u003c/h1\u003e\u003c/div\u003e\u003c/body\u003e\u003c/html\u003e\";\n        System.out.println(\"Is HTML valid? \" + validator.validateHTML(html3)); // Expected output: false\n\n        // Test case 4: Valid HTML with multiple tags\n        String html4 = \"\u003chtml\u003e\u003cbody\u003e\u003cdiv\u003e\u003cp\u003eThis is a \u003cb\u003ebold\u003c/b\u003e word and this is \u003ci\u003eitalic\u003c/i\u003e.\u003c/p\u003e\u003c/div\u003e\u003c/body\u003e\u003c/html\u003e\";\n        System.out.println(\"Is HTML valid? \" + validator.validateHTML(html4)); // Expected output: true\n    }\n}\n",
+      "template": "public class HTMLValidator {\n    // Écris ta solution ici.\n}\n",
+      "runner": "HTMLValidator",
+      "expectedFiles": [
+        "HTMLValidator.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/html-validator/README.md"
+    },
+    {
+      "id": "java-check-anagram",
+      "title": "IsAnagram",
+      "statement": "## Check Anagram\n\n### Instructions\n\nCreate a class `AnagramChecker` that provides a method to check if two strings are anagrams. An anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.The comparison should be case insensitive.\n\n### Expected Class\n\n```java\npublic class AnagramChecker {\n    public boolean isAnagram(String str1, String str2) {\n        // Implementation to check if str1 and str2 are anagrams\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        AnagramChecker checker = new AnagramChecker();\n\n        // Test cases\n        System.out.println(checker.isAnagram(\"listen\", \"silent\"));\n        System.out.println(checker.isAnagram(\"triangle\", \"integral\"));\n        System.out.println(checker.isAnagram(\"apple\", \"pale\"));\n        System.out.println(checker.isAnagram(\"Astronomer\", \"Moon starer\"));\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\ntrue\ntrue\nfalse\nfalse\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        AnagramChecker checker = new AnagramChecker();\n\n        // Test cases\n        System.out.println(checker.isAnagram(\"listen\", \"silent\"));\n        System.out.println(checker.isAnagram(\"triangle\", \"integral\"));\n        System.out.println(checker.isAnagram(\"apple\", \"pale\"));\n        System.out.println(checker.isAnagram(\"Astronomer\", \"Moon starer\"));\n    }\n}\n",
+      "template": "public class AnagramChecker {\n    // Écris ta solution ici.\n}\n",
+      "runner": "IsAnagram",
+      "expectedFiles": [
+        "AnagramChecker.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/check-anagram/README.md"
+    },
+    {
+      "id": "java-longest-common-prefix",
+      "title": "LongestCommonPrefix",
+      "statement": "## Longest Common Prefix\n\n### Instructions\n\nWrite a function to find the longest common prefix string amongst an array of strings, with case-sensitive comparison. If there is no common prefix, return an empty string \"\".\n\n### Expected Class\n\n```java\npublic class LongestCommonPrefix {\n    public String findLongestCommonPrefix(String[] strs) {\n        // Implementation to find the longest common prefix\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        LongestCommonPrefix lcp = new LongestCommonPrefix();\n\n        // Test case 1\n        String[] strs1 = {\"flower\", \"flow\", \"flight\"};\n        System.out.println(\"Longest common prefix: \" + lcp.findLongestCommonPrefix(strs1)); // Expected output: \"fl\"\n\n        // Test case 2\n        String[] strs2 = {\"dog\", \"racecar\", \"car\"};\n        System.out.println(\"Longest common prefix: \" + lcp.findLongestCommonPrefix(strs2)); // Expected output: \"\"\n\n        // Test case 3\n        String[] strs3 = {\"interspecies\", \"interstellar\", \"interstate\"};\n        System.out.println(\"Longest common prefix: \" + lcp.findLongestCommonPrefix(strs3)); // Expected output: \"inters\"\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nLongest common prefix: fl\nLongest common prefix:\nLongest common prefix: inters\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        LongestCommonPrefix lcp = new LongestCommonPrefix();\n\n        // Test case 1\n        String[] strs1 = {\"flower\", \"flow\", \"flight\"};\n        System.out.println(\"Longest common prefix: \" + lcp.findLongestCommonPrefix(strs1)); // Expected output: \"fl\"\n\n        // Test case 2\n        String[] strs2 = {\"dog\", \"racecar\", \"car\"};\n        System.out.println(\"Longest common prefix: \" + lcp.findLongestCommonPrefix(strs2)); // Expected output: \"\"\n\n        // Test case 3\n        String[] strs3 = {\"interspecies\", \"interstellar\", \"interstate\"};\n        System.out.println(\"Longest common prefix: \" + lcp.findLongestCommonPrefix(strs3)); // Expected output: \"inters\"\n    }\n}\n",
+      "template": "public class LongestCommonPrefix {\n    // Écris ta solution ici.\n}\n",
+      "runner": "LongestCommonPrefix",
+      "expectedFiles": [
+        "LongestCommonPrefix.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/longest-common-prefix/README.md"
+    },
+    {
+      "id": "java-maximal-square",
+      "title": "MaximalSquare",
+      "statement": "## Maximal Square\n\n### Instructions\n\nCreate a class `MaximalSquare` that provides a method to find the area of the largest square containing only 1's in a given 2D binary matrix.\n\n### Expected Class\n\n```java\npublic class MaximalSquare {\n    public int maximalSquare(char[][] matrix) {\n        // Implementation to find the area of the largest square containing only 1's\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        MaximalSquare finder = new MaximalSquare();\n\n        // Test case 1\n        char[][] matrix1 = {\n            {'1', '0', '1', '0', '0'},\n            {'1', '0', '1', '1', '1'},\n            {'1', '1', '1', '1', '1'},\n            {'1', '0', '0', '1', '0'}\n        };\n        System.out.println(\"Maximal square area: \" + finder.maximalSquare(matrix1)); // Expected output: 4\n\n        // Test case 2\n        char[][] matrix2 = {\n            {'0', '1'},\n            {'1', '0'}\n        };\n        System.out.println(\"Maximal square area: \" + finder.maximalSquare(matrix2)); // Expected output: 1\n\n        // Test case 3\n        char[][] matrix3 = {\n            {'0'}\n        };\n        System.out.println(\"Maximal square area: \" + finder.maximalSquare(matrix3)); // Expected output: 0\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nMaximal square area: 4\nMaximal square area: 1\nMaximal square area: 0\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        MaximalSquare finder = new MaximalSquare();\n\n        // Test case 1\n        char[][] matrix1 = {\n            {'1', '0', '1', '0', '0'},\n            {'1', '0', '1', '1', '1'},\n            {'1', '1', '1', '1', '1'},\n            {'1', '0', '0', '1', '0'}\n        };\n        System.out.println(\"Maximal square area: \" + finder.maximalSquare(matrix1)); // Expected output: 4\n\n        // Test case 2\n        char[][] matrix2 = {\n            {'0', '1'},\n            {'1', '0'}\n        };\n        System.out.println(\"Maximal square area: \" + finder.maximalSquare(matrix2)); // Expected output: 1\n\n        // Test case 3\n        char[][] matrix3 = {\n            {'0'}\n        };\n        System.out.println(\"Maximal square area: \" + finder.maximalSquare(matrix3)); // Expected output: 0\n    }\n}\n",
+      "template": "public class MaximalSquare {\n    // Écris ta solution ici.\n}\n",
+      "runner": "MaximalSquare",
+      "expectedFiles": [
+        "MaximalSquare.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/maximal-square/README.md"
+    },
+    {
+      "id": "java-monthly-period",
+      "title": "MonthlyPeriod",
+      "statement": "## Monthly Period\n\n### Instructions\n\nCreate a class `MonthlyPeriod` that provides a method to calculate the period between two given dates in terms of months and years. The dates will be provided in the format `yyyy-MM-dd`.\n\nIn case of any error the method `calculatePeriod` should return `Error`\n\n\u003e 💡 Going to the past is possible!\n\n### Expected Class\n\n```java\nimport java.time.LocalDate;\nimport java.time.Period;\nimport java.time.format.DateTimeFormatter;\n\npublic class MonthlyPeriod {\n    public String calculatePeriod(String startDate, String endDate) {\n        // Implementation to calculate the period between two dates in months and years\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        MonthlyPeriod MonthlyPeriod = new MonthlyPeriod();\n\n        String startDate1 = \"2020-01-01\";\n        String endDate1 = \"2023-06-15\";\n        System.out.println(\"Period: \" + MonthlyPeriod.calculatePeriod(startDate1, endDate1));\n\n        String startDate2 = \"2015-05-20\";\n        String endDate2 = \"2015-10-19\";\n        System.out.println(\"Period: \" + MonthlyPeriod.calculatePeriod(startDate2, endDate2));\n\n        String startDate3 = \"2015-05-20\";\n        String endDate3 = \"2015-10-20\";\n        System.out.println(\"Period: \" + MonthlyPeriod.calculatePeriod(startDate3, endDate3));\n\n        String startDate4 = \"2018-12-25\";\n        String endDate4 = \"2021-12-25\";\n        System.out.println(\"Period: \" + MonthlyPeriod.calculatePeriod(startDate4, endDate4));\n\n        String startDate5 = \"2018-10-25\";\n        String endDate5 = \"2019-11-30\";\n        System.out.println(\"Period: \" + MonthlyPeriod.calculatePeriod(startDate5, endDate5));\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nPeriod: 3 years and 5 months\nPeriod: 4 months\nPeriod: 5 months\nPeriod: 3 years\nPeriod: 1 year and 1 month\n$\n```\n\n### Tips\n\n```java\n// ✅ Parse a date string into LocalDate\nDateTimeFormatter fmt = DateTimeFormatter.ofPattern(\"yyyy-MM-dd\");\nLocalDate date = LocalDate.parse(\"2024-05-10\", fmt);\n\n// ✅ Use Period to get years and months between two dates\nPeriod period = Period.between(start, end);\nint years = period.getYears();\nint months = period.getMonths();\n// Tip: Period.between() gives difference in years, months, and days separately.\n\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        MonthlyPeriod MonthlyPeriod = new MonthlyPeriod();\n\n        String startDate1 = \"2020-01-01\";\n        String endDate1 = \"2023-06-15\";\n        System.out.println(\"Period: \" + MonthlyPeriod.calculatePeriod(startDate1, endDate1));\n\n        String startDate2 = \"2015-05-20\";\n        String endDate2 = \"2015-10-19\";\n        System.out.println(\"Period: \" + MonthlyPeriod.calculatePeriod(startDate2, endDate2));\n\n        String startDate3 = \"2015-05-20\";\n        String endDate3 = \"2015-10-20\";\n        System.out.println(\"Period: \" + MonthlyPeriod.calculatePeriod(startDate3, endDate3));\n\n        String startDate4 = \"2018-12-25\";\n        String endDate4 = \"2021-12-25\";\n        System.out.println(\"Period: \" + MonthlyPeriod.calculatePeriod(startDate4, endDate4));\n\n        String startDate5 = \"2018-10-25\";\n        String endDate5 = \"2019-11-30\";\n        System.out.println(\"Period: \" + MonthlyPeriod.calculatePeriod(startDate5, endDate5));\n    }\n}\n",
+      "template": "public class MonthlyPeriod {\n    // Écris ta solution ici.\n}\n",
+      "runner": "MonthlyPeriod",
+      "expectedFiles": [
+        "MonthlyPeriod.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/monthly-period/README.md"
+    },
+    {
+      "id": "java-multiplication-table",
+      "title": "MultiplicationTable",
+      "statement": "## MultiplicationTable\n\n### Instructions\n\nIn a file named `MultiplicationTable.java` write a function `generate` which takes a number as a parameter, and prints the multiplication table for this number.\n\n### Expected Functions\n\n```java\npublic class MultiplicationTable {\n    public static void generate(int num) {\n        // your code here\n        // System.out.println(\"5 x 1 = 5\");\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        MultiplicationTable.generate(5);\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\n5 x 1 = 5\n5 x 2 = 10\n5 x 3 = 15\n5 x 4 = 20\n5 x 5 = 25\n5 x 6 = 30\n5 x 7 = 35\n5 x 8 = 40\n5 x 9 = 45\n5 x 10 = 50\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        MultiplicationTable.generate(5);\n    }\n}\n",
+      "template": "public class MultiplicationTable {\n    // Écris ta solution ici.\n}\n",
+      "runner": "MultiplicationTable",
+      "expectedFiles": [
+        "MultiplicationTable.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/multiplication-table/README.md"
+    },
+    {
+      "id": "java-next-prime",
+      "title": "NextPrime",
+      "statement": "## NextPrime\n\n### Instructions\n\nIn a file named **`NextPrime.java`**, implement a function called **`nextPrime`** that takes an integer as input and returns the next prime number greater than the given value.\n\n\u003e 👉 A **prime number** is a natural number greater than **1** that has no divisors other than **1** and itself. For example, `2`, `3`, `5`, and `7` are prime numbers, while `4` and `6` are not because they can be divided evenly by numbers other than 1 and themselves.\n\n### Expected Functions\n\n```java\npublic class NextPrime {\n    public static Integer nextPrime(Integer n) {\n        // your code here\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(NextPrime.nextPrime(3));\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\n5\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(NextPrime.nextPrime(3));\n    }\n}\n",
+      "template": "public class NextPrime {\n    // Écris ta solution ici.\n}\n",
+      "runner": "NextPrime",
+      "expectedFiles": [
+        "NextPrime.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/next-prime/README.md"
+    },
+    {
+      "id": "java-perfect-number",
+      "title": "PerfectNumber",
+      "statement": "## Perfect Number\n\n### Instructions\n\nWrite a program to check if a given number is a _perfect number_.\nA **perfect number** is a positive integer that is equal to the sum of its proper positive divisors, excluding itself.\n\n**Example:**\n\n- Input: `28`\n- Divisors (excluding itself): `1, 2, 4, 7, 14`\n- Sum of divisors = `1 + 2 + 4 + 7 + 14 = 28`\n  ✅ Since the sum equals the original number, **28 is a perfect number**.\n\n### Expected Class\n\n```java\npublic class PerfectNumber {\n    public boolean isPerfectNumber(int number) {\n        // Implementation to check if the given number is a perfect number\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        PerfectNumber perfectNumber = new PerfectNumber();\n\n        int number1 = 6;\n        System.out.println(\"Is \" + number1 + \" a perfect number? \" + perfectNumber.isPerfectNumber(number1));\n\n        int number2 = 28;\n        System.out.println(\"Is \" + number2 + \" a perfect number? \" + perfectNumber.isPerfectNumber(number2));\n\n        int number3 = 12;\n        System.out.println(\"Is \" + number3 + \" a perfect number? \" + perfectNumber.isPerfectNumber(number3));\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nIs 6 a perfect number? true\nIs 28 a perfect number? true\nIs 12 a perfect number? false\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        PerfectNumber perfectNumber = new PerfectNumber();\n\n        int number1 = 6;\n        System.out.println(\"Is \" + number1 + \" a perfect number? \" + perfectNumber.isPerfectNumber(number1));\n\n        int number2 = 28;\n        System.out.println(\"Is \" + number2 + \" a perfect number? \" + perfectNumber.isPerfectNumber(number2));\n\n        int number3 = 12;\n        System.out.println(\"Is \" + number3 + \" a perfect number? \" + perfectNumber.isPerfectNumber(number3));\n    }\n}\n",
+      "template": "public class PerfectNumber {\n    // Écris ta solution ici.\n}\n",
+      "runner": "PerfectNumber",
+      "expectedFiles": [
+        "PerfectNumber.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/perfect-number/README.md"
+    },
+    {
+      "id": "java-reverse-array",
+      "title": "ReverseArray",
+      "statement": "## ReverseArray\n\n### Instructions\n\nIn a file named `ReverseArray.java` define a function called `reverse` that takes an array as input, reverses the order of its elements, and returns the new reversed array.\n\n### Expected Functions\n\n```java\npublic class ReverseArray {\n    public static Integer[] reverse(Integer[] arr) {\n        // your code here\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\nimport java.io.*;\nimport java.util.Arrays;\n\npublic class ExerciseRunner {\n    public static void main(String[] args) throws IOException {\n        System.out.println(Arrays.toString(ReverseArray.reverse(new Integer[]{4, 2, 1, 3})));\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\n[3, 1, 2, 4]\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "import java.io.*;\nimport java.util.Arrays;\n\npublic class ExerciseRunner {\n    public static void main(String[] args) throws IOException {\n        System.out.println(Arrays.toString(ReverseArray.reverse(new Integer[]{4, 2, 1, 3})));\n    }\n}\n",
+      "template": "public class ReverseArray {\n    // Écris ta solution ici.\n}\n",
+      "runner": "ReverseArray",
+      "expectedFiles": [
+        "ReverseArray.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/reverse-array/README.md"
+    },
+    {
+      "id": "java-rotate-array",
+      "title": "RotateArray",
+      "statement": "## RotateArray\n\n### Instructions\n\nIn a file named `RotateArray.java` write a function `rotate` that rotates the given array specified in the parameters by the number given in the second parameter and returns it.\n\n\u003e Note: The rotation count may have a negative value!!!\n\n### Expected Functions\n\n```java\npublic class RotateArray {\n    public static Integer[] rotate(Integer[] arr, int rotationCount) {\n        // your code here\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\nimport java.io.*;\nimport java.util.Arrays;\n\npublic class ExerciseRunner {\n    public static void main(String[] args) throws IOException {\n        System.out.println(Arrays.toString(RotateArray.rotate(new Integer[]{4, 2, 1, 3}, 1)));\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\n[3, 4, 2, 1]\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "import java.io.*;\nimport java.util.Arrays;\n\npublic class ExerciseRunner {\n    public static void main(String[] args) throws IOException {\n        System.out.println(Arrays.toString(RotateArray.rotate(new Integer[]{4, 2, 1, 3}, 1)));\n    }\n}\n",
+      "template": "public class RotateArray {\n    // Écris ta solution ici.\n}\n",
+      "runner": "RotateArray",
+      "expectedFiles": [
+        "RotateArray.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/rotate-array/README.md"
+    },
+    {
+      "id": "java-single-linked-list",
+      "title": "SingleLinkedList",
+      "statement": "## Single Linked List\n\n### Instructions\n\nCreate a single linked list data structure that implements the following methods:\n\n- `at(int index)`: to access an element by its index, if the index is out of bound return -1.\n- `add(int value)`: to add an element at the end of the list.\n- `remove(int index)`: to remove an element by its index.\n- `size()`: to get the size of the list.\n\nDefine these methods in an interface called `LinkedList`, and implement this interface in a class called `SingleLinkedList`. Additionally, add a private method `next(Node node)` in this class that will be used to traversing the list in the other methods. This method should print the message \"Go to next node\\n\" each time it is called.\n\n### Explanation\n\nA linked list is a linear data structure where each element is a separate object called a node. Each node contains two fields:\n\n- `value`: stores the data.\n- `next`: stores a reference to the next node in the list.\n\nThe first node is called the head of the list and the last node is always null. The list allows for efficient insertion and deletion of elements. However, accessing an element by its index requires traversing the list from the head to the desired position.\n\n### Given Interface\n\n```java\npublic interface LinkedList {\n    int at(int index);\n    void add(int value);\n    void remove(int index);\n    int size();\n}\n```\n\n### Expected Class\n\n```java\npublic class SingleLinkedList implements LinkedList {\n    private Node head;\n    private int size;\n\n    private class Node {\n        int value;\n        Node next;\n\n        Node(int value) {\n            this.value = value;\n            this.next = null;\n        }\n    }\n\n    @Override\n    public int at(int index) {\n        // Implementation for accessing an element by its index\n    }\n\n    @Override\n    public void add(int value) {\n        // Implementation for adding an element at the end of the list\n    }\n\n    @Override\n    public void remove(int index) {\n        // Implementation for removing an element by its index\n    }\n\n    @Override\n    public int size() {\n        // Implementation for accessing an element by its index\n    }\n\n    private Node next(Node node) {\n        // Print the message \"Go to next node\"\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        LinkedList list = new SingleLinkedList();\n\n        // Add elements to the list\n        list.add(1);\n        list.add(2);\n        list.add(3);\n\n        // Access elements by index\n        System.out.println(\"Element at index 0: \" + list.at(0)); // Expected output: 1\n        System.out.println(\"Element at index 1: \" + list.at(1)); // Expected output: 2\n        System.out.println(\"Element at index 2: \" + list.at(2)); // Expected output: 3\n\n        // Remove an element by index\n        list.remove(1);\n        System.out.println(\"Element at index 1 after removal: \" + list.at(1)); // Expected output: 3\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nGo to next node\nElement at index 0: 1\nGo to next node\nElement at index 1: 2\nGo to next node\nGo to next node\nElement at index 2: 3\nGo to next node\nGo to next node\nElement at index 1 after removal: 3\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        LinkedList list = new SingleLinkedList();\n\n        // Add elements to the list\n        list.add(1);\n        list.add(2);\n        list.add(3);\n\n        // Access elements by index\n        System.out.println(\"Element at index 0: \" + list.at(0)); // Expected output: 1\n        System.out.println(\"Element at index 1: \" + list.at(1)); // Expected output: 2\n        System.out.println(\"Element at index 2: \" + list.at(2)); // Expected output: 3\n\n        // Remove an element by index\n        list.remove(1);\n        System.out.println(\"Element at index 1 after removal: \" + list.at(1)); // Expected output: 3\n    }\n}\n",
+      "template": "// Fichiers attendus : LinkedList.java, SingleLinkedList.java.\n// Écris toutes les classes ici : chacune sera placée dans son propre fichier.\n\npublic class LinkedList {\n    // Écris ta solution ici.\n}\n\npublic class SingleLinkedList {\n    // Écris ta solution ici.\n}\n",
+      "runner": "SingleLinkedList",
+      "expectedFiles": [
+        "LinkedList.java",
+        "SingleLinkedList.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/single-linked-list/README.md"
+    },
+    {
+      "id": "java-singleton-blueprint",
+      "title": "SingletonBlueprint",
+      "statement": "## Singleton Blueprint\n\n### Instructions\n\nYou are given an incomplete `Singleton` class. Complete the class to demonstrate your understanding of how the `Singleton` design pattern works. The `Singleton` pattern ensures that a class has only one instance and provides a global point of access to that instance.\n\n### Expected Class\n\n```java\npublic class Singleton {\n    public Singleton instance;\n\n    ??? Singleton() {\n    }\n\n    public ??? Singleton get???() {\n    }\n\n    public String showMessage() {\n        return \"Hello, I am a singleton!\"\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(Singleton.get???().showMessage());\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nHello, I am a singleton!\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(Singleton.get???().showMessage());\n    }\n}\n",
+      "template": "public class Singleton {\n    // Écris ta solution ici.\n}\n",
+      "runner": "SingletonBlueprint",
+      "expectedFiles": [
+        "Singleton.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/singleton-blueprint/README.md"
+    },
+    {
+      "id": "java-sort-array",
+      "title": "SortArray",
+      "statement": "## SortArray\n\n### Instructions\n\nIn a file named `SortArray.java` write a function `sort` that returns the given array, specified in the parameters, sorted in ascending order.\n\n### Expected Functions\n\n```java\npublic class SortArray {\n    public static Integer[] sort(Integer[] arr) {\n        // your code here\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\nimport java.io.*;\nimport java.util.Arrays;\n\npublic class ExerciseRunner {\n    public static void main(String[] args) throws IOException {\n        System.out.println(Arrays.toString(SortArray.sort(new Integer[]{4, 2, 1, 3})));\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\n[1, 2, 3, 4]\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "import java.io.*;\nimport java.util.Arrays;\n\npublic class ExerciseRunner {\n    public static void main(String[] args) throws IOException {\n        System.out.println(Arrays.toString(SortArray.sort(new Integer[]{4, 2, 1, 3})));\n    }\n}\n",
+      "template": "public class SortArray {\n    // Écris ta solution ici.\n}\n",
+      "runner": "SortArray",
+      "expectedFiles": [
+        "SortArray.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/sort-array/README.md"
+    },
+    {
+      "id": "java-spiral-matrix",
+      "title": "SpiralMatrix",
+      "statement": "## Spiral Matrix\n\n### Instructions\n\nCreate a class `SpiralMatrix` that provides a method to generate a matrix filled with elements from 1 to n\\*n in spiral order, given an integer n where n \u003e 0.\n\n### Expected Class\n\n```java\npublic class SpiralMatrix {\n    public int[][] generateMatrix(int n) {\n        // Implementation to generate a spiral matrix\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\nimport java.util.Arrays;\n\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        SpiralMatrix spiralMatrix = new SpiralMatrix();\n\n        // Test case 1\n        int n1 = 3;\n        int[][] matrix1 = spiralMatrix.generateMatrix(n1);\n        System.out.println(\"Spiral matrix for n = \" + n1 + \":\");\n        for (int[] row : matrix1) {\n            System.out.println(Arrays.toString(row));\n        }\n\n        // Test case 2\n        int n2 = 4;\n        int[][] matrix2 = spiralMatrix.generateMatrix(n2);\n        System.out.println(\"Spiral matrix for n = \" + n2 + \":\");\n        for (int[] row : matrix2) {\n            System.out.println(Arrays.toString(row));\n        }\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nSpiral matrix for n = 3:\n[1, 2, 3]\n[8, 9, 4]\n[7, 6, 5]\n\nSpiral matrix for n = 4:\n[1, 2, 3, 4]\n[12, 13, 14, 5]\n[11, 16, 15, 6]\n[10, 9, 8, 7]\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "import java.util.Arrays;\n\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        SpiralMatrix spiralMatrix = new SpiralMatrix();\n\n        // Test case 1\n        int n1 = 3;\n        int[][] matrix1 = spiralMatrix.generateMatrix(n1);\n        System.out.println(\"Spiral matrix for n = \" + n1 + \":\");\n        for (int[] row : matrix1) {\n            System.out.println(Arrays.toString(row));\n        }\n\n        // Test case 2\n        int n2 = 4;\n        int[][] matrix2 = spiralMatrix.generateMatrix(n2);\n        System.out.println(\"Spiral matrix for n = \" + n2 + \":\");\n        for (int[] row : matrix2) {\n            System.out.println(Arrays.toString(row));\n        }\n    }\n}\n",
+      "template": "public class SpiralMatrix {\n    // Écris ta solution ici.\n}\n",
+      "runner": "SpiralMatrix",
+      "expectedFiles": [
+        "SpiralMatrix.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/spiral-matrix/README.md"
+    },
+    {
+      "id": "java-steady-sequence",
+      "title": "SteadySequence",
+      "statement": "## Steady Sequence\n\n### Instructions\n\nCreate a class named `SteadySequence` that includes a method to determine the length of the longest consecutive sequence in an unsorted array of integers. The \"longest consecutive sequence\" refers to the sequence with the longest stretch of elements that increase strictly by 1. The elements of this sequence may appear in any order within the array.\n\n### Expected Class\n\n```java\nimport java.util.HashSet;\nimport java.util.Set;\nimport java.util.Arrays;\n\npublic class SteadySequence {\n    public int longestSequence(int[] nums) {\n        public static int[] removeDuplicates(int[] nums) {\n            return Arrays.stream(nums).distinct().toArray();\n        }\n        // Implementation to find the length of the longest consecutive elements sequence\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        SteadySequence finder = new SteadySequence();\n\n        // Test case 1\n        int[] nums1 = {100, 4, 200, 1, 3, 2};\n        System.out.println(\"Longest consecutive sequence length: \" + finder.longestSequence(nums1)); // Expected output: 4\n\n        // Test case 2\n        int[] nums2 = {0, 3, 7, 2, 5, 8, 4, 6, 0, 1};\n        System.out.println(\"Longest consecutive sequence length: \" + finder.longestSequence(nums2)); // Expected output: 9\n\n        // Test case 3\n        int[] nums3 = {1, 2, 0, 1};\n        System.out.println(\"Longest consecutive sequence length: \" + finder.longestSequence(nums3)); // Expected output: 3\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nLongest consecutive sequence length: 4\nLongest consecutive sequence length: 9\nLongest consecutive sequence length: 3\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        SteadySequence finder = new SteadySequence();\n\n        // Test case 1\n        int[] nums1 = {100, 4, 200, 1, 3, 2};\n        System.out.println(\"Longest consecutive sequence length: \" + finder.longestSequence(nums1)); // Expected output: 4\n\n        // Test case 2\n        int[] nums2 = {0, 3, 7, 2, 5, 8, 4, 6, 0, 1};\n        System.out.println(\"Longest consecutive sequence length: \" + finder.longestSequence(nums2)); // Expected output: 9\n\n        // Test case 3\n        int[] nums3 = {1, 2, 0, 1};\n        System.out.println(\"Longest consecutive sequence length: \" + finder.longestSequence(nums3)); // Expected output: 3\n    }\n}\n",
+      "template": "public class SteadySequence {\n    // Écris ta solution ici.\n}\n",
+      "runner": "SteadySequence",
+      "expectedFiles": [
+        "SteadySequence.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/steady-sequence/README.md"
+    },
+    {
+      "id": "java-strlen",
+      "title": "Strlen",
+      "statement": "## Strlen\n\n### Instructions\n\nIn a file named `Strlen.java` write a function `strlen` that returns the length of the string passed as a parameter.\n\n### Expected Functions\n\n```java\npublic class Strlen {\n    public static int strlen(String s) {\n        // your code here\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(Strlen.strlen(\"Hello World !\"));\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\n13\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(Strlen.strlen(\"Hello World !\"));\n    }\n}\n",
+      "template": "public class Strlen {\n    // Écris ta solution ici.\n}\n",
+      "runner": "Strlen",
+      "expectedFiles": [
+        "Strlen.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/strlen/README.md"
+    },
+    {
+      "id": "java-system-logger",
+      "title": "SystemLogger",
+      "statement": "## SystemLogger\n\n### Instructions\n\nIn a file named `SystemLog.java` write a function `systemLog` that takes a String message as a parameter and returns the given message concatenated with 'System Log: '\n\n### Expected Functions\n\n```java\npublic class SystemLog {\n    public static String systemLog(String message) {\n        // your code here\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(SystemLog.systemLog(\"message\"));\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nSystem Log: message\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(SystemLog.systemLog(\"message\"));\n    }\n}\n",
+      "template": "public class SystemLog {\n    // Écris ta solution ici.\n}\n",
+      "runner": "SystemLogger",
+      "expectedFiles": [
+        "SystemLog.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/system-logger/README.md"
+    },
+    {
+      "id": "java-time-tracker",
+      "title": "TimeTracker",
+      "statement": "## TimeTracker\n\n### Instructions\n\nWrite a `ProjectTime` class to track the duration of a project using start and end times. You will be asked to add getter and setter methods for the `startTime` and `endTime` attributes. When you set one of them, you must update the `hoursLogged` attribute. The `hoursLogged` getter should output the hours in the following format:\n\n- Less than 120 minutes: `hoursLogged` m\n- Less than 120 hours: `hoursLogged` h\n- Less than 120 days: `hoursLogged` d\n- More than 120 days: `hoursLogged` mo\n\nIf there is any error, the number of `hoursLogged` should be handled accordingly.\n\n\u003e 💡 The `hoursLogged` shouldn't be a negative number except -1 in case of errors.\n\n### Expected Functions\n\n```java\nimport java.text.ParseException;\nimport java.text.SimpleDateFormat;\nimport java.util.Date;\n\npublic class ProjectTime {\n    private String startTime;\n    private String endTime;\n    private float hoursLogged;\n\n    public ProjectTime(String start, String end);\n\n    public void setStartTime();\n    public void setEndTime();\n\n    public String getStartTime();\n    public String getEndTime();\n\n    public String getHoursLogged();\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n\n        ProjectTime shortProject = new ProjectTime(\"2023-05-14 09:00\", \"2023-05-14 09:30\");\n        System.out.println(\"Short Project Total Logged Time: \" + shortProject.getHoursLogged());\n\n        ProjectTime overnightProject = new ProjectTime(\"2023-05-14 20:00\", \"2023-05-15 08:00\");\n        System.out.println(\"Overnight Project Total Logged Time: \" + overnightProject.getHoursLogged());\n\n        ProjectTime fullDayProject = new ProjectTime(\"2023-05-14 00:00\", \"2023-05-15 00:00\");\n        System.out.println(\"Full Day Project Total Logged Time: \" + fullDayProject.getHoursLogged());\n\n        ProjectTime errorProject = new ProjectTime(\"2023-05-14\", \"2023-05-15 08:00\");\n        System.out.println(\"Error Project Total Logged Time: \" + errorProject.getHoursLogged());\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nShort Project Total Logged Time: 30 m\nOvernight Project Total Logged Time: 12 h\nFull Day Project Total Logged Time: 24 h\nError Project Total Logged Time: -1\n$\n```\n\n### Tip — How To Use SimpleDateFormat\n\n```java\n// Creation of the date parser\nSimpleDateFormat DATE_FORMAT = new SimpleDateFormat(\"yyyy-MM-dd HH:mm\");\n\n// parse and get the date\nDate date = DATE_FORMAT.parse(startTime);\n\n// getTime in milisecond\nLong timeInMilisecond = date.getTime();\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n\n        ProjectTime shortProject = new ProjectTime(\"2023-05-14 09:00\", \"2023-05-14 09:30\");\n        System.out.println(\"Short Project Total Logged Time: \" + shortProject.getHoursLogged());\n\n        ProjectTime overnightProject = new ProjectTime(\"2023-05-14 20:00\", \"2023-05-15 08:00\");\n        System.out.println(\"Overnight Project Total Logged Time: \" + overnightProject.getHoursLogged());\n\n        ProjectTime fullDayProject = new ProjectTime(\"2023-05-14 00:00\", \"2023-05-15 00:00\");\n        System.out.println(\"Full Day Project Total Logged Time: \" + fullDayProject.getHoursLogged());\n\n        ProjectTime errorProject = new ProjectTime(\"2023-05-14\", \"2023-05-15 08:00\");\n        System.out.println(\"Error Project Total Logged Time: \" + errorProject.getHoursLogged());\n    }\n}\n",
+      "template": "public class ProjectTime {\n    // Écris ta solution ici.\n}\n",
+      "runner": "TimeTracker",
+      "expectedFiles": [
+        "ProjectTime.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/time-tracker/README.md"
+    },
+    {
+      "id": "java-todo-list",
+      "title": "TodoList",
+      "statement": "## TodoList\n\n### Instructions\n\nWrite a class `Task` that has two attributes: `description` and `status`, with the corresponding getters, setters and constructor.\n\nWrite a class called `TodoList` that represents a to-do list. The class should be able to hold a specified number of tasks, each with a description and a status. Include methods to add tasks, set a task's status, update task descriptions, and display all tasks in a neat format showing their descriptions and statuses.\n\nIf the index is out of bound nothing happens.\n\n\u003e The description length will be less or equal to 30 character. When the list is full nothing more will be added.\n\n### Expected Functions\n\n```java\nenum TaskStatus {\n    NEW, IN_PROGRESS, COMPLETED\n}\n\npublic class Task {\n    private String description;\n    private TaskStatus status;\n\n    public Task(String description);\n    public void setDescription(String description);\n    // Getters and Setters\n    // ...\n}\n\npublic class TodoList {\n    private Task[] tasks;\n    private int capacity;\n\n    public TodoList(int capacity);\n\n    public void addTask(String description);\n\n    public void setStatus(int index, TaskStatus status);\n\n    public void setDescription(int index, String newDescription);\n\n    public void displayTasks();\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your `TodoList` class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        TodoList myList = new TodoList(3); // List can hold up to 3 tasks\n        myList.addTask(\"Go grocery shopping\");\n        myList.addTask(\"Pay electricity bill\");\n        myList.setStatus(0, TaskStatus.COMPLETED); // Mark the first task as completed\n        myList.setDescription(1, \"Pay all utility bills\"); // Update the description of the second task\n        myList.displayTasks(); // Display the list of tasks\n    }\n}\n```\n\nand its output:\n\n```shell\n$ javac TaskList.java ExerciseRunner.java\n$ java ExerciseRunner.java\nTasks:\nGo grocery shopping               | COMPLETED\nPay all utility bills             | NEW\n```\n\n### Tips for `String.format()`\n\n- **Width**: `%10s` → at least 10 spaces (right-aligned).\n- **Left align**: `%-10s` → text on the left, spaces on the right.\n- **Zero padding**: `%05d` → numbers padded with zeros (e.g., `00042`).\n- **Decimals**: `%.2f` → number with 2 decimal places.\n\n### Example\n\n```java\nSystem.out.println(String.format(\"%-10s | %05d\", \"Task\", 42));\n```\n\n**Output:**\n\n```\nTask       | 00042\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        TodoList myList = new TodoList(3); // List can hold up to 3 tasks\n        myList.addTask(\"Go grocery shopping\");\n        myList.addTask(\"Pay electricity bill\");\n        myList.setStatus(0, TaskStatus.COMPLETED); // Mark the first task as completed\n        myList.setDescription(1, \"Pay all utility bills\"); // Update the description of the second task\n        myList.displayTasks(); // Display the list of tasks\n    }\n}\n",
+      "template": "// Fichiers attendus : Task.java, TodoList.java.\n// Écris toutes les classes ici : chacune sera placée dans son propre fichier.\n\npublic class Task {\n    // Écris ta solution ici.\n}\n\npublic class TodoList {\n    // Écris ta solution ici.\n}\n",
+      "runner": "TodoList",
+      "expectedFiles": [
+        "Task.java",
+        "TodoList.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/todo-list/README.md"
+    },
+    {
+      "id": "java-top-frequents",
+      "title": "TopFrequents",
+      "statement": "## Top Frequents\n\n### Instructions\n\nGiven a non-empty array of integers, return the `k` most frequent elements. Use a hash map together with a heap to ensure efficient lookup and retrieval.\n\nThe resulting array should be ordered primarily by frequency (most frequent first). In case of a frequency tie, the element that appears earliest in the original array should come first.\n\n### Expected Class\n\n```java\nimport java.util.*;\n\npublic class TopFrequents {\n    public List\u003cInteger\u003e findTopKFrequent(int[] nums, int k) {\n        // Implementation to find the k most frequent elements\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        TopFrequents topFrequents = new TopFrequents();\n\n        // Test case 1\n        int[] nums1 = {1, 1, 1, 2, 2, 3};\n        int k1 = 2;\n        System.out.println(\"Top \" + k1 + \" frequent elements: \" + topFrequents.findTopKFrequent(nums1, k1));\n\n        // Test case 2\n        int[] nums2 = {1};\n        int k2 = 1;\n        System.out.println(\"Top \" + k2 + \" frequent elements: \" + topFrequents.findTopKFrequent(nums2, k2));\n\n        // Test case 3\n        int[] nums3 = {4, 1, -1, 2, -1, 2, 3, 3};\n        int k3 = 2;\n        System.out.println(\"Top \" + k3 + \" frequent elements: \" + topFrequents.findTopKFrequent(nums3, k3));\n\n        // Test case 4\n        int[] nums4 = {4, 1, -1, 2, -1, 2, 3};\n        int k4 = 10;\n        System.out.println(\"Top \" + k4 + \" frequent elements: \" + topFrequents.findTopKFrequent(nums4, k4));\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nTop 2 frequent elements: [1, 2]\nTop 1 frequent elements: [1]\nTop 2 frequent elements: [-1, 2]\nTop 10 frequent elements: [-1, 2, 4, 1, 3]\n$\n```\n\n### Tips\n\n```java\n// 🧩 Tips for Using HashMap, PriorityQueue, and ArrayList in Java\n\n// ✅ HashMap (Key–Value Pairs)\nHashMap\u003cString, Integer\u003e map = new HashMap\u003c\u003e();\nmap.put(\"apple\", 3);\nmap.put(\"banana\", 5);\nint value = map.get(\"apple\");     // 3\nmap.containsKey(\"banana\");        // true\nmap.remove(\"apple\");              // removes key-value pair\n// Tip: HashMap stores unique keys; fast lookup, insert, and delete (average O(1)).\n\n// ✅ PriorityQueue (Min-Heap by Default)\nPriorityQueue\u003cInteger\u003e pq = new PriorityQueue\u003c\u003e();\npq.add(10);\npq.add(5);\npq.add(20);\nint smallest = pq.poll();         // 5 (removes smallest element)\npq.peek();                        // next smallest without removing\n// Tip: Use custom Comparator for max-heap: new PriorityQueue\u003c\u003e(Collections.reverseOrder()).\n\n// ✅ ArrayList (Resizable Array)\nArrayList\u003cString\u003e list = new ArrayList\u003c\u003e();\nlist.add(\"A\");\nlist.add(\"B\");\nlist.get(0);                      // \"A\"\nlist.remove(\"B\");                 // removes \"B\"\nlist.size();                      // number of elements\n// Tip: ArrayList is ordered, allows duplicates, and is ideal for dynamic lists.\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        TopFrequents topFrequents = new TopFrequents();\n\n        // Test case 1\n        int[] nums1 = {1, 1, 1, 2, 2, 3};\n        int k1 = 2;\n        System.out.println(\"Top \" + k1 + \" frequent elements: \" + topFrequents.findTopKFrequent(nums1, k1));\n\n        // Test case 2\n        int[] nums2 = {1};\n        int k2 = 1;\n        System.out.println(\"Top \" + k2 + \" frequent elements: \" + topFrequents.findTopKFrequent(nums2, k2));\n\n        // Test case 3\n        int[] nums3 = {4, 1, -1, 2, -1, 2, 3, 3};\n        int k3 = 2;\n        System.out.println(\"Top \" + k3 + \" frequent elements: \" + topFrequents.findTopKFrequent(nums3, k3));\n\n        // Test case 4\n        int[] nums4 = {4, 1, -1, 2, -1, 2, 3};\n        int k4 = 10;\n        System.out.println(\"Top \" + k4 + \" frequent elements: \" + topFrequents.findTopKFrequent(nums4, k4));\n    }\n}\n",
+      "template": "public class TopFrequents {\n    // Écris ta solution ici.\n}\n",
+      "runner": "TopFrequents",
+      "expectedFiles": [
+        "TopFrequents.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/top-frequents/README.md"
+    },
+    {
+      "id": "java-unit-converter",
+      "title": "UnitConverter",
+      "statement": "## UnitConverter\n\n### Instructions\n\nIn a file named `UnitConverter.java`, write a function `convert` that returns the result of a unit conversion specified in the parameters. The function should handle different types of unit conversions based on the input parameters which specify the unit from, the unit to, and the value to be converted. In case of an error print `ERROR`\n\n##### Request conversions\n\n- Fahrenheit to Celsius: (F - 32) \\* 5/9\n- Celsius to Fahrenheit: C \\* 9/5 + 32\n- Kilometers to Miles: Km \\* 0.621371\n- Miles to Kilometers: M \\* 1.60934\n- Pounds to Kilograms: P \\* 0.45359237\n\n### Expected Functions\n\n```java\npublic class UnitConverter {\n    public static String convert(String[] args) {\n        // your code here\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(UnitConverter.convert(new String[]{\"celsius\", \"fahrenheit\", \"100\"}));\n        System.out.println(UnitConverter.convert(new String[]{\"fahrenheit\", \"celsius\", \"212\"}));\n        System.out.println(UnitConverter.convert(new String[]{\"kilometers\", \"miles\", \"5\"}));\n        System.out.println(UnitConverter.convert(new String[]{\"pounds\", \"kilograms\", \"10\"}));\n        System.out.println(UnitConverter.convert(args));\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\n212.00\n100.00\n3.11\n4.54\nERROR\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(UnitConverter.convert(new String[]{\"celsius\", \"fahrenheit\", \"100\"}));\n        System.out.println(UnitConverter.convert(new String[]{\"fahrenheit\", \"celsius\", \"212\"}));\n        System.out.println(UnitConverter.convert(new String[]{\"kilometers\", \"miles\", \"5\"}));\n        System.out.println(UnitConverter.convert(new String[]{\"pounds\", \"kilograms\", \"10\"}));\n        System.out.println(UnitConverter.convert(args));\n    }\n}\n",
+      "template": "public class UnitConverter {\n    // Écris ta solution ici.\n}\n",
+      "runner": "UnitConverter",
+      "expectedFiles": [
+        "UnitConverter.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/unit-converter/README.md"
+    },
+    {
+      "id": "java-universal-greeting",
+      "title": "UniversalGreeting",
+      "statement": "## UniversalGreeting\n\n### Instructions\n\nIn a file named `UniversalGreeting.java` write a function `greeting` that takes a String language as a parameter and returns a greeting message based on the language as follows:\n\n- `FR`: `Bonjour comment allez-vous?`\n- `EN`: `Hello, How are you?`\n- `ES`: `Hola, cómo estás?`\n\nand return an empty string in any other case.\n\n### Expected Functions\n\n```java\npublic class UniversalGreeting {\n    public static String greeting(String language) {\n        // your code here\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your function :\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(UniversalGreeting.greeting(\"EN\"));\n    }\n}\n```\n\nand its output :\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nHello, How are you?\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        System.out.println(UniversalGreeting.greeting(\"EN\"));\n    }\n}\n",
+      "template": "public class UniversalGreeting {\n    // Écris ta solution ici.\n}\n",
+      "runner": "UniversalGreeting",
+      "expectedFiles": [
+        "UniversalGreeting.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/universal-greeting/README.md"
+    },
+    {
+      "id": "java-valid-sudoku",
+      "title": "ValidSudoku",
+      "statement": "## Valid Sudoku\n\n### Instructions\n\nDetermine if a 9x9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:\n\n1. Each row must contain the digits 1-9 without repetition.\n2. Each column must contain the digits 1-9 without repetition.\n3. Each of the nine 3x3 sub-boxes of the grid must contain the digits 1-9 without repetition.\n\nThe Sudoku board could be partially filled, where empty cells are filled with the character '.'.\n\n### Expected Class\n\n```java\npublic class ValidSudoku {\n    public boolean isValidSudoku(char[][] board) {\n        // Implementation to determine if the Sudoku board is valid\n    }\n}\n```\n\n### Usage\n\nHere is a possible `ExerciseRunner.java` to test your class:\n\n```java\npublic class ExerciseRunner {\n    public static void main(String[] args) {\n        ValidSudoku validSudoku = new ValidSudoku();\n\n        // Test case 1\n        char[][] board1 = {\n            {'5', '3', '.', '.', '7', '.', '.', '.', '.'},\n            {'6', '.', '.', '1', '9', '5', '.', '.', '.'},\n            {'.', '9', '8', '.', '.', '.', '.', '6', '.'},\n            {'8', '.', '.', '.', '6', '.', '.', '.', '3'},\n            {'4', '.', '.', '8', '.', '3', '.', '.', '1'},\n            {'7', '.', '.', '.', '2', '.', '.', '.', '6'},\n            {'.', '6', '.', '.', '.', '.', '2', '8', '.'},\n            {'.', '.', '.', '4', '1', '9', '.', '.', '5'},\n            {'.', '.', '.', '.', '8', '.', '.', '7', '9'}\n        };\n        System.out.println(\"Is board1 valid? \" + validSudoku.isValidSudoku(board1)); // Expected output: true\n\n        // Test case 2\n        char[][] board2 = {\n            {'8', '3', '.', '.', '7', '.', '.', '.', '.'},\n            {'6', '.', '.', '1', '9', '5', '.', '.', '.'},\n            {'.', '9', '8', '.', '.', '.', '.', '6', '.'},\n            {'8', '.', '.', '.', '6', '.', '.', '.', '3'},\n            {'4', '.', '.', '8', '.', '3', '.', '.', '1'},\n            {'7', '.', '.', '.', '2', '.', '.', '.', '6'},\n            {'.', '6', '.', '.', '.', '.', '2', '8', '.'},\n            {'.', '.', '.', '4', '1', '9', '.', '.', '5'},\n            {'.', '.', '.', '.', '8', '.', '.', '7', '9'}\n        };\n        System.out.println(\"Is board2 valid? \" + validSudoku.isValidSudoku(board2)); // Expected output: false\n    }\n}\n```\n\n### Expected Output\n\n```shell\n$ javac *.java -d build\n$ java -cp build ExerciseRunner\nIs board1 valid? true\nIs board2 valid? false\n$\n```",
+      "statementSource": "zone01-api",
+      "example": "public class ExerciseRunner {\n    public static void main(String[] args) {\n        ValidSudoku validSudoku = new ValidSudoku();\n\n        // Test case 1\n        char[][] board1 = {\n            {'5', '3', '.', '.', '7', '.', '.', '.', '.'},\n            {'6', '.', '.', '1', '9', '5', '.', '.', '.'},\n            {'.', '9', '8', '.', '.', '.', '.', '6', '.'},\n            {'8', '.', '.', '.', '6', '.', '.', '.', '3'},\n            {'4', '.', '.', '8', '.', '3', '.', '.', '1'},\n            {'7', '.', '.', '.', '2', '.', '.', '.', '6'},\n            {'.', '6', '.', '.', '.', '.', '2', '8', '.'},\n            {'.', '.', '.', '4', '1', '9', '.', '.', '5'},\n            {'.', '.', '.', '.', '8', '.', '.', '7', '9'}\n        };\n        System.out.println(\"Is board1 valid? \" + validSudoku.isValidSudoku(board1)); // Expected output: true\n\n        // Test case 2\n        char[][] board2 = {\n            {'8', '3', '.', '.', '7', '.', '.', '.', '.'},\n            {'6', '.', '.', '1', '9', '5', '.', '.', '.'},\n            {'.', '9', '8', '.', '.', '.', '.', '6', '.'},\n            {'8', '.', '.', '.', '6', '.', '.', '.', '3'},\n            {'4', '.', '.', '8', '.', '3', '.', '.', '1'},\n            {'7', '.', '.', '.', '2', '.', '.', '.', '6'},\n            {'.', '6', '.', '.', '.', '.', '2', '8', '.'},\n            {'.', '.', '.', '4', '1', '9', '.', '.', '5'},\n            {'.', '.', '.', '.', '8', '.', '.', '7', '9'}\n        };\n        System.out.println(\"Is board2 valid? \" + validSudoku.isValidSudoku(board2)); // Expected output: false\n    }\n}\n",
+      "template": "public class ValidSudoku {\n    // Écris ta solution ici.\n}\n",
+      "runner": "ValidSudoku",
+      "expectedFiles": [
+        "ValidSudoku.java"
+      ],
+      "allowedFunctions": null,
+      "image": "ghcr.io/01-edu/module-java@sha256:0de34af00688443f99bce8648abd270b8a0646c429151e8513eeb106153fc347",
+      "subjectURL": "/api/content/root/01-edu_module/content/valid-sudoku/README.md"
+    }
+  ]
+}

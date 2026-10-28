@@ -15,6 +15,8 @@ type Exercise struct {
 	ID               string   `json:"id"`
 	Title            string   `json:"title"`
 	Statement        string   `json:"statement"`
+	StatementSource  string   `json:"statementSource,omitempty"`
+	SnapshotDate     string   `json:"snapshotDate,omitempty"`
 	Example          string   `json:"example"`
 	Template         string   `json:"template"`
 	Runner           string   `json:"runner"`
@@ -73,7 +75,7 @@ func catalogExercises(list []RunnerExercise) []Exercise {
 }
 
 // Charge les exercices JS depuis js_exam_instructions (fichiers .md).
-func LoadJSExercises(jsDir string) ([]Exercise, error) {
+func LoadLocalJSExercises(jsDir string) ([]Exercise, error) {
 	if strings.TrimSpace(jsDir) == "" || !DirExists(jsDir) {
 		return []Exercise{}, nil
 	}
@@ -111,13 +113,14 @@ func LoadJSExercises(jsDir string) ([]Exercise, error) {
 		expectedFile := "js-" + testID + ".js"
 		template := "function solve(input) {\n  return input;\n}\n\nmodule.exports = { solve };\n"
 		list = append(list, Exercise{
-			ID:            id,
-			Title:         base,
-			Statement:     string(body),
-			Example:       LanguageExample("js", string(body)),
-			Template:      template,
-			Runner:        testID,
-			ExpectedFiles: []string{expectedFile},
+			ID:              id,
+			Title:           base,
+			Statement:       string(body),
+			StatementSource: "local",
+			Example:         LanguageExample("js", string(body)),
+			Template:        template,
+			Runner:          testID,
+			ExpectedFiles:   []string{expectedFile},
 		})
 	}
 

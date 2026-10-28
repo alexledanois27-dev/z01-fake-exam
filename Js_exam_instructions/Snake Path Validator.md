@@ -2,18 +2,25 @@
 
 ### Instructions
 
-Write a function `isSnakePath(grid)` that:
+Write a function `isSnakePath(grid)` that checks if all the `1`s in a 2D grid form **a single, connected snake** path.
 
-Takes a 2D grid of numbers where each cell is either `1` or `0`.
-Checks whether the `1`s in the grid form a valid snake path. A valid snake path is defined as:
+Each cell in the grid is either:
 
-- All `1`s are connected either horizontally or vertically (no diagonal connections are allowed).
-- There are no isolated `1`s.
-- The path can only have one connected sequence of `1`s.
+- `1` → part of the snake
+- `0` → empty space
 
-PS: the snake may have a single piece
+#### ✅ Rules for a valid snake path
 
-> ⚠️ Note: You are not allowed to use any kind of loops.
+1. All the `1`s must be **connected** — only **horizontally or vertically** (no diagonal connection).
+2. There must be **only one connected group of `1`s** — no disconnected parts.
+3. A snake of just **one single `1`** is also valid.
+4. ❗ You **cannot use**:
+   - `for`, `while`, `do while`
+   - Recursion
+   - Manual indexing
+
+5. ✅ You **can use**:
+   - `.map()`, `.filter()`, `.flatMap()`, `.reduce()` and other array methods
 
 ### Expected function
 
@@ -52,3 +59,9 @@ true
 false
 $
 ```
+
+### Tip
+
+- Use `.flatMap()` or `.map()` to collect all the positions of the `1`s.
+- Use `.some()` or `.every()` to check connections between them.
+- You can simulate a search or use sets to track visited `1`s — all using array methods!

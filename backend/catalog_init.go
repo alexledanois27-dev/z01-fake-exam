@@ -2,6 +2,7 @@ package backend
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -12,23 +13,26 @@ import (
 
 func initializeCatalog() error {
 	var err error
+	if mode := os.Getenv("CATALOG_MODE"); mode != "" && mode != "auto" && mode != "offline" {
+		return errors.New("CATALOG_MODE doit être auto ou offline")
+	}
 	jsInstructionsDir = resolveJSInstructionsDir(rootDir)
 
-	exercises, err = LoadGoExercises()
+	exercises, err = loadCatalogBackup("go", LoadGoExercises)
 	if err != nil {
 		fmt.Println("Catalogue Go indisponible:", err)
 		exercises = []Exercise{}
 	}
-	jsExercises, err = LoadJSExercises(jsInstructionsDir)
+	jsExercises, err = loadCatalogBackup("js", func() ([]Exercise, error) { return LoadJSExercises(jsInstructionsDir) })
 	if err != nil {
 		return fmt.Errorf("chargement exercices JS: %w", err)
 	}
-	rustExercises, err = LoadRustExercises()
+	rustExercises, err = loadCatalogBackup("rust", LoadRustExercises)
 	if err != nil {
 		fmt.Println("Catalogue Rust indisponible:", err)
 		rustExercises = []Exercise{}
 	}
-	javaExercises, err = LoadJavaExercises()
+	javaExercises, err = loadCatalogBackup("java", LoadJavaExercises)
 	if err != nil {
 		fmt.Println("Catalogue Java indisponible:", err)
 		javaExercises = []Exercise{}

@@ -24,6 +24,9 @@ La version personnelle ajoute/refond l’organisation de l’interface, CodeMirr
 les parcours entraînement/examens libre et strict, le stockage local des sessions,
 les tests d’exemples et Args, les 175 aides pédagogiques, la personnalisation
 visuelle, les réactions, les garde-fous de sécurité et leurs tests reproductibles.
+Les catalogues des quatre langages sont reliés aux API Zone01, avec copies locales
+de secours. Les 34 fiches Go historiques sont complétées par 36 nouvelles fiches
+Rust/JavaScript/Java, associées explicitement aux exercices en entraînement.
 Voir [l’historique fonctionnel](../CHANGELOG.md) et [la carte du code](maintenance.md).
 Les changements ont été développés avec l’assistance de Codex ; ils doivent
 continuer à être relus, testés et maintenus comme tout autre code.

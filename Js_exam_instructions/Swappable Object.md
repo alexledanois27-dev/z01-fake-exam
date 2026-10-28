@@ -40,3 +40,26 @@ a
 banana
 b
 ```
+
+### Tips
+
+A **Proxy** is like a **wrapper** around an object that lets you **control or customize any action** performed on it — such as getting or setting a property — using special functions called **traps**.
+
+```js
+const user = { name: "Alice", age: 25 };
+
+const proxyUser = new Proxy(user, {
+  get(target, prop) {
+    console.log(`Getting ${prop}`);
+    return target[prop];
+  },
+  set(target, prop, value) {
+    console.log(`Setting ${prop} to ${value}`);
+    target[prop] = value;
+    return true;
+  },
+});
+
+proxyUser.name; // 👉 logs: Getting name
+proxyUser.age = 30; // 👉 logs: Setting age to 30
+```

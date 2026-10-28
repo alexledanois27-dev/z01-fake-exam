@@ -6,8 +6,8 @@ cloner, consulter les issues ou lire les actions.
 
 ## Branches
 
-- `main` : version stable importée après les vérifications locales.
-- `develop` : même point de départ à l’import, puis intégration des évolutions.
+- `main` : version stable, actualisée par une PR de livraison depuis `develop`.
+- `develop` : intégration des évolutions validées avant leur livraison sur `main`.
 - `archive/upstream-base` : base open source `c55677a` ; ne pas la modifier.
 
 L’ancien historique est conservé. L’import des modifications locales est regroupé
