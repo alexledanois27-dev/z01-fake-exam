@@ -181,8 +181,8 @@ function renderExamReport() {
 function renderExamView() {
   syncExamFocus();
   const phase = currentExam?.phase;
-  const lobby = trueExamMode && !currentExam;
-  const report = trueExamMode && phase === "finished";
+  const lobby = trueExamMode && !learningMode && !currentExam;
+  const report = trueExamMode && !learningMode && phase === "finished";
   appEl.classList.toggle("exam-setup", lobby);
   appEl.classList.toggle("exam-complete", report);
   document.getElementById("exam-lobby").hidden = !lobby;
