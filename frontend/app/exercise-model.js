@@ -22,7 +22,9 @@ function getExerciseLevel(id) {
 
 function getFilteredExercises() {
   let source = getTrackExercises();
-  if (!isJsTrack() && currentLevelFilter !== "all")
+  if (currentLevelFilter === "unclassified")
+    source = source.filter((ex) => !ex.level);
+  else if (currentLevelFilter !== "all")
     source = source.filter((ex) => ex.level === Number(currentLevelFilter));
   const query = exerciseQuery.trim().toLocaleLowerCase();
   return query

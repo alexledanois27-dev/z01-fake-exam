@@ -17,9 +17,9 @@ async function loadExercises() {
     });
     if (jsRes.ok) {
       const incomingJs = await jsRes.json();
-      jsExercises = incomingJs.map((ex, idx) => ({
+      jsExercises = incomingJs.map((ex) => ({
         ...ex,
-        level: Number(ex.level) || (idx % 10) + 1,
+        level: Number.isInteger(ex.level) && ex.level > 0 ? ex.level : null,
       }));
     } else {
       jsExercises = [];

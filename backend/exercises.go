@@ -12,6 +12,7 @@ import (
 )
 
 type Exercise struct {
+	Level            int      `json:"level,omitempty"`
 	ID               string   `json:"id"`
 	Title            string   `json:"title"`
 	Statement        string   `json:"statement"`
