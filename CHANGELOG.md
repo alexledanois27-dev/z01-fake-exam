@@ -1,5 +1,12 @@
 # Historique fonctionnel
 
+## 28 octobre 2026 — cohérence de navigation
+
+- Changer de langage conserve l’onglet actuel et les conditions d’examen choisies.
+- Le nom de l’exercice d’entraînement ne remplace plus le titre des fiches.
+- Le bilan et l’écran de préparation d’examen restent masqués dans les fiches.
+- Tests de transition entre fiches, entraînement et bilan, dans les quatre langages.
+
 ## 28 octobre 2026 — fiches multilangages et références en entraînement
 
 - 36 nouvelles fiches : 12 Rust, 11 JavaScript et 13 Java, soit 70 avec Go.
