@@ -343,7 +343,20 @@
   padding: 8px 10px;
   font-family: monospace;
 }
-.program-args span {
-  font-size: 11px;
-  color: #aaa;
+
+.editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  gap: 8px;
+  margin-left: auto;
+}
+@media (max-width: 600px) {
+  .editor-actions {
+    flex: 1 0 100%;
+  }
+  .editor-actions .button {
+    flex: 1;
+  }
 }

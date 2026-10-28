@@ -492,24 +492,7 @@
                       aria-label="Agrandir la taille du code"
                       title="Agrandir le code"
                     >
-                      A+</button
-                    ><span class="tool-divider"></span
-                    ><button
-                      id="example-btn"
-                      class="button button-subtle"
-                      type="button"
-                      disabled
-                      title="Lancer le programme d’exemple de l’énoncé"
-                    >
-                      Tester l’exemple
-                    </button>
-                    <button
-                      id="run-btn"
-                      class="button button-primary"
-                      type="button"
-                    >
-                      <span aria-hidden="true">▷</span> Exécuter
-                      <kbd>Ctrl ↵</kbd>
+                      A+
                     </button>
                   </div>
                 </div>
@@ -530,12 +513,32 @@
                     autocomplete="off"
                     spellcheck="false"
                     placeholder='"Hello World" 42'
-                    aria-describedby="program-args-help"
                   />
-                  <span id="program-args-help"
-                    >Arguments de Tester · sans validation</span
+                  <div
+                    class="editor-actions"
+                    role="group"
+                    aria-label="Exécution du code"
                   >
+                    <button
+                      id="example-btn"
+                      class="button button-subtle"
+                      type="button"
+                      disabled
+                      title="Lancer le programme d’exemple de l’énoncé"
+                    >
+                      Tester l’exemple
+                    </button>
+                    <button
+                      id="run-btn"
+                      class="button button-primary"
+                      type="button"
+                    >
+                      <span aria-hidden="true">▷</span> Exécuter
+                      <kbd>Ctrl ↵</kbd>
+                    </button>
+                  </div>
                 </div>
+
                 <div class="editor-status">
                   <span id="editor-position">Ligne 1</span><span>UTF-8</span
                   ><span id="editor-language">Go</span
