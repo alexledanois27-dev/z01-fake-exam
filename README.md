@@ -92,8 +92,11 @@ ou d’un rechargement. En examen, le brouillon et l’échéance sont restaurab
 Le serveur reçoit le code pour l’exécuter ; les fichiers temporaires sont supprimés
 à la fin de l’exécution normale ou à l’expiration du runner.
 
-Les énoncés/catalogues viennent des ressources Zone01/01-edu et de contenus locaux
-pour JavaScript. La correction utilise des images publiques 01-edu **épinglées
+Les énoncés/catalogues des quatre langages viennent des ressources Zone01/01-edu.
+JavaScript utilise le checkpoint `/rouen/cursus-cda/checkpoint-js` et ses fichiers
+attendus officiels. Les 31 identifiants historiques sont conservés. En cas de
+panne du catalogue ou d’un énoncé, une copie locale JavaScript sert de secours ;
+la source effective est indiquée sous la consigne. La correction utilise des images publiques 01-edu **épinglées
 par digest**, et non une API privée de correction. Les tests de l’établissement
 peuvent différer. Voir [les contrats des moulinettes](docs/moulinettes.md).
 

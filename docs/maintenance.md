@@ -229,3 +229,25 @@ validation visible, hors exemples et rendu final. L’animation ne bloque aucun
 clic, contient 32 petits éléments et se supprime après 2,1 secondes. Elle n’est
 pas créée lorsque `prefers-reduced-motion` est actif. Le changement de nuance
 n’altère ni les résultats ni les sessions.
+
+## Catalogue JavaScript officiel
+
+`backend/js_catalog.go` lit `/rouen/cursus-cda/checkpoint-js` dans le catalogue
+Zone01 partagé. Il valide les métadonnées et télécharge les consignes via un
+maximum de huit workers. Les fichiers attendus viennent du catalogue officiel.
+Les alias conservent les identifiants de progression et les aides historiques.
+
+Si le catalogue est indisponible, `LoadLocalJSExercises` charge le snapshot local.
+Si une seule consigne échoue, son fichier local est utilisé sans remplacer les
+métadonnées officielles. Le champ public `statementSource` vaut `zone01-api` ou
+`local` et alimente le libellé sous la consigne. Une nouvelle consigne sans copie
+locale manquante fait échouer le chargement API plutôt que publier un faux énoncé.
+Les échecs sont journalisés ; la copie locale ne se met pas à jour automatiquement.
+
+Après une synchronisation manuelle, comparer les contrats avant d’actualiser les
+empreintes des aides et les fixtures. Un changement API non relu garde l’aide
+suspendue. Vérification réelle :
+
+```sh
+RUN_JS_CATALOG_INTEGRATION=1 go -C backend test -run TestJSAPI -v .
+```

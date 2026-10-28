@@ -2,7 +2,14 @@
 
 ### Instructions
 
-Write a function that takes an integer `n` and returns the sum of all even numbers from 0 to `n` .
+Write a function that takes a number (`n`) and returns the **sum of all even numbers from `0` to `n`**.
+
+**Even numbers** are numbers that can be divided by `2` with no remainder, like `0, 2, 4, 6, 8...`
+
+For example:
+
+- `evenSum(5)` → `0 + 2 + 4` → `6`
+- `evenSum(1)` → `0` (because there are no even numbers between `0` and `1` except `0`)
 
 ### Expected function
 
@@ -27,3 +34,12 @@ $ node main.js
 0
 $
 ```
+
+### Tip
+
+To calculate the sum:
+
+1. Start with the total as `0`.
+2. Go through every number from `0` to `n`.
+3. If the number is even, add it to the total.
+4. At the end, return the total.

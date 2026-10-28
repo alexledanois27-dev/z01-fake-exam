@@ -1,5 +1,13 @@
 # Historique fonctionnel
 
+## 28 octobre 2026 — catalogue JavaScript depuis l’API
+
+- Chargement prioritaire des 31 exercices du checkpoint JavaScript Zone01.
+- Métadonnées et fichiers attendus officiels, identifiants de progression conservés.
+- Copie locale synchronisée en secours et source visible sous la consigne.
+- Empreintes des aides mises à jour après comparaison des consignes et signatures.
+- Tests des alias, du secours, des chemins et correction réelle de factorial.
+
 ## Version personnelle initiale — 27 octobre 2026
 
 Import du travail local à partir de la base open source `c55677a`. Les commits
