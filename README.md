@@ -52,7 +52,7 @@ commandes système : cela ne constitue pas une protection anti-triche.
 ### Tester et corriger
 
 - **Tester** exécute ton programme et affiche sa sortie ou ses erreurs, sans point
-  ni validation. Le champ **Args** accepte par exemple `"bonjour monde" 42` ; les
+  ni validation. Le champ **Args** accepte par exemple `"Hello World" 42` ; les
   arguments restent littéraux, sans exécuter une commande shell.
 - Pour une fonction seule, Tester utilise le programme d’appel de la consigne
   lorsqu’il existe. Sans programme d’appel, un message explique la limite. Un

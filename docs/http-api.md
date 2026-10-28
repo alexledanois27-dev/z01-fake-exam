@@ -21,7 +21,7 @@ sans validation :
   "exerciseId": "only1",
   "code": "package main\nimport \"github.com/01-edu/z01\"\nfunc main(){ z01.PrintRune('1') }\n",
   "mode": "preview",
-  "args": ["bonjour monde", "42"]
+  "args": ["Hello World", "42"]
 }
 ```
 
