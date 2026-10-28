@@ -1,5 +1,11 @@
 # Historique fonctionnel
 
+## 28 octobre 2026 — niveaux JavaScript officiels
+
+- Filtrage JavaScript réactivé et niveaux issus de `attrs.group` de l’API (N1 à N7).
+- Groupes conservés dans les 31 copies locales ; aucun classement par index.
+- Niveaux absents regroupés sous « Non classés » ; tests API, secours et interface.
+
 ## 28 octobre 2026 — cohérence de navigation
 
 - Changer de langage conserve l’onglet actuel et les conditions d’examen choisies.

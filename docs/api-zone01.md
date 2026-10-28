@@ -79,6 +79,7 @@ Exemple simplifié de nœud JavaScript :
 | `key` | Identifiant officiel ; sert à la correspondance et au runner. |
 | `name` | Nom du nœud ; utilisé selon les adaptateurs de langage. |
 | `path` | Identifier le checkpoint sélectionné. |
+| `attrs.group` | Groupe d’examen JavaScript, exposé comme `level` (N1 à N7 dans le catalogue vérifié). |
 | `attrs.subject` | Chemin du Markdown à télécharger. |
 | `attrs.expectedFiles` | Fichiers attendus ; JS reprend actuellement le fichier officiel unique. |
 | `attrs.allowedFunctions` | Règles disponibles dans le catalogue, notamment utilisées pour Go. |
@@ -306,3 +307,14 @@ Ne pas supposer qu’un changement de chemin conserve les mêmes signatures ou t
 - [API de notre application](http-api.md)
 - [Architecture des services](architecture-services.md)
 - [Images et moulinettes](moulinettes.md)
+
+## Niveaux JavaScript
+
+Le filtre N1, N2… utilise `attrs.group` du checkpoint JavaScript. Au 28 octobre
+2026, ses 31 exercices sont répartis en sept groupes. Le champ `attrs.level`
+vaut 9 pour tous ces exercices et correspond au parcours : il ne représente pas
+ces groupes d’examen. `attrs.difficulty` est encore une autre mesure (2 à 14).
+Notre API expose le groupe dans `level` ; le snapshot local conserve cette valeur.
+Les filtres ne proposent que les niveaux présents. Sans groupe connu, un exercice
+reste dans « Non classés » ; aucun numéro n’est déduit de l’ordre alphabétique.
+Cette correction ne modifie pas la sélection aléatoire de la série d’examen JS.

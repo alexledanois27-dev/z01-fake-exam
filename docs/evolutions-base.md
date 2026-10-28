@@ -42,6 +42,8 @@ Les moulinettes ne sont donc pas une création de cette version personnelle.
 - **Maintenance** : sources frontend organisées par responsabilité, génération
   reproductible du bundle, tests de parcours, CI, documentation du fonctionnement,
   des API, du runner, des licences et de la mise en ligne.
+- **Niveaux JavaScript** : groupes d’examen officiels N1 à N7 récupérés depuis
+  l’API, filtrage réactivé et groupes conservés dans la copie locale.
 - **Navigation** : changer de langage garde l’onglet actuel ; les fiches ne
   réaffichent ni le titre d’exercice ni un ancien bilan d’examen.
 

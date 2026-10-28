@@ -9,7 +9,7 @@ import (
 
 func jsCatalogFixture() zoneRustNode {
 	return zoneRustNode{Path: jsExams[0].path, Children: map[string]zoneRustNode{
-		"one": {Type: "exercise", Key: "js-array-chunk-reversal", Attrs: zoneRustAttrs{Subject: "/api/content/root/01-edu_module/content/js-array-chunk-reversal/README.md", ExpectedFiles: []string{"array-chunk-reversal.js"}}},
+		"one": {Type: "exercise", Key: "js-array-chunk-reversal", Attrs: zoneRustAttrs{Group: 2, Subject: "/api/content/root/01-edu_module/content/js-array-chunk-reversal/README.md", ExpectedFiles: []string{"array-chunk-reversal.js"}}},
 	}}
 }
 func TestJSAPIUsesOfficialMetadataAndStableIDs(t *testing.T) {
@@ -21,7 +21,7 @@ func TestJSAPIUsesOfficialMetadataAndStableIDs(t *testing.T) {
 		t.Fatal(err)
 	}
 	ex := list[0]
-	if len(list) != 1 || ex.ID != "array-reverse-chunks" || ex.Runner != "array-chunk-reversal" || ex.ExpectedFiles[0] != "array-chunk-reversal.js" || ex.StatementSource != "zone01-api" || ex.Example == "" || ex.Template != "template" {
+	if ex.Level != 2 || len(list) != 1 || ex.ID != "array-reverse-chunks" || ex.Runner != "array-chunk-reversal" || ex.ExpectedFiles[0] != "array-chunk-reversal.js" || ex.StatementSource != "zone01-api" || ex.Example == "" || ex.Template != "template" {
 		t.Fatalf("%+v", ex)
 	}
 }
@@ -64,7 +64,7 @@ func TestJSAPILiveIntegration(t *testing.T) {
 		t.Fatalf("expected 31 current exercises, got %d; check catalogue changes", len(list))
 	}
 	for _, ex := range list {
-		if ex.StatementSource != "zone01-api" || ex.Statement == "" {
+		if ex.StatementSource != "zone01-api" || ex.Statement == "" || ex.Level < 1 || ex.Level > 7 {
 			t.Fatalf("fallback instead of live API: %s", ex.ID)
 		}
 	}
@@ -75,5 +75,39 @@ func TestJSAPILiveIntegration(t *testing.T) {
 	ok, out := RunJSExercise(*ex, "function factorial(n){let v=1;for(let i=2;i<=n;i++)v*=i;return v;}")
 	if !ok {
 		t.Fatal(out)
+	}
+}
+
+func TestJSAPIMissingGroupDoesNotInventLevel(t *testing.T) {
+	root := jsCatalogFixture()
+	node := root.Children["one"]
+	node.Attrs.Group = 0
+	root.Children["one"] = node
+	list, err := loadAPIJSExercises(context.Background(), root, nil, func(context.Context, string) (string, error) { return "statement", nil })
+	if err != nil || len(list) != 1 || list[0].Level != 0 {
+		t.Fatalf("%+v %v", list, err)
+	}
+}
+
+func TestJSBackupRetainsOfficialGroups(t *testing.T) {
+	oldRoot := rootDir
+	rootDir = ".."
+	t.Cleanup(func() { rootDir = oldRoot })
+	list, _, err := readCatalogBackup("js")
+	if err != nil {
+		t.Fatal(err)
+	}
+	groups := map[int]int{}
+	for _, ex := range list {
+		groups[ex.Level]++
+	}
+	if len(list) != 31 || len(groups) != 7 {
+		t.Fatalf("unexpected groups: %v", groups)
+	}
+	if ex := FindExercise(list, "factorial"); ex == nil || ex.Level != 1 {
+		t.Fatalf("factorial: %+v", ex)
+	}
+	if ex := FindExercise(list, "array-reverse-chunks"); ex == nil || ex.Level != 2 {
+		t.Fatalf("chunks: %+v", ex)
 	}
 }
