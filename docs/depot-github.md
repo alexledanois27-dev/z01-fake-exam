@@ -1,8 +1,9 @@
 # Dépôt GitHub personnel
 
 Dépôt : [alexledanois27-dev/z01-fake-exam](https://github.com/alexledanois27-dev/z01-fake-exam).
-La visibilité est privée : le compte connecté doit disposer d’un accès pour
-cloner, consulter les issues ou lire les actions.
+La visibilité est publique : chacun peut lire le code et créer un fork. La lecture
+publique ne donne pas le droit de pousser dans ce dépôt. Le projet d’origine est
+[z01exam/z01exam, créé par Alioune](https://github.com/z01exam/z01exam).
 
 ## Branches
 
@@ -18,9 +19,20 @@ des anciennes demandes de personnalisation.
 
 Pour les prochaines modifications, créer une branche depuis `develop`, ouvrir une
 PR puis intégrer vers `main` lors d’une livraison. Voir [CONTRIBUTING](../CONTRIBUTING.md).
-Les rôles des branches sont une convention ; ils ne prouvent pas qu’une protection
-technique GitHub est activée. Les protections disponibles dépendent du compte et
-de l’offre GitHub pour les dépôts privés. Aucune offre payante n’est souscrite.
+## Protections de main et develop
+
+Les deux branches imposent une pull request et une approbation avant fusion.
+Les approbations sont invalidées si de nouveaux commits sont ajoutés ; les
+conversations de revue doivent être résolues. Les contrôles CI `frontend` et
+`backend` doivent réussir, sur une branche à jour avec la cible.
+Les règles s’appliquent aussi aux administrateurs : pushes directs, pushes forcés
+et suppression des branches sont interdits. L’auteur d’une PR ne peut pas
+s’approuver lui-même ; un autre collaborateur doit la relire.
+
+La suppression automatique des branches après fusion est désactivée pour garder
+`develop` après une livraison vers `main`. Les branches de travail peuvent être
+supprimées manuellement une fois leur PR intégrée. Les protections sont des
+paramètres GitHub : vérifier leur état après un changement de visibilité ou d’offre.
 
 ## Automatisation
 
