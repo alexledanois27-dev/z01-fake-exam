@@ -936,3 +936,58 @@ require("node:test")(
     }
   },
 );
+
+require("node:test")(
+  "JavaScript level filters use official groups, including offline and unknown entries",
+  async () => {
+    const catalogs = {
+      ...require("./fixtures/training-exercises.json"),
+      js: require("../catalog-snapshots/js.json").exercises,
+    };
+    const env = await boot({}, false, catalogs);
+    const w = env.w;
+    try {
+      click(w, "#track-js");
+      assert.equal(
+        w.document.querySelectorAll("#level-filters button").length,
+        8,
+      );
+      for (let level = 1; level <= 7; level++) {
+        click(w, `#level-filters [data-filter="${level}"]`);
+        const visible = [...w.document.querySelectorAll(".exercise-chip")]
+          .map((node) => node.dataset.id)
+          .sort();
+        const expected = catalogs.js
+          .filter((ex) => ex.level === level)
+          .map((ex) => ex.id)
+          .sort();
+        assert.ok(expected.length > 0);
+        assert.deepEqual(visible, expected);
+        assert.equal(el(w, "exercise-level").textContent, `Niveau ${level}`);
+      }
+      click(w, '#level-filters [data-filter="all"]');
+      assert.equal(w.document.querySelectorAll(".exercise-chip").length, 31);
+    } finally {
+      env.dom.window.close();
+    }
+    const unknown = await boot({}, false, {
+      ...catalogs,
+      js: [{ id: "new-js", title: "New JS", statement: "new subject" }],
+    });
+    try {
+      click(unknown.w, "#track-js");
+      assert.equal(
+        unknown.w.document.querySelectorAll("#level-filters button").length,
+        2,
+      );
+      click(unknown.w, '#level-filters [data-filter="unclassified"]');
+      assert.equal(
+        unknown.w.document.querySelectorAll(".exercise-chip").length,
+        1,
+      );
+      assert.equal(el(unknown.w, "exercise-level").textContent, "Sans niveau");
+    } finally {
+      unknown.dom.window.close();
+    }
+  },
+);
