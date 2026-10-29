@@ -113,6 +113,8 @@ function getExamSource() {
 }
 
 function renderExamReport() {
+  attemptJournal.releaseExam(currentExam.id);
+  attemptJournal.flush();
   const summary = examRepo.summary(currentExam);
   const analyses = new Map(
     summary.rows
@@ -179,6 +181,7 @@ function renderExamReport() {
 }
 
 function renderExamView() {
+  syncJournalControls();
   syncExamFocus();
   const phase = currentExam?.phase;
   const lobby = trueExamMode && !learningMode && !currentExam;
@@ -320,6 +323,7 @@ function finishExam(reason = "submitted") {
       await runCode({ finalSubmission: true });
     }
     examRepo.finish(session, reason);
+    attemptJournal.releaseExam(session.id);
     if (trueExamMode && currentExam === session) {
       renderExamView();
       document.getElementById("exam-report").focus();

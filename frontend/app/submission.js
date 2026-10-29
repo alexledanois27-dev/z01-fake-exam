@@ -129,6 +129,14 @@ function runCode(options = {}) {
         );
       const out = String(data.output || "");
       if (!example) {
+        attemptJournal.add({
+          track: submitted.track,
+          exercise: submitted.id,
+          session: session?.id || "",
+          code,
+          output: out,
+          success: data.success,
+        });
         if (session)
           examRepo.record(
             session,
@@ -172,6 +180,17 @@ function runCode(options = {}) {
       }
       return true;
     } catch (error) {
+      if (!example) {
+        attemptJournal.add({
+          track: submitted.track,
+          exercise: submitted.id,
+          session: session?.id || "",
+          code,
+          output: error.message,
+          success: null,
+        });
+        persistPersonal();
+      }
       if (session && !example) {
         examRepo.record(session, submitted.id, code, null, error.message);
         persistPersonal();

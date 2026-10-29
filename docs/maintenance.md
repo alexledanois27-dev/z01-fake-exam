@@ -33,6 +33,7 @@ La fonction `window.getExamTimerContext` reste le contrat explicite avec le time
 | `exercise-model.js` | Identifiants, sélection des niveaux et métadonnées d’exercice. |
 | `markdown.js` | Conversion Markdown et assainissement du HTML. |
 | `learning.js` | Chargement local et navigation des fiches par langage. |
+| `learning-journal.js` | Lecteur des tentatives, comparaison et suggestions de fiches après correction. |
 | `revisions.js` | Associations exercice/fiche et lecteur modal qui préserve le code. |
 | `catalog-loader.js` | Appels des quatre catalogues et restauration de la sélection. |
 | `catalog-view.js` | Filtres, liste des exercices et ouverture d’un exercice. |
@@ -300,3 +301,32 @@ fonds ; une comparaison de contraste choisit le texte clair ou sombre des bouton
 remplis et de la marque. Revenir à une nuance supprime les variables de couleur personnalisée. Le logo et
 le titre partagent le même contraste noir/blanc pour toutes les nuances.
 Les couleurs choisies restent locales au navigateur et ne modifient pas les scores.
+
+## Historique local des corrections
+
+`frontend/lib/attempt-journal.js` utilise la clé séparée `z01-attempt-journal-v1`.
+Les ajouts sont bornés à 100 entrées, 10 par exercice et 800 000 caractères JSON,
+avec copies limitées à 24 000 caractères de code et 8 000 de sortie. Les copies
+abrégées sont signalées. La sauvegarde n’est réécrite que lorsqu’elle change,
+même si le statut général de progression est actualisé pendant la saisie.
+
+`submission.js` enregistre la correction complète, y compris les erreurs de
+service avec `success: null`. Les tests préliminaires sont exclus. Une tentative
+d’examen porte son identifiant de session et ne devient consultable qu’après
+`releaseExam`, au rendu ou lors de la restauration d’un bilan terminé. Ce verrou
+est un comportement d’interface local, pas une protection contre la modification
+manuelle des données du navigateur. Les limites peuvent évincer des essais
+anciens, y compris ceux d’un examen long ; les résultats d’examen restent séparés.
+
+Le bilan ignore les erreurs de service dans le dernier résultat corrigé par
+exercice. Les suggestions utilisent les associations explicites de
+`learning-content/exercise-links.json` ; aucune analyse automatique du niveau de
+compétence, du temps ou du code n’est revendiquée. Les données ne sont pas envoyées
+à une API supplémentaire. Le code et les sorties sont affichés via `textContent`,
+sans insertion de HTML. Les lecteurs de fiches utilisent l’assainissement Markdown
+existant et invalident les réponses tardives à leur fermeture ou à l’effacement.
+
+Les tests unitaires couvrent le stockage, ses limites, son indisponibilité, les
+langages et la libération après examen. Les tests UI couvrent la comparaison sans
+modification de l’éditeur, l’effacement indépendant de la progression, les liens
+pédagogiques et la distinction entre échec, erreur de service et Tester.

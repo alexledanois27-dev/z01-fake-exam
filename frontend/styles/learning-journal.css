@@ -1,0 +1,125 @@
+#learning-report-btn {
+  margin: 10px 0;
+  width: 100%;
+}
+#learning-journal-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(1000px, calc(100vw - 28px));
+  max-height: 88vh;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+  color: var(--text);
+}
+#learning-journal-dialog::backdrop {
+  background: #000b;
+}
+.journal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+}
+.journal-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+.journal-body {
+  padding: 20px;
+}
+.journal-body h3 {
+  margin: 18px 0 12px;
+}
+.journal-body > .button {
+  margin: 4px;
+}
+.journal-note,
+.journal-meta,
+.journal-footer {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.journal-footer {
+  border-top: 1px solid var(--line);
+  padding: 12px 20px;
+}
+.journal-compare-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin: 18px 0;
+}
+.journal-compare-controls label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  flex: 1 1 240px;
+}
+.journal-compare-controls select {
+  width: 100%;
+  max-width: 100%;
+  padding: 8px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+.journal-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.journal-comparison > section {
+  min-width: 0;
+}
+.journal-code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 360px;
+  overflow: auto;
+  background: var(--bg);
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  font: 12px/1.6 monospace;
+}
+.journal-attempt,
+.journal-topic {
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.journal-attempt summary {
+  cursor: pointer;
+  line-height: 1.6;
+}
+.journal-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.journal-stats span {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.learning-mode #exercise-history-btn,
+.true-exam-mode #exercise-history-btn {
+  display: none;
+}
+@media (max-width: 650px) {
+  .journal-comparison,
+  .journal-stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .journal-body {
+    padding: 14px;
+  }
+}

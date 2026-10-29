@@ -42,7 +42,11 @@ searchEl.addEventListener("input", () => {
   renderChips();
 });
 document.addEventListener("keydown", (event) => {
-  if (document.getElementById("revision-dialog")?.open) return;
+  if (
+    document.getElementById("revision-dialog")?.open ||
+    document.getElementById("learning-journal-dialog")?.open
+  )
+    return;
   if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
     event.preventDefault();
     if (!searchEl.disabled) searchEl.focus();

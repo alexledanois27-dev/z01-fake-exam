@@ -1088,3 +1088,194 @@ require("node:test")(
     env.dom.window.close();
   },
 );
+
+require("node:test")(
+  "journal compares attempts safely without changing the editor and clears independently of progress",
+  async () => {
+    let env = await boot();
+    let w = env.w;
+    try {
+      const malicious = '<img src=x onerror="alert(1)">';
+      draft(w, malicious);
+      click(w, "#run-btn");
+      await tick();
+      env.advance(15000);
+      draft(w, "correct second attempt");
+      click(w, "#run-btn");
+      await tick();
+      draft(w, "CURRENT UNSUBMITTED CODE");
+      click(w, "#exercise-history-btn");
+      const dialog = el(w, "learning-journal-dialog");
+      assert.ok(dialog.open);
+      assert.equal(dialog.querySelectorAll(".journal-attempt").length, 2);
+      assert.ok(dialog.textContent.includes(malicious));
+      assert.equal(dialog.querySelector("img"), null);
+      [...dialog.querySelectorAll("button")]
+        .find((b) => b.textContent === "Comparer les deux essais")
+        .click();
+      assert.equal(
+        dialog.querySelectorAll(".journal-comparison section").length,
+        2,
+      );
+      assert.equal(el(w, "code-editor").value, "CURRENT UNSUBMITTED CODE");
+      w.document.dispatchEvent(
+        new w.KeyboardEvent("keydown", {
+          key: "Enter",
+          ctrlKey: true,
+          bubbles: true,
+        }),
+      );
+      assert.equal(env.requests.length, 2);
+      const saved = env.snapshot();
+      env.dom.window.close();
+      env = await boot(saved);
+      w = env.w;
+      click(w, "#exercise-history-btn");
+      assert.equal(
+        el(w, "learning-journal-dialog").querySelectorAll(".journal-attempt")
+          .length,
+        2,
+      );
+      const clear = el(w, "learning-journal-dialog").querySelector(
+        ".journal-footer button",
+      );
+      clear.click();
+      assert.equal(
+        el(w, "learning-journal-dialog").querySelectorAll(".journal-attempt")
+          .length,
+        2,
+      );
+      clear.click();
+      assert.equal(
+        el(w, "learning-journal-dialog").querySelectorAll(".journal-attempt")
+          .length,
+        0,
+      );
+      assert.match(el(w, "progress-label").textContent, /1 \/ 3/);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+require("node:test")(
+  "exam attempts stay hidden until rendering and the report links to relevant lessons",
+  async () => {
+    const env = await boot();
+    const w = env.w;
+    try {
+      click(w, "#mode-true-exam");
+      click(w, "#exam-start");
+      draft(w, "exam failed attempt");
+      click(w, "#run-btn");
+      await tick();
+      click(w, "#exam-learning-report-btn");
+      click(w, "#exercise-history-btn");
+      click(w, "#learning-report-btn");
+      assert.equal(el(w, "learning-journal-dialog"), null);
+      click(w, "#mode-exam");
+      click(w, "#exercise-history-btn");
+      assert.equal(
+        el(w, "learning-journal-dialog").querySelectorAll(".journal-attempt")
+          .length,
+        0,
+      );
+      click(w, "#mode-true-exam");
+      assert.equal(el(w, "learning-journal-dialog"), null);
+      click(w, "#exam-submit");
+      await tick();
+      click(w, "#exam-learning-report-btn");
+      const dialog = el(w, "learning-journal-dialog");
+      assert.ok(dialog.open);
+      assert.ok(dialog.textContent.includes("1 exercice(s) à retravailler"));
+      assert.ok(dialog.querySelectorAll(".journal-topic").length > 0);
+      const examCode = el(w, "code-editor").value;
+      dialog.querySelector(".journal-topic button").click();
+      await tick();
+      assert.ok(dialog.querySelector("article h1"));
+      assert.equal(el(w, "code-editor").value, examCode);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+require("node:test")(
+  "service errors are stored without counting as failed learning outcomes; Tester is not saved",
+  async () => {
+    const env = await boot();
+    const w = env.w;
+    try {
+      draft(w, "correct solution");
+      click(w, "#run-btn");
+      await tick();
+      env.advance(15000);
+      click(w, "#example-btn");
+      await tick();
+      env.advance(15000);
+      const original = w.fetch;
+      w.fetch = async (url, options) =>
+        url === "/api/run"
+          ? {
+              ok: false,
+              status: 503,
+              json: async () => ({ output: "Service unavailable" }),
+            }
+          : original(url, options);
+      click(w, "#run-btn");
+      await tick();
+      click(w, "#learning-report-btn");
+      const text = el(w, "learning-journal-dialog").textContent;
+      assert.ok(text.includes("2 correction(s) conservée(s)"));
+      assert.ok(text.includes("1 exercice(s) réussi(s)"));
+      assert.ok(text.includes("0 exercice(s) à retravailler"));
+      assert.ok(text.includes("1 correction(s) indisponible(s)"));
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "clearing the journal invalidates a late lesson response and unknown exercise IDs remain harmless",
+  async () => {
+    const seed = {
+      version: 1,
+      items: ["only1", "__proto__"].map((exercise, index) => ({
+        id: String(index),
+        track: "go",
+        exercise,
+        code: "sample",
+        output: "",
+        at: 1700000000000,
+        session: "",
+        released: true,
+        success: false,
+      })),
+    };
+    const env = await boot({ "z01-attempt-journal-v1": JSON.stringify(seed) });
+    const w = env.w;
+    try {
+      let release;
+      const original = w.fetch;
+      w.fetch = async (url, opts) =>
+        String(url).includes("learning-content/")
+          ? new Promise((resolve) => {
+              release = () =>
+                resolve({ ok: true, text: async () => "# Late lesson" });
+            })
+          : original(url, opts);
+      click(w, "#learning-report-btn");
+      const dialog = el(w, "learning-journal-dialog");
+      assert.ok(dialog.querySelector(".journal-topic"));
+      dialog.querySelector(".journal-topic button").click();
+      const clear = dialog.querySelector(".journal-footer button");
+      clear.click();
+      clear.click();
+      release();
+      await tick();
+      assert.ok(!dialog.textContent.includes("Late lesson"));
+      assert.ok(dialog.textContent.includes("Pas encore d’historique"));
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);

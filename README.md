@@ -70,6 +70,24 @@ Ces références complètent les aides progressives et sont masquées en examen.
 Les nouvelles fiches contiennent syntaxe, exemples autonomes, pièges et checklist,
 sans solution complète du sujet. Voir [le guide des fiches](learning-content/README.md).
 
+### Historique et bilan d’apprentissage
+
+Le bouton **Historique**, dans l’en-tête de l’éditeur, permet de relire le code et
+le résultat des corrections d’un exercice et de comparer deux essais côte à côte.
+La lecture ne remplace jamais le code en cours. **Mon bilan**, sous la progression,
+résume les dernières corrections du langage sélectionné et propose les fiches
+associées aux exercices dont le dernier essai corrigé reste non validé.
+Les erreurs de service sont distinguées des échecs de correction.
+
+Tout reste dans ce navigateur : 10 essais par exercice, 100 au total, environ
+1,6 Mo de texte. Les codes de plus de 24 000 caractères et sorties de plus de
+8 000 caractères sont abrégés et signalés. Les plus anciens essais sont supprimés
+si nécessaire ; un effacement par langage conserve les réussites et sessions.
+Les anciens essais ne sont pas reconstitués. **Tester** n’alimente pas l’historique.
+En examen, l’historique et les suggestions restent inaccessibles jusqu’au rendu,
+puis sont disponibles depuis **Historique et révisions** dans le bilan final.
+Ces suggestions sont indicatives et ne constituent pas une évaluation de maîtrise.
+
 ### Tester et corriger
 
 - **Tester** exécute ton programme et affiche sa sortie ou ses erreurs, sans point

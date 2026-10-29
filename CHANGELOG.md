@@ -1,5 +1,12 @@
 # Historique fonctionnel
 
+## 29 octobre 2026 — historique et bilan d’apprentissage
+
+- Historique local des corrections, code et sortie consultables, comparaison de deux essais.
+- Bilan par langage avec fiches conseillées selon les derniers essais non validés.
+- Historique d’examen accessible après le rendu uniquement ; erreurs de service distinguées.
+- Stockage borné et effacement par langage indépendant de la progression.
+
 ## 29 octobre 2026 — couleur d’interface personnalisée
 
 - Palette native et saisie hexadécimale dans le menu des nuances.
