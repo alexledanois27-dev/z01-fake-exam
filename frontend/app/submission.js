@@ -10,7 +10,7 @@ function updateExecutionCooldowns() {
   exampleBtn.textContent = testWait ? `Tester (${testWait}s)` : "Tester";
   if (!submissionRunning) {
     runBtn.textContent =
-      (trueExamMode ? "Soumettre l’exercice" : "Exécuter") +
+      "Exécuter" +
       (runWait ? ` (${runWait}s)` : "");
   }
 }
