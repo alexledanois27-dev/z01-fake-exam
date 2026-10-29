@@ -99,7 +99,8 @@
     opacity: 1;
   }
   100% {
-    transform: translate3d(var(--drift), calc(-1 * var(--rise)), 0) rotate(var(--spin));
+    transform: translate3d(var(--drift), calc(-1 * var(--rise)), 0)
+      rotate(var(--spin));
     opacity: 0;
   }
 }
@@ -153,7 +154,7 @@
 }
 .accent-menu > .accent-options {
   display: grid;
-  grid-template-columns: repeat(3, 28px);
+  grid-template-columns: repeat(6, 28px);
   gap: 8px;
   position: absolute;
   top: calc(100% + 8px);
@@ -178,4 +179,49 @@
     margin-left: auto;
     margin-right: 12px;
   }
+}
+
+.custom-accent {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+.custom-accent > label {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--text);
+  font-size: 11px;
+}
+.custom-accent-controls {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#custom-accent-color {
+  width: 34px;
+  height: 34px;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel);
+  cursor: pointer;
+}
+#custom-accent-hex {
+  width: 84px;
+  min-width: 0;
+  padding: 8px 6px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--text);
+  font: 12px monospace;
+}
+.brand,
+.brand-light,
+.brand small,
+.button-primary,
+#level-filters .filter-chip.active,
+.editor-tab:before {
+  color: var(--accent-ink);
 }

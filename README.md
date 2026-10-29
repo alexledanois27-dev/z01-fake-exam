@@ -95,7 +95,8 @@ démarche, indices progressifs, syntaxe, pièges et cas limites. Une empreinte d
 consigne suspend une aide devenue obsolète. Ces aides sont absentes en examen.
 Aucune IA externe n’est appelée pendant l’utilisation.
 
-Six nuances, filtres N1–N10, transitions courtes, six GIFs d’échec et confettis
+Six nuances prédéfinies et une palette personnalisée (sélecteur et code hexadécimal),
+filtres N1–N10, transitions courtes, six GIFs d’échec et confettis
 ascendants personnalisent l’interface. Les effets respectent la réduction des
 animations. Un compteur indicatif repère certaines réponses codées en dur dans
 le bilan ; il ne refuse rien et ne retire aucun point. Les faux positifs et les

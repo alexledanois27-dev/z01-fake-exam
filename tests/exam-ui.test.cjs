@@ -523,7 +523,9 @@ require("node:test")(
       1,
     );
     assert.equal(
-      w.document.querySelectorAll("#accent-theme input[aria-label]").length,
+      w.document.querySelectorAll(
+        '#accent-theme input[type="radio"][aria-label]',
+      ).length,
       6,
     );
     assert.match(el(w, "progress-label").textContent, /0 \/ 3/);
@@ -989,5 +991,100 @@ require("node:test")(
     } finally {
       unknown.dom.window.close();
     }
+  },
+);
+
+require("node:test")(
+  "custom accent accepts precise colors, restores them and clears overrides for presets",
+  async () => {
+    let env = await boot();
+    let w = env.w;
+    const applyHex = (hex) => {
+      el(w, "custom-accent-hex").value = hex;
+      el(w, "custom-accent-form").dispatchEvent(
+        new w.Event("submit", { bubbles: true, cancelable: true }),
+      );
+    };
+    for (const hex of ["#000000", "#ffffff", "#808080", "#E85D04"]) {
+      applyHex(hex);
+      const root = w.document.documentElement;
+      assert.equal(root.dataset.accent, "custom");
+      assert.equal(root.style.getPropertyValue("--accent"), hex.toLowerCase());
+      assert.ok(
+        Number.isFinite(Number(root.style.getPropertyValue("--accent-hue"))),
+      );
+      assert.ok(
+        Number.isFinite(Number(root.style.getPropertyValue("--theme-chroma"))),
+      );
+      assert.equal(
+        w.localStorage.getItem("z01fakeexam-accent"),
+        hex.toLowerCase(),
+      );
+    }
+    applyHex("#000000");
+    assert.equal(
+      w.document.documentElement.style.getPropertyValue("--accent-ink"),
+      "#ffffff",
+    );
+    assert.equal(
+      w.document.documentElement.style.getPropertyValue("--accent-logo-filter"),
+      "brightness(0) invert(1)",
+    );
+    applyHex("#ffffff");
+    assert.equal(
+      w.document.documentElement.style.getPropertyValue("--accent-logo-filter"),
+      "brightness(0)",
+    );
+    assert.equal(
+      w.document.documentElement.style.getPropertyValue("--accent-ink"),
+      "#101010",
+    );
+    applyHex("red; color: red");
+    assert.equal(w.localStorage.getItem("z01fakeexam-accent"), "#ffffff");
+    assert.ok(el(w, "custom-accent-hex").validationMessage);
+    el(w, "custom-accent-color").value = "#6437ab";
+    el(w, "custom-accent-color").dispatchEvent(
+      new w.Event("input", { bubbles: true }),
+    );
+    assert.equal(el(w, "custom-accent-hex").value, "#6437ab");
+    const saved = env.snapshot();
+    env.dom.window.close();
+    env = await boot(saved);
+    w = env.w;
+    assert.equal(w.document.documentElement.dataset.accent, "custom");
+    assert.equal(
+      w.document.documentElement.style.getPropertyValue("--accent"),
+      "#6437ab",
+    );
+    click(w, '#accent-theme input[value="green"]');
+    assert.equal(w.document.documentElement.dataset.accent, "green");
+    assert.equal(
+      w.document.documentElement.style.getPropertyValue("--accent"),
+      "",
+    );
+    assert.equal(
+      w.document.documentElement.style.getPropertyValue("--theme-chroma"),
+      "",
+    );
+    assert.equal(
+      w.document.documentElement.style.getPropertyValue("--accent-ink"),
+      "#101010",
+    );
+    assert.equal(w.localStorage.getItem("z01fakeexam-accent"), "green");
+    click(w, '#accent-theme input[value="violet"]');
+    assert.equal(
+      w.document.documentElement.style.getPropertyValue("--accent-ink"),
+      "#101010",
+    );
+    assert.equal(
+      w.document.documentElement.style.getPropertyValue("--accent-logo-filter"),
+      "brightness(0)",
+    );
+    click(w, '#accent-theme input[value="yellow"]');
+    assert.equal(
+      w.document.documentElement.style.getPropertyValue("--accent-logo-filter"),
+      "brightness(0)",
+    );
+    env.dom.window.close();
   },
 );

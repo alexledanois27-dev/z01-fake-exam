@@ -104,7 +104,7 @@
           <div
             class="accent-picker accent-options"
             id="accent-theme"
-            role="radiogroup"
+            role="group"
             aria-label="Nuance de l’interface"
           >
             <label class="accent-swatch" title="Jaune"
@@ -167,6 +167,32 @@
                 style="--swatch: #9855ff"
               ></span
             ></label>
+            <form id="custom-accent-form" class="custom-accent">
+              <label for="custom-accent-color">Couleur personnalisée</label>
+              <div class="custom-accent-controls">
+                <input
+                  id="custom-accent-color"
+                  type="color"
+                  value="#f4cf00"
+                  aria-label="Choisir une couleur personnalisée"
+                />
+                <input
+                  id="custom-accent-hex"
+                  type="text"
+                  value="#f4cf00"
+                  maxlength="7"
+                  pattern="#[0-9a-fA-F]{6}"
+                  required
+                  autocomplete="off"
+                  spellcheck="false"
+                  aria-label="Code hexadécimal de la couleur"
+                  placeholder="#f4cf00"
+                />
+                <button class="button button-subtle" type="submit">
+                  Appliquer
+                </button>
+              </div>
+            </form>
           </div>
         </details>
       </header>
