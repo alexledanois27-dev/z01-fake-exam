@@ -1,5 +1,11 @@
 # Historique fonctionnel
 
+## 29 octobre 2026 — couleur d’interface personnalisée
+
+- Palette native et saisie hexadécimale dans le menu des nuances.
+- Sauvegarde locale, retour aux six nuances et adaptation des tons de fond.
+- Texte des boutons remplis et logo adaptés aux couleurs sombres ou claires.
+
 ## 28 octobre 2026 — publication du dépôt et protections
 
 - Attribution du projet d’origine mise en évidence dans le README.

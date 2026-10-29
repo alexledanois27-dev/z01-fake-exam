@@ -290,3 +290,13 @@ fermeture du lecteur. Le raccourci de correction est suspendu dans le lecteur.
 Voir [le guide de contribution des fiches](../learning-content/README.md) pour les
 associations et la compilation Docker des exemples Rust/Java. `npm test` couvre
 les exemples JavaScript, les références, les filtres et la conservation du code.
+
+## Couleur personnalisée
+
+`appearance.js` accepte les six noms de nuances historiques ou un code `#rrggbb`
+strictement validé dans la même clé locale `z01fakeexam-accent`. Le sélecteur natif
+et le champ hexadécimal restent synchronisés. Les composantes HSL adaptent les
+fonds ; une comparaison de contraste choisit le texte clair ou sombre des boutons
+remplis et de la marque. Revenir à une nuance supprime les variables de couleur personnalisée. Le logo et
+le titre partagent le même contraste noir/blanc pour toutes les nuances.
+Les couleurs choisies restent locales au navigateur et ne modifient pas les scores.

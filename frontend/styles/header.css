@@ -123,12 +123,12 @@
   display: inline-block;
 }
 
-/* Preserve the supplied logo and transparency; render it black on the yellow banner. */
+/* Preserve transparency and use the same black/white contrast as the brand text. */
 .brand-logo {
   display: block;
   width: 46px;
   height: 38px;
   object-fit: contain;
   flex-shrink: 0;
-  filter: brightness(0);
+  filter: var(--accent-logo-filter, brightness(0));
 }
