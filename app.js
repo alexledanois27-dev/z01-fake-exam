@@ -2,6 +2,134 @@
 (function () {
 const trainingGuides = {"go":{"addprimesum":{"title":"addprimesum","statementHash":"a9e13f4d","topics":["Nombres premiers","Accumulateur"],"strategy":"Teste la primalité des entiers jusqu’à la borne et additionne ceux retenus.","hints":["Un entier inférieur à 2 n’est pas premier.","Cherche un diviseur seulement tant que d ≤ n/d, puis respecte les erreurs d’arguments."],"checks":["Borne 0 et 1","Borne première et arguments invalides"]},"brackets":{"title":"brackets","statementHash":"3bcffef2","topics":["Pile","Parcours de chaîne"],"strategy":"Mémorise les ouvertures dans une pile pour vérifier leur ordre de fermeture.","hints":["La prochaine fermeture doit correspondre à la dernière ouverture.","Ignore les autres caractères et exige une pile vide à la fin."],"checks":["Chaîne sans parenthèses","Croisements comme ([)] et ouverture non fermée"]},"brainfuck":{"title":"brainfuck","statementHash":"427b30e1","topics":["Interpréteur","Machine à états"],"strategy":"Garde une mémoire, un pointeur de cellule et une position dans le programme.","hints":["Chaque symbole modifie la mémoire, le pointeur ou la sortie.","Pour les crochets, recherche le correspondant en comptant les boucles imbriquées."],"checks":["Cellule initialisée à zéro","Boucles imbriquées et boucle sautée"]},"cameltosnakecase":{"title":"cameltosnakecase","statementHash":"6df1e03b","topics":["Validation","Transformation","Chaînes"],"strategy":"Valide toute la chaîne avant de convertir ses majuscules en séparateurs.","hints":["Les deux conventions camelCase admises ont des règles précises.","Une entrée invalide doit rester intégralement inchangée, sans conversion partielle."],"checks":["Chaîne vide","Majuscules consécutives et majuscule finale"]},"canjump":{"title":"canjump","statementHash":"77312114","topics":["Simulation","Indices"],"strategy":"Simule le trajet : chaque valeur impose la longueur exacte du saut.","hints":["Ce problème ne permet pas de choisir un saut plus court.","Arrête sur le dernier indice, un dépassement ou un zéro bloquant avant la fin."],"checks":["Tableau vide ou singleton","Saut hors limites et zéro intermédiaire"]},"checknumber":{"title":"checknumber","statementHash":"f4dc74ad","topics":["Recherche","Prédicat","Chaînes"],"strategy":"Parcours les caractères pour chercher un chiffre décimal.","hints":["Une seule correspondance suffit pour retourner vrai.","Distingue une chaîne sans chiffre d’une chaîne vide."],"checks":["Texte sans chiffre","Chiffre au début et à la fin"]},"chunk":{"title":"chunk","statementHash":"4d2f3c2b","topics":["Découpage","Bornes"],"strategy":"Avance par blocs de taille donnée et borne la fin de chaque bloc.","hints":["Le dernier bloc peut être plus court.","Traite la taille nulle avant la boucle et respecte le format d’affichage."],"checks":["Taille nulle","Slice vide et dernier bloc incomplet"]},"concatalternate":{"title":"concatalternate","statementHash":"7e499c77","topics":["Deux pointeurs","Alternance"],"strategy":"Choisis d’abord le slice le plus long, puis alterne ses valeurs avec l’autre.","hints":["En cas d’égalité, le premier argument commence.","Quand un slice est épuisé, ajoute le reste de l’autre dans son ordre."],"checks":["Longueurs égales","Un slice vide et longueurs différentes"]},"concatslice":{"title":"concatslice","statementHash":"f2f892b7","topics":["Slices","Concaténation"],"strategy":"Construis un nouveau slice avec tous les éléments du premier, puis du second.","hints":["Conserve les doublons et l’ordre d’origine.","Ne mélange pas concaténation et alternance."],"checks":["Deux slices vides","Un seul slice vide et doublons"]},"countalpha":{"title":"countalpha","statementHash":"6dc392f3","topics":["Parcours","Compteur"],"strategy":"Compte les caractères alphabétiques au fil d’un seul parcours.","hints":["Pour les exemples ASCII, compare les intervalles a–z et A–Z.","N’incrémente pas le compteur pour les chiffres, espaces ou signes."],"checks":["Chaîne vide","Mélange de majuscules, chiffres et ponctuation"]},"countcharacter":{"title":"countcharacter","statementHash":"b7c48db4","topics":["Comparaison","Compteur"],"strategy":"Compare chaque caractère au caractère recherché et compte les égalités.","hints":["Le paramètre recherché est une rune, pas un texte à plusieurs caractères.","Un espace peut aussi être le caractère recherché."],"checks":["Caractère absent","Chaîne vide et occurrences répétées"]},"countrepeats":{"title":"countrepeats","statementHash":"d9695614","topics":["Groupes consécutifs","Compression RLE"],"strategy":"Mémorise le caractère courant et la longueur de sa séquence.","hints":["Émets le groupe lorsque le caractère change.","N’oublie pas le dernier groupe ; ici le caractère précède le compteur."],"checks":["Un seul caractère","Groupes séparés du même caractère"]},"digitlen":{"title":"digitlen","statementHash":"75baa02a","topics":["Division entière","Bases"],"strategy":"Compte les divisions successives par la base jusqu’à épuisement de la valeur.","hints":["Valide d’abord que la base est comprise entre 2 et 36.","Traite le signe et le zéro comme cas séparés ; évite les débordements en changeant le signe."],"checks":["Base invalide","Zéro, négatif et puissance de la base"]},"fifthandskip":{"title":"fifthandskip","statementHash":"df056292","topics":["Compteur","Filtrage"],"strategy":"Ignore les espaces, conserve cinq caractères puis saute le sixième.","hints":["Sépare les groupes conservés par un espace.","Gère d’abord la chaîne vide et les entrées trop courtes selon la consigne."],"checks":["Entrée vide et courte","Espaces internes et frontière du sixième caractère"]},"findpairs":{"title":"findpairs","statementHash":"15f6068e","topics":["Validation","Double parcours"],"strategy":"Après validation de l’entrée, examine les couples d’indices i < j dont la somme vaut la cible.","hints":["Un même indice ne peut pas être associé à lui-même.","Conserve l’ordre des couples et distingue les différents messages d’erreur."],"checks":["Nombres négatifs et doublons","Aucune paire, cible invalide et tableau mal formé"]},"findprevprime":{"title":"findprevprime","statementHash":"59155516","topics":["Primalité","Recherche descendante"],"strategy":"Descends depuis la valeur reçue jusqu’au premier nombre premier.","hints":["La borne elle-même peut être la réponse.","Teste les diviseurs jusqu’à la racine et retourne zéro si aucun premier n’existe."],"checks":["Valeurs inférieures à 2","Nombre premier et nombre composé"]},"firstword":{"title":"firstword","statementHash":"3699aefc","topics":["Bornes de mot","Parcours"],"strategy":"Repère le premier mot délimité par des espaces et les extrémités.","hints":["Saute les espaces initiaux avant de chercher la fin du mot.","Respecte le retour à la ligne même lorsqu’aucun mot n’est trouvé."],"checks":["Chaîne vide","Espaces initiaux et espaces multiples"]},"fishandchips":{"title":"fishandchips","statementHash":"2034504d","topics":["Conditions","Modulo"],"strategy":"Teste les divisibilités par 2 et 3 pour choisir le texte attendu.","hints":["Le cas divisible par les deux doit être distingué des cas simples.","Vérifie d’abord le traitement des négatifs puis celui des non-divisibles."],"checks":["Multiple de 6","Négatif et entier non divisible"]},"fprime":{"title":"fprime","statementHash":"77283118","topics":["Factorisation","Division"],"strategy":"Divise successivement par les plus petits facteurs possibles.","hints":["Tant qu’un facteur divise encore le nombre, conserve-le.","Gère les séparateurs sans astérisque final et le facteur restant."],"checks":["Nombre premier","Facteur répété et arguments invalides"]},"fromto":{"title":"fromto","statementHash":"3681e7b7","topics":["Boucle orientée","Formatage"],"strategy":"Choisis le sens de parcours selon les deux bornes et inclus les extrémités.","hints":["Chaque nombre doit occuper deux chiffres.","Valide l’intervalle 0–99 et évite une virgule après le dernier nombre."],"checks":["Bornes identiques","Ordre décroissant et borne invalide"]},"gcd":{"title":"gcd","statementHash":"e364a896","topics":["Algorithme d’Euclide","Modulo"],"strategy":"Remplace progressivement le couple par le second entier et le reste de la division.","hints":["Le dernier reste non nul donne le PGCD.","Cette consigne exige zéro si l’un des arguments est nul."],"checks":["Un argument nul","Entiers premiers entre eux et multiples"]},"grouping":{"title":"grouping","statementHash":"888052c9","topics":["Analyse de motif","Recherche"],"strategy":"Sépare les alternatives du motif puis cherche leurs occurrences dans le texte.","hints":["Valide les délimiteurs et la syntaxe avant toute recherche.","Numérote les résultats dans leur ordre d’apparition, comme dans les exemples."],"checks":["Plusieurs alternatives","Motif invalide et absence de correspondance"]},"hashcode":{"title":"hashcode","statementHash":"7819a28e","topics":["ASCII","Transformation"],"strategy":"Transforme chaque caractère avec la formule donnée et la longueur de la chaîne.","hints":["Applique le modulo 127 avant la correction des caractères non imprimables.","N’utilise pas une fonction de hachage standard : la formule est spécifique."],"checks":["Chaîne vide","Valeur donnant un caractère non imprimable"]},"hiddenp":{"title":"hiddenp","statementHash":"50d69794","topics":["Sous-séquence","Deux pointeurs"],"strategy":"Avance dans le second texte et ne progresse dans le premier qu’en cas de correspondance.","hints":["Les lettres doivent garder leur ordre, sans être contiguës.","Le premier texte vide est toujours caché dans le second."],"checks":["Premier texte vide","Lettres présentes mais dans le mauvais ordre"]},"inter":{"title":"inter","statementHash":"7a6a07e6","topics":["Ensembles","Ordre stable","Chaînes"],"strategy":"Parcours le premier texte et retiens les caractères également présents dans le second.","hints":["Mémorise ce qui a déjà été affiché.","Conserve l’ordre du premier texte et non celui d’un ensemble trié."],"checks":["Doublons","Aucune intersection et caractères communs réordonnés"]},"iscapitalized":{"title":"iscapitalized","statementHash":"44edbd6f","topics":["Début de mot","Validation"],"strategy":"Identifie le début de chaque mot et vérifie sa première lettre.","hints":["Un caractère non alphabétique initial est accepté.","La chaîne vide est un cas faux explicite."],"checks":["Mot commençant en minuscule","Chiffre initial et chaîne vide"]},"itoa":{"title":"itoa","statementHash":"2f3a48d1","topics":["Division entière","Construction de chaîne"],"strategy":"Extrais les chiffres par reste et division puis remets-les dans l’ordre.","hints":["Traite séparément zéro et le signe.","Prévois le plus petit entier : sa valeur positive peut dépasser le type signé."],"checks":["Zéro et négatif","Plus petit entier représentable"]},"itoabase":{"title":"itoabase","statementHash":"83a5a724","topics":["Conversion de base","Restes"],"strategy":"Extrais les chiffres dans la base demandée puis inverse leur ordre.","hints":["Les restes supérieurs à 9 correspondent à A–F.","Ajoute le signe une seule fois et gère zéro explicitement."],"checks":["Bases 2 et 16","Zéro et valeur négative"]},"lastword":{"title":"lastword","statementHash":"14602364","topics":["Parcours à rebours","Bornes"],"strategy":"Ignore les espaces finaux puis cherche le début du dernier mot.","hints":["La ponctuation reste dans le mot : seuls les espaces le délimitent.","Ajoute le retour à la ligne demandé, même sans mot."],"checks":["Chaîne faite d’espaces","Ponctuation et espaces finaux"]},"longestword":{"title":"longestword","statementHash":"8cbb4102","topics":["Unicode","Validation de jetons"],"strategy":"Valide chaque mot avant de comparer sa longueur au meilleur candidat.","hints":["Un mot commence par une lettre ; seule la ponctuation finale autorisée est optionnelle.","Conserve le premier mot en cas d’égalité et distingue caractères Unicode et octets."],"checks":["Lettres accentuées","Égalité, chiffre interne et aucun mot valide"]},"notdecimal":{"title":"notdecimal","statementHash":"82c2f2fb","topics":["Validation numérique","Écriture décimale","Chaînes"],"strategy":"Identifie signe, chiffres et partie décimale avant d’enlever le point si nécessaire.","hints":["Évite les erreurs d’arrondi d’une conversion flottante pour une opération textuelle.","Normalise les zéros initiaux et le signe du résultat numérique ; une entrée invalide reste inchangée, suivie du retour à la ligne."],"checks":["Entrée vide et invalide","Décimale nulle, signe et zéros"]},"only1":{"title":"only1","statementHash":"cb978200","topics":["Programme minimal","Sortie standard"],"strategy":"Écris un programme principal qui émet uniquement le caractère 1.","hints":["Ne lis pas les arguments : ils ne changent pas le résultat.","N’ajoute ni espace ni retour à la ligne."],"checks":["Sans argument","Avec plusieurs arguments et comparaison exacte de la sortie"]},"onlya":{"title":"onlya","statementHash":"b19ded2f","topics":["Programme minimal","Sortie standard"],"strategy":"Écris un programme principal qui émet uniquement la lettre a.","hints":["La lettre est minuscule.","N’ajoute ni espace ni retour à la ligne."],"checks":["Sans argument","Sortie contenant un seul caractère"]},"onlyb":{"title":"onlyb","statementHash":"6ca2413b","topics":["Programme minimal","Sortie standard"],"strategy":"Écris un programme principal qui émet uniquement la lettre B.","hints":["La lettre demandée est majuscule malgré le nom de l’exercice.","N’ajoute ni espace ni retour à la ligne."],"checks":["Sans argument","Vérification de la casse et de la longueur"]},"onlyf":{"title":"onlyf","statementHash":"6ffe8879","topics":["Programme minimal","Sortie standard"],"strategy":"Écris un programme principal qui émet uniquement la lettre f.","hints":["La lettre est minuscule.","N’ajoute ni espace ni retour à la ligne."],"checks":["Sans argument","Sortie contenant un seul caractère"]},"onlyz":{"title":"onlyz","statementHash":"57a1e377","topics":["Programme minimal","Sortie standard"],"strategy":"Écris un programme principal qui émet uniquement la lettre z.","hints":["La lettre est minuscule.","N’ajoute ni espace ni retour à la ligne."],"checks":["Sans argument","Sortie contenant un seul caractère"]},"options":{"title":"options","statementHash":"d6c2094e","topics":["Masque de bits","Analyse d’arguments"],"strategy":"Associe chaque option à un bit et regroupe les options par OU binaire.","hints":["L’aide et les options invalides ont des règles de priorité précises.","Affiche les 32 bits dans l’ordre attendu, groupés par huit."],"checks":["Options répétées","Aide prioritaire et lettre invalide"]},"passwordentropy":{"title":"passwordentropy","statementHash":"3781dd3b","topics":["Classes de caractères","Logarithme"],"strategy":"Détecte les catégories présentes, additionne leurs tailles puis applique L × log₂(P).","hints":["Une catégorie ne contribue qu’une fois, même si plusieurs caractères lui appartiennent.","Le mot de passe vide retourne zéro avant tout logarithme."],"checks":["Chaîne vide","Une catégorie seule et mélange de catégories"]},"piglatin":{"title":"piglatin","statementHash":"bddbacae","topics":["Recherche de voyelle","Rotation","Chaînes"],"strategy":"Cherche la première voyelle pour déplacer le préfixe consonantique à la fin.","hints":["Si le mot commence déjà par une voyelle, seul le suffixe est ajouté.","Vérifie le cas sans voyelle et les règles exactes d’arguments dans la consigne."],"checks":["Voyelle initiale","Groupe de consonnes et aucune voyelle"]},"printif":{"title":"printif","statementHash":"8e9a5bd7","topics":["Condition","Longueur","Chaînes"],"strategy":"Compare la longueur au seuil trois pour choisir la chaîne retournée.","hints":["Le seuil est inclus dans le cas valide.","Le retour à la ligne fait partie du résultat attendu."],"checks":["Longueurs 2 et 3","Chaîne vide"]},"printifnot":{"title":"printifnot","statementHash":"d8507926","topics":["Conditions","Cas particuliers","Chaînes"],"strategy":"Traite d’abord l’entrée vide puis le seuil de longueur inférieur à trois.","hints":["La frontière trois diffère de printif.","Vérifie les retours à la ligne de chaque branche dans les exemples."],"checks":["Chaîne vide","Longueurs 2 et 3"]},"printmemory":{"title":"printmemory","statementHash":"6e02dd0e","topics":["Octets","Hexadécimal","Chaînes"],"strategy":"Sépare l’affichage hexadécimal des octets de leur représentation graphique.","hints":["Un octet se décompose en deux chiffres hexadécimaux.","Seuls les octets 33 à 126 sont graphiques ; remplace notamment l’espace par un point."],"checks":["Octets 0, 32, 33 et 126","Respect des groupes et des retours à la ligne"]},"printrevcomb":{"title":"printrevcomb","statementHash":"1fd76e2d","topics":["Boucles imbriquées","Combinaisons"],"strategy":"Fais décroître trois chiffres en imposant premier > deuxième > troisième.","hints":["Cette contrainte élimine répétitions et permutations équivalentes.","Insère les séparateurs uniquement entre les combinaisons."],"checks":["Première et dernière combinaison","Absence de chiffres répétés et de séparateur final"]},"rectperimeter":{"title":"rectperimeter","statementHash":"b80c2c9e","topics":["Validation","Arithmétique"],"strategy":"Après validation des dimensions, calcule deux fois la somme largeur plus hauteur.","hints":["L’aire et le périmètre sont deux formules différentes.","Applique le résultat spécial demandé pour une dimension négative."],"checks":["Rectangle carré","Dimension nulle et négative"]},"repeatalpha":{"title":"repeatalpha","statementHash":"eda817f3","topics":["ASCII","Répétition"],"strategy":"Calcule le rang alphabétique de chaque lettre puis affiche-la autant de fois.","hints":["Les majuscules et minuscules ont le même rang.","Les caractères non alphabétiques ne doivent pas recevoir un rang de lettre."],"checks":["a, z et majuscules","Espaces, chiffres et chaîne vide"]},"retainfirsthalf":{"title":"retainfirsthalf","statementHash":"edfb5fb1","topics":["Découpage","Cas limites"],"strategy":"Renvoie la première moitié en arrondissant sa longueur vers le bas.","hints":["La longueur un est une exception : conserve son caractère.","La chaîne vide reste vide."],"checks":["Longueurs 0 et 1","Longueurs paires et impaires"]},"revconcatalternate":{"title":"revconcatalternate","statementHash":"88725553","topics":["Parcours inverse","Deux pointeurs"],"strategy":"Lis les slices depuis leur fin et choisis la source selon leurs longueurs restantes.","hints":["Quand les tailles restantes sont égales, prends d’abord le premier argument.","Ne confonds pas cette règle avec une simple alternance fixe."],"checks":["Tailles égales","Premier ou second slice nettement plus long"]},"reversestrcap":{"title":"reversestrcap","statementHash":"90cca773","topics":["Bornes de mot","Casse"],"strategy":"Passe les lettres en minuscules et repère la dernière lettre de chaque mot.","hints":["Une fin de chaîne peut aussi terminer un mot.","Traite chaque argument séparément avec son retour à la ligne."],"checks":["Un seul mot","Espaces multiples et plusieurs arguments"]},"revwstr":{"title":"revwstr","statementHash":"e1d14681","topics":["Découpage","Mots"],"strategy":"Repère les mots alphanumériques puis affiche-les dans l’ordre inverse.","hints":["Le séparateur de sortie est un seul espace.","Respecte la définition des mots et le nombre d’arguments de cette consigne."],"checks":["Un mot","Ponctuation, espaces multiples et argument absent"]},"romannumbers":{"title":"romannumbers","statementHash":"af7eff38","topics":["Décomposition gloutonne","Table de symboles"],"strategy":"Décompose la valeur avec les symboles romains, du plus grand au plus petit.","hints":["Prévois les couples soustractifs comme IV et IX.","Produis aussi l’écriture du calcul et respecte la limite 4000."],"checks":["Valeurs 4, 9 et 49","Borne maximale et entrée invalide"]},"rostring":{"title":"rostring","statementHash":"eb80dddb","topics":["Rotation de mots","Normalisation"],"strategy":"Repère les mots et déplace le premier à la fin sans changer les autres.","hints":["Un texte d’un seul mot reste identique après normalisation.","Réunis les mots avec un espace et termine comme demandé."],"checks":["Un mot et chaîne vide","Plusieurs espaces et ponctuation"]},"rpncalc":{"title":"rpncalc","statementHash":"1c6469d8","topics":["Pile","Opérateurs"],"strategy":"Empile les nombres ; chaque opérateur dépile deux valeurs et réempile le résultat.","hints":["La première valeur dépilée est l’opérande de droite.","À la fin, exige exactement une valeur et rejette les opérations invalides."],"checks":["Soustraction et division","Pile insuffisante, division par zéro et surplus de valeurs"]},"saveandmiss":{"title":"saveandmiss","statementHash":"3aa208f0","topics":["Blocs","Alternance"],"strategy":"Alterne un bloc conservé et un bloc ignoré de la taille reçue.","hints":["Borne chaque bloc à la fin de la chaîne.","Lis les cas nuls ou négatifs de la consigne avant de faire avancer l’indice."],"checks":["Taille 1","Bloc final incomplet et taille non positive"]},"slice":{"title":"slice","statementHash":"ecff63a3","topics":["Indices négatifs","Bornes"],"strategy":"Traduis les indices négatifs relativement à la fin, puis borne les positions.","hints":["Un seul indice signifie aller jusqu’à la fin.","Gère explicitement une fin précédant le début."],"checks":["Slice vide","Indices négatifs, hors limites et ordre inversé"]},"thirdtimeisacharm":{"title":"thirdtimeisacharm","statementHash":"1b1e0ae6","topics":["Indice","Modulo"],"strategy":"Conserve le troisième caractère, puis chaque troisième suivant.","hints":["Avec des indices à partir de zéro, la première position utile est deux.","Traite les chaînes courtes et ajoute le retour à la ligne demandé."],"checks":["Longueurs 0, 2 et 3","Longueur non multiple de trois"]},"union":{"title":"union","statementHash":"cc303872","topics":["Ensemble","Ordre stable","Chaînes"],"strategy":"Parcours le premier texte puis le second en émettant chaque caractère une seule fois.","hints":["Mémorise les caractères déjà rencontrés.","Ne trie pas le résultat : l’ordre de première apparition compte."],"checks":["Doublons dans les deux textes","Un argument vide et caractères disjoints"]},"wdmatch":{"title":"wdmatch","statementHash":"031a7893","topics":["Sous-séquence","Deux pointeurs"],"strategy":"Cherche les caractères du premier texte, dans l’ordre, à travers le second.","hints":["Avance dans le premier uniquement si le caractère correspond.","Affiche le premier texte seulement si toute la sous-séquence a été trouvée."],"checks":["Correspondance espacée","Ordre incorrect et argument vide"]},"weareunique":{"title":"weareunique","statementHash":"3c155847","topics":["Différence symétrique","Ensembles","Chaînes"],"strategy":"Compte les caractères présents dans un seul des deux textes, une seule fois chacun.","hints":["Un caractère répété dans un texte ne compte pas plusieurs fois.","Les deux chaînes vides constituent le cas spécial -1."],"checks":["Deux chaînes vides","Doublons et textes ayant les mêmes caractères"]},"wordanatomy":{"title":"wordanatomy","statementHash":"eb4b9905","topics":["Préfixes","Suffixes","Chaînes"],"strategy":"Parcours séparément les listes de préfixes et de suffixes dans leur ordre d’origine.","hints":["Le premier élément correspondant gagne, pas le plus long.","Les deux recherches sont indépendantes et peuvent ne rien trouver."],"checks":["Plusieurs préfixes compatibles","Suffixe seul et aucune correspondance"]},"wordflip":{"title":"wordflip","statementHash":"7a6ad9a3","topics":["Ordre des mots","Normalisation"],"strategy":"Découpe le texte en mots puis inverse leur ordre en normalisant les espaces.","hints":["Les espaces initiaux, finaux et multiples ne sont pas conservés.","Vérifie le message réservé à l’entrée vide et le retour à la ligne."],"checks":["Plusieurs mots","Espaces multiples et entrée vide"]},"zipstring":{"title":"zipstring","statementHash":"feb72f5d","topics":["Compression RLE","Groupes consécutifs"],"strategy":"Compte chaque groupe de lettres identiques consécutives et écris nombre puis lettre.","hints":["Deux groupes séparés de la même lettre restent distincts.","Émets aussi le dernier groupe."],"checks":["Une lettre","Groupes de taille un et répétitions séparées"]}},"js":{"array-reverse-chunks":{"title":"Array Reverse Chunks","statementHash":"4dd23320","topics":["Tableaux","Deux pointeurs"],"strategy":"Inverse chaque bloc indépendamment, sans modifier l’ordre des blocs.","hints":["Borne le dernier bloc à la longueur réelle du tableau.","Échange les éléments des deux extrémités du bloc puis rapproche les indices."],"checks":["Bloc de taille 1","Dernier bloc incomplet et tableau vide"]},"bubble-sort-analyzer":{"title":"Bubble Sort Analyzer","statementHash":"0e151bdb","topics":["Tri à bulles","Comparateur"],"strategy":"Compare les voisins et échange-les selon le comparateur fourni.","hints":["Le compteur d’itérations et celui des échanges ne représentent pas la même chose.","Respecte la convention de comptage des exemples avant d’ajouter une optimisation."],"checks":["Tableau déjà trié","Ordre inverse, doublons et comparateur décroissant"]},"character-maker":{"title":"Character Maker","statementHash":"eda3438a","topics":["Fermeture","Curryfication","Fusion profonde"],"strategy":"Conserve le personnage dans une fermeture et renvoie la même fonction de construction.","hints":["Un objet déclenche une fusion profonde ; une fonction transforme l’état courant.","Un appel sans argument termine la chaîne et renvoie le personnage."],"checks":["Fusions imbriquées","Transformation après fusion et finalisation sans modification"]},"deep-clone":{"title":"Deep Clone","statementHash":"1e9dc55e","topics":["Récursion","Identité des références"],"strategy":"Distingue les primitives des conteneurs et reconstruis récursivement chaque niveau.","hints":["Un tableau doit rester un tableau, et null n’est pas un objet à parcourir.","Vérifie l’indépendance des références et pas seulement l’égalité du contenu."],"checks":["Objet avec tableaux imbriqués","Modification de l’original après clonage"]},"deep-equal":{"title":"Deep Equal","statementHash":"79fe505f","topics":["Récursion","Comparaison structurelle"],"strategy":"Compare les primitives puis les types de conteneurs, les clés et leurs valeurs récursives.","hints":["L’ordre des tableaux compte, celui des clés d’objet ne compte pas.","Même nombre de clés ne signifie pas mêmes clés ni mêmes valeurs."],"checks":["Clés réordonnées","Tableaux permutés, null et différence profondément imbriquée"]},"deep-find":{"title":"Deep Find","statementHash":"2fe60498","topics":["Chemin de propriétés","Parcours"],"strategy":"Découpe le chemin par points et avance d’un niveau à chaque segment.","hints":["Un indice de tableau se parcourt aussi comme une propriété.","Arrête proprement sur une étape absente, sans confondre une valeur fausse avec une absence."],"checks":["Chemin absent","Valeur 0, false ou null et indice de tableau"]},"deep-freeze":{"title":"Deep Freeze","statementHash":"98d7c2c4","topics":["Récursion","Immutabilité"],"strategy":"Parcours les objets et tableaux imbriqués puis fige chaque conteneur.","hints":["Figer seulement la racine ne protège pas les objets enfants.","Traite null et les primitives avant de chercher des propriétés."],"checks":["Objet profondément imbriqué","Tableau enfant et tentative de modification"]},"divisorfinder":{"title":"divisorFinder","statementHash":"8a3b4418","topics":["Diviseurs","Modulo"],"strategy":"Cherche les entiers positifs qui divisent n sans reste, en excluant n.","hints":["Le nombre 1 n’a aucun diviseur propre positif.","Conserve l’ordre demandé des diviseurs."],"checks":["n égal à 1","Nombre premier et carré parfait"]},"election-mix":{"title":"Election Mix","statementHash":"52d24b2f","topics":["Curryfication","Filtrage","Transformation"],"strategy":"Capture criteria et mapper dans une fermeture qui recevra ensuite un objet.","hints":["Décide d’abord avec la clé et la valeur si la paire doit être retenue.","Applique mapper uniquement aux valeurs retenues et construis un nouvel objet."],"checks":["Aucune clé retenue","Toutes les clés et réutilisation de la fonction curryfiée"]},"evensum":{"title":"evenSum","statementHash":"6604d65c","topics":["Parité","Accumulateur"],"strategy":"Additionne les nombres pairs compris entre zéro et la borne.","hints":["Un pas de deux évite de traiter les impairs.","Vérifie si la borne elle-même doit être incluse."],"checks":["Bornes 0, 1 et 2","Borne paire puis impaire"]},"exam-grader":{"title":"Exam Grader","statementHash":"f3475143","topics":["Promesses","Échéance globale"],"strategy":"Observe les résultats dans l’ordre avec une seule échéance pour tout l’examen.","hints":["Les promesses existent déjà : les attendre ne les démarre pas nécessairement l’une après l’autre.","Ne réinitialise pas le timeout à chaque exercice et arrête d’ajouter des notes après l’échéance."],"checks":["Toutes les notes à temps","Exercice lent avant un résultat déjà disponible"]},"factorial":{"title":"factorial","statementHash":"9eadde59","topics":["Produit","Cas de base"],"strategy":"Multiplie les entiers de 1 à n avec un accumulateur initialisé à un.","hints":["La factorielle de zéro vaut un.","Une récursion est possible mais une boucle évite de remplir la pile."],"checks":["n égal à 0 et 1","Plusieurs petits entiers"]},"fibonacci":{"title":"fibonacci","statementHash":"0b36e683","topics":["Récurrence","Mémoire constante"],"strategy":"Conserve uniquement les deux termes précédents pour construire le suivant.","hints":["Les premiers termes sont zéro et un.","Une récursion naïve répète inutilement de nombreux calculs."],"checks":["Indices 0, 1 et 2","Indice plus grand"]},"final-attempt":{"title":"Final Attempt","statementHash":"c9efa4f8","topics":["Fonction enveloppe","Async","Relance"],"strategy":"Renvoie une fonction qui tente le callback et intercepte ses échecs.","hints":["Transmets tous les arguments à chaque tentative.","Arrête dès le premier succès ; après épuisement renvoie le texte exact demandé."],"checks":["Succès immédiat","Succès au dernier essai et échec permanent"]},"flat-object":{"title":"Flat Object","statementHash":"26abdba5","topics":["Récursion","Chemins","Transformation"],"strategy":"Descends dans l’objet en transportant le chemin courant et transforme chaque feuille.","hints":["Construis les chemins avec un point entre les niveaux.","Applique mapper aux valeurs finales, pas aux conteneurs intermédiaires."],"checks":["Objet imbriqué","Feuilles nulles et chemins à plusieurs niveaux"]},"flatten-object":{"title":"Flatten Object","statementHash":"8f502217","topics":["Récursion","Chemins de propriétés"],"strategy":"Aplatis chaque feuille dans une nouvelle propriété nommée par son chemin complet.","hints":["Les indices des tableaux font partie du chemin.","Distingue null d’un conteneur afin de ne pas le parcourir."],"checks":["Tableau dans un objet","Objet vide et feuille à plusieurs niveaux"]},"grid-words-finder":{"title":"Grid Words Finder","statementHash":"3da3b2f4","topics":["Grille","Recherche directionnelle"],"strategy":"Teste chaque mot à chaque départ possible horizontalement et verticalement.","hints":["Cet exercice ne demande ni diagonales ni changement de direction.","Contrôle les limites avant de comparer tous les caractères du mot."],"checks":["Mot horizontal puis vertical","Mot absent et départ au bord de la grille"]},"grid-words-finder-2":{"title":"Grid Words Finder 2","statementHash":"382c2b5e","topics":["Récursion","Recherche dans une grille"],"strategy":"Remplace les parcours par des appels récursifs sur les coordonnées et les positions du mot.","hints":["Aucune boucle n’est autorisée par cette consigne.","Collecte toutes les occurrences avec leurs coordonnées et leur direction exactes."],"checks":["Occurrences multiples","Bord de grille et correspondance verticale"]},"insertion-sort-analyzer":{"title":"Insertion Sort Analyzer","statementHash":"9af6677f","topics":["Tri par insertion","Comparateur"],"strategy":"Insère chaque nouvel élément dans la partie déjà triée en décalant les précédents.","hints":["Le comparateur décide de l’ordre et non une comparaison numérique fixe.","Compte les étapes et échanges comme définis par les exemples."],"checks":["Tableau déjà trié","Ordre inverse, doublons et comparateur personnalisé"]},"nested-array-reverser":{"title":"Nested Array Reverser","statementHash":"a6fbb9d1","topics":["Tableaux imbriqués","Ordre"],"strategy":"Inverse l’ordre des sous-tableaux puis l’ordre des mots dans chacun.","hints":["La sortie est une chaîne unique et non un tableau.","Réunis les mots avec un espace sans perdre l’ordre obtenu."],"checks":["Une seule ligne","Plusieurs lignes et sous-tableau vide"]},"object-lab":{"title":"Object Lab","statementHash":"214ec8cb","topics":["Fusion","Accumulateurs","Pipeline"],"strategy":"Fusionne les objets dans l’ordre en comptant les nouvelles clés et les remplacements.","hints":["Une clé déjà présente est écrasée par l’objet suivant.","Applique ensuite les transformations en séquence et garde leurs compteurs séparés."],"checks":["Clés communes à trois objets","Aucun transformateur et remplacement par une valeur fausse"]},"palindromic-chains":{"title":"Palindromic Chains","statementHash":"4f824374","topics":["Itération","Palindrome"],"strategy":"Pour chaque entier, additionne-le à son écriture renversée jusqu’à obtenir un palindrome.","hints":["Teste si le nombre est déjà palindrome avant une addition.","Arrête à la limite de 100 tentatives et applique le résultat de repli demandé."],"checks":["Palindrome initial","Plusieurs additions et limite atteinte"]},"perfectnum":{"title":"PerfectNum","statementHash":"d50367bb","topics":["Diviseurs propres","Somme"],"strategy":"Additionne les diviseurs positifs strictement inférieurs au nombre puis compare la somme.","hints":["Un nombre parfait est strictement positif.","Si tu parcours par paires de diviseurs, ne compte pas deux fois une racine carrée."],"checks":["1 et 6","28, nombre premier et carré parfait"]},"pipeline":{"title":"Pipeline","statementHash":"6a280c47","topics":["Composition","Historique"],"strategy":"Applique chaque fonction à la sortie de la précédente.","hints":["Conserve les informations de chaque étape au moment où elle est exécutée.","Le résultat final et l’historique doivent respecter la structure demandée."],"checks":["Pipeline vide","Fonctions non commutatives et changement de type"]},"sentencepyramid":{"title":"sentencePyramid","statementHash":"fae7d9d1","topics":["Mots","Préfixes progressifs"],"strategy":"Affiche les préfixes de la phrase en ajoutant un mot à chaque ligne.","hints":["La première ligne ne contient que le premier mot.","Soigne les espaces et le nombre de lignes de sortie."],"checks":["Un seul mot","Phrase de plusieurs mots et espaces"]},"sleep-breaker":{"title":"Sleep Breaker","statementHash":"5d114bdc","topics":["Promesses","Course temporelle"],"strategy":"Fais concourir l’expiration du délai et la résolution du breaker.","hints":["Le premier événement doit résoudre la promesse retournée.","Évite une seconde résolution utile et nettoie le timer lorsque le breaker gagne."],"checks":["Breaker rapide","Délai plus court et breaker tardif"]},"snake-path-validator":{"title":"Snake Path Validator","statementHash":"649e2f38","topics":["Récursion","Connexité"],"strategy":"Explore récursivement les cellules 1 par leurs voisins orthogonaux et mémorise les cellules visitées.","hints":["Aucune boucle n’est autorisée ; une cellule seule est admise.","Vérifie que tous les 1 appartiennent à la même composante ; les diagonales ne relient pas les cases."],"checks":["Cellule unique","Deux groupes séparés et contact uniquement diagonal"]},"swappable-object":{"title":"Swappable Object","statementHash":"aacad7de","topics":["Proxy","Recherche inverse"],"strategy":"Intercepte la lecture d’une propriété pour permettre une recherche par clé ou par valeur.","hints":["La lecture d’une vraie clé doit garder son comportement normal.","La recherche inverse doit refléter l’état courant de l’objet."],"checks":["Lecture directe et inverse","Modification d’une valeur après création"]},"transform-keys":{"title":"Transform Keys","statementHash":"1dddcce6","topics":["Récursion","Transformation de clés"],"strategy":"Reconstruis chaque objet en transformant ses clés et en traitant récursivement les valeurs conteneurs.","hints":["Les valeurs primitives restent inchangées.","Distingue les tableaux et null des objets ordinaires."],"checks":["Objet imbriqué","Tableau enfant et valeurs primitives"]},"trap-object":{"title":"Trap Object","statementHash":"98b9c065","topics":["Proxy","Interception"],"strategy":"Utilise des interceptions de lecture et d’écriture pour notifier fn.","hints":["En lecture, transmets la clé et la valeur ; en écriture, garde aussi l’ancienne valeur.","Après notification, effectue bien l’opération normale sur l’objet cible."],"checks":["Lecture d’une propriété","Écriture nouvelle puis remplacement"]},"zoo-race":{"title":"Zoo Race","statementHash":"7aad1e7d","topics":["Promesses","Temps par segments"],"strategy":"Calcule le temps de chaque animal en additionnant les durées de ses segments de vitesse.","hints":["La distance restante change après chaque segment.","La course choisit la promesse résolue en premier ; surveille l’unité utilisée par le timer."],"checks":["Distance dans chacun des trois segments","Deux animaux de durées différentes"]}},"rust":{"rust-checkpoint-blood-types-s":{"title":"blood_types_s","statementHash":"fc91afc8","topics":["Enums","Table de compatibilité"],"strategy":"Sépare les règles du groupe ABO et celles du facteur Rh pour décider de la compatibilité.","hints":["Pour les listes de dons et réceptions, applique la règle dans le bon sens.","Utilise la table comme référence exhaustive et conserve l’ordre attendu des résultats."],"checks":["O négatif et AB positif","Tous les couples des huit groupes"]},"rust-checkpoint-brackets-matching":{"title":"brackets_matching","statementHash":"982d8eea","topics":["Pile","Caractères"],"strategy":"Empile les ouvertures et compare chaque fermeture avec le sommet.","hints":["Ignore les caractères qui ne sont pas des délimiteurs.","À la fin de chaque argument, la pile doit être vide."],"checks":["Aucun délimiteur","Croisement et fermeture sans ouverture"]},"rust-checkpoint-brain-fuck":{"title":"brain_fuck","statementHash":"0380ba2f","topics":["Interpréteur","Mémoire","Indices"],"strategy":"Maintiens les 2048 cellules, le pointeur mémoire et l’indice d’instruction.","hints":["Pour les boucles, compte les crochets imbriqués pour trouver le correspondant.","Respecte la sémantique des cellules octets et des sauts indiquée dans la consigne."],"checks":["Boucle sautée sur zéro","Boucles imbriquées et déplacement du pointeur"]},"rust-checkpoint-car-rental":{"title":"car_rental","statementHash":"87956712","topics":["Mutabilité intérieure","Emprunts"],"strategy":"Choisis les conteneurs de mutabilité intérieure correspondant aux types de retour demandés.","hints":["Un accès partagé ne donne pas automatiquement un accès mutable direct.","Respecte les durées de vie des gardes d’emprunt et évite les emprunts incompatibles simultanés."],"checks":["Lecture puis mutation","Accès partagé et garde encore vivante"]},"rust-checkpoint-check-user-name":{"title":"check_user_name","statementHash":"d78497cb","topics":["Enum","Result","Validation"],"strategy":"Modélise les niveaux d’accès puis distingue création, validation du nom et autorisations.","hints":["Une erreur attendue doit être retournée selon le contrat plutôt que provoquer un panic.","Suis exactement les messages et changements de niveau définis dans l’énoncé."],"checks":["Nom valide et invalide","Utilisateur invité puis administrateur"]},"rust-checkpoint-count-factorial-steps":{"title":"count_factorial_steps","statementHash":"501d1b65","topics":["Produit progressif","Arrêt"],"strategy":"Multiplie progressivement les entiers jusqu’à atteindre ou dépasser la valeur.","hints":["Zéro, un et les nombres non factoriels doivent donner zéro.","Protège la multiplication contre le dépassement avant de calculer le produit suivant."],"checks":["0, 1 et 6","Nombre entre deux factorielles et grande valeur"]},"rust-checkpoint-counting-words":{"title":"counting_words","statementHash":"aa2bdaad","topics":["Tokenisation","HashMap"],"strategy":"Normalise la casse et compte les mots en conservant les apostrophes internes pertinentes.","hints":["Les nombres sont des mots et les espaces ASCII peuvent varier.","Écarte les autres ponctuations sans perdre les séparations entre mots."],"checks":["HELLO puis hello","Apostrophes, chiffres, tabulations et sauts de ligne"]},"rust-checkpoint-display-table":{"title":"display_table","statementHash":"4b21f0a2","topics":["Display","Largeurs de colonnes"],"strategy":"Calcule la largeur maximale de chaque colonne avant de construire les lignes.","hints":["Le centrage répartit les espaces à gauche et à droite.","Si le nombre d’espaces est impair, suis la convention de l’exemple."],"checks":["Colonnes de tailles différentes","Contenu plus court d’un nombre impair de caractères"]},"rust-checkpoint-dress-code":{"title":"dress_code","statementHash":"50935132","topics":["Option","Result","Pattern matching"],"strategy":"Traite séparément le niveau de formalité et le résultat de l’invitation.","hints":["Le couple None et Err constitue une exception pour le chapeau.","Construis les enums publics et l’Outfit avec les variantes exactes."],"checks":["None avec Ok puis Err","Some de zéro et valeur positive"]},"rust-checkpoint-drop-the-blog":{"title":"drop_the_blog","statementHash":"e1c04360","topics":["Drop","Mutabilité intérieure","Durées de vie"],"strategy":"Relie chaque article à son blog et centralise la mise à jour de destruction.","hints":["Le trait Drop doit enregistrer la destruction une seule fois.","discard consomme l’article ; évite de compter manuellement puis de recompter dans Drop."],"checks":["Article détruit en fin de bloc","Destruction explicite et état des autres articles"]},"rust-checkpoint-filter-table":{"title":"filter_table","statementHash":"37c080d0","topics":["Closures","Colonnes et lignes"],"strategy":"Construis la table puis sélectionne colonnes ou lignes en appliquant les closures demandées.","hints":["Une colonne retenue doit conserver ses valeurs dans toutes les lignes.","Garde les en-têtes et données alignés après chaque filtre."],"checks":["Aucune colonne retenue","Toutes les lignes et enchaînement de filtres"]},"rust-checkpoint-flat-tree":{"title":"flat_tree","statementHash":"fd88cfdd","topics":["Collection ordonnée","Itération"],"strategy":"Le BTreeSet maintient déjà ses éléments dans l’ordre.","hints":["Parcours-le dans cet ordre pour construire le Vec attendu.","Ne réintroduis ni doublons ni tri dans l’ordre inverse."],"checks":["Ensemble vide","Valeurs ajoutées dans le désordre"]},"rust-checkpoint-format-me":{"title":"format_me","statementHash":"279f04ce","topics":["Display","Option"],"strategy":"Formate chaque champ optionnel selon sa présence et la variante du parc.","hints":["Un champ absent ne doit pas ajouter de texte ou de séparateur superflu.","Respecte exactement l’ordre et la ponctuation des exemples."],"checks":["Tous les champs présents","Champs absents et chaque variante de ParkType"]},"rust-checkpoint-get-document-id":{"title":"get_document_id","statementHash":"69ccc12a","topics":["Result","Propagation d’erreurs"],"strategy":"Traverse la chaîne des bureaux en propageant la première erreur rencontrée.","hints":["Chaque accès peut échouer avant le bureau suivant.","Ne remplace pas une erreur métier par un panic ou une valeur d’identifiant arbitraire."],"checks":["Tous les bureaux accessibles","Échec à chaque niveau de la chaîne"]},"rust-checkpoint-insertion-sort":{"title":"insertion_sort","statementHash":"04cf467e","topics":["Tri par insertion","Étapes limitées"],"strategy":"Insère chaque élément dans le préfixe déjà trié et arrête au nombre d’étapes demandé.","hints":["Une étape correspond à l’itération définie dans les exemples.","Ne termine pas systématiquement le tri lorsque steps est trop petit."],"checks":["Zéro étape","Une étape et nombre d’étapes suffisant"]},"rust-checkpoint-inv-pyramid":{"title":"inv_pyramid","statementHash":"df85bd02","topics":["Construction de lignes","Répétition"],"strategy":"Construis la montée des tailles de 1 à n puis la descente sans répéter le sommet.","hints":["L’indentation fait partie de chaque chaîne.","Le résultat est un vecteur de lignes, pas une sortie imprimée directement."],"checks":["Hauteur 1","Hauteur plus grande et motif de plusieurs caractères"]},"rust-checkpoint-lucas-number":{"title":"lucas_number","statementHash":"1d7c87fb","topics":["Récurrence","Mémoire constante"],"strategy":"Pars des deux termes initiaux 2 et 1 puis additionne les deux précédents.","hints":["Le rang zéro et le rang un ont des résultats distincts.","Une méthode itérative évite les recalculs d’une récursion naïve."],"checks":["Rangs 0, 1 et 2","Plusieurs termes consécutifs"]},"rust-checkpoint-lunch-queue":{"title":"lunch_queue","statementHash":"c6d76586","topics":["File","FIFO"],"strategy":"Ajoute les personnes d’un côté et retire de l’autre pour conserver le premier arrivé.","hints":["L’inversion doit changer l’ordre de toute la file.","Traite les opérations sur une file vide selon les signatures demandées."],"checks":["File vide","Ajouts multiples puis inversion et retrait"]},"rust-checkpoint-matrix-determinant":{"title":"matrix_determinant","statementHash":"c9460125","topics":["Matrices","Développement par cofacteurs"],"strategy":"Développe le déterminant suivant une ligne avec les mineurs 2 × 2.","hints":["Les signes des trois termes alternent plus, moins, plus.","Utilise un type signé et vérifie les indices des lignes et colonnes supprimées."],"checks":["Matrice identité","Lignes identiques et déterminant négatif"]},"rust-checkpoint-matrix-display":{"title":"matrix_display","statementHash":"5bf656fb","topics":["Struct","Display"],"strategy":"Stocke les dimensions et éléments puis formate chaque ligne selon l’exemple.","hints":["Distingue la représentation des données de leur affichage.","Contrôle les espaces, parenthèses et retours à la ligne sans ajouter de ligne superflue."],"checks":["Petite matrice","Plusieurs lignes et valeurs négatives"]},"rust-checkpoint-modify-letter":{"title":"modify_letter","statementHash":"c6dcd48e","topics":["ASCII","Casse","Filtrage"],"strategy":"Traite séparément suppression sensible, suppression insensible et inversion de casse de la lettre cible.","hints":["L’insensibilité compare les versions normalisées des lettres.","Les caractères non ciblés doivent rester inchangés."],"checks":["Lettre en deux casses","Lettre absente et caractères non alphabétiques"]},"rust-checkpoint-moving-targets":{"title":"moving_targets","statementHash":"27fe4aee","topics":["Liste chaînée","Box","Option"],"strategy":"Représente les nœuds récursifs par des liens possédés et un éventuel nœud de tête.","hints":["push et pop concernent la tête : le dernier ajouté sort d’abord.","Prends possession du lien avant de le remplacer pour éviter les conflits d’emprunt."],"checks":["Liste vide","Deux ajouts, lecture de tête et retraits successifs"]},"rust-checkpoint-negative-spelling":{"title":"negative_spelling","statementHash":"6ed9a7c1","topics":["Décomposition numérique","Composition de mots"],"strategy":"Valide le signe puis décompose la valeur en millions, milliers, centaines, dizaines et unités.","hints":["Les nombres de 10 à 19 et les dizaines nécessitent des noms spécifiques.","Assemble espaces, tirets et préfixe minus conformément aux exemples."],"checks":["-1, -14 et -348","Millier, million et entrée non négative"]},"rust-checkpoint-nextprime":{"title":"nextprime","statementHash":"c72876eb","topics":["Primalité","Recherche ascendante"],"strategy":"Cherche le premier nombre premier à partir de la borne incluse.","hints":["Deux est le premier candidat premier possible.","Teste les diviseurs sans dépasser la racine, en évitant le débordement de d × d."],"checks":["0, 1 et 2","Borne déjà première et grand nombre composé"]},"rust-checkpoint-office-worker":{"title":"office_worker","statementHash":"33db6e3d","topics":["From","Analyse de texte","Enum"],"strategy":"Convertis séparément le rôle puis les trois champs du travailleur.","hints":["Les chaînes ont un format et une casse de rôle définis par l’énoncé.","Vérifie les valeurs de repli demandées avant de convertir l’âge."],"checks":["Chaque rôle","Champs manquants et âge invalide selon la consigne"]},"rust-checkpoint-order-books":{"title":"order_books","statementHash":"9b3f76c9","topics":["Modules","Tri","Comparaison insensible"],"strategy":"Définis les modules et leurs types publics puis trie les livres par titre sans tenir compte de la casse.","hints":["Les comparaisons portent sur des titres normalisés.","Conserve les titres d’origine dans les objets retournés."],"checks":["Titres de casses différentes","Liste vide et titres identiques"]},"rust-checkpoint-organize-garage":{"title":"organize_garage","statementHash":"812db054","topics":["Génériques","Option","Addition"],"strategy":"Déplace la valeur du côté source vers la destination, en combinant les valeurs si nécessaire.","hints":["Les deux côtés peuvent être absents ou présents indépendamment.","Après un déplacement effectif, vide le côté source selon le contrat."],"checks":["Deux côtés vides","Un seul côté occupé et deux valeurs à additionner"]},"rust-checkpoint-own-and-return":{"title":"own_and_return","statementHash":"356e666d","topics":["Ownership","Emprunt"],"strategy":"La fonction qui consomme reçoit le Film par valeur ; celle qui lit reçoit un emprunt.","hints":["Déplacer un champ String consomme sa propriété sans le cloner inutilement.","Pour la lecture, utilise le type de retour attendu en conservant la réutilisabilité du Film."],"checks":["Lecture répétée","Consommation et vérification des signatures"]},"rust-checkpoint-partial-sums":{"title":"partial_sums","statementHash":"b826be1c","topics":["Sommes de préfixes","Accumulateur"],"strategy":"Construis les sommes des préfixes jusqu’au préfixe vide, dans l’ordre montré.","hints":["Le dernier résultat est zéro.","Prépare les sommes cumulées puis inverse leur ordre plutôt que recalculer chaque somme."],"checks":["Slice vide","Un élément et plusieurs éléments"]},"rust-checkpoint-previousprime":{"title":"previousprime","statementHash":"630df932","topics":["Primalité","Recherche descendante"],"strategy":"Commence strictement sous la borne puis cherche vers le bas.","hints":["Ne soustrais pas à un entier non signé nul sans contrôle.","Retourne zéro si aucun nombre premier inférieur n’existe."],"checks":["Bornes 0, 1 et 2","Borne première et borne composée"]},"rust-checkpoint-prime-checker":{"title":"prime_checker","statementHash":"d05a5630","topics":["Option","Result","Diviseurs"],"strategy":"Sépare les valeurs sans réponse, les nombres premiers et les erreurs de primalité.","hints":["Les valeurs inférieures ou égales à un donnent None.","Distingue le cas pair du diviseur impair et respecte le diviseur attendu."],"checks":["0, 1 et 2","Composé pair et composé impair"]},"rust-checkpoint-profanity-filter":{"title":"profanity_filter","statementHash":"9cca8a98","topics":["Result","Validation de texte"],"strategy":"Vérifie le message avant de construire un résultat réussi.","hints":["Une chaîne vide et la présence du terme interdit déclenchent l’erreur définie.","Respecte la règle de recherche et la casse précisées dans les exemples."],"checks":["Message vide","Terme interdit présent et message accepté"]},"rust-checkpoint-queens":{"title":"queens","statementHash":"63e64f1b","topics":["Coordonnées","Diagonales"],"strategy":"Valide les positions puis compare lignes, colonnes et écarts diagonaux.","hints":["Deux reines sont sur une diagonale si les écarts absolus de leurs coordonnées sont égaux.","Évite les soustractions non signées qui débordent."],"checks":["Même ligne ou colonne","Diagonale et coordonnées hors échiquier"]},"rust-checkpoint-reverse-it":{"title":"reverse_it","statementHash":"40aef591","topics":["Chiffres","Chaîne","Signe"],"strategy":"Renverse l’écriture de la valeur absolue puis concatène son écriture d’origine.","hints":["Le signe négatif n’est ajouté qu’au début du résultat.","Les zéros issus du renversement restent des caractères de la sortie."],"checks":["Zéro","Nombre finissant par zéro et valeur négative"]},"rust-checkpoint-rot21":{"title":"rot21","statementHash":"01857f2c","topics":["ASCII","Modulo"],"strategy":"Repère l’alphabet et la casse puis décale l’indice de 21 modulo 26.","hints":["Majuscules et minuscules ont des origines distinctes.","Laisse inchangés les caractères non alphabétiques ASCII."],"checks":["Lettres proches de z et Z","Chiffres, ponctuation et caractères non ASCII"]},"rust-checkpoint-rpn":{"title":"rpn","statementHash":"3afff605","topics":["Pile","Analyse d’expression"],"strategy":"Empile les nombres et remplace les deux derniers par le résultat de chaque opérateur.","hints":["L’opérande dépilé en premier se trouve à droite de l’opération.","Ignore les espaces supplémentaires et exige une seule valeur finale."],"checks":["Soustraction et division","Opérandes manquants, division par zéro et argument absent"]},"rust-checkpoint-scytale-decoder":{"title":"scytale_decoder","statementHash":"f91df28e","topics":["Transposition","Indices"],"strategy":"Reconstitue les positions de la grille d’enroulement à partir du nombre de lettres par tour.","hints":["La dernière rangée peut être incomplète.","Une chaîne vide ou un nombre de lettres par tour nul retourne None."],"checks":["Exemples à deux et trois lettres par tour","Longueur non divisible et paramètre nul"]},"rust-checkpoint-smallest":{"title":"smallest","statementHash":"beb60350","topics":["HashMap","Minimum"],"strategy":"Parcours les valeurs du dictionnaire en conservant la plus petite.","hints":["La valeur de départ doit permettre de gérer une collection vide.","La consigne demande le maximum de i32 pour une table vide."],"checks":["Table vide","Valeurs négatives et minimum répété"]}},"java":{"java-age-finder":{"title":"AgeFinder","statementHash":"ece9f76a","topics":["Dates","Validation"],"strategy":"Analyse la date puis compare anniversaire et date courante pour compter les années complètes.","hints":["Soustraire seulement les numéros d’année surestime parfois l’âge.","Intercepte les erreurs de date et applique le retour -1 demandé."],"checks":["Anniversaire aujourd’hui et demain","Date invalide et année bissextile"]},"java-almost-palindrome":{"title":"AlmostPalindrome","statementHash":"69f268a2","topics":["Deux pointeurs","Palindrome"],"strategy":"Compare les extrémités en avançant vers le centre ; au premier désaccord, essaie de retirer l’un des deux caractères.","hints":["Une seule suppression est permise.","Vérifie les deux sous-chaînes candidates au lieu de supprimer arbitrairement un côté."],"checks":["Palindrome déjà valide","Suppression à gauche, à droite et impossible"]},"java-area-calculator":{"title":"AreaCalculator","statementHash":"04f04982","topics":["Surcharge","Arithmétique"],"strategy":"Définis les surcharges correspondant à chaque forme et applique sa formule d’aire.","hints":["La signature distingue les types de calcul attendus.","Ne confonds pas une surcharge avec un unique calcul à paramètres optionnels."],"checks":["Chaque forme","Dimensions nulles et valeurs décimales"]},"java-is-armstrong":{"title":"ArmstrongNumber","statementHash":"e93beef2","topics":["Chiffres","Puissances"],"strategy":"Compte les chiffres puis additionne chaque chiffre élevé à cette puissance.","hints":["Compare la somme à la valeur initiale, conservée séparément.","Distingue le nombre de chiffres de la valeur de chaque chiffre."],"checks":["0, 153 et 154","Nombre à un chiffre et nombre de plusieurs chiffres"]},"java-average-calc":{"title":"AverageCalc","statementHash":"b1c7fbeb","topics":["Suite arithmétique","Validation"],"strategy":"Parcours les termes dans le sens du pas et calcule somme divisée par nombre de termes.","hints":["Un pas nul ou mal orienté ne doit pas provoquer de boucle infinie.","Utilise une division adaptée au résultat et respecte la valeur zéro en cas d’erreur."],"checks":["Pas positif puis négatif","Pas nul et bornes incompatibles"]},"java-breakdown-url":{"title":"BreakdownURL","statementHash":"b180eabe","topics":["Regex","Groupes de capture"],"strategy":"Construis une expression avec groupes pour les composants de l’URL et rends les parties facultatives optionnelles.","hints":["Les séparateurs ne doivent pas être inclus dans les valeurs capturées.","Distingue l’absence d’un composant d’une URL invalide selon les exemples."],"checks":["URL complète","Sans port, chemin ou paramètres"]},"java-builder-blueprint":{"title":"BuilderBlueprint","statementHash":"baa82097","topics":["Builder","Construction progressive"],"strategy":"Sépare le produit de son constructeur et laisse les méthodes du builder accumuler les réglages.","hints":["Les méthodes chaînables doivent retourner le builder.","build fabrique le résultat attendu ; complète les signatures et les composants indiqués dans le squelette."],"checks":["Construction minimale","Plusieurs appels chaînés et paramètres optionnels"]},"java-circular-linked-list":{"title":"CircularLinkedList","statementHash":"b7b96cc4","topics":["Liste circulaire","Indices"],"strategy":"Maintiens un lien de la dernière cellule vers la première et parcours avec une limite explicite.","hints":["Une boucle qui attend null ne termine pas dans une liste circulaire.","Traite les modifications de tête et le cas d’un unique nœud séparément."],"checks":["Liste vide","Indice au-delà de la taille et retrait du dernier nœud"]},"java-config-protector":{"title":"ConfigProtector","statementHash":"986e4032","topics":["Regex","Remplacement ciblé"],"strategy":"Repère les lignes des clés sensibles et remplace uniquement leur valeur par les astérisques attendus.","hints":["Une clé peut contenir des caractères spéciaux pour une regex : traite-la comme du texte.","Préserve les autres lignes et la structure clé=valeur."],"checks":["Clé absente","Plusieurs clés sensibles et valeur vide"]},"java-count-char":{"title":"CountChar","statementHash":"fe31af06","topics":["Parcours","Compteur","Caractères"],"strategy":"Compare chaque caractère de la chaîne au caractère recherché.","hints":["Toutes les occurrences doivent être comptées, même consécutives.","Un espace peut aussi être le caractère recherché."],"checks":["Chaîne vide","Caractère absent et plusieurs occurrences"]},"java-date-formatter":{"title":"DateFormatter","statementHash":"a78d2057","topics":["Timestamp","UTC","État dérivé"],"strategy":"Convertis les secondes UNIX en date UTC puis rends l’un des formats acceptés.","hints":["Les formats sont des conventions de la consigne, pas forcément des motifs Java directement utilisables.","Recalcule après un setter valide ; conserve le dernier résultat si le format est invalide."],"checks":["Timestamp zéro","Changement de format, casse et format invalide"]},"java-day-of-week":{"title":"DayOfWeek","statementHash":"5e0efb88","topics":["Dates","Jour de semaine"],"strategy":"Analyse la date et calcule l’écart vers le prochain jour demandé.","hints":["La notion de prochain peut exclure le jour courant : vérifie les exemples.","Traite les noms de jours et les dates invalides selon le contrat."],"checks":["Jour déjà correspondant","Passage de mois ou d’année et date invalide"]},"java-digitcount":{"title":"Digitlen","statementHash":"e814ed9e","topics":["Division entière","Signe"],"strategy":"Compte les chiffres en divisant successivement le nombre par dix.","hints":["Zéro possède un chiffre.","Évite le débordement si tu changes le signe de la valeur minimale du type."],"checks":["0 et négatif","Puissance de dix et entier minimal"]},"java-distinct-substring-length":{"title":"DistinctSubstringLength","statementHash":"4ae82ce3","topics":["Fenêtre glissante","Dernières positions"],"strategy":"Fais avancer une fenêtre sans caractère répété et mémorise sa longueur maximale.","hints":["En cas de répétition, déplace le début après l’occurrence précédente.","Ne fais jamais reculer le début de fenêtre."],"checks":["Chaîne vide","abba, lettres toutes différentes et répétition unique"]},"java-double-linked-list":{"title":"DoubleLinkedList","statementHash":"adec30e2","topics":["Liens avant et arrière","Cas limites","Nœuds"],"strategy":"Chaque insertion ou suppression doit maintenir les liens dans les deux directions.","hints":["Modifier la tête ou la queue demande une attention particulière.","Contrôle les indices et la taille avant de parcourir."],"checks":["Liste vide","Retrait en tête, milieu et queue"]},"java-factorial":{"title":"Factorial","statementHash":"0d10702c","topics":["Produit","Cas de base"],"strategy":"Multiplie les entiers de 1 à n à partir de l’élément neutre un.","hints":["La factorielle de zéro vaut un.","Respecte le type retourné et les limites du domaine de test."],"checks":["0 et 1","Petit entier supérieur à un"]},"java-factorial-master":{"title":"FactorialMaster","statementHash":"329cae72","topics":["Classe abstraite","Récursion","Itération"],"strategy":"Définis le contrat abstrait puis implémente séparément les variantes itérative et récursive.","hints":["Les deux classes doivent produire le même résultat pour les mêmes entrées.","La récursion a besoin d’un cas de base pour zéro et un."],"checks":["0 et 1 dans les deux classes","Plusieurs valeurs identiques entre implémentations"]},"java-factory-blueprint":{"title":"FactoryBlueprint","statementHash":"07d068f7","topics":["Interface","Factory","Polymorphisme"],"strategy":"Fais implémenter le contrat Product par chaque produit concret et choisis la classe dans la factory.","hints":["Le type de retour permet d’utiliser tous les produits par la même interface.","Prévois le comportement pour un type de produit inconnu tel que demandé."],"checks":["Chaque produit","Type inconnu et appel via l’interface"]},"java-first-unique":{"title":"FirstUnique","statementHash":"6afa31fb","topics":["Fréquences","Ordre stable"],"strategy":"Compte les caractères puis parcours de nouveau le texte pour trouver le premier de fréquence un.","hints":["L’ordre du dictionnaire ne représente pas forcément l’ordre du texte.","Retourne le caractère de repli prévu si aucune fréquence ne vaut un."],"checks":["Premier unique tardif","Tous répétés et chaîne vide"]},"java-flexisort":{"title":"Flexisort","statementHash":"23638f4a","topics":["Classe abstraite","Tri à bulles","Tri par insertion"],"strategy":"Partage l’accès au tableau dans la classe abstraite puis implémente les deux tris dans leurs sous-classes.","hints":["Le tri à bulles compare les voisins ; l’insertion maintient un préfixe trié.","Vérifie que les getters et setters accèdent au même tableau utilisé par le tri."],"checks":["Tableau déjà trié","Ordre inverse et doublons pour les deux sous-classes"]},"java-goodbye-mars":{"title":"GoodbyeMars","statementHash":"f8a79b73","topics":["Méthode statique","Chaîne constante"],"strategy":"Retourne exactement la chaîne fixe demandée depuis la méthode statique.","hints":["La méthode renvoie une valeur plutôt que de l’afficher directement.","La ponctuation et les espaces font partie du contrat."],"checks":["Égalité exacte de la chaîne","Absence d’affichage parasite"]},"java-harmonious-fusion":{"title":"HarmoniousFusion","statementHash":"e500f062","topics":["Fusion","Deux pointeurs"],"strategy":"Compare les éléments courants des deux tableaux déjà triés et prends le plus petit.","hints":["Avance seulement dans le tableau dont l’élément vient d’être choisi.","Ajoute la fin du tableau restant après épuisement de l’autre."],"checks":["Un tableau vide","Doublons et plages de valeurs disjointes"]},"java-html-validator":{"title":"HTMLValidator","statementHash":"5661e839","topics":["Pile","Analyse de balises"],"strategy":"Analyse les balises reconnues et utilise une pile pour vérifier leur fermeture dans l’ordre inverse.","hints":["Une fermeture doit correspondre au sommet de la pile.","Ne cherche pas à valider tout HTML : respecte le sous-ensemble de la consigne."],"checks":["Balises imbriquées","Croisement et balise non fermée"]},"java-check-anagram":{"title":"IsAnagram","statementHash":"da1e9f90","topics":["Fréquences","Normalisation de casse"],"strategy":"Normalise la casse puis compare les fréquences de tous les caractères.","hints":["Une même longueur ne suffit pas à prouver une anagramme.","Ne retire pas d’espaces ou de signes si la consigne ne le demande pas."],"checks":["Casses différentes","Lettres répétées et mêmes longueurs non anagrammes"]},"java-longest-common-prefix":{"title":"LongestCommonPrefix","statementHash":"fd17eb71","topics":["Comparaison verticale","Bornes","Préfixes"],"strategy":"Compare les caractères à la même position dans toutes les chaînes.","hints":["Arrête au premier désaccord ou à la fin de la chaîne la plus courte.","La comparaison est sensible à la casse."],"checks":["Chaîne vide dans le tableau","Aucun préfixe et chaînes identiques"]},"java-maximal-square":{"title":"MaximalSquare","statementHash":"d90de349","topics":["Programmation dynamique","Matrice"],"strategy":"Pour chaque 1, déduis le côté maximal à partir des voisins haut, gauche et diagonale.","hints":["Le nouveau côté est borné par le plus petit de ces trois côtés voisins.","La réponse attendue est l’aire : élève au carré le meilleur côté."],"checks":["Matrice de zéros","Un seul 1 et carré touchant une bordure"]},"java-monthly-period":{"title":"MonthlyPeriod","statementHash":"666ba758","topics":["Dates","Période calendaire"],"strategy":"Analyse les deux dates et calcule une période en années et mois complets.","hints":["Une durée calendaire ne s’obtient pas en divisant des jours par trente.","Les dates inversées sont admises ; respecte le format et la valeur Error en cas d’échec."],"checks":["Dates identiques","Ordre inversé, mois incomplet et date invalide"]},"java-multiplication-table":{"title":"MultiplicationTable","statementHash":"0af55e93","topics":["Boucle","Formatage"],"strategy":"Parcours les multiplicateurs demandés et affiche une ligne par produit.","hints":["La valeur de base reste la même à chaque ligne.","Respecte exactement les espaces autour de x et de =."],"checks":["Nombre positif","Zéro et nombre négatif"]},"java-next-prime":{"title":"NextPrime","statementHash":"07a7847a","topics":["Primalité","Recherche stricte"],"strategy":"Commence après la valeur fournie et cherche le premier entier premier.","hints":["Contrairement à une recherche inclusive, un nombre déjà premier n’est pas sa propre réponse.","Les candidats inférieurs à deux ne sont pas premiers."],"checks":["1 et 2","Borne première et borne composée"]},"java-perfect-number":{"title":"PerfectNumber","statementHash":"69865c43","topics":["Somme de diviseurs","Validation"],"strategy":"Additionne les diviseurs propres positifs et compare la somme au nombre.","hints":["Le nombre lui-même doit être exclu.","Si tu utilises des paires, ne compte pas deux fois la racine d’un carré."],"checks":["6 et 28","1, nombre premier et carré parfait"]},"java-reverse-array":{"title":"ReverseArray","statementHash":"80f947b0","topics":["Deux pointeurs","Tableau résultat"],"strategy":"Associe le premier élément à la dernière position, puis progresse vers le centre.","hints":["Les doublons ne changent pas le mécanisme.","Respecte la demande de nouveau tableau si l’entrée doit rester indépendante."],"checks":["Tableau vide","Nombre pair puis impair d’éléments"]},"java-rotate-array":{"title":"RotateArray","statementHash":"addea3e1","topics":["Modulo","Indices circulaires"],"strategy":"Réduis le nombre de rotations à la taille du tableau puis calcule les positions de destination.","hints":["Normalise les rotations négatives pour obtenir un décalage dans les bornes.","Vérifie le sens de rotation dans les exemples avant d’écrire la formule d’indice."],"checks":["Rotation nulle et multiple de la taille","Rotation négative et tableau vide"]},"java-single-linked-list":{"title":"SingleLinkedList","statementHash":"55c6536c","topics":["Nœuds","Parcours","Indices"],"strategy":"Maintiens une tête de liste et traverse les liens pour trouver un indice.","hints":["Une insertion en fin doit raccorder le dernier nœud au nouveau.","Le retrait en tête diffère du retrait après un prédécesseur ; contrôle les indices."],"checks":["Liste vide","Ajout unique et retrait de tête ou de fin"]},"java-singleton-blueprint":{"title":"SingletonBlueprint","statementHash":"fb011435","topics":["Instance unique","Constructeur privé"],"strategy":"Empêche la construction extérieure et conserve l’unique instance dans la classe.","hints":["Le point d’accès global doit être statique.","Deux demandes d’instance doivent renvoyer la même référence."],"checks":["Deux appels successifs","Impossibilité d’appeler directement le constructeur"]},"java-sort-array":{"title":"SortArray","statementHash":"b569c473","topics":["Tri","Comparaison"],"strategy":"Construis un ordre croissant en comparant les éléments du tableau.","hints":["Un tri par insertion convient pour commencer simplement.","Vérifie les exigences de mutation de l’entrée avant de choisir un tri en place."],"checks":["Ordre inverse","Tableau vide, doublons et nombres négatifs"]},"java-spiral-matrix":{"title":"SpiralMatrix","statementHash":"d655a839","topics":["Bornes de grille","Simulation"],"strategy":"Maintiens quatre frontières et remplis successivement haut, droite, bas et gauche.","hints":["Resserre la frontière correspondante après chaque parcours.","Vérifie qu’une ligne ou colonne centrale n’est pas écrite deux fois."],"checks":["n égal à 1","Tailles paires et impaires"]},"java-steady-sequence":{"title":"SteadySequence","statementHash":"5ce2c9d2","topics":["Ensemble","Suites consécutives"],"strategy":"Ignore les doublons puis commence une suite uniquement si son prédécesseur est absent.","hints":["L’ordre d’entrée ne détermine pas la suite numérique.","Étends chaque départ tant que l’entier suivant existe."],"checks":["Tableau désordonné","Doublons, valeurs négatives et suite isolée"]},"java-strlen":{"title":"Strlen","statementHash":"60a50582","topics":["Chaîne","Longueur"],"strategy":"Renvoie la longueur de la chaîne selon le contrat String demandé.","hints":["Ne compte pas les mots ni les seuls caractères alphabétiques.","En Java, la longueur de String compte des unités UTF-16 ; respecte les cas de l’énoncé."],"checks":["Chaîne vide","Espaces et plusieurs caractères"]},"java-system-logger":{"title":"SystemLogger","statementHash":"0d426e16","topics":["Concaténation","Préfixe"],"strategy":"Construis la chaîne retournée en plaçant le préfixe fixe avant le message.","hints":["L’espace après les deux-points fait partie du résultat.","La méthode doit retourner la chaîne plutôt que l’afficher."],"checks":["Message vide","Ponctuation et espaces conservés"]},"java-time-tracker":{"title":"TimeTracker","statementHash":"45f7a8e7","topics":["Durée","Setters","État dérivé"],"strategy":"Centralise le recalcul de durée et appelle-le après chaque changement de date.","hints":["Choisis ensuite l’unité selon les seuils exacts de 120 de la consigne.","Les durées invalides ne doivent pas devenir négatives hors sentinelle -1."],"checks":["Durée nulle et inversée","Valeurs juste avant et après chaque seuil"]},"java-todo-list":{"title":"TodoList","statementHash":"549c1ec0","topics":["Objets","Capacité","Indices"],"strategy":"Sépare les données d’une Task du tableau de tâches géré par TodoList.","hints":["Contrôle capacité et indices avant toute modification.","Respecte les contraintes de description et le format exact de l’affichage."],"checks":["Liste pleine","Indice invalide et modification d’une tâche existante"]},"java-top-frequents":{"title":"TopFrequents","statementHash":"297bea47","topics":["HashMap","Tas","Ordre stable"],"strategy":"Compte les fréquences et mémorise l’indice de première apparition de chaque valeur.","hints":["Le tas compare d’abord la fréquence, puis cet indice pour les égalités.","Retourne les k meilleurs éléments dans l’ordre demandé, pas dans l’ordre interne du tas."],"checks":["Fréquences égales","Valeurs répétées et k à la limite"]},"java-unit-converter":{"title":"UnitConverter","statementHash":"c9a10b0c","topics":["Branchement","Arithmétique"],"strategy":"Sélectionne la conversion à partir du couple unité source et unité cible.","hints":["Les deux sens d’une conversion n’emploient pas toujours la même formule directe.","Utilise une division décimale et traite les couples inconnus avec ERROR."],"checks":["Chaque conversion admise","Unités inconnues et valeur décimale"]},"java-universal-greeting":{"title":"UniversalGreeting","statementHash":"9e2374d8","topics":["Conditions","Chaînes constantes"],"strategy":"Associe chaque code de langue à son message exact.","hints":["La casse et la ponctuation des messages doivent être conservées.","Un code inconnu renvoie une chaîne vide."],"checks":["FR, EN et ES","Code inconnu et chaîne vide"]},"java-valid-sudoku":{"title":"ValidSudoku","statementHash":"20c8a8bb","topics":["Ensembles","Lignes","Colonnes","Blocs"],"strategy":"Contrôle séparément les chiffres déjà vus dans chaque ligne, colonne et bloc 3 × 3.","hints":["Les cases vides ne participent pas aux répétitions.","Cette validation ne cherche pas une solution complète du Sudoku."],"checks":["Grille partielle valide","Doublon de ligne, de colonne puis de bloc"]}}};
 const revisionCatalog = {"lessons":[{"id":"01","title":"Structure d’un fichier Go","path":"learning-content/1 Structure d’un fichier Go.md","track":"go"},{"id":"02","title":"Fonctions et signatures","path":"learning-content/2 Fonctions et signatures.md","track":"go"},{"id":"03","title":"Variables, constantes, zéro-value","path":"learning-content/3 Variables, constantes, zéro-value.md","track":"go"},{"id":"04","title":"Types de base + conversions","path":"learning-content/4 Types de base + conversions.md","track":"go"},{"id":"05","title":"Conditions","path":"learning-content/5 Conditions.md","track":"go"},{"id":"06","title":"Boucles","path":"learning-content/6 Boucles.md","track":"go"},{"id":"07","title":"Print au caractère près","path":"learning-content/7 Print au caractère près.md","track":"go"},{"id":"08","title":"Arguments CLI","path":"learning-content/8 Arguments CLI.md","track":"go"},{"id":"09","title":"String comme tableau de bytes","path":"learning-content/9 String comme tableau de bytes.md","track":"go"},{"id":"10","title":"Itérer une string","path":"learning-content/10 Itérer une string.md","track":"go"},{"id":"11","title":"Concaténer et construire une string","path":"learning-content/11 # Concaténer et construire une string.md","track":"go"},{"id":"12","title":"Nettoyer espaces et découper en mots","path":"learning-content/12 Nettoyer espaces et découper en mots.md","track":"go"},{"id":"13","title":"Recherche remplacement simple","path":"learning-content/13 Recherche remplacement simple.md","track":"go"},{"id":"14","title":"Transformations de casse","path":"learning-content/14 Transformations de casse.md","track":"go"},{"id":"15","title":"Renverser rotation zip","path":"learning-content/15 Renverser rotation zip.md","track":"go"},{"id":"16","title":"Slices","path":"learning-content/16 Slices.md","track":"go"},{"id":"17","title":"Tableaux fixes","path":"learning-content/17 Tableaux fixes.md","track":"go"},{"id":"18","title":"Maps comme set","path":"learning-content/18 Maps comme set.md","track":"go"},{"id":"19","title":"Atoi “maison”","path":"learning-content/19 Atoi “maison”.md","track":"go"},{"id":"20","title":"Itoa “maison”","path":"learning-content/20 Itoa “maison”.md","track":"go"},{"id":"21","title":"Conversion en base N","path":"learning-content/21 Conversion en base N.md","track":"go"},{"id":"22","title":"Longueur d’un nombre","path":"learning-content/22 Longueur d’un nombre.md","track":"go"},{"id":"23","title":"GCD (PGCD)","path":"learning-content/23 GCD (PGCD).md","track":"go"},{"id":"24","title":"Nombres premiers","path":"learning-content/24 Nombres premiers.md","track":"go"},{"id":"25","title":"Factorisation","path":"learning-content/25 Factorisation.md","track":"go"},{"id":"26","title":"Two pointers","path":"learning-content/26 Two pointers.md","track":"go"},{"id":"27","title":"Comptage","path":"learning-content/27 Comptage.md","track":"go"},{"id":"28","title":"Bitwise bases","path":"learning-content/28 Bitwise bases.md","track":"go"},{"id":"29","title":"Encodage d’options en bits","path":"learning-content/29 Encodage d’options en bits.md","track":"go"},{"id":"30","title":"Stack via slice","path":"learning-content/30 Stack via slice.md","track":"go"},{"id":"31","title":"RPN calc","path":"learning-content/31 RPN calc.md","track":"go"},{"id":"32","title":"Parenthèses brackets","path":"learning-content/32 Parenthèses brackets.md","track":"go"},{"id":"33","title":"Brainfuck: mémoire + pointeur","path":"learning-content/33 Brainfuck: mémoire + pointeur.md","track":"go"},{"id":"34","title":"Brainfuck: matching [ ]","path":"learning-content/34 Brainfuck: matching [ ].md","track":"go"},{"id":"rust-01","title":"Types, fonctions et expressions","path":"learning-content/rust/rust-01.md","track":"rust"},{"id":"rust-02","title":"Ownership, emprunts et durées de vie","path":"learning-content/rust/rust-02.md","track":"rust"},{"id":"rust-03","title":"Chaînes, caractères et Unicode","path":"learning-content/rust/rust-03.md","track":"rust"},{"id":"rust-04","title":"Vec, slices, itérateurs et tri","path":"learning-content/rust/rust-04.md","track":"rust"},{"id":"rust-05","title":"HashMap, HashSet et collections ordonnées","path":"learning-content/rust/rust-05.md","track":"rust"},{"id":"rust-06","title":"Option, Result et propagation des erreurs","path":"learning-content/rust/rust-06.md","track":"rust"},{"id":"rust-07","title":"Enums et pattern matching","path":"learning-content/rust/rust-07.md","track":"rust"},{"id":"rust-08","title":"Struct, traits et formatage Display","path":"learning-content/rust/rust-08.md","track":"rust"},{"id":"rust-09","title":"Génériques, modules et conversions","path":"learning-content/rust/rust-09.md","track":"rust"},{"id":"rust-10","title":"Box, Rc, RefCell et Drop","path":"learning-content/rust/rust-10.md","track":"rust"},{"id":"rust-11","title":"Piles, files et structures récursives","path":"learning-content/rust/rust-11.md","track":"rust"},{"id":"rust-12","title":"Algorithmes numériques, matrices et états","path":"learning-content/rust/rust-12.md","track":"rust"},{"id":"js-01","title":"Variables, types et fonctions","path":"learning-content/js/js-01.md","track":"js"},{"id":"js-02","title":"Tableaux, chaînes et indices","path":"learning-content/js/js-02.md","track":"js"},{"id":"js-03","title":"Boucles, accumulateurs et nombres","path":"learning-content/js/js-03.md","track":"js"},{"id":"js-04","title":"Objets, références et parcours de propriétés","path":"learning-content/js/js-04.md","track":"js"},{"id":"js-05","title":"Récursion, chemins et références circulaires","path":"learning-content/js/js-05.md","track":"js"},{"id":"js-06","title":"Closures, curryfication et composition","path":"learning-content/js/js-06.md","track":"js"},{"id":"js-07","title":"Proxy, accès indirect et immutabilité","path":"learning-content/js/js-07.md","track":"js"},{"id":"js-08","title":"Promesses et async/await","path":"learning-content/js/js-08.md","track":"js"},{"id":"js-09","title":"Timers, échéances et nouvelles tentatives","path":"learning-content/js/js-09.md","track":"js"},{"id":"js-10","title":"Comparateurs et étapes de tri","path":"learning-content/js/js-10.md","track":"js"},{"id":"js-11","title":"Grilles, directions et backtracking","path":"learning-content/js/js-11.md","track":"js"},{"id":"java-01","title":"Classes, types et méthodes statiques","path":"learning-content/java/java-01.md","track":"java"},{"id":"java-02","title":"String, caractères et comparaison","path":"learning-content/java/java-02.md","track":"java"},{"id":"java-03","title":"Tableaux, indices, comparateurs et tri","path":"learning-content/java/java-03.md","track":"java"},{"id":"java-04","title":"Map, Set, fréquences et ordre","path":"learning-content/java/java-04.md","track":"java"},{"id":"java-05","title":"Objets, constructeurs et état dérivé","path":"learning-content/java/java-05.md","track":"java"},{"id":"java-06","title":"Interfaces, héritage et polymorphisme","path":"learning-content/java/java-06.md","track":"java"},{"id":"java-07","title":"Listes simplement, doublement et circulairement chaînées","path":"learning-content/java/java-07.md","track":"java"},{"id":"java-08","title":"Piles et analyse de texte structuré","path":"learning-content/java/java-08.md","track":"java"},{"id":"java-09","title":"Dates, UTC, Duration et Period","path":"learning-content/java/java-09.md","track":"java"},{"id":"java-10","title":"Expressions régulières et remplacements ciblés","path":"learning-content/java/java-10.md","track":"java"},{"id":"java-11","title":"Builder, Factory et Singleton","path":"learning-content/java/java-11.md","track":"java"},{"id":"java-12","title":"Nombres, fenêtres glissantes et invariants","path":"learning-content/java/java-12.md","track":"java"},{"id":"java-13","title":"Matrices, ensembles et programmation dynamique","path":"learning-content/java/java-13.md","track":"java"}],"exerciseLinks":{"go":{"addprimesum":["24","06"],"brackets":["32","30","10"],"brainfuck":["33","34","16"],"cameltosnakecase":["14","10","11"],"canjump":["16","06","05"],"checknumber":["13","05","10"],"chunk":["16","06"],"concatalternate":["26","16"],"concatslice":["16"],"countalpha":["10","27"],"countcharacter":["10","27"],"countrepeats":["27","10","11"],"digitlen":["22","04"],"fifthandskip":["06","10"],"findpairs":["06","16","05"],"findprevprime":["24","06"],"firstword":["12","09"],"fishandchips":["05","06"],"fprime":["25","24"],"fromto":["06","07","20"],"gcd":["23","05"],"grouping":["13","06"],"hashcode":["09","10","11"],"hiddenp":["26","10"],"inter":["18","10"],"iscapitalized":["14","10"],"itoa":["20","11"],"itoabase":["21","20"],"lastword":["12","09"],"longestword":["12","10"],"notdecimal":["19","09","11"],"only1":["01","07"],"onlya":["01","07"],"onlyb":["01","07"],"onlyf":["01","07"],"onlyz":["01","07"],"options":["08","28","29"],"passwordentropy":["10","27","04"],"piglatin":["13","15","11"],"printif":["02","05","09"],"printifnot":["02","05","09"],"printmemory":["09","21","07"],"printrevcomb":["06","07"],"rectperimeter":["02","04","05"],"repeatalpha":["10","06","07"],"retainfirsthalf":["09","16"],"revconcatalternate":["26","16"],"reversestrcap":["12","14","10"],"revwstr":["12","15"],"romannumbers":["21","11","06"],"rostring":["12","15","11"],"rpncalc":["30","31","19"],"saveandmiss":["06","09"],"slice":["16","05"],"thirdtimeisacharm":["06","09"],"union":["18","10"],"wdmatch":["26","10"],"weareunique":["18","10"],"wordanatomy":["09","13"],"wordflip":["12","15"],"zipstring":["27","10","11"]},"js":{"array-reverse-chunks":["js-02","js-01"],"bubble-sort-analyzer":["js-10","js-02"],"character-maker":["js-06","js-04","js-05"],"deep-clone":["js-04","js-05"],"deep-equal":["js-04","js-05"],"deep-find":["js-04","js-05"],"deep-freeze":["js-05","js-07"],"divisorfinder":["js-03","js-02"],"election-mix":["js-06","js-02"],"evensum":["js-03"],"exam-grader":["js-08","js-09"],"factorial":["js-03","js-01"],"fibonacci":["js-03","js-01"],"final-attempt":["js-06","js-08","js-09"],"flat-object":["js-04","js-05","js-06"],"flatten-object":["js-04","js-05"],"grid-words-finder":["js-11","js-02"],"grid-words-finder-2":["js-11","js-05"],"insertion-sort-analyzer":["js-10","js-02"],"nested-array-reverser":["js-02"],"object-lab":["js-04","js-06"],"palindromic-chains":["js-02","js-03"],"perfectnum":["js-03"],"pipeline":["js-06","js-02"],"sentencepyramid":["js-02","js-03"],"sleep-breaker":["js-08","js-09"],"snake-path-validator":["js-11","js-05"],"swappable-object":["js-07","js-04"],"transform-keys":["js-04","js-05"],"trap-object":["js-07","js-06"],"zoo-race":["js-08","js-09"]},"rust":{"rust-checkpoint-blood-types-s":["rust-07","rust-09"],"rust-checkpoint-brackets-matching":["rust-11","rust-03"],"rust-checkpoint-brain-fuck":["rust-12","rust-11","rust-04"],"rust-checkpoint-car-rental":["rust-10","rust-02"],"rust-checkpoint-check-user-name":["rust-06","rust-07","rust-03"],"rust-checkpoint-count-factorial-steps":["rust-12","rust-01"],"rust-checkpoint-counting-words":["rust-03","rust-05"],"rust-checkpoint-display-table":["rust-08","rust-04"],"rust-checkpoint-dress-code":["rust-06","rust-07"],"rust-checkpoint-drop-the-blog":["rust-10","rust-02"],"rust-checkpoint-filter-table":["rust-04","rust-02"],"rust-checkpoint-flat-tree":["rust-04","rust-05"],"rust-checkpoint-format-me":["rust-08","rust-06"],"rust-checkpoint-get-document-id":["rust-06","rust-09"],"rust-checkpoint-insertion-sort":["rust-04","rust-12"],"rust-checkpoint-inv-pyramid":["rust-03","rust-04"],"rust-checkpoint-lucas-number":["rust-12","rust-01"],"rust-checkpoint-lunch-queue":["rust-11","rust-02"],"rust-checkpoint-matrix-determinant":["rust-12","rust-04"],"rust-checkpoint-matrix-display":["rust-08","rust-04"],"rust-checkpoint-modify-letter":["rust-03","rust-04"],"rust-checkpoint-moving-targets":["rust-11","rust-10","rust-02"],"rust-checkpoint-negative-spelling":["rust-12","rust-03"],"rust-checkpoint-nextprime":["rust-12","rust-01"],"rust-checkpoint-office-worker":["rust-09","rust-07","rust-03"],"rust-checkpoint-order-books":["rust-09","rust-04","rust-03"],"rust-checkpoint-organize-garage":["rust-09","rust-06"],"rust-checkpoint-own-and-return":["rust-02","rust-01"],"rust-checkpoint-partial-sums":["rust-04","rust-12"],"rust-checkpoint-previousprime":["rust-12","rust-01"],"rust-checkpoint-prime-checker":["rust-06","rust-12"],"rust-checkpoint-profanity-filter":["rust-06","rust-03"],"rust-checkpoint-queens":["rust-12","rust-08"],"rust-checkpoint-reverse-it":["rust-03","rust-12"],"rust-checkpoint-rot21":["rust-03","rust-12"],"rust-checkpoint-rpn":["rust-11","rust-06"],"rust-checkpoint-scytale-decoder":["rust-03","rust-12"],"rust-checkpoint-smallest":["rust-05","rust-06"]},"java":{"java-age-finder":["java-09","java-01"],"java-almost-palindrome":["java-02","java-12"],"java-area-calculator":["java-01","java-06"],"java-is-armstrong":["java-12","java-01"],"java-average-calc":["java-12","java-01"],"java-breakdown-url":["java-10","java-02"],"java-builder-blueprint":["java-11","java-05"],"java-circular-linked-list":["java-07"],"java-config-protector":["java-10","java-02"],"java-count-char":["java-02","java-12"],"java-date-formatter":["java-09","java-05"],"java-day-of-week":["java-09"],"java-digitcount":["java-12","java-01"],"java-distinct-substring-length":["java-12","java-04","java-02"],"java-double-linked-list":["java-07"],"java-factorial":["java-12","java-01"],"java-factorial-master":["java-06","java-12"],"java-factory-blueprint":["java-11","java-06"],"java-first-unique":["java-04","java-02"],"java-flexisort":["java-06","java-03"],"java-goodbye-mars":["java-01","java-02"],"java-harmonious-fusion":["java-03","java-12"],"java-html-validator":["java-08","java-02"],"java-check-anagram":["java-04","java-02"],"java-longest-common-prefix":["java-02","java-03"],"java-maximal-square":["java-13"],"java-monthly-period":["java-09","java-05"],"java-multiplication-table":["java-01","java-12"],"java-next-prime":["java-12"],"java-perfect-number":["java-12"],"java-reverse-array":["java-03"],"java-rotate-array":["java-03","java-12"],"java-single-linked-list":["java-07"],"java-singleton-blueprint":["java-11","java-05"],"java-sort-array":["java-03"],"java-spiral-matrix":["java-13"],"java-steady-sequence":["java-04","java-12"],"java-strlen":["java-02","java-01"],"java-system-logger":["java-01","java-02"],"java-time-tracker":["java-09","java-05"],"java-todo-list":["java-05","java-03"],"java-top-frequents":["java-04","java-03"],"java-unit-converter":["java-01","java-12"],"java-universal-greeting":["java-01","java-02"],"java-valid-sudoku":["java-13","java-04"]}}};
+/* Source: frontend/lib/attempt-journal.js */
+/* Bounded browser-local correction history. No editor drafts or remote account. */
+(function (root) {
+  const KEY = "z01-attempt-journal-v1";
+  const LIMITS = {
+    total: 100,
+    perExercise: 10,
+    characters: 800000,
+    code: 24000,
+    output: 8000,
+  };
+  const tracks = ["go", "js", "rust", "java"];
+  function create(getStorage = () => root.localStorage) {
+    let items = [],
+      sequence = 0,
+      dirty = false;
+    function normalize(raw) {
+      if (
+        !raw ||
+        !tracks.includes(raw.track) ||
+        typeof raw.exercise !== "string" ||
+        !raw.exercise ||
+        typeof raw.code !== "string" ||
+        ![true, false, null].includes(raw.success) ||
+        !Number.isFinite(raw.at)
+      )
+        return null;
+      const session =
+        typeof raw.session === "string" ? raw.session.slice(0, 200) : "";
+      return {
+        id:
+          typeof raw.id === "string"
+            ? raw.id.slice(0, 200)
+            : `${Date.now()}-${++sequence}`,
+        track: raw.track,
+        exercise: raw.exercise.slice(0, 200),
+        at: raw.at,
+        session,
+        released: !session || raw.released === true,
+        code: raw.code.slice(0, LIMITS.code),
+        output: String(raw.output || "").slice(0, LIMITS.output),
+        truncated:
+          raw.truncated === true ||
+          raw.code.length > LIMITS.code ||
+          String(raw.output || "").length > LIMITS.output,
+        success: raw.success,
+      };
+    }
+    function trim() {
+      const kept = [],
+        counts = new Map();
+      let size = 0;
+      for (const item of [...items].reverse()) {
+        const key = JSON.stringify([item.track, item.exercise]);
+        const length = JSON.stringify(item).length;
+        if (
+          (counts.get(key) || 0) >= LIMITS.perExercise ||
+          kept.length >= LIMITS.total ||
+          size + length > LIMITS.characters
+        )
+          continue;
+        kept.push(item);
+        counts.set(key, (counts.get(key) || 0) + 1);
+        size += length;
+      }
+      items = kept.reverse();
+    }
+    try {
+      const saved = JSON.parse(getStorage().getItem(KEY));
+      if (saved?.version === 1 && Array.isArray(saved.items))
+        items = saved.items.slice(-1000).map(normalize).filter(Boolean);
+      trim();
+    } catch {
+      /* Corrupt/unavailable storage: use memory. */
+    }
+    return {
+      add(value) {
+        const item = normalize({
+          ...value,
+          id: `${Date.now()}-${++sequence}-${Math.random().toString(36).slice(2)}`,
+          at: Date.now(),
+          released: !value.session,
+        });
+        if (!item) return false;
+        items.push(item);
+        dirty = true;
+        trim();
+        return true;
+      },
+      releaseExam(session) {
+        for (const item of items)
+          if (item.session === session && !item.released) {
+            item.released = true;
+            dirty = true;
+          }
+      },
+      list(track, exercise) {
+        return items
+          .filter(
+            (item) =>
+              item.track === track &&
+              item.released &&
+              (!exercise || item.exercise === exercise),
+          )
+          .slice()
+          .reverse()
+          .map((item) => ({ ...item }));
+      },
+      clear(track) {
+        dirty = true;
+        items = items.filter((item) => item.track !== track);
+      },
+      flush() {
+        if (!dirty) return true;
+        try {
+          getStorage().setItem(KEY, JSON.stringify({ version: 1, items }));
+          dirty = false;
+          return true;
+        } catch {
+          return false;
+        }
+      },
+    };
+  }
+  if (typeof module !== "undefined") module.exports = { create, LIMITS };
+  else root.AttemptJournal = { create, LIMITS };
+})(typeof window !== "undefined" ? window : globalThis);
+
 /* Source: frontend/app/context.js */
 const chipsContainer = document.getElementById("exercise-chips");
 const levelFiltersEl = document.getElementById("level-filters");
@@ -85,7 +213,7 @@ function renderRunState(state) {
     error: "À revoir",
   }[state];
   outputEl.dataset.state = state;
-  const labelText = trueExamMode ? "Soumettre l’exercice" : "Exécuter";
+  const labelText = "Exécuter";
   runBtn.innerHTML =
     state === "running"
       ? "Tests en cours…"
@@ -209,6 +337,7 @@ let learningRequestSequence = 0;
 /* Source: frontend/app/progress.js */
 // Personal data stays in this browser, namespaced by language and exercise.
 const personalStore = PersonalProgress.create(() => window.localStorage);
+const attemptJournal = AttemptJournal.create(() => window.localStorage);
 let personalReady = false;
 let editorIdentity = null;
 let trainingVisit = 0;
@@ -221,9 +350,13 @@ document
   .insertAdjacentElement("afterend", saveStatusEl);
 
 function persistPersonal() {
-  const saved = personalStore.flush() && examRepo.flush();
+  const saved = [
+    personalStore.flush(),
+    examRepo.flush(),
+    attemptJournal.flush(),
+  ].every(Boolean);
   saveStatusEl.textContent = saved
-    ? "Enregistré dans ce navigateur · réussites et session d’examen"
+    ? "Enregistré dans ce navigateur · progression, examen et historique"
     : "Stockage indisponible : copie ton code avant de fermer cette page.";
 }
 
@@ -743,6 +876,8 @@ function getExamSource() {
 }
 
 function renderExamReport() {
+  attemptJournal.releaseExam(currentExam.id);
+  attemptJournal.flush();
   const summary = examRepo.summary(currentExam);
   const analyses = new Map(
     summary.rows
@@ -809,6 +944,7 @@ function renderExamReport() {
 }
 
 function renderExamView() {
+  syncJournalControls();
   syncExamFocus();
   const phase = currentExam?.phase;
   const lobby = trueExamMode && !learningMode && !currentExam;
@@ -950,6 +1086,7 @@ function finishExam(reason = "submitted") {
       await runCode({ finalSubmission: true });
     }
     examRepo.finish(session, reason);
+    attemptJournal.releaseExam(session.id);
     if (trueExamMode && currentExam === session) {
       renderExamView();
       document.getElementById("exam-report").focus();
@@ -1976,6 +2113,8 @@ if (typeof module !== "undefined") module.exports = CodeHints;
 /* Source: frontend/app/training-guide.js */
 // Rebuilt on every exercise/mode change: revealed help never follows into an exam.
 function renderTrainingGuide(exercise) {
+  closeLearningJournal();
+  syncJournalControls();
   closeRevisionLesson();
   document.getElementById("exercise-revision-links")?.remove();
   document.getElementById("training-guide")?.remove();
@@ -2393,6 +2532,304 @@ function showFailureReaction() {
   outputEl.append(document.createTextNode("\n"), reaction);
 }
 
+/* Source: frontend/app/learning-journal.js */
+let journalRequestSequence = 0;
+function journalAvailable() {
+  return !learningMode && (!trueExamMode || currentExam?.phase === "finished");
+}
+function syncJournalControls() {
+  document.getElementById("exercise-history-btn").hidden =
+    learningMode || trueExamMode || !currentExercise;
+  document.getElementById("learning-report-btn").disabled = !journalAvailable();
+}
+function closeLearningJournal() {
+  journalRequestSequence++;
+  const dialog = document.getElementById("learning-journal-dialog");
+  if (!dialog) return;
+  if (dialog.open && typeof dialog.close === "function") dialog.close();
+  dialog.remove();
+}
+function journalNode(tag, text, className) {
+  const node = document.createElement(tag);
+  if (text !== undefined) node.textContent = text;
+  if (className) node.className = className;
+  return node;
+}
+function journalButton(text, action) {
+  const button = journalNode("button", text, "button button-subtle");
+  button.type = "button";
+  button.addEventListener("click", action);
+  return button;
+}
+function journalExerciseTitle(id) {
+  return exTitle(getTrackExercises().find((ex) => exId(ex) === id) || { id });
+}
+function journalAttemptLabel(item) {
+  return `${new Date(item.at).toLocaleString("fr-FR")} · ${item.session ? "Examen terminé" : "Entraînement"} · ${item.success === null ? "Correction indisponible" : item.success ? "Réussi" : "Non validé"}`;
+}
+function journalCode(parent, item) {
+  parent.append(journalNode("p", journalAttemptLabel(item), "journal-meta"));
+  if (item.truncated)
+    parent.append(
+      journalNode(
+        "p",
+        "Copie abrégée pour limiter le stockage : ce code ou cette sortie est incomplet.",
+        "journal-note",
+      ),
+    );
+  parent.append(
+    journalNode("h4", "Code soumis"),
+    journalNode("pre", item.code, "journal-code"),
+    journalNode("h4", "Résultat"),
+    journalNode("pre", item.output || "(aucune sortie)", "journal-code"),
+  );
+}
+function renderExerciseHistory(body, exercise) {
+  body.replaceChildren();
+  body.append(
+    journalNode("h3", journalExerciseTitle(exercise)),
+    journalNode(
+      "p",
+      "Corrections enregistrées sur ce navigateur. Tester n’est pas enregistré ; consulter un essai ne remplace jamais le code de l’éditeur.",
+      "journal-note",
+    ),
+  );
+  const attempts = attemptJournal.list(currentTrack, exercise);
+  if (!attempts.length) {
+    body.append(
+      journalNode(
+        "p",
+        "Aucune tentative conservée pour cet exercice. Les essais antérieurs à cette fonctionnalité ne sont pas récupérables.",
+      ),
+    );
+    return;
+  }
+  if (attempts.length > 1) {
+    const controls = journalNode("div", undefined, "journal-compare-controls");
+    const selectors = [0, 1].map((selected, index) => {
+      const label = journalNode("label", `Tentative ${index ? "B" : "A"}`);
+      const select = document.createElement("select");
+      select.setAttribute(
+        "aria-label",
+        `Tentative ${index ? "B" : "A"} à comparer`,
+      );
+      attempts.forEach((item, i) => {
+        const option = journalNode(
+          "option",
+          `#${attempts.length - i} · ${journalAttemptLabel(item)}`,
+        );
+        option.value = String(i);
+        select.append(option);
+      });
+      select.value = String(selected);
+      label.append(select);
+      controls.append(label);
+      return select;
+    });
+    const comparison = journalNode("div", undefined, "journal-comparison");
+    controls.append(
+      journalButton("Comparer les deux essais", () => {
+        comparison.replaceChildren();
+        selectors.forEach((select, index) => {
+          const panel = journalNode("section");
+          panel.append(journalNode("h3", `Tentative ${index ? "B" : "A"}`));
+          journalCode(panel, attempts[Number(select.value)]);
+          comparison.append(panel);
+        });
+      }),
+    );
+    body.append(controls, comparison);
+  }
+  attempts.forEach((item, index) => {
+    const details = journalNode("details", undefined, "journal-attempt");
+    details.append(
+      journalNode(
+        "summary",
+        `#${attempts.length - index} · ${journalAttemptLabel(item)}`,
+      ),
+    );
+    const content = journalNode("div");
+    journalCode(content, item);
+    details.append(content);
+    body.append(details);
+  });
+}
+async function showJournalLesson(body, lesson) {
+  const request = ++journalRequestSequence;
+  body.replaceChildren(
+    journalButton("← Retour au bilan", () => {
+      journalRequestSequence++;
+      renderLearningReport(body);
+    }),
+    journalNode("p", "Chargement de la fiche…"),
+  );
+  try {
+    const md = await revisionMarkdown(lesson);
+    if (
+      request !== journalRequestSequence ||
+      !body.isConnected ||
+      !journalAvailable()
+    )
+      return;
+    const article = journalNode("article", undefined, "markdown-viewer");
+    article.innerHTML = markdownToHtml(md);
+    highlightMarkdownCode(article);
+    body.lastChild.replaceWith(article);
+  } catch {
+    if (request === journalRequestSequence && body.isConnected)
+      body.lastChild.textContent =
+        "Fiche indisponible. Réessaie depuis le bilan.";
+  }
+}
+function renderLearningReport(body) {
+  body.replaceChildren();
+  const labels = { go: "Go", js: "JavaScript", rust: "Rust", java: "Java" };
+  body.append(
+    journalNode("h3", `Mon bilan · ${labels[currentTrack]}`),
+    journalNode(
+      "p",
+      "Bilan indicatif fondé sur les dernières corrections conservées ici, pas une mesure certaine de tes compétences. Les anciennes tentatives ne sont pas reconstituées.",
+      "journal-note",
+    ),
+  );
+  const attempts = attemptJournal.list(currentTrack);
+  if (!attempts.length) {
+    body.append(
+      journalNode(
+        "p",
+        "Pas encore d’historique pour ce langage. Tes réussites existantes restent conservées dans la progression.",
+      ),
+    );
+    return;
+  }
+  const latest = new Map();
+  for (const item of attempts)
+    if (item.success !== null && !latest.has(item.exercise))
+      latest.set(item.exercise, item);
+  const passed = [...latest.values()].filter((item) => item.success).length;
+  const failed = [...latest.values()].filter((item) => !item.success);
+  const stats = journalNode("div", undefined, "journal-stats");
+  for (const text of [
+    `${attempts.length} correction(s) conservée(s)`,
+    `${passed} exercice(s) réussi(s) au dernier essai corrigé`,
+    `${failed.length} exercice(s) à retravailler`,
+    `${attempts.filter((item) => item.success === null).length} correction(s) indisponible(s)`,
+  ])
+    stats.append(journalNode("span", text));
+  body.append(stats, journalNode("h3", "Fiches à revoir"));
+  const topics = new Map();
+  for (const item of failed) {
+    const references =
+      revisionCatalog.exerciseLinks[currentTrack]?.[item.exercise];
+    for (const id of Array.isArray(references) ? references : []) {
+      const lesson = revisionCatalog.lessons.find(
+        (l) => l.id === id && l.track === currentTrack,
+      );
+      if (!lesson) continue;
+      if (!topics.has(id)) topics.set(id, { lesson, exercises: [] });
+      topics.get(id).exercises.push(journalExerciseTitle(item.exercise));
+    }
+  }
+  if (!topics.size)
+    body.append(
+      journalNode(
+        "p",
+        failed.length
+          ? "Aucune fiche associée aux exercices concernés dans le catalogue actuel."
+          : "Aucun exercice à revoir parmi les derniers essais corrigés. Tu peux continuer à t’entraîner.",
+      ),
+    );
+  for (const { lesson, exercises } of [...topics.values()].sort(
+    (a, b) => b.exercises.length - a.exercises.length,
+  )) {
+    const row = journalNode("section", undefined, "journal-topic");
+    row.append(
+      journalButton(lesson.title, () => showJournalLesson(body, lesson)),
+      journalNode("p", `Dernier essai non validé : ${exercises.join(", ")}`),
+    );
+    body.append(row);
+  }
+  body.append(journalNode("h3", "Exercices présents dans l’historique"));
+  for (const id of new Set(attempts.map((item) => item.exercise))) {
+    const item = latest.get(id);
+    body.append(
+      journalButton(
+        `${journalExerciseTitle(id)} · ${item ? (item.success ? "Réussi" : "À revoir") : "Correction indisponible"}`,
+        () => {
+          renderExerciseHistory(body, id);
+          body.prepend(
+            journalButton("← Retour au bilan", () =>
+              renderLearningReport(body),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+function openLearningJournal(exercise = null) {
+  if (!journalAvailable()) return;
+  closeLearningJournal();
+  closeRevisionLesson();
+  const dialog = journalNode("dialog");
+  dialog.id = "learning-journal-dialog";
+  dialog.setAttribute("aria-labelledby", "learning-journal-title");
+  const header = journalNode("div", undefined, "journal-header");
+  const title = journalNode(
+    "h2",
+    exercise ? "Historique de l’exercice" : "Bilan d’apprentissage",
+  );
+  title.id = "learning-journal-title";
+  header.append(title, journalButton("Fermer", closeLearningJournal));
+  const body = journalNode("div", undefined, "journal-body");
+  const footer = journalNode("footer", undefined, "journal-footer");
+  footer.append(
+    journalNode(
+      "p",
+      "Limites : 10 essais par exercice, 100 au total, environ 1,6 Mo de texte. Les plus anciens sont supprimés automatiquement. Effacer l’historique ne touche ni aux réussites ni à l’examen.",
+    ),
+  );
+  let confirmClear = false;
+  const clear = journalButton("Effacer l’historique de ce langage", () => {
+    if (!confirmClear) {
+      confirmClear = true;
+      clear.textContent = "Confirmer l’effacement de l’historique";
+      return;
+    }
+    journalRequestSequence++;
+    attemptJournal.clear(currentTrack);
+    persistPersonal();
+    confirmClear = false;
+    clear.textContent = "Effacer l’historique de ce langage";
+    if (exercise) renderExerciseHistory(body, exercise);
+    else renderLearningReport(body);
+  });
+  footer.append(clear);
+  dialog.append(header, body, footer);
+  document.body.append(dialog);
+  dialog.addEventListener("close", () => {
+    journalRequestSequence++;
+    dialog.remove();
+  });
+  if (exercise) renderExerciseHistory(body, exercise);
+  else renderLearningReport(body);
+  if (typeof dialog.showModal === "function") dialog.showModal();
+  else {
+    dialog.setAttribute("open", "");
+    header.querySelector("button").focus();
+  }
+}
+document
+  .getElementById("exercise-history-btn")
+  .addEventListener("click", () => {
+    if (!trueExamMode && currentExercise)
+      openLearningJournal(exId(currentExercise));
+  });
+for (const id of ["learning-report-btn", "exam-learning-report-btn"])
+  document
+    .getElementById(id)
+    .addEventListener("click", () => openLearningJournal());
+
 /* Source: frontend/app/submission.js */
 const executionCooldowns = { test: 0, run: 0 };
 function cooldownRemaining(kind) {
@@ -2406,7 +2843,7 @@ function updateExecutionCooldowns() {
   exampleBtn.textContent = testWait ? `Tester (${testWait}s)` : "Tester";
   if (!submissionRunning) {
     runBtn.textContent =
-      (trueExamMode ? "Soumettre l’exercice" : "Exécuter") +
+      "Exécuter" +
       (runWait ? ` (${runWait}s)` : "");
   }
 }
@@ -2525,6 +2962,14 @@ function runCode(options = {}) {
         );
       const out = String(data.output || "");
       if (!example) {
+        attemptJournal.add({
+          track: submitted.track,
+          exercise: submitted.id,
+          session: session?.id || "",
+          code,
+          output: out,
+          success: data.success,
+        });
         if (session)
           examRepo.record(
             session,
@@ -2568,6 +3013,17 @@ function runCode(options = {}) {
       }
       return true;
     } catch (error) {
+      if (!example) {
+        attemptJournal.add({
+          track: submitted.track,
+          exercise: submitted.id,
+          session: session?.id || "",
+          code,
+          output: error.message,
+          success: null,
+        });
+        persistPersonal();
+      }
       if (session && !example) {
         examRepo.record(session, submitted.id, code, null, error.message);
         persistPersonal();
@@ -2653,7 +3109,11 @@ searchEl.addEventListener("input", () => {
   renderChips();
 });
 document.addEventListener("keydown", (event) => {
-  if (document.getElementById("revision-dialog")?.open) return;
+  if (
+    document.getElementById("revision-dialog")?.open ||
+    document.getElementById("learning-journal-dialog")?.open
+  )
+    return;
   if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
     event.preventDefault();
     if (!searchEl.disabled) searchEl.focus();

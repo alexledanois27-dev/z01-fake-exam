@@ -1,5 +1,7 @@
 // Rebuilt on every exercise/mode change: revealed help never follows into an exam.
 function renderTrainingGuide(exercise) {
+  closeLearningJournal();
+  syncJournalControls();
   closeRevisionLesson();
   document.getElementById("exercise-revision-links")?.remove();
   document.getElementById("training-guide")?.remove();

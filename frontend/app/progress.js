@@ -1,5 +1,6 @@
 // Personal data stays in this browser, namespaced by language and exercise.
 const personalStore = PersonalProgress.create(() => window.localStorage);
+const attemptJournal = AttemptJournal.create(() => window.localStorage);
 let personalReady = false;
 let editorIdentity = null;
 let trainingVisit = 0;
@@ -12,9 +13,13 @@ document
   .insertAdjacentElement("afterend", saveStatusEl);
 
 function persistPersonal() {
-  const saved = personalStore.flush() && examRepo.flush();
+  const saved = [
+    personalStore.flush(),
+    examRepo.flush(),
+    attemptJournal.flush(),
+  ].every(Boolean);
   saveStatusEl.textContent = saved
-    ? "Enregistré dans ce navigateur · réussites et session d’examen"
+    ? "Enregistré dans ce navigateur · progression, examen et historique"
     : "Stockage indisponible : copie ton code avant de fermer cette page.";
 }
 
