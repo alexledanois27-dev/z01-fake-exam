@@ -90,14 +90,6 @@ function setTrueExamMode(enabled) {
 
 function buildTrueExamSeries() {
   const source = getExamSource();
-  if (isJsTrack()) {
-    const shuffled = [...source];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled.slice(0, Math.min(10, shuffled.length));
-  }
   const series = [];
   for (let level = 1; level <= 10; level++) {
     const candidates = source.filter((ex) => ex.level === level);

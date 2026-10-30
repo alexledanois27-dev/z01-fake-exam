@@ -4,7 +4,10 @@
 
 Garder les parcours utilisateur et les contrats HTTP stables. Une nouvelle
 session d’examen ne réutilise jamais le code d’entraînement. Une exécution du
-programme d’exemple ne valide jamais un exercice. Les exercices à venir restent
+programme d’exemple ne valide jamais un exercice. Une nouvelle série prend un exercice par niveau disponible, dans l’ordre N1 à N10
+(N1 à N7 pour le catalogue JavaScript actuel), indépendamment du filtre ou de
+l’exercice d’entraînement. Une session reprise conserve sa série et sa position.
+Les exercices à venir restent
 masqués en examen. Les données du navigateur restent locales.
 Changer de langage conserve le mode courant et le type d’examen ; seuls le filtre
 et l’exercice choisi sont repris depuis la progression du langage de destination.

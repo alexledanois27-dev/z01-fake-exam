@@ -1,5 +1,11 @@
 # Historique fonctionnel
 
+## 30 octobre 2026 — progression des examens JavaScript
+
+- Suppression du mélange de tous les niveaux JavaScript au démarrage d’un examen.
+- Nouvelle série : un exercice par niveau dans l’ordre, indépendamment de l’entraînement.
+- Vérification du départ au niveau 1 et de la reprise pour les quatre langages.
+
 ## 29 octobre 2026 — historique et bilan d’apprentissage
 
 - Historique local des corrections, code et sortie consultables, comparaison de deux essais.

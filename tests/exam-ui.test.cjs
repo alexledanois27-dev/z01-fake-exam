@@ -1279,3 +1279,66 @@ require("node:test")(
     }
   },
 );
+
+require("node:test")(
+  "fresh strict exams start at level one in all languages regardless of training level",
+  async () => {
+    const catalogs = Object.fromEntries(
+      ["go", "js", "rust", "java"].map((track) => [
+        track,
+        require(`../catalog-snapshots/${track}.json`).exercises,
+      ]),
+    );
+    for (const track of Object.keys(catalogs)) {
+      const env = await boot({}, false, catalogs);
+      const w = env.w;
+      try {
+        // Make the old JavaScript shuffle start away from N1 deterministically.
+        w.Math.random = () => 0;
+        click(w, "#mode-exam");
+        click(w, "#track-" + track);
+        click(w, '#level-filters [data-filter="5"]');
+        assert.equal(el(w, "exercise-level").textContent, "Niveau 5", track);
+        draft(w, "TRAINING ONLY");
+        click(w, "#mode-true-exam");
+        click(w, 'input[name="exam-kind"][value="strict"]');
+        click(w, "#exam-start");
+        assert.equal(el(w, "exercise-level").textContent, "Niveau 1", track);
+        assert.equal(el(w, "code-editor").value, "", track);
+        assertNoFuture(w);
+        const sessions = JSON.parse(
+          w.localStorage.getItem("personal-exam-sessions-v2"),
+        ).sessions;
+        const session = sessions[JSON.stringify([track, "strict"])];
+        assert.equal(session.index, 0, track);
+        assert.equal(session.series.length, track === "js" ? 7 : 10, track);
+        if (track !== "go") {
+          const levels = session.series.map((id) => {
+            const exercise = catalogs[track].find((ex) => ex.id === id);
+            return (
+              exercise.level || (catalogs[track].indexOf(exercise) % 10) + 1
+            );
+          });
+          assert.deepEqual(
+            levels,
+            Array.from({ length: session.series.length }, (_, i) => i + 1),
+            track,
+          );
+        }
+        // A reload resumes the actual exam, never the training selection.
+        const restored = await boot(env.snapshot(), false, catalogs);
+        try {
+          assert.equal(
+            el(restored.w, "exercise-level").textContent,
+            "Niveau 1",
+            track,
+          );
+        } finally {
+          restored.dom.window.close();
+        }
+      } finally {
+        env.dom.window.close();
+      }
+    }
+  },
+);
