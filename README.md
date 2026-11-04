@@ -96,7 +96,7 @@ Ces suggestions sont indicatives et ne constituent pas une évaluation de maîtr
 - Pour une fonction seule, Tester utilise le programme d’appel de la consigne
   lorsqu’il existe. Sans programme d’appel, un message explique la limite. Un
   script JavaScript qui n’appelle ni n’affiche rien peut ne produire aucune sortie.
-- **Exécuter / Soumettre l’exercice** lance la correction complète dans la
+- **Exécuter** lance la correction complète dans la
   moulinette et enregistre le résultat. Les fonctions autorisées sont contrôlées
   en Go. Le package doit correspondre à l’exercice : `piscine` ou `main`.
 - Les cooldowns d’interface sont de 10 s pour Tester et 15 s pour la correction.
@@ -126,6 +126,13 @@ Les réussites, préférences, sessions d’examen et brouillons d’examen sont
 dans le **localStorage du navigateur**. Changer d’hôte, de port ou de navigateur
 utilise un autre stockage. Effacer les données du site supprime cette progression.
 Il n’existe pas de compte individuel ou de synchronisation entre appareils.
+
+Sur Linux, `make start` utilise automatiquement `~/z01-exam-tmp` pour les
+soumissions temporaires lorsque `TMPDIR` n’est pas défini. Cela évite le `/tmp`
+privé de certaines installations Docker. Un `TMPDIR` explicite est conservé ;
+les lancements de production et Compose gardent leur configuration. Le dossier
+parent reste vide après les corrections normales. Un daemon distant exige toujours
+un chemin réellement partagé : ce réglage ne synchronise pas les fichiers.
 
 En entraînement, le code est volontairement vidé lors d’un changement d’exercice
 ou d’un rechargement. En examen, le brouillon et l’échéance sont restaurables.
@@ -165,6 +172,14 @@ flowchart LR
 `frontend/build.json` définit l’assemblage. **Ne pas modifier directement `app.js`
 ou `style.css`** : ces bundles sont générés et versionnés. Le backend peut démarrer
 en monolithe ou en services Web/Catalogue/Runner : [architecture des services](docs/architecture-services.md) et [contrats HTTP](docs/http-api.md).
+
+## Installation reproductible avec Compose
+
+Une configuration Linux prépare l’application et un proxy HTTPS optionnel, avec
+un daemon rootless dédié aux corrections. Les prérequis, le contrôle préalable,
+les limites et le retour arrière sont détaillés dans [le guide Compose](docs/docker-compose.md).
+Aucun site n’est publié automatiquement ; la charge et les corrections doivent
+être validées sur le futur hôte.
 
 ## Copies locales et mode hors ligne
 

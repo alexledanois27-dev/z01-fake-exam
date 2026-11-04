@@ -1,0 +1,93 @@
+name: z01-fake-exam
+services:
+  app:
+    image: z01-fake-exam:${BUILD_SHA:-local}
+    build:
+      context: .
+      dockerfile: deploy/compose/Dockerfile
+      args:
+        BUILD_SHA: ${BUILD_SHA:-unknown}
+    # Compose runs on the infrastructure daemon; corrections use a DIFFERENT,
+    # dedicated rootless daemon. UID/GID must match that daemon's host owner.
+    user: "${RUNNER_UID:?Set RUNNER_UID}:${RUNNER_GID:?Set RUNNER_GID}"
+    environment:
+      APP_ENV: production
+      PUBLIC_ORIGIN: https://${EXAM_DOMAIN:?Set EXAM_DOMAIN}
+      ACCESS_USERNAME: ${ACCESS_USERNAME:?Set ACCESS_USERNAME}
+      ACCESS_PASSWORD: ${ACCESS_PASSWORD:?Set ACCESS_PASSWORD}
+      LISTEN_ADDR: 0.0.0.0:8080
+      RUNNER_MODE: docker
+      RUNNER_TIMEOUT_SECONDS: ${RUNNER_TIMEOUT_SECONDS:-30}
+      RUNNER_MEMORY: ${RUNNER_MEMORY:-512m}
+      RUNNER_CPUS: ${RUNNER_CPUS:-1}
+      RUNNER_PIDS_LIMIT: ${RUNNER_PIDS_LIMIT:-128}
+      CATALOG_MODE: ${CATALOG_MODE:-offline}
+      DOCKER_HOST: unix:///run/correction-docker.sock
+      DOCKER_CONFIG: /tmp/docker-config
+      HOME: /tmp
+      TMPDIR: ${RUNNER_WORK_DIR:?Set RUNNER_WORK_DIR to a dedicated absolute host path}
+    volumes:
+      - type: bind
+        source: ${RUNNER_DOCKER_SOCKET:?Set the dedicated ROOTLESS daemon socket}
+        target: /run/correction-docker.sock
+        bind:
+          create_host_path: false
+      # Bind sources are resolved by the correction daemon, not by this client.
+      - type: bind
+        source: ${RUNNER_WORK_DIR:?Set RUNNER_WORK_DIR}
+        target: ${RUNNER_WORK_DIR:?Set RUNNER_WORK_DIR}
+        bind:
+          create_host_path: false
+    ports:
+      - "127.0.0.1:${APP_PORT:-8095}:8080"
+    networks: [edge]
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=32m,mode=1777
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 1g
+    memswap_limit: 1g
+    cpus: 1
+    pids_limit: 128
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 75s
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+
+  https:
+    profiles: [https]
+    image: caddy:2-alpine@sha256:e70b164da81ef698b3ad19af799ea6086ce6d9e48ed4079eb9fe26f6fbf14ee5
+    environment:
+      EXAM_DOMAIN: ${EXAM_DOMAIN:?Set EXAM_DOMAIN}
+    command: [caddy, run, --config, /etc/caddy/Caddyfile, --adapter, caddyfile]
+    volumes:
+      - ./deploy/compose/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    ports:
+      - "80:8080"
+      - "443:8443"
+    networks: [edge]
+    depends_on: [app]
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=16m
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 128m
+    memswap_limit: 128m
+    cpus: 0.5
+    pids_limit: 64
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+
+networks:
+  edge: {}
+volumes:
+  caddy_data: {}
+  caddy_config: {}

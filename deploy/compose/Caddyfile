@@ -1,0 +1,10 @@
+{
+    admin off
+    http_port 8080
+    https_port 8443
+}
+{$EXAM_DOMAIN} {
+    encode zstd gzip
+    header -Server
+    reverse_proxy app:8080
+}

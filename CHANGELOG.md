@@ -1,5 +1,17 @@
 # Historique fonctionnel
 
+## 4 novembre 2026 — dossiers temporaires du lancement local
+
+- Sur Linux, `make start` utilise un dossier personnel pour éviter les `/tmp` isolés.
+- Les réglages `TMPDIR` explicites et les lancements de production sont conservés.
+- Tests du choix de chemin, de ses permissions et du nettoyage des soumissions.
+
+## 2 novembre 2026 — préparation Docker Compose
+
+- Image du monolithe et proxy HTTPS optionnel, sans déploiement automatique.
+- Daemon rootless de correction séparé, dossier partagé et limites explicites.
+- Contrôle préalable et guide de préparation, validation et retour arrière.
+
 ## 30 octobre 2026 — progression des examens JavaScript
 
 - Suppression du mélange de tous les niveaux JavaScript au démarrage d’un examen.
