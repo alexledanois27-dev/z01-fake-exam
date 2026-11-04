@@ -358,3 +358,19 @@ des soumissions et le respect des paramètres explicites. Les autres commandes
 Docker résout les chemins de montage sur l’hôte du daemon. Ce défaut évite
 les `/tmp` isolés dans les installations locales courantes, mais ne prend pas
 en charge un daemon distant sans partage de fichiers.
+
+## Préparation des images de correction
+
+`backend/image_preparation.go` gère la présence des images amd64 et leurs
+téléchargements bornés en arrière-plan. `http_run.go` répond 202 avant de lancer
+le runner ; `submission.js` attend cinq secondes et réessaie avec la soumission
+capturée. Aucune progression, réaction d’échec ou tentative corrigée n’est
+enregistrée pendant la préparation. Une erreur finale est conservée comme erreur
+de service (`success: null` dans l’historique). Les diagnostics Docker de pull
+sont bornés et écrits dans les journaux serveur. Les images autorisées restent
+exclusivement celles de `officialImages` ; aucune URL d’image client n’est acceptée.
+
+Les appels directs aux fonctions Go des runners utilisent aussi `--pull never` :
+précharger les images avant les tests Docker lancés hors du handler HTTP. Les
+tests simulés vérifient le regroupement des demandes, la pause après échec,
+la reprise, la libération des places et l’absence de faux résultat de correction.

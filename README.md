@@ -40,6 +40,11 @@ Le serveur a besoin d’Internet pour récupérer les catalogues et les images D
 manquantes. Les programmes soumis s’exécutent ensuite sans réseau dans Docker.
 Des snapshots locaux des 175 exercices permettent un démarrage sans API.
 Les images Docker doivent avoir été téléchargées pour corriger sans Internet.
+Au premier test ou à la première correction, une image absente est préparée
+automatiquement : l’interface affiche **Préparation de la moulinette…**, puis
+lance le code quand elle est disponible. Ce téléchargement possède son propre
+délai de dix minutes et ne compte pas comme un échec de l’exercice. Un problème
+de préparation apparaît comme **Correction indisponible**.
 
 ## Parcours disponibles
 

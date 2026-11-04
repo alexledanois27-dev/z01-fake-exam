@@ -1,5 +1,12 @@
 # Historique fonctionnel
 
+## 4 novembre 2026 — préparation automatique des moulinettes
+
+- Téléchargement des images manquantes avec un délai distinct de la correction.
+- État « Préparation… », attente automatique et reprise de la soumission.
+- Téléchargements regroupés et bornés ; échecs de préparation signalés sans échec d’exercice.
+- Suppression des téléchargements implicites pendant le délai d’exécution.
+
 ## 4 novembre 2026 — dossiers temporaires du lancement local
 
 - Sur Linux, `make start` utilise un dossier personnel pour éviter les `/tmp` isolés.

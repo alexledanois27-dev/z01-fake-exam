@@ -211,6 +211,7 @@ function renderRunState(state) {
     running: "Tests en cours",
     success: "Réussi",
     error: "À revoir",
+    unavailable: "Indisponible",
   }[state];
   outputEl.dataset.state = state;
   const labelText = "Exécuter";
@@ -2834,9 +2835,7 @@ function updateExecutionCooldowns() {
   if (runWait) runBtn.disabled = true;
   exampleBtn.textContent = testWait ? `Tester (${testWait}s)` : "Tester";
   if (!submissionRunning) {
-    runBtn.textContent =
-      "Exécuter" +
-      (runWait ? ` (${runWait}s)` : "");
+    runBtn.textContent = "Exécuter" + (runWait ? ` (${runWait}s)` : "");
   }
 }
 setInterval(() => updateTrueExamControls(), 250);
@@ -2877,6 +2876,35 @@ function parseProgramArgs(raw) {
     throw Error("Args : ferme les guillemets ou complète l’échappement.");
   if (active) args.push(value);
   return args;
+}
+
+// Preparation uses short HTTP requests; the Docker pull has its own server deadline.
+async function requestCorrection(payload, onPreparing, expired = () => false) {
+  for (let attempt = 0; attempt < 145; attempt++) {
+    const response = await fetch("/api/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await response.json();
+    if (response.status === 202 && data.status === "preparing") {
+      onPreparing(String(data.output || "Préparation de la moulinette…"));
+      if (expired())
+        throw Error(
+          "Temps d’examen écoulé pendant la préparation de la moulinette. Aucun test n’a été évalué.",
+        );
+      await new Promise((resolve) => window.setTimeout(resolve, 5000));
+      continue;
+    }
+    if (!response.ok || typeof data.success !== "boolean")
+      throw Error(
+        data.output || `Correction refusée (HTTP ${response.status})`,
+      );
+    return data;
+  }
+  throw Error(
+    "Préparation trop longue : vérifier Docker et réessayer. Aucun test n’a été évalué.",
+  );
 }
 
 function runCode(options = {}) {
@@ -2938,20 +2966,17 @@ function runCode(options = {}) {
   let advanceAfterSuccess = false;
   pendingRun = (async () => {
     try {
-      const response = await fetch("/api/run", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          exerciseId: submitted.id,
-          code,
-          ...testOptions,
-        }),
-      });
-      const data = await response.json();
-      if (!response.ok || typeof data.success !== "boolean")
-        throw Error(
-          data.output || `Correction refusée (HTTP ${response.status})`,
-        );
+      const data = await requestCorrection(
+        { exerciseId: submitted.id, code, ...testOptions },
+        (message) => {
+          if (visible()) {
+            outputEl.textContent = message;
+            document.getElementById("run-status").textContent = "Préparation…";
+            runBtn.textContent = "Préparation…";
+          }
+        },
+        () => !!session && examRepo.expired(session),
+      );
       const out = String(data.output || "");
       if (!example) {
         attemptJournal.add({
@@ -3021,7 +3046,7 @@ function runCode(options = {}) {
         persistPersonal();
       }
       if (visible()) {
-        renderRunState("error");
+        renderRunState("unavailable");
         outputEl.textContent = "Correction indisponible : " + error.message;
       }
       return false;

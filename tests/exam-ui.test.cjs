@@ -1342,3 +1342,119 @@ require("node:test")(
     }
   },
 );
+
+require("node:test")(
+  "image preparation waits without a failed attempt and resumes correction",
+  async () => {
+    const env = await boot();
+    const w = env.w;
+    const originalFetch = w.fetch;
+    const originalTimeout = w.setTimeout.bind(w);
+    let resume;
+    let calls = 0;
+    const bodies = [];
+    w.setTimeout = (callback, delay, ...args) => {
+      if (delay === 5000) {
+        resume = callback;
+        return 999;
+      }
+      return originalTimeout(callback, delay, ...args);
+    };
+    w.fetch = async (url, options) => {
+      if (url === "/api/run") {
+        bodies.push(options.body);
+        if (++calls < 3)
+          return {
+            ok: true,
+            status: 202,
+            json: async () => ({
+              status: "preparing",
+              output: "Préparation de la moulinette…",
+            }),
+          };
+      }
+      return originalFetch(url, options);
+    };
+    try {
+      draft(w, "correct PROGRAM");
+      click(w, "#run-btn");
+      await tick();
+      assert.match(el(w, "run-status").textContent, /Préparation/);
+      assert.match(el(w, "progress-label").textContent, /0 \/ 3/);
+      assert.equal(
+        JSON.parse(
+          w.localStorage.getItem("z01-attempt-journal-v1") || '{"items":[]}',
+        ).items.length,
+        0,
+      );
+      assert.equal(el(w, "run-btn").disabled, true);
+      resume();
+      await tick();
+      assert.equal(calls, 2);
+      resume();
+      await tick();
+      assert.equal(calls, 3);
+      assert.equal(new Set(bodies).size, 1);
+      assert.match(el(w, "progress-label").textContent, /1 \/ 3/);
+      const items = JSON.parse(
+        w.localStorage.getItem("z01-attempt-journal-v1"),
+      ).items;
+      assert.equal(items.length, 1);
+      assert.equal(items[0].success, true);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "failed image preparation is unavailable, never an exercise failure",
+  async () => {
+    const env = await boot();
+    const w = env.w;
+    const original = w.fetch;
+    const originalTimeout = w.setTimeout.bind(w);
+    let resume,
+      calls = 0;
+    w.setTimeout = (callback, delay, ...args) =>
+      delay === 5000
+        ? ((resume = callback), 999)
+        : originalTimeout(callback, delay, ...args);
+    w.fetch = async (url, options) =>
+      url !== "/api/run"
+        ? original(url, options)
+        : ++calls === 1
+          ? {
+              ok: true,
+              status: 202,
+              json: async () => ({
+                status: "preparing",
+                output: "Préparation…",
+              }),
+            }
+          : {
+              ok: false,
+              status: 503,
+              json: async () => ({
+                success: false,
+                output: "Téléchargement indisponible",
+              }),
+            };
+    try {
+      draft(w, "PROGRAM");
+      click(w, "#run-btn");
+      await tick();
+      resume();
+      await tick();
+      assert.equal(el(w, "run-status").textContent, "Indisponible");
+      assert.match(el(w, "progress-label").textContent, /0 \/ 3/);
+      const items = JSON.parse(
+        w.localStorage.getItem("z01-attempt-journal-v1"),
+      ).items;
+      assert.equal(items.length, 1);
+      assert.equal(items[0].success, null);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
