@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#13130f" />
     <title>Z01 Fake Exam · Mon espace d’entraînement</title>
-    <link rel="stylesheet" href="style.css?v=20261027-exam-timer-only" />
+    <link rel="stylesheet" href="style.css?v=20261028-editor-actions" />
   </head>
   <body>
     <div id="app">
@@ -104,7 +104,7 @@
           <div
             class="accent-picker accent-options"
             id="accent-theme"
-            role="radiogroup"
+            role="group"
             aria-label="Nuance de l’interface"
           >
             <label class="accent-swatch" title="Jaune"
@@ -167,6 +167,32 @@
                 style="--swatch: #9855ff"
               ></span
             ></label>
+            <form id="custom-accent-form" class="custom-accent">
+              <label for="custom-accent-color">Couleur personnalisée</label>
+              <div class="custom-accent-controls">
+                <input
+                  id="custom-accent-color"
+                  type="color"
+                  value="#f4cf00"
+                  aria-label="Choisir une couleur personnalisée"
+                />
+                <input
+                  id="custom-accent-hex"
+                  type="text"
+                  value="#f4cf00"
+                  maxlength="7"
+                  pattern="#[0-9a-fA-F]{6}"
+                  required
+                  autocomplete="off"
+                  spellcheck="false"
+                  aria-label="Code hexadécimal de la couleur"
+                  placeholder="#f4cf00"
+                />
+                <button class="button button-subtle" type="submit">
+                  Appliquer
+                </button>
+              </div>
+            </form>
           </div>
         </details>
       </header>
@@ -203,6 +229,13 @@
               <span>Ma progression</span
               ><strong id="progress-label">0 / 0</strong>
             </div>
+            <button
+              id="learning-report-btn"
+              class="button button-subtle"
+              type="button"
+            >
+              Mon bilan
+            </button>
             <progress
               id="catalog-progress"
               max="1"
@@ -361,9 +394,9 @@
             <p id="exam-brute-force-note"></p>
             <figure id="exam-brute-force-reaction" hidden>
               <img
-                alt="Une réussite un peu particulière : poignée de main de The Office"
-                width="640"
-                height="627"
+                alt="La moulinette serre la main au brute force : mème de The Office"
+                width="1267"
+                height="1241"
                 loading="lazy"
               />
               <figcaption>
@@ -372,6 +405,13 @@
               </figcaption>
             </figure>
             <div class="exam-start-actions">
+              <button
+                id="exam-learning-report-btn"
+                class="button button-subtle"
+                type="button"
+              >
+                Historique et révisions
+              </button>
               <button
                 id="exam-report-new"
                 class="button button-primary"
@@ -478,6 +518,13 @@
                   </div>
                   <div class="editor-tools">
                     <button
+                      id="exercise-history-btn"
+                      class="button button-subtle"
+                      type="button"
+                    >
+                      Historique
+                    </button>
+                    <button
                       id="font-smaller"
                       class="icon-button"
                       type="button"
@@ -492,24 +539,7 @@
                       aria-label="Agrandir la taille du code"
                       title="Agrandir le code"
                     >
-                      A+</button
-                    ><span class="tool-divider"></span
-                    ><button
-                      id="example-btn"
-                      class="button button-subtle"
-                      type="button"
-                      disabled
-                      title="Lancer le programme d’exemple de l’énoncé"
-                    >
-                      Tester l’exemple
-                    </button>
-                    <button
-                      id="run-btn"
-                      class="button button-primary"
-                      type="button"
-                    >
-                      <span aria-hidden="true">▷</span> Exécuter
-                      <kbd>Ctrl ↵</kbd>
+                      A+
                     </button>
                   </div>
                 </div>
@@ -530,12 +560,32 @@
                     autocomplete="off"
                     spellcheck="false"
                     placeholder='"Hello World" 42'
-                    aria-describedby="program-args-help"
                   />
-                  <span id="program-args-help"
-                    >Arguments de Tester · sans validation</span
+                  <div
+                    class="editor-actions"
+                    role="group"
+                    aria-label="Exécution du code"
                   >
+                    <button
+                      id="example-btn"
+                      class="button button-subtle"
+                      type="button"
+                      disabled
+                      title="Lancer le programme d’exemple de l’énoncé"
+                    >
+                      Tester l’exemple
+                    </button>
+                    <button
+                      id="run-btn"
+                      class="button button-primary"
+                      type="button"
+                    >
+                      <span aria-hidden="true">▷</span> Exécuter
+                      <kbd>Ctrl ↵</kbd>
+                    </button>
+                  </div>
                 </div>
+
                 <div class="editor-status">
                   <span id="editor-position">Ligne 1</span><span>UTF-8</span
                   ><span id="editor-language">Go</span

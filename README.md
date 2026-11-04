@@ -70,6 +70,24 @@ Ces références complètent les aides progressives et sont masquées en examen.
 Les nouvelles fiches contiennent syntaxe, exemples autonomes, pièges et checklist,
 sans solution complète du sujet. Voir [le guide des fiches](learning-content/README.md).
 
+### Historique et bilan d’apprentissage
+
+Le bouton **Historique**, dans l’en-tête de l’éditeur, permet de relire le code et
+le résultat des corrections d’un exercice et de comparer deux essais côte à côte.
+La lecture ne remplace jamais le code en cours. **Mon bilan**, sous la progression,
+résume les dernières corrections du langage sélectionné et propose les fiches
+associées aux exercices dont le dernier essai corrigé reste non validé.
+Les erreurs de service sont distinguées des échecs de correction.
+
+Tout reste dans ce navigateur : 10 essais par exercice, 100 au total, environ
+1,6 Mo de texte. Les codes de plus de 24 000 caractères et sorties de plus de
+8 000 caractères sont abrégés et signalés. Les plus anciens essais sont supprimés
+si nécessaire ; un effacement par langage conserve les réussites et sessions.
+Les anciens essais ne sont pas reconstitués. **Tester** n’alimente pas l’historique.
+En examen, l’historique et les suggestions restent inaccessibles jusqu’au rendu,
+puis sont disponibles depuis **Historique et révisions** dans le bilan final.
+Ces suggestions sont indicatives et ne constituent pas une évaluation de maîtrise.
+
 ### Tester et corriger
 
 - **Tester** exécute ton programme et affiche sa sortie ou ses erreurs, sans point
@@ -78,7 +96,7 @@ sans solution complète du sujet. Voir [le guide des fiches](learning-content/RE
 - Pour une fonction seule, Tester utilise le programme d’appel de la consigne
   lorsqu’il existe. Sans programme d’appel, un message explique la limite. Un
   script JavaScript qui n’appelle ni n’affiche rien peut ne produire aucune sortie.
-- **Exécuter / Soumettre l’exercice** lance la correction complète dans la
+- **Exécuter** lance la correction complète dans la
   moulinette et enregistre le résultat. Les fonctions autorisées sont contrôlées
   en Go. Le package doit correspondre à l’exercice : `piscine` ou `main`.
 - Les cooldowns d’interface sont de 10 s pour Tester et 15 s pour la correction.
@@ -95,7 +113,8 @@ démarche, indices progressifs, syntaxe, pièges et cas limites. Une empreinte d
 consigne suspend une aide devenue obsolète. Ces aides sont absentes en examen.
 Aucune IA externe n’est appelée pendant l’utilisation.
 
-Six nuances, filtres N1–N10, transitions courtes, six GIFs d’échec et confettis
+Six nuances prédéfinies et une palette personnalisée (sélecteur et code hexadécimal),
+filtres N1–N10, transitions courtes, six GIFs d’échec et confettis
 ascendants personnalisent l’interface. Les effets respectent la réduction des
 animations. Un compteur indicatif repère certaines réponses codées en dur dans
 le bilan ; il ne refuse rien et ne retire aucun point. Les faux positifs et les
@@ -153,6 +172,14 @@ flowchart LR
 `frontend/build.json` définit l’assemblage. **Ne pas modifier directement `app.js`
 ou `style.css`** : ces bundles sont générés et versionnés. Le backend peut démarrer
 en monolithe ou en services Web/Catalogue/Runner : [architecture des services](docs/architecture-services.md) et [contrats HTTP](docs/http-api.md).
+
+## Installation reproductible avec Compose
+
+Une configuration Linux prépare l’application et un proxy HTTPS optionnel, avec
+un daemon rootless dédié aux corrections. Les prérequis, le contrôle préalable,
+les limites et le retour arrière sont détaillés dans [le guide Compose](docs/docker-compose.md).
+Aucun site n’est publié automatiquement ; la charge et les corrections doivent
+être validées sur le futur hôte.
 
 ## Copies locales et mode hors ligne
 

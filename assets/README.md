@@ -38,3 +38,10 @@ Une nouvelle ressource publique doit être ajoutée explicitement dans
 Droits conservés par leurs titulaires respectifs. Fichiers servis localement ;
 un seul GIF est chargé à chaque réaction, et les animations restent désactivées
 si le navigateur demande une réduction des mouvements.
+
+## Bilan des réponses codées en dur
+
+`brute-force-result.png` : image fournie par l’utilisateur le 29 octobre 2026,
+avec les textes « MOULINETTE » et « BRUTE FORCE » sur une poignée de main de
+The Office. Remplace la précédente version sans texte. Fichier PNG de 1267 × 1241,
+servi localement ; les droits du contenu d’origine restent à leurs titulaires.

@@ -1,5 +1,6 @@
 {
   "javascript": [
+    "frontend/lib/attempt-journal.js",
     "frontend/app/context.js",
     "frontend/app/configuration.js",
     "frontend/app/progress.js",
@@ -15,6 +16,7 @@
     "frontend/app/training-guide.js",
     "frontend/app/catalog-view.js",
     "frontend/app/failure-reaction.js",
+    "frontend/app/learning-journal.js",
     "frontend/app/submission.js",
     "frontend/app/events.js",
     "frontend/app/layout.js",
@@ -38,7 +40,13 @@
     "frontend/styles/failure-reaction.css",
     "frontend/styles/appearance.css",
     "frontend/styles/motion.css",
-    "frontend/styles/revisions.css"
+    "frontend/styles/revisions.css",
+    "frontend/styles/learning-journal.css"
   ],
-  "guides": ["go", "js", "rust", "java"]
+  "guides": [
+    "go",
+    "js",
+    "rust",
+    "java"
+  ]
 }

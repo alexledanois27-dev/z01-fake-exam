@@ -90,14 +90,6 @@ function setTrueExamMode(enabled) {
 
 function buildTrueExamSeries() {
   const source = getExamSource();
-  if (isJsTrack()) {
-    const shuffled = [...source];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled.slice(0, Math.min(10, shuffled.length));
-  }
   const series = [];
   for (let level = 1; level <= 10; level++) {
     const candidates = source.filter((ex) => ex.level === level);
@@ -113,6 +105,8 @@ function getExamSource() {
 }
 
 function renderExamReport() {
+  attemptJournal.releaseExam(currentExam.id);
+  attemptJournal.flush();
   const summary = examRepo.summary(currentExam);
   const analyses = new Map(
     summary.rows
@@ -179,6 +173,7 @@ function renderExamReport() {
 }
 
 function renderExamView() {
+  syncJournalControls();
   syncExamFocus();
   const phase = currentExam?.phase;
   const lobby = trueExamMode && !learningMode && !currentExam;
@@ -320,6 +315,7 @@ function finishExam(reason = "submitted") {
       await runCode({ finalSubmission: true });
     }
     examRepo.finish(session, reason);
+    attemptJournal.releaseExam(session.id);
     if (trueExamMode && currentExam === session) {
       renderExamView();
       document.getElementById("exam-report").focus();

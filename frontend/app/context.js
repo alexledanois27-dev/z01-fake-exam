@@ -80,7 +80,7 @@ function renderRunState(state) {
     error: "À revoir",
   }[state];
   outputEl.dataset.state = state;
-  const labelText = trueExamMode ? "Soumettre l’exercice" : "Exécuter";
+  const labelText = "Exécuter";
   runBtn.innerHTML =
     state === "running"
       ? "Tests en cours…"

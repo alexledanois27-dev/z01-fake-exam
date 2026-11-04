@@ -58,6 +58,11 @@ prévoir aussi de l’espace et un entretien côté administrateur.
 
 ## Configuration proposée
 
+Le [guide Docker Compose](docker-compose.md) propose aussi une installation
+conteneurisée du monolithe et un proxy HTTPS optionnel. Il conserve un daemon
+rootless dédié et un dossier temporaire partagé au même chemin sur l’hôte.
+
+
 1. Préparer un hôte Linux dédié et son Docker rootless. Vérifier `docker info` :
    option rootless, cgroup v2 et limites de ressources actives. Le serveur utilise
    le contexte/DOCKER_HOST du compte qui le lance. Il refuse un daemon rootful en

@@ -28,3 +28,6 @@ test-results/
 
 # Fichiers temporaires de synchronisation
 catalog-snapshots/.snapshot-*
+
+# Python validation helpers
+__pycache__/

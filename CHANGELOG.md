@@ -6,6 +6,30 @@
 - Les réglages `TMPDIR` explicites et les lancements de production sont conservés.
 - Tests du choix de chemin, de ses permissions et du nettoyage des soumissions.
 
+## 2 novembre 2026 — préparation Docker Compose
+
+- Image du monolithe et proxy HTTPS optionnel, sans déploiement automatique.
+- Daemon rootless de correction séparé, dossier partagé et limites explicites.
+- Contrôle préalable et guide de préparation, validation et retour arrière.
+
+## 30 octobre 2026 — progression des examens JavaScript
+
+- Suppression du mélange de tous les niveaux JavaScript au démarrage d’un examen.
+- Nouvelle série : un exercice par niveau dans l’ordre, indépendamment de l’entraînement.
+- Vérification du départ au niveau 1 et de la reprise pour les quatre langages.
+
+## 29 octobre 2026 — historique et bilan d’apprentissage
+
+- Historique local des corrections, code et sortie consultables, comparaison de deux essais.
+- Bilan par langage avec fiches conseillées selon les derniers essais non validés.
+- Historique d’examen accessible après le rendu uniquement ; erreurs de service distinguées.
+- Stockage borné et effacement par langage indépendant de la progression.
+
+## 29 octobre 2026 — couleur d’interface personnalisée
+
+- Palette native et saisie hexadécimale dans le menu des nuances.
+- Sauvegarde locale, retour aux six nuances et adaptation des tons de fond.
+- Texte des boutons remplis et logo adaptés aux couleurs sombres ou claires.
 
 ## 28 octobre 2026 — publication du dépôt et protections
 
