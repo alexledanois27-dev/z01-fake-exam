@@ -84,6 +84,20 @@ func handleRun(w http.ResponseWriter, r *http.Request) {
 		if ex == nil {
 			continue
 		}
+		ready, err := runnerImages.ready(exerciseImage(runner.track, *ex))
+		if err != nil {
+			writeRunError(w, http.StatusServiceUnavailable, err.Error())
+			return
+		}
+		if !ready {
+			w.Header().Set("Content-Type", "application/json")
+			w.Header().Set("Retry-After", "5")
+			w.WriteHeader(http.StatusAccepted)
+			_ = json.NewEncoder(w).Encode(map[string]any{
+				"status": "preparing", "output": "Préparation de la moulinette… Premier téléchargement en cours, cela peut prendre plusieurs minutes. Aucun résultat n’a encore été évalué.",
+			})
+			return
+		}
 		var ok bool
 		var out string
 		if req.Mode == "example" || req.Mode == "preview" {

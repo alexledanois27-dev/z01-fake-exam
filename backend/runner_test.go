@@ -178,7 +178,7 @@ func useFakeDocker(t *testing.T, body string) {
 	t.Helper()
 	dir := t.TempDir()
 	path := filepath.Join(dir, "docker")
-	script := "#!/bin/sh\nset -eu\n" + body + "\n"
+	script := "#!/bin/sh\nset -eu\n" + `if [ "$1" = image ] && [ "$2" = inspect ]; then printf 'linux/amd64\n'; exit 0; fi` + "\n" + body + "\n"
 	if err := os.WriteFile(path, []byte(script), 0o755); err != nil {
 		t.Fatalf("write fake docker: %v", err)
 	}

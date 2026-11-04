@@ -22,7 +22,7 @@ func dockerRunCommand(ctx context.Context, args []string) *exec.Cmd {
 	}
 	args = hardened
 	name := fmt.Sprintf("personal-exam-%d-%d", os.Getpid(), atomic.AddUint64(&containerSequence, 1))
-	named := append([]string{"run", "--name", name}, args[1:]...)
+	named := append([]string{"run", "--pull", "never", "--name", name}, args[1:]...)
 	cmd := exec.CommandContext(ctx, "docker", named...)
 	cmd.Cancel = func() error {
 		cleanup, cancel := context.WithTimeout(context.Background(), 3*time.Second)

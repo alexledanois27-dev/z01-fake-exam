@@ -40,17 +40,41 @@ sont pas des appels de fonction ou des commandes shell.
 - Au plus 64 arguments de 4096 caractères, sans caractère nul. Les identifiants,
   chemins du catalogue et images exécutées sont validés côté serveur.
 
-Réponse :
+Réponse finale (HTTP 200) :
 
 ```json
 {"success": true, "output": "1"}
 ```
+
+Si l’image manque, le serveur répond HTTP 202 avec `Retry-After: 5` :
+
+```json
+{"status":"preparing","output":"Préparation de la moulinette…"}
+```
+
+Cette réponse ne contient pas de résultat `success`. Le navigateur réenvoie la
+même requête après cinq secondes jusqu’à la réponse finale ou une erreur. Le
+serveur ne conserve pas le code pendant le téléchargement. Seules les cinq images
+officielles épinglées sont éligibles, avec un téléchargement partagé par image,
+deux téléchargements simultanés au maximum et un délai global de dix minutes
+(attente incluse). Les échecs ont une pause de trente secondes avant nouvel essai.
+La place de correction est libérée entre les requêtes d’attente. Un redémarrage du
+serveur perd cet état en mémoire ; la demande suivante vérifie l’image et peut
+relancer le téléchargement.
+
+Le délai court d’exécution du code ne commence qu’après la préparation. Les
+conteneurs utilisent `--pull never` : une image supprimée entre la vérification
+et l’exécution ne provoque pas un téléchargement implicite dans ce délai.
+Le navigateur attend au maximum environ douze minutes et arrête l’attente si
+le temps de l’examen est écoulé. Les clients API doivent prendre en charge 202 ;
+un ancien frontend doit être actualisé en même temps que le backend.
 
 Dans un aperçu, success signifie seulement que l’exécution a abouti. Le code HTTP
 200 peut aussi transporter success=false lorsqu’un test ou une compilation échoue.
 
 | Code | Signification |
 | --- | --- |
+| 202 | Image en préparation ; aucun exercice encore évalué. |
 | 400 | JSON, code ou mode invalide. |
 | 401 | Authentification absente ou incorrecte. |
 | 403 | Hôte, origine ou contexte intersite refusé. |
@@ -58,7 +82,7 @@ Dans un aperçu, success signifie seulement que l’exécution a abouti. Le code
 | 413 | Requête trop volumineuse. |
 | 415 | Type de contenu incorrect. |
 | 429 | Correcteur occupé ou fréquence dépassée ; réessayer après le délai indiqué. |
-| 503 | Runner non activé. |
+| 503 | Runner non activé ou préparation de l’image indisponible. |
 
 ## Autres routes
 

@@ -78,6 +78,7 @@ function renderRunState(state) {
     running: "Tests en cours",
     success: "Réussi",
     error: "À revoir",
+    unavailable: "Indisponible",
   }[state];
   outputEl.dataset.state = state;
   const labelText = "Exécuter";
