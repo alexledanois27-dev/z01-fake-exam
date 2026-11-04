@@ -108,6 +108,13 @@ dans le **localStorage du navigateur**. Changer d’hôte, de port ou de navigat
 utilise un autre stockage. Effacer les données du site supprime cette progression.
 Il n’existe pas de compte individuel ou de synchronisation entre appareils.
 
+Sur Linux, `make start` utilise automatiquement `~/z01-exam-tmp` pour les
+soumissions temporaires lorsque `TMPDIR` n’est pas défini. Cela évite le `/tmp`
+privé de certaines installations Docker. Un `TMPDIR` explicite est conservé ;
+les lancements de production et Compose gardent leur configuration. Le dossier
+parent reste vide après les corrections normales. Un daemon distant exige toujours
+un chemin réellement partagé : ce réglage ne synchronise pas les fichiers.
+
 En entraînement, le code est volontairement vidé lors d’un changement d’exercice
 ou d’un rechargement. En examen, le brouillon et l’échéance sont restaurables.
 Le serveur reçoit le code pour l’exécuter ; les fichiers temporaires sont supprimés

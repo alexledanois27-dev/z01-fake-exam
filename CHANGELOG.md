@@ -1,5 +1,12 @@
 # Historique fonctionnel
 
+## 4 novembre 2026 — dossiers temporaires du lancement local
+
+- Sur Linux, `make start` utilise un dossier personnel pour éviter les `/tmp` isolés.
+- Les réglages `TMPDIR` explicites et les lancements de production sont conservés.
+- Tests du choix de chemin, de ses permissions et du nettoyage des soumissions.
+
+
 ## 28 octobre 2026 — publication du dépôt et protections
 
 - Attribution du projet d’origine mise en évidence dans le README.

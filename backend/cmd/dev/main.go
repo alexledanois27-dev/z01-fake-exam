@@ -7,10 +7,15 @@ import (
 	"net"
 	"os"
 	"os/exec"
+	"runtime"
 	"strings"
 )
 
 func main() {
+	if err := configureLocalTempDir(runtime.GOOS, os.UserHomeDir); err != nil {
+		log.Fatal(err)
+	}
+
 	if os.Getenv("LISTEN_ADDR") == "" {
 		port := strings.TrimPrefix(os.Getenv("PORT"), ":")
 		if port == "" {

@@ -290,3 +290,17 @@ fermeture du lecteur. Le raccourci de correction est suspendu dans le lecteur.
 Voir [le guide de contribution des fiches](../learning-content/README.md) pour les
 associations et la compilation Docker des exemples Rust/Java. `npm test` couvre
 les exemples JavaScript, les références, les filtres et la conservation du code.
+
+## Dossier temporaire du lancement local
+
+`backend/cmd/dev/temp.go` configure `TMPDIR` au démarrage local sur Linux,
+uniquement si la variable est absente et hors `APP_ENV=production`. Le dossier
+`~/z01-exam-tmp` est créé avec les droits 0700 ; les liens symboliques, fichiers
+et dossiers accessibles en écriture au groupe ou aux autres sont refusés.
+Le helper est testé pour les cinq familles de dossiers temporaires, la suppression
+des soumissions et le respect des paramètres explicites. Les autres commandes
+(`runner`, `monolith`) conservent la configuration d’exploitation existante.
+
+Docker résout les chemins de montage sur l’hôte du daemon. Ce défaut évite
+les `/tmp` isolés dans les installations locales courantes, mais ne prend pas
+en charge un daemon distant sans partage de fichiers.
