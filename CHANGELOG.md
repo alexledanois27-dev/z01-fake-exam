@@ -1,5 +1,11 @@
 # Historique fonctionnel
 
+## 17 novembre 2026 — prototype du parcours JavaScript
+
+- Sept séances ciblant les 19 exercices N1–N4, avec diagnostic, méthodes et fiches.
+- Défis guidés ou sans aide, résultats locaux et confirmations espacées de 24 h.
+- Révision des derniers échecs, séparation des examens et guide d’évaluation.
+
 ## 4 novembre 2026 — préparation automatique des moulinettes
 
 - Téléchargement des images manquantes avec un délai distinct de la correction.

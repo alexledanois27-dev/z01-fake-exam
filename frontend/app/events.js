@@ -43,6 +43,7 @@ searchEl.addEventListener("input", () => {
 });
 document.addEventListener("keydown", (event) => {
   if (
+    document.getElementById("js-sprint-dialog")?.open ||
     document.getElementById("revision-dialog")?.open ||
     document.getElementById("learning-journal-dialog")?.open
   )

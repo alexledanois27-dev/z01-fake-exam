@@ -1458,3 +1458,138 @@ require("node:test")(
     }
   },
 );
+
+require("node:test")(
+  "JS sprint keeps navigation and evidence separate from standard training and exams",
+  async () => {
+    const catalogs = Object.fromEntries(
+      ["go", "js", "rust", "java"].map((track) => [
+        track,
+        require(`../catalog-snapshots/${track}.json`).exercises,
+      ]),
+    );
+    const env = await boot({}, false, catalogs);
+    const w = env.w;
+    try {
+      draft(w, "KEEP MY GO CODE");
+      click(w, "#js-sprint-open");
+      assert.ok(el(w, "js-sprint-dialog").open);
+      assert.equal(w.document.querySelectorAll(".sprint-day").length, 7);
+      assert.equal(el(w, "code-editor").value, "KEEP MY GO CODE");
+      click(w, '[name="sprint-quiz-return"][value="1"]');
+      assert.match(el(w, "sprint-diagnostic").textContent, /1\/6 réponses/);
+      click(w, '[data-sprint-exercise="factorial"][data-assisted="false"]');
+      assert.equal(el(w, "js-sprint-dialog"), null);
+      assert.equal(el(w, "track-js").checked, true);
+      assert.ok(w.document.querySelector(".sprint-autonomous"));
+      assert.equal(el(w, "code-editor").value, "");
+      draft(w, "correct SPRINT");
+      env.advance(15000);
+      click(w, "#run-btn");
+      await tick();
+      let state = JSON.parse(
+        w.localStorage.getItem("z01-js-checkpoint-sprint-v1"),
+      );
+      assert.equal(state.attempts.length, 1);
+      assert.equal(state.attempts[0].assisted, false);
+      // Opening the teaching material converts the ongoing attempt to guided.
+      click(w, "#js-sprint-open");
+      assert.equal(w.document.querySelector(".sprint-autonomous"), null);
+      click(w, '[data-sprint-exercise="evensum"][data-assisted="true"]');
+      draft(w, "correct GUIDED");
+      env.advance(15000);
+      click(w, "#run-btn");
+      await tick();
+      state = JSON.parse(w.localStorage.getItem("z01-js-checkpoint-sprint-v1"));
+      assert.equal(state.attempts[1].assisted, true);
+      // Tester is excluded from sprint evidence.
+      env.advance(15000);
+      click(w, "#example-btn");
+      await tick();
+      assert.equal(
+        JSON.parse(w.localStorage.getItem("z01-js-checkpoint-sprint-v1"))
+          .attempts.length,
+        2,
+      );
+      click(w, '.exercise-chip[data-id="evensum"]');
+      assert.equal(el(w, "sprint-exercise-banner"), null);
+      click(w, "#mode-learning");
+      assert.equal(el(w, "sprint-exercise-banner"), null);
+      click(w, "#mode-true-exam");
+      click(w, "#js-sprint-open");
+      assert.equal(el(w, "js-sprint-dialog"), null);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "sprint lessons preserve code and reset never erases standard progress",
+  async () => {
+    const catalogs = Object.fromEntries(
+      ["go", "js", "rust", "java"].map((track) => [
+        track,
+        require(`../catalog-snapshots/${track}.json`).exercises,
+      ]),
+    );
+    const env = await boot({}, false, catalogs);
+    const w = env.w;
+    try {
+      draft(w, "correct GO");
+      env.advance(15000);
+      click(w, "#run-btn");
+      await tick();
+      draft(w, "DO NOT REPLACE");
+      click(w, "#js-sprint-open");
+      const lesson = [
+        ...el(w, "js-sprint-dialog").querySelectorAll("button"),
+      ].find((b) => b.textContent.includes("Variables, types"));
+      lesson.click();
+      await tick();
+      assert.ok(w.document.querySelector(".sprint-reader h1"));
+      assert.equal(el(w, "code-editor").value, "DO NOT REPLACE");
+      [...el(w, "js-sprint-dialog").querySelectorAll("button")]
+        .find((b) => b.textContent.includes("Revenir à la séance"))
+        .click();
+      const clear = [
+        ...el(w, "js-sprint-dialog").querySelectorAll("button"),
+      ].find((b) => b.textContent.includes("Réinitialiser"));
+      clear.click();
+      assert.equal(clear.textContent, "Confirmer la réinitialisation");
+      clear.click();
+      assert.match(el(w, "progress-label").textContent, /1 \/ 61/);
+      assert.equal(el(w, "code-editor").value, "DO NOT REPLACE");
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "sprint never presents a changed catalog group as a ready challenge",
+  async () => {
+    const catalogs = Object.fromEntries(
+      ["go", "js", "rust", "java"].map((track) => [
+        track,
+        require(`../catalog-snapshots/${track}.json`).exercises,
+      ]),
+    );
+    catalogs.js = catalogs.js.map((ex) =>
+      ex.id === "factorial" ? { ...ex, level: 6 } : ex,
+    );
+    const env = await boot({}, false, catalogs);
+    const w = env.w;
+    try {
+      click(w, "#js-sprint-open");
+      const row = w.document.querySelector(
+        '.sprint-exercise[data-exercise="factorial"]',
+      );
+      assert.match(row.textContent, /Groupe modifié/);
+      assert.equal(row.querySelector('[data-assisted="false"]').disabled, true);
+      assert.equal(row.querySelector('[data-assisted="true"]').disabled, true);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);

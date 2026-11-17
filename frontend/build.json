@@ -1,6 +1,7 @@
 {
   "javascript": [
     "frontend/lib/attempt-journal.js",
+    "frontend/lib/checkpoint-sprint.js",
     "frontend/app/context.js",
     "frontend/app/configuration.js",
     "frontend/app/progress.js",
@@ -17,6 +18,7 @@
     "frontend/app/catalog-view.js",
     "frontend/app/failure-reaction.js",
     "frontend/app/learning-journal.js",
+    "frontend/app/checkpoint-sprint.js",
     "frontend/app/submission.js",
     "frontend/app/events.js",
     "frontend/app/layout.js",
@@ -41,7 +43,8 @@
     "frontend/styles/appearance.css",
     "frontend/styles/motion.css",
     "frontend/styles/revisions.css",
-    "frontend/styles/learning-journal.css"
+    "frontend/styles/learning-journal.css",
+    "frontend/styles/checkpoint-sprint.css"
   ],
   "guides": [
     "go",

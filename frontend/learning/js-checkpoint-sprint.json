@@ -1,0 +1,204 @@
+{
+  "version": 1,
+  "targetLevel": 4,
+  "days": [
+    {
+      "day": 1,
+      "title": "Sécuriser les points du N1",
+      "topic": "Fonctions, boucles, accumulateurs",
+      "minutes": 100,
+      "lessons": ["js-01", "js-03"],
+      "exercises": ["factorial", "evensum", "divisorfinder"],
+      "method": "Avant de coder : entrée, résultat retourné, cas zéro, puis variable qui évolue à chaque tour.",
+      "insight": "Un produit commence à 1 ; une somme commence à 0. Écris les premières étapes sur papier avant de choisir ta boucle.",
+      "code": "function countPositives(values) {\n  let count = 0;\n  for (const value of values) {\n    if (value > 0) count += 1;\n  }\n  return count;\n}",
+      "traps": [
+        "Confondre afficher et retourner.",
+        "Placer return dans la boucle et arrêter au premier tour.",
+        "Inclure une borne que la consigne exclut."
+      ]
+    },
+    {
+      "day": 2,
+      "title": "Stabiliser le N1",
+      "topic": "État, réutilisation et chaînes",
+      "minutes": 110,
+      "lessons": ["js-02", "js-03"],
+      "exercises": ["perfectnum", "fibonacci", "sentencepyramid"],
+      "method": "Réutilise une démarche connue, puis vérifie si le résultat doit être retourné ou imprimé.",
+      "insight": "Distingue état précédent et nouvel état : calcule la nouvelle valeur avant de remplacer celles dont tu as encore besoin.",
+      "code": "const words = \"red blue green\".split(\" \");\nconst prefix = words.slice(0, 2).join(\" \");\n// prefix vaut \"red blue\" ; words reste intact.",
+      "traps": [
+        "Mélanger les indices 0 et 1 dans une suite.",
+        "Inclure le nombre lui-même dans ses diviseurs propres.",
+        "Retourner une chaîne quand la consigne demande des lignes affichées."
+      ]
+    },
+    {
+      "day": 3,
+      "title": "Passer les transformations du N2",
+      "topic": "Tableaux, groupes et grilles",
+      "minutes": 120,
+      "lessons": ["js-02", "js-11"],
+      "exercises": [
+        "array-reverse-chunks",
+        "nested-array-reverser",
+        "palindromic-chains",
+        "grid-words-finder"
+      ],
+      "method": "Découpe chaque problème en une opération élémentaire, puis applique-la à un groupe ou à une direction.",
+      "insight": "Pour une grille, écris séparément ligne et colonne. Pour un tableau, vérifie si une méthode modifie son entrée.",
+      "code": "const original = [2, 4, 6];\nconst backwards = [...original].reverse();\n// original vaut toujours [2, 4, 6].\nconst rows = [[\"a\", \"b\"], [\"c\", \"d\"]];\nconst cell = rows[1][0]; // \"c\"",
+      "traps": [
+        "reverse() modifie le tableau reçu.",
+        "Oublier le dernier groupe incomplet.",
+        "Inverser x/colonne et y/ligne.",
+        "Oublier une limite d’itérations."
+      ]
+    },
+    {
+      "day": 4,
+      "title": "Décomposer le N3",
+      "topic": "Comparateurs, compteurs et voisinage",
+      "minutes": 120,
+      "lessons": ["js-10", "js-11"],
+      "exercises": [
+        "bubble-sort-analyzer",
+        "insertion-sort-analyzer",
+        "grid-words-finder-2",
+        "snake-path-validator"
+      ],
+      "method": "Écris le rôle exact de chaque compteur et du comparateur. Pour une grille, sépare voisinage et parcours.",
+      "insight": "Un tri demandé doit suivre son algorithme : un résultat bien trié ne suffit pas si les compteurs sont faux. Pour un chemin, connexité et degrés sont deux contrôles distincts.",
+      "code": "const compareByLength = (a, b) => a.length - b.length;\nconst before = compareByLength(\"ab\", \"long\"); // négatif\nconst around = [[0, 1], [1, 0], [0, -1], [-1, 0]];\n// Chaque paire représente un déplacement, pas une diagonale.",
+      "traps": [
+        "Utiliser sort() à la place de l’algorithme imposé.",
+        "Compter un échange comme une comparaison.",
+        "Valider les voisins sans vérifier que tout le chemin est connecté."
+      ]
+    },
+    {
+      "day": 5,
+      "title": "Entrer dans le N4",
+      "topic": "Callbacks, composition et objets",
+      "minutes": 120,
+      "lessons": ["js-04", "js-06"],
+      "exercises": ["pipeline", "election-mix", "object-lab"],
+      "method": "Une fonction peut être stockée, transmise, puis appelée. Trace les valeurs intermédiaires et le résultat exact attendu.",
+      "insight": "Commence par deux petites transformations. Écris ensuite ce que la fonction extérieure reçoit et ce que la fonction retournée recevra plus tard.",
+      "code": "const makeMultiplier = (factor) => (value) => value * factor;\nconst triple = makeMultiplier(3);\ntriple(4); // 12\nconst updated = { ...{ score: 2 }, score: 5 };\n// Une copie superficielle, pas une copie profonde.",
+      "traps": [
+        "Appeler immédiatement un callback au lieu de le transmettre.",
+        "Écraser un objet partagé entre plusieurs appels.",
+        "Confondre nouvelle clé et clé remplacée."
+      ]
+    },
+    {
+      "day": 6,
+      "title": "Couvrir les variantes du N4",
+      "topic": "Closures successives et récursion",
+      "minutes": 120,
+      "lessons": ["js-05", "js-06"],
+      "exercises": ["character-maker", "flat-object"],
+      "method": "Identifie ce qui reste mémorisé entre deux appels et ce qui doit être recréé. Pour la récursion : arrêt, sous-problème, assemblage.",
+      "insight": "Dessine l’arbre d’un petit objet imbriqué. Trace un appel récursif à la fois, en conservant le préfixe de chemin.",
+      "code": "function countLeaves(node) {\n  if (node === null || typeof node !== \"object\") return 1;\n  let total = 0;\n  for (const value of Object.values(node)) total += countLeaves(value);\n  return total;\n}\n// Exemple de récursion : ce n’est pas l’aplatissement du sujet.",
+      "traps": [
+        "typeof null vaut \"object\".",
+        "Perdre le préfixe du chemin dans la récursion.",
+        "Partager involontairement un état entre deux créateurs."
+      ]
+    },
+    {
+      "day": 7,
+      "title": "Vérifier en conditions d’examen",
+      "topic": "Rappel libre, simulation et bilan",
+      "minutes": 180,
+      "lessons": ["js-03", "js-06", "js-11"],
+      "exercises": [],
+      "method": "Refais d’abord les exercices signalés à revoir. Ensuite, ouvre un examen JavaScript chronométré et tente d’atteindre le N4 sans fiche.",
+      "insight": "Au blocage : relis le contrat, trace un petit exemple, puis simplifie. Après le rendu, relève la notion manquante avant de recommencer.",
+      "code": "// Avant la soumission :\n// 1. Signature et type de retour exacts.\n// 2. Entrée vide, bornes et dernier élément.\n// 3. Mutation autorisée ou copie nécessaire ?\n// 4. Aucun affichage de débogage restant.",
+      "traps": [
+        "Relire une solution juste avant de prétendre la refaire de mémoire.",
+        "Accumuler les soumissions sans expliquer l’erreur.",
+        "Assimiler le score du simulateur à une garantie de score officiel."
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "return",
+      "prompt": "Que renvoie une fonction sans instruction return exécutée ?",
+      "choices": ["null", "undefined", "0"],
+      "answer": 1,
+      "explanation": "console.log affiche une valeur ; seul return transmet un résultat à l’appelant.",
+      "day": 1
+    },
+    {
+      "id": "loop",
+      "prompt": "Pour traiter les indices d’un tableau de longueur n, quelle borne habituelle choisir ?",
+      "choices": ["i <= n", "i < n", "i < n - 1"],
+      "answer": 1,
+      "explanation": "Les indices vont de 0 à n - 1. Une borne peut changer selon le contrat du sujet.",
+      "day": 1
+    },
+    {
+      "id": "mutation",
+      "prompt": "Quel appel peut modifier directement son tableau d’entrée ?",
+      "choices": ["arr.slice()", "arr.map(fn)", "arr.reverse()"],
+      "answer": 2,
+      "explanation": "reverse modifie le tableau. Une copie superficielle peut suffire si seuls les éléments du premier niveau sont réordonnés.",
+      "day": 3
+    },
+    {
+      "id": "comparator",
+      "prompt": "Que signifie généralement comparator(a, b) < 0 ?",
+      "choices": ["a vient avant b", "a et b sont égaux", "a vient après b"],
+      "answer": 0,
+      "explanation": "Le signe du comparateur exprime l’ordre. Les compteurs restent propres à l’algorithme demandé.",
+      "day": 4
+    },
+    {
+      "id": "closure",
+      "prompt": "Que renvoie x => y => x + y après le premier appel avec x = 2 ?",
+      "choices": ["Le nombre 2", "Une fonction qui mémorise x", "Une Promise"],
+      "answer": 1,
+      "explanation": "La fonction extérieure renvoie une fonction ; la closure conserve l’accès à x.",
+      "day": 5
+    },
+    {
+      "id": "recursion",
+      "prompt": "Quel cas doit être traité avant de parcourir les propriétés d’une valeur ?",
+      "choices": [
+        "null et les primitives",
+        "Uniquement les nombres pairs",
+        "Uniquement les chaînes vides"
+      ],
+      "answer": 0,
+      "explanation": "null et les primitives constituent des cas d’arrêt fréquents ; les tableaux nécessitent ensuite le traitement prévu par la consigne.",
+      "day": 6
+    }
+  ],
+  "levels": {
+    "array-reverse-chunks": 2,
+    "bubble-sort-analyzer": 3,
+    "character-maker": 4,
+    "divisorfinder": 1,
+    "election-mix": 4,
+    "evensum": 1,
+    "factorial": 1,
+    "fibonacci": 1,
+    "flat-object": 4,
+    "grid-words-finder": 2,
+    "grid-words-finder-2": 3,
+    "insertion-sort-analyzer": 3,
+    "nested-array-reverser": 2,
+    "object-lab": 4,
+    "palindromic-chains": 2,
+    "perfectnum": 1,
+    "pipeline": 4,
+    "sentencepyramid": 2,
+    "snake-path-validator": 3
+  }
+}

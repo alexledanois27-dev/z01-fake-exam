@@ -1,5 +1,6 @@
 // Rebuilt on every exercise/mode change: revealed help never follows into an exam.
 function renderTrainingGuide(exercise) {
+  syncSprintContext(exercise);
   closeLearningJournal();
   syncJournalControls();
   closeRevisionLesson();

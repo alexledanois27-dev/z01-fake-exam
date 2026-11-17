@@ -374,3 +374,11 @@ Les appels directs aux fonctions Go des runners utilisent aussi `--pull never` :
 précharger les images avant les tests Docker lancés hors du handler HTTP. Les
 tests simulés vérifient le regroupement des demandes, la pause après échec,
 la reprise, la libération des places et l’absence de faux résultat de correction.
+
+## Prototype de parcours JavaScript
+
+La pédagogie est décrite dans `frontend/learning/js-checkpoint-sprint.json`,
+intégré au bundle par le builder. La bibliothèque `checkpoint-sprint.js` gère
+les repères locaux, distincts des scores d’examen. Le module d’application du
+même nom ouvre le tableau de bord et suit les défis en entraînement. Voir le
+[guide du prototype](prototype-parcours-js.md) pour les limites et tests à rejouer.

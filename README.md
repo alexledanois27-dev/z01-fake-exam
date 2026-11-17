@@ -75,6 +75,16 @@ Ces références complètent les aides progressives et sont masquées en examen.
 Les nouvelles fiches contiennent syntaxe, exemples autonomes, pièges et checklist,
 sans solution complète du sujet. Voir [le guide des fiches](learning-content/README.md).
 
+### Prototype : parcours JavaScript vers le N4
+
+Le bouton **Parcours JS ↗** propose sept séances, un diagnostic express, des
+exemples de syntaxe, les fiches associées et les 19 sujets de référence N1 à N4.
+Les défis distinguent une correction avec aide, sans aide et refaite au moins
+24 heures plus tard. Les derniers échecs et les rappels guident la révision.
+Le parcours reste hors examen et conserve son suivi dans ce navigateur.
+Ce prototype vise une préparation intensive ; il ne garantit pas de score réel.
+Voir [le guide et le scénario de test](docs/prototype-parcours-js.md).
+
 ### Historique et bilan d’apprentissage
 
 Le bouton **Historique**, dans l’en-tête de l’éditeur, permet de relire le code et
