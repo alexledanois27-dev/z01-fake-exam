@@ -75,15 +75,16 @@ Ces références complètent les aides progressives et sont masquées en examen.
 Les nouvelles fiches contiennent syntaxe, exemples autonomes, pièges et checklist,
 sans solution complète du sujet. Voir [le guide des fiches](learning-content/README.md).
 
-### Prototype : parcours JavaScript vers le N4
+### Prototype : apprendre JavaScript en venant de Go
 
-Le bouton **Parcours JS ↗** propose sept séances, un diagnostic express, des
-exemples de syntaxe, les fiches associées et les 19 sujets de référence N1 à N4.
-Les défis distinguent une correction avec aide, sans aide et refaite au moins
-24 heures plus tard. Les derniers échecs et les rappels guident la révision.
-Le parcours reste hors examen et conserve son suivi dans ce navigateur.
-Ce prototype vise une préparation intensive ; il ne garantit pas de score réel.
-Voir [le guide et le scénario de test](docs/prototype-parcours-js.md).
+**Parcours JS ↗** explique les différences Go → JavaScript à travers **63 petits
+exercices en 12 chapitres**. Chaque étape comporte explication, comparaison,
+fonction à compléter, tests dans Docker, indices et corrigé commenté. Les
+brouillons se reprennent automatiquement. Les résultats attendus et obtenus
+s’affichent avant de passer à la suite ; les mutations d’entrée sont contrôlées.
+Des ponts relient ensuite les briques aux 19 sujets de référence N1 à N4.
+Le suivi reste distinct des scores d’entraînement et d’examen. Ce prototype
+ne garantit pas une note au vrai checkpoint ; [guide du parcours](docs/prototype-parcours-js.md).
 
 ### Historique et bilan d’apprentissage
 

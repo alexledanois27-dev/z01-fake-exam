@@ -1,0 +1,3042 @@
+{
+  "version": 1,
+  "title": "De Go au checkpoint JavaScript",
+  "target": "Comprendre puis résoudre les niveaux 1 à 4",
+  "preserveInputs": true,
+  "modules": [
+    {
+      "id": "basics",
+      "title": "Quitter les réflexes de syntaxe Go",
+      "goal": "Écrire une fonction JavaScript et comprendre ce qu’elle renvoie.",
+      "go": "func double(n int) int {\n    return n * 2\n}",
+      "js": "function double(n) {\n  return n * 2;\n}",
+      "notes": [
+        "Dans ces exercices Node.js, écris directement la fonction demandée : pas de package main, pas de func main et pas d’import fmt. Le test appelle ta fonction.",
+        "Les paramètres et la valeur de retour ne portent pas de type dans la signature. Cela ne supprime pas les types : JavaScript les vérifie au moment d’exécuter les opérations.",
+        "return termine la fonction et transmet une valeur au test. console.log affiche une valeur mais ne remplace jamais return.",
+        "Les accolades entourent le corps. Les points-virgules sont souvent insérés automatiquement ; pour éviter les pièges, garde return et son expression sur la même ligne."
+      ],
+      "checkpoint": ["factorial", "evensum"],
+      "lessons": [
+        {
+          "id": "js-learn-return",
+          "title": "Renvoyer une valeur",
+          "target": "doubleValue",
+          "minutes": 5,
+          "task": "Renvoie le double de n. N’affiche rien.",
+          "bridge": "En Go : func doubleValue(n int) int. En JS : function doubleValue(n).",
+          "explanation": [
+            "n contient l’argument donné par le test.",
+            "n * 2 calcule un nombre ; return transmet ce nombre.",
+            "console.log(n * 2) ne suffit pas : la fonction renverrait undefined."
+          ],
+          "starter": "function doubleValue(n) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Utilise le paramètre n, pas une valeur écrite en dur.",
+            "Multiplie n par 2."
+          ],
+          "solution": "function doubleValue(n) {\n  return n * 2;\n}",
+          "walkthrough": [
+            "Utilise le paramètre n, pas une valeur écrite en dur.",
+            "Multiplie n par 2.",
+            "Retourne le calcul ; aucun programme main n’est nécessaire."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [4],
+              "expected": 8,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [0],
+              "expected": 0,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [-3],
+              "expected": -6,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-let",
+          "title": "Faire évoluer une variable",
+          "target": "addBonus",
+          "minutes": 5,
+          "task": "Crée let result = score, ajoute 3 à result, puis renvoie result.",
+          "bridge": "let joue ici le rôle d’une variable locale déclarée avec := et réaffectée ensuite.",
+          "explanation": [
+            "let autorise une nouvelle affectation à la variable.",
+            "La déclaration n’a lieu qu’une fois ; ensuite on écrit result += 3.",
+            "Évite var : sa portée diffère de let et n’aide pas pour ces exercices."
+          ],
+          "starter": "function addBonus(score) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Déclare result avec let et la valeur score.",
+            "Modifie result après sa déclaration."
+          ],
+          "solution": "function addBonus(score) {\n  let result = score;\n  result += 3;\n  return result;\n}",
+          "walkthrough": [
+            "Déclare result avec let et la valeur score.",
+            "Modifie result après sa déclaration.",
+            "Le return doit utiliser result, pas score."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [2],
+              "expected": 5,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [-3],
+              "expected": 0,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-const",
+          "title": "Nommer une valeur stable",
+          "target": "withTax",
+          "minutes": 5,
+          "task": "Déclare const rate = 2, puis renvoie price * rate.",
+          "bridge": "const fixe la liaison JS ; ce n’est pas exactement une constante de compilation Go.",
+          "explanation": [
+            "const interdit de réaffecter le nom à une autre valeur.",
+            "La valeur initiale doit être fournie dans la déclaration.",
+            "Pour les objets et tableaux, const ne rend pas leur contenu immuable : on y reviendra."
+          ],
+          "starter": "function withTax(price) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Déclare rate à l’intérieur de la fonction.",
+            "Il n’est pas nécessaire de réaffecter rate."
+          ],
+          "solution": "function withTax(price) {\n  const rate = 2;\n  return price * rate;\n}",
+          "walkthrough": [
+            "Déclare rate à l’intérieur de la fonction.",
+            "Il n’est pas nécessaire de réaffecter rate.",
+            "Retourne price multiplié par rate."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [7],
+              "expected": 14,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [0],
+              "expected": 0,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-types",
+          "title": "Vérifier un type au runtime",
+          "target": "valueType",
+          "minutes": 5,
+          "task": "Renvoie le résultat de typeof value.",
+          "bridge": "Go connaît le type statique ; typeof en JS produit une chaîne décrivant le type à l’exécution.",
+          "explanation": [
+            "typeof 3 vaut \"number\" et typeof \"3\" vaut \"string\".",
+            "Un tableau est un objet : typeof [] vaut \"object\".",
+            "typeof null vaut aussi \"object\" : c’est un cas historique, pas une preuve que null possède des propriétés."
+          ],
+          "starter": "function valueType(value) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "typeof est un opérateur, pas une fonction à importer.",
+            "Écris typeof suivi du paramètre."
+          ],
+          "solution": "function valueType(value) {\n  return typeof value;\n}",
+          "walkthrough": [
+            "typeof est un opérateur, pas une fonction à importer.",
+            "Écris typeof suivi du paramètre.",
+            "Retourne sa chaîne sans l’afficher."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [3],
+              "expected": "number",
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": ["3"],
+              "expected": "string",
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [true],
+              "expected": "boolean",
+              "calls": []
+            },
+            {
+              "label": "Cas 4",
+              "args": [null],
+              "expected": "object",
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-strict-equality",
+          "title": "Éviter les conversions cachées",
+          "target": "sameValue",
+          "minutes": 5,
+          "task": "Renvoie true si a et b sont égaux avec ===, sinon false.",
+          "bridge": "L’égalité Go ne mélange pas implicitement int et string. En JS, choisis === pour éviter la coercition de ==.",
+          "explanation": [
+            "3 === \"3\" est faux car les types diffèrent.",
+            "Le résultat d’une comparaison est déjà un booléen : inutile d’ajouter if puis return true/false.",
+            "Les tableaux et objets sont comparés par identité avec ===, pas par contenu."
+          ],
+          "starter": "function sameValue(a, b) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Compare directement a et b.",
+            "Utilise trois signes égal."
+          ],
+          "solution": "function sameValue(a, b) {\n  return a === b;\n}",
+          "walkthrough": [
+            "Compare directement a et b.",
+            "Utilise trois signes égal.",
+            "Retourne le booléen de la comparaison."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [3, 3],
+              "expected": true,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [3, "3"],
+              "expected": false,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [false, 0],
+              "expected": false,
+              "calls": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "numbers",
+      "title": "Nombres, conditions et boucles",
+      "goal": "Transférer les algorithmes simples du N1 sans se tromper sur les nombres JS.",
+      "go": "q := 7 / 2 // division entière si les opérandes sont int\nfor i := 0; i < 3; i++ { /* ... */ }",
+      "js": "const q = 7 / 2; // 3.5\nfor (let i = 0; i < 3; i++) { /* ... */ }",
+      "notes": [
+        "Le type number utilise des nombres flottants. Une division de deux entiers peut donc produire une fraction. Pour tronquer vers zéro, utilise Math.trunc.",
+        "Les parenthèses du for JS sont obligatoires. Les trois parties restent initialisation ; condition ; mise à jour.",
+        "Le modulo % permet de tester la divisibilité. Pour un entier négatif, son reste peut être négatif ; normalise avec Math.abs si la consigne le demande.",
+        "Un accumulateur de somme commence à 0, un accumulateur de produit à 1. Le return est placé après la boucle si tous les éléments doivent être traités."
+      ],
+      "checkpoint": [
+        "evensum",
+        "divisorfinder",
+        "factorial",
+        "perfectnum",
+        "fibonacci"
+      ],
+      "lessons": [
+        {
+          "id": "js-learn-condition",
+          "title": "Écrire un cas de base",
+          "target": "positiveOrZero",
+          "minutes": 5,
+          "task": "Renvoie n s’il est strictement positif ; sinon renvoie 0.",
+          "bridge": "En JS, if prend des parenthèses : if (condition) { ... }.",
+          "explanation": [
+            "Le cas n = 0 doit être prévu.",
+            "Un return dans if quitte la fonction : le code suivant ne s’exécute plus.",
+            "On peut donc retourner 0 après le bloc, sans else."
+          ],
+          "starter": "function positiveOrZero(n) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Compare n à zéro.",
+            "Retourne n uniquement dans le cas positif."
+          ],
+          "solution": "function positiveOrZero(n) {\n  if (n > 0) return n;\n  return 0;\n}",
+          "walkthrough": [
+            "Compare n à zéro.",
+            "Retourne n uniquement dans le cas positif.",
+            "Ajoute un retour pour les autres cas."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [4],
+              "expected": 4,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [0],
+              "expected": 0,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [-2],
+              "expected": 0,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-modulo",
+          "title": "Reconnaître un multiple",
+          "target": "isMultiple",
+          "minutes": 5,
+          "task": "divisor est non nul. Renvoie true si n est divisible par divisor.",
+          "bridge": "Le test n % divisor === 0 correspond au même raisonnement qu’en Go.",
+          "explanation": [
+            "% calcule le reste de la division.",
+            "Un reste nul signifie que la division tombe juste.",
+            "Ce test fonctionne aussi avec n négatif lorsque le reste vaut zéro."
+          ],
+          "starter": "function isMultiple(n, divisor) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Calcule le reste, pas le quotient.",
+            "Compare le reste à zéro avec ===."
+          ],
+          "solution": "function isMultiple(n, divisor) {\n  return n % divisor === 0;\n}",
+          "walkthrough": [
+            "Calcule le reste, pas le quotient.",
+            "Compare le reste à zéro avec ===.",
+            "La comparaison fournit directement true ou false."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [12, 3],
+              "expected": true,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [10, 3],
+              "expected": false,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [-8, 4],
+              "expected": true,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-division",
+          "title": "Retrouver la division entière",
+          "target": "integerPart",
+          "minutes": 5,
+          "task": "b est non nul. Renvoie la partie entière de a / b en tronquant vers zéro.",
+          "bridge": "Math.trunc(-3.5) vaut -3, comme la division entière Go ; Math.floor(-3.5) vaudrait -4.",
+          "explanation": [
+            "a / b conserve la partie fractionnaire.",
+            "Math est disponible sans import.",
+            "Math.trunc retire la partie fractionnaire, y compris pour une valeur négative."
+          ],
+          "starter": "function integerPart(a, b) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Calcule d’abord a / b.",
+            "Passe ce quotient à Math.trunc."
+          ],
+          "solution": "function integerPart(a, b) {\n  return Math.trunc(a / b);\n}",
+          "walkthrough": [
+            "Calcule d’abord a / b.",
+            "Passe ce quotient à Math.trunc.",
+            "Évite Math.floor si le résultat peut être négatif."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [7, 2],
+              "expected": 3,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [-7, 2],
+              "expected": -3,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [8, 2],
+              "expected": 4,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-sum-loop",
+          "title": "Accumuler une somme",
+          "target": "sumUntil",
+          "minutes": 5,
+          "task": "n est entier et positif ou nul. Renvoie 1 + 2 + ... + n ; pour n = 0, renvoie 0.",
+          "bridge": "La boucle Go se réécrit presque à l’identique, mais avec let et des parenthèses.",
+          "explanation": [
+            "L’accumulateur existe avant la boucle.",
+            "La borne <= n inclut n.",
+            "Pour n = 0, la boucle ne démarre pas et la somme initiale est le bon résultat."
+          ],
+          "starter": "function sumUntil(n) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Commence total à zéro.",
+            "Ajoute chaque entier de 1 à n inclus."
+          ],
+          "solution": "function sumUntil(n) {\n  let total = 0;\n  for (let i = 1; i <= n; i++) total += i;\n  return total;\n}",
+          "walkthrough": [
+            "Commence total à zéro.",
+            "Ajoute chaque entier de 1 à n inclus.",
+            "Retourne total après la boucle."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [4],
+              "expected": 10,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [0],
+              "expected": 0,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [1],
+              "expected": 1,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-while",
+          "title": "Faire décroître un état",
+          "target": "digitCount",
+          "minutes": 8,
+          "task": "n est un entier positif. Compte ses chiffres décimaux en le divisant successivement par 10.",
+          "bridge": "Le while JS exprime une boucle conditionnelle ; Go utiliserait for n > 0.",
+          "explanation": [
+            "Chaque division par 10 retire un chiffre après Math.trunc.",
+            "Il faut mettre à jour n, sinon la boucle ne termine pas.",
+            "Le contrat exclut zéro ; on n’a donc pas à inventer son traitement ici."
+          ],
+          "starter": "function digitCount(n) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Déclare un compteur avant la boucle.",
+            "Tant que n est positif, retire un chiffre et incrémente le compteur."
+          ],
+          "solution": "function digitCount(n) {\n  let count = 0;\n  while (n > 0) {\n    n = Math.trunc(n / 10);\n    count++;\n  }\n  return count;\n}",
+          "walkthrough": [
+            "Déclare un compteur avant la boucle.",
+            "Tant que n est positif, retire un chiffre et incrémente le compteur.",
+            "La division doit produire un entier à chaque tour."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [7],
+              "expected": 1,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [1024],
+              "expected": 4,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [10],
+              "expected": 2,
+              "calls": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "patterns",
+      "title": "Assembler les briques du N1",
+      "goal": "Reconnaître les petites étapes utiles aux cinq sujets numériques.",
+      "go": "values := []int{}\nvalues = append(values, 3)",
+      "js": "const values = [];\nvalues.push(3);",
+      "notes": [
+        "Un tableau JS est créé avec []. push ajoute à sa fin et modifie ce tableau. Sa valeur de retour est la nouvelle longueur, pas le tableau.",
+        "Pour chercher les diviseurs propres de n, le candidat commence à 1 et reste strictement inférieur à n. n = 1 doit donc produire un tableau vide.",
+        "La récurrence de Fibonacci demande de conserver deux états. Calcule la valeur suivante avant d’écraser les valeurs nécessaires au calcul.",
+        "Un mini-exercice entraîne ici une seule brique ; les vrais sujets liés au bas du chapitre demandent de les assembler."
+      ],
+      "checkpoint": ["divisorfinder", "perfectnum", "factorial", "fibonacci"],
+      "lessons": [
+        {
+          "id": "js-learn-absolute",
+          "title": "Normaliser une entrée",
+          "target": "magnitude",
+          "minutes": 5,
+          "task": "Renvoie la valeur absolue de n.",
+          "bridge": "Math.abs remplace une condition n < 0 puis -n ; aucune conversion de type Go n’est requise.",
+          "explanation": [
+            "Math.abs(-5) vaut 5.",
+            "La valeur positive reste inchangée.",
+            "La valeur absolue ne doit pas être confondue avec l’arrondi."
+          ],
+          "starter": "function magnitude(n) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Utilise l’objet Math.",
+            "La méthode attend un seul nombre."
+          ],
+          "solution": "function magnitude(n) {\n  return Math.abs(n);\n}",
+          "walkthrough": [
+            "Utilise l’objet Math.",
+            "La méthode attend un seul nombre.",
+            "Retourne son résultat."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [-5],
+              "expected": 5,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [0],
+              "expected": 0,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [7],
+              "expected": 7,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-proper-divisors",
+          "title": "Construire une liste filtrée",
+          "target": "smallDivisors",
+          "minutes": 8,
+          "task": "n est entier strictement positif. Renvoie ses diviseurs positifs strictement inférieurs à n.",
+          "bridge": "append Go devient push en JS ; le tableau peut rester déclaré avec const.",
+          "explanation": [
+            "const bloque la réaffectation du nom, pas push.",
+            "Teste chaque candidat avec le modulo.",
+            "Le résultat doit être un tableau, même quand aucun candidat ne convient."
+          ],
+          "starter": "function smallDivisors(n) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Crée [] avant la boucle.",
+            "Ajoute d seulement si n % d === 0."
+          ],
+          "solution": "function smallDivisors(n) {\n  const result = [];\n  for (let d = 1; d < n; d++) {\n    if (n % d === 0) result.push(d);\n  }\n  return result;\n}",
+          "walkthrough": [
+            "Crée [] avant la boucle.",
+            "Ajoute d seulement si n % d === 0.",
+            "La condition de boucle est d < n."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [1],
+              "expected": [],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [10],
+              "expected": [1, 2, 5],
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [7],
+              "expected": [1],
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-product",
+          "title": "Initialiser un produit",
+          "target": "productOf",
+          "minutes": 5,
+          "task": "Renvoie le produit des nombres de values. Pour [], renvoie 1.",
+          "bridge": "range sur un slice Go devient for...of pour lire les valeurs d’un tableau JS.",
+          "explanation": [
+            "for (const value of values) fournit les éléments, pas les indices.",
+            "Le produit neutre vaut 1.",
+            "for...in ne convient pas ici : il parcourt des noms de propriétés."
+          ],
+          "starter": "function productOf(values) {\n  // Écris ton code ici.\n}\n",
+          "hints": ["Initialise product à 1.", "Multiplie par chaque élément."],
+          "solution": "function productOf(values) {\n  let product = 1;\n  for (const value of values) product *= value;\n  return product;\n}",
+          "walkthrough": [
+            "Initialise product à 1.",
+            "Multiplie par chaque élément.",
+            "Retourne après le parcours complet."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [[2, 3, 4]],
+              "expected": 24,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[]],
+              "expected": 1,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [[5]],
+              "expected": 5,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-pair-state",
+          "title": "Mettre à jour deux états",
+          "target": "nextPair",
+          "minutes": 5,
+          "task": "Renvoie [b, a + b], le couple suivant d’une suite additive.",
+          "bridge": "En Go, une fonction pourrait renvoyer deux valeurs. Ici on renvoie explicitement un tableau à deux éléments.",
+          "explanation": [
+            "Un return JS transporte une seule valeur ; cette valeur peut être un tableau.",
+            "Évaluer [b, a + b] ne modifie pas les arguments.",
+            "Ce couple est la brique d’une version itérative de Fibonacci."
+          ],
+          "starter": "function nextPair(a, b) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Le premier élément du résultat est b.",
+            "Le second utilise encore les anciens a et b."
+          ],
+          "solution": "function nextPair(a, b) {\n  return [b, a + b];\n}",
+          "walkthrough": [
+            "Le premier élément du résultat est b.",
+            "Le second utilise encore les anciens a et b.",
+            "Retourne les deux valeurs entre crochets."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [0, 1],
+              "expected": [1, 1],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [3, 5],
+              "expected": [5, 8],
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-repeat-state",
+          "title": "Répéter une transition",
+          "target": "advancePair",
+          "minutes": 8,
+          "task": "Applique steps fois la transition [a,b] → [b,a+b], puis renvoie le couple final.",
+          "bridge": "let [x, y] = [a, b] décompose un tableau ; cela ressemble à une affectation multiple Go.",
+          "explanation": [
+            "La décomposition lit les éléments dans l’ordre.",
+            "Calcule next avant de remplacer x.",
+            "Zéro étape doit rendre le couple d’origine."
+          ],
+          "starter": "function advancePair(a, b, steps) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Copie les deux états dans des variables modifiables.",
+            "À chaque tour, calcule la somme avant de remplacer les états."
+          ],
+          "solution": "function advancePair(a, b, steps) {\n  let x = a;\n  let y = b;\n  for (let i = 0; i < steps; i++) {\n    const next = x + y;\n    x = y;\n    y = next;\n  }\n  return [x, y];\n}",
+          "walkthrough": [
+            "Copie les deux états dans des variables modifiables.",
+            "À chaque tour, calcule la somme avant de remplacer les états.",
+            "Retourne le couple seulement à la fin."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [0, 1, 0],
+              "expected": [0, 1],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [0, 1, 3],
+              "expected": [2, 3],
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [2, 3, 2],
+              "expected": [5, 8],
+              "calls": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "strings",
+      "title": "Chaînes et indices",
+      "goal": "Manipuler du texte sans transposer len et les runes à l’aveugle.",
+      "go": "len(\"été\") // nombre d’octets\nlen([]rune(\"été\")) // nombre de points de code",
+      "js": "\"été\".length // unités UTF-16\nArray.from(\"été\").length // points de code",
+      "notes": [
+        "length est une propriété : écris text.length, pas len(text). Pour du texte ASCII, indices et caractères coïncident ; pour un emoji, une unité UTF-16 ne suffit pas toujours.",
+        "Les chaînes sont immuables. text[0] = \"A\" ne construit pas une nouvelle chaîne : il faut créer le résultat par concaténation ou des méthodes.",
+        "split sépare en tableau, join reconstruit une chaîne. trim enlève les blancs aux extrémités ; split(/\\s+/) gère plusieurs espaces entre les mots.",
+        "slice(start, end) inclut start et exclut end, comme beaucoup de découpages Go. Les exercices précisent ici les cas vides et le type de résultat."
+      ],
+      "checkpoint": [
+        "sentencepyramid",
+        "palindromic-chains",
+        "grid-words-finder"
+      ],
+      "lessons": [
+        {
+          "id": "js-learn-string-length",
+          "title": "Lire une propriété",
+          "target": "asciiLength",
+          "minutes": 5,
+          "task": "Le texte contient uniquement de l’ASCII. Renvoie sa longueur.",
+          "bridge": "Pour ces entrées ASCII, text.length joue le rôle de len(text), sans fonction len.",
+          "explanation": [
+            "length n’a pas de parenthèses.",
+            "Une chaîne vide a une longueur nulle.",
+            "Ce contrat ASCII évite de confondre unités UTF-16, points de code et caractères visuels."
+          ],
+          "starter": "function asciiLength(text) {\n  // Écris ton code ici.\n}\n",
+          "hints": ["Utilise le paramètre text.", "Lis sa propriété length."],
+          "solution": "function asciiLength(text) {\n  return text.length;\n}",
+          "walkthrough": [
+            "Utilise le paramètre text.",
+            "Lis sa propriété length.",
+            "Retourne un nombre, pas une chaîne."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": ["go"],
+              "expected": 2,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [""],
+              "expected": 0,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": ["hello"],
+              "expected": 5,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-first-char",
+          "title": "Protéger un accès",
+          "target": "firstAscii",
+          "minutes": 5,
+          "task": "Renvoie le premier caractère ASCII ou la chaîne vide si text est vide.",
+          "bridge": "Un accès JS hors limites renvoie undefined, au lieu d’une panique d’index Go.",
+          "explanation": [
+            "Teste le cas vide avant l’accès.",
+            "text[0] fournit le premier élément.",
+            "La valeur demandée pour le cas vide est \"\", pas undefined."
+          ],
+          "starter": "function firstAscii(text) {\n  // Écris ton code ici.\n}\n",
+          "hints": ["Traite text.length === 0.", "Le premier indice est zéro."],
+          "solution": "function firstAscii(text) {\n  if (text.length === 0) return \"\";\n  return text[0];\n}",
+          "walkthrough": [
+            "Traite text.length === 0.",
+            "Le premier indice est zéro.",
+            "La fonction doit toujours renvoyer une chaîne."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": ["abc"],
+              "expected": "a",
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [""],
+              "expected": "",
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": ["Z"],
+              "expected": "Z",
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-split-words",
+          "title": "Passer du texte aux mots",
+          "target": "wordsOf",
+          "minutes": 8,
+          "task": "Supprime les blancs aux extrémités et renvoie les mots séparés par un ou plusieurs blancs. Une entrée vide ou blanche donne [].",
+          "bridge": "C’est proche de strings.Fields en Go, mais il faut composer trim et split en JS.",
+          "explanation": [
+            "trim produit une nouvelle chaîne.",
+            "Une chaîne vide découpée naïvement donne [\"\"], pas [].",
+            "/\\s+/ signifie une suite d’un ou plusieurs caractères blancs."
+          ],
+          "starter": "function wordsOf(text) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Conserve le texte nettoyé dans une variable.",
+            "Retourne [] avant split si cette variable est vide."
+          ],
+          "solution": "function wordsOf(text) {\n  const cleaned = text.trim();\n  if (cleaned === \"\") return [];\n  return cleaned.split(/\\s+/);\n}",
+          "walkthrough": [
+            "Conserve le texte nettoyé dans une variable.",
+            "Retourne [] avant split si cette variable est vide.",
+            "Découpe avec /\\s+/, pas uniquement avec \" \"."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": ["  red   blue "],
+              "expected": ["red", "blue"],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": ["  "],
+              "expected": [],
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": ["one\ttwo"],
+              "expected": ["one", "two"],
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-join-prefix",
+          "title": "Reconstruire une phrase",
+          "target": "prefixWords",
+          "minutes": 5,
+          "task": "Renvoie les count premiers mots reliés par un espace ; ne modifie pas words. count est positif ou nul.",
+          "bridge": "slice ressemble au découpage Go ; join ressemble à strings.Join.",
+          "explanation": [
+            "slice(0, count) prend les indices de 0 à count - 1.",
+            "slice produit un nouveau tableau.",
+            "join(\" \") place un espace entre les mots et n’en ajoute pas à la fin."
+          ],
+          "starter": "function prefixWords(words, count) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Prends le préfixe avec slice.",
+            "Relie ce tableau avec join."
+          ],
+          "solution": "function prefixWords(words, count) {\n  return words.slice(0, count).join(\" \");\n}",
+          "walkthrough": [
+            "Prends le préfixe avec slice.",
+            "Relie ce tableau avec join.",
+            "Le séparateur est un espace."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [["red", "blue", "green"], 2],
+              "expected": "red blue",
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [["red"], 0],
+              "expected": "",
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-reverse-text",
+          "title": "Inverser un texte ASCII",
+          "target": "reverseAscii",
+          "minutes": 5,
+          "task": "Renvoie les caractères ASCII dans l’ordre inverse.",
+          "bridge": "Une chaîne Go ou JS est immuable ; ici on passe par un tableau temporaire.",
+          "explanation": [
+            "split(\"\") transforme l’ASCII en tableau de caractères.",
+            "reverse modifie ce tableau temporaire.",
+            "join(\"\") retire les séparateurs pour reconstruire une chaîne."
+          ],
+          "starter": "function reverseAscii(text) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Commence par split(\"\").",
+            "Inverse le tableau, pas directement la chaîne."
+          ],
+          "solution": "function reverseAscii(text) {\n  return text.split(\"\").reverse().join(\"\");\n}",
+          "walkthrough": [
+            "Commence par split(\"\").",
+            "Inverse le tableau, pas directement la chaîne.",
+            "Termine avec join(\"\")."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": ["abc"],
+              "expected": "cba",
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [""],
+              "expected": "",
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": ["1221"],
+              "expected": "1221",
+              "calls": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "arrays",
+      "title": "Tableaux et copies",
+      "goal": "Savoir quand une opération modifie une entrée.",
+      "go": "b := a // des slices peuvent partager leur tableau sous-jacent\nb = append(b, 4)",
+      "js": "const b = a; // exactement le même objet tableau\nconst copy = [...a]; // nouveau tableau, copie superficielle",
+      "notes": [
+        "Un tableau JS est un objet. Affecter const b = a ne copie ni ses éléments ni son identité ; b et a désignent le même tableau.",
+        "Une tranche Go possède longueur et capacité et peut partager un tableau sous-jacent. Ne transpose pas ce modèle : en JS, l’affectation partage directement le même objet tableau.",
+        "push, pop et reverse modifient le tableau. slice et map créent un autre tableau. La notation [...a] copie un niveau, pas les objets imbriqués.",
+        "Une transformation doit préciser si la mutation est permise. Les tests suivants vérifient aussi l’entrée quand c’est utile."
+      ],
+      "checkpoint": [
+        "array-reverse-chunks",
+        "nested-array-reverser",
+        "palindromic-chains"
+      ],
+      "lessons": [
+        {
+          "id": "js-learn-append-copy",
+          "title": "Ajouter sans modifier",
+          "target": "appendCopy",
+          "minutes": 5,
+          "task": "Renvoie un nouveau tableau contenant arr puis value, sans modifier arr.",
+          "bridge": "append Go ne garantit pas une copie indépendante ; [...arr, value] crée ici un nouveau tableau JS.",
+          "explanation": [
+            "...arr déploie les éléments dans un autre tableau.",
+            "value devient son dernier élément.",
+            "La copie reste superficielle pour les éléments qui sont eux-mêmes des objets."
+          ],
+          "starter": "function appendCopy(arr, value) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Commence un nouveau littéral [].",
+            "Déploie arr avec ...arr."
+          ],
+          "solution": "function appendCopy(arr, value) {\n  return [...arr, value];\n}",
+          "walkthrough": [
+            "Commence un nouveau littéral [].",
+            "Déploie arr avec ...arr.",
+            "Ajoute value après les éléments existants."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [[1, 2], 3],
+              "expected": [1, 2, 3],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[], 4],
+              "expected": [4],
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-reverse-copy",
+          "title": "Inverser sans effet de bord",
+          "target": "reverseCopy",
+          "minutes": 5,
+          "task": "Renvoie [tableau inversé, tableau original] sans modifier arr.",
+          "bridge": "Passer un tableau JS transmet une référence ; appeler arr.reverse() modifierait l’entrée.",
+          "explanation": [
+            "Copie d’abord le tableau.",
+            "Applique reverse sur cette copie.",
+            "Retourner aussi arr permet au test de vérifier qu’il n’a pas changé."
+          ],
+          "starter": "function reverseCopy(arr) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Crée une copie avec [...arr].",
+            "Appelle reverse sur copy."
+          ],
+          "solution": "function reverseCopy(arr) {\n  const copy = [...arr];\n  copy.reverse();\n  return [copy, arr];\n}",
+          "walkthrough": [
+            "Crée une copie avec [...arr].",
+            "Appelle reverse sur copy.",
+            "Renvoie les deux tableaux dans l’ordre demandé."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [[1, 2, 3]],
+              "expected": [
+                [3, 2, 1],
+                [1, 2, 3]
+              ],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[]],
+              "expected": [[], []],
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-chunks",
+          "title": "Découper en groupes",
+          "target": "chunksOf",
+          "minutes": 8,
+          "task": "size est entier > 0. Renvoie les groupes successifs de size éléments, y compris le dernier groupe incomplet.",
+          "bridge": "L’indice du for peut avancer de size au lieu de 1, comme en Go.",
+          "explanation": [
+            "slice tolère une borne de fin supérieure à la longueur.",
+            "La boucle doit continuer tant que le début du groupe est dans le tableau.",
+            "Chaque groupe est ajouté au tableau de résultat avec push."
+          ],
+          "starter": "function chunksOf(arr, size) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Avance l’indice du début de groupe de size à chaque tour.",
+            "Le groupe est arr.slice(i, i + size)."
+          ],
+          "solution": "function chunksOf(arr, size) {\n  const result = [];\n  for (let i = 0; i < arr.length; i += size) {\n    result.push(arr.slice(i, i + size));\n  }\n  return result;\n}",
+          "walkthrough": [
+            "Avance l’indice du début de groupe de size à chaque tour.",
+            "Le groupe est arr.slice(i, i + size).",
+            "N’exclus pas le dernier groupe incomplet."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [[1, 2, 3, 4, 5], 2],
+              "expected": [[1, 2], [3, 4], [5]],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[], 3],
+              "expected": [],
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-flatten-one",
+          "title": "Parcourir deux niveaux",
+          "target": "flattenOne",
+          "minutes": 8,
+          "task": "Renvoie les valeurs de rows dans l’ordre, dans un seul tableau. rows est un tableau de tableaux.",
+          "bridge": "Deux for...of remplacent ici deux boucles range imbriquées.",
+          "explanation": [
+            "La première boucle fournit une ligne.",
+            "La seconde fournit chaque valeur de cette ligne.",
+            "Un tableau de sortie unique est créé avant les deux boucles."
+          ],
+          "starter": "function flattenOne(rows) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Une seule liste result doit être partagée par les deux boucles.",
+            "Parcours rows puis chaque row."
+          ],
+          "solution": "function flattenOne(rows) {\n  const result = [];\n  for (const row of rows) {\n    for (const value of row) result.push(value);\n  }\n  return result;\n}",
+          "walkthrough": [
+            "Une seule liste result doit être partagée par les deux boucles.",
+            "Parcours rows puis chaque row.",
+            "Ajoute les valeurs, pas les lignes."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [[[1, 2], [], [3]]],
+              "expected": [1, 2, 3],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[]],
+              "expected": [],
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-nested-copy",
+          "title": "Distinguer copie superficielle et profonde",
+          "target": "editFirstCopy",
+          "minutes": 8,
+          "task": "rows contient au moins une ligne non vide. Copie le tableau et chacune de ses lignes, remplace la première case de la copie par value, puis renvoie [copie, original].",
+          "bridge": "Copier une tranche de tranches Go n’isole pas forcément les éléments ; même piège avec les objets imbriqués JS.",
+          "explanation": [
+            "[...rows] copie seulement le premier niveau.",
+            "Chaque row doit aussi être copiée.",
+            "On modifie ensuite copy[0][0], jamais rows[0][0]."
+          ],
+          "starter": "function editFirstCopy(rows, value) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Construis un tableau de nouvelles lignes.",
+            "Copie chaque ligne avec [...row]."
+          ],
+          "solution": "function editFirstCopy(rows, value) {\n  const copy = [];\n  for (const row of rows) copy.push([...row]);\n  copy[0][0] = value;\n  return [copy, rows];\n}",
+          "walkthrough": [
+            "Construis un tableau de nouvelles lignes.",
+            "Copie chaque ligne avec [...row].",
+            "Change uniquement la case de copy."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [[[1, 2], [3]], 9],
+              "expected": [
+                [[9, 2], [3]],
+                [[1, 2], [3]]
+              ],
+              "calls": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "objects",
+      "title": "Objets et propriétés",
+      "goal": "Passer des maps Go aux objets JS sans perdre la notion de référence.",
+      "go": "value, ok := values[key]\nfor key, value := range values { /* ... */ }",
+      "js": "const ok = Object.hasOwn(values, key);\nconst value = values[key];\nfor (const [key, value] of Object.entries(values)) { /* ... */ }",
+      "notes": [
+        "Un objet littéral s’écrit { key: value }. obj.name lit la propriété nommée name ; obj[key] utilise la valeur de la variable key.",
+        "Une propriété absente donne undefined. Une propriété peut aussi exister avec la valeur undefined : pour vérifier sa présence propre, utilise Object.hasOwn.",
+        "Object.keys renvoie les clés propres énumérables. Object.entries renvoie des couples [clé, valeur] ; la décomposition du for extrait ces deux valeurs.",
+        "Deux variables peuvent partager un même objet. {...obj} crée une copie superficielle. Les clés d’objets sont des chaînes (ou des symboles), contrairement à une map Go typée."
+      ],
+      "checkpoint": [
+        "object-lab",
+        "election-mix",
+        "character-maker",
+        "flat-object"
+      ],
+      "lessons": [
+        {
+          "id": "js-learn-dynamic-key",
+          "title": "Lire une clé variable",
+          "target": "readKey",
+          "minutes": 5,
+          "task": "Renvoie obj[key].",
+          "bridge": "L’accès obj[key] ressemble à une map Go ; obj.key chercherait littéralement \"key\".",
+          "explanation": [
+            "key est ici un paramètre, pas un nom de propriété fixe.",
+            "Les crochets évaluent l’expression qu’ils contiennent.",
+            "Une propriété absente renverra undefined ; le test connaît ce cas."
+          ],
+          "starter": "function readKey(obj, key) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Entoure la variable key de crochets après obj.",
+            "N’utilise pas obj.key."
+          ],
+          "solution": "function readKey(obj, key) {\n  return obj[key];\n}",
+          "walkthrough": [
+            "Entoure la variable key de crochets après obj.",
+            "N’utilise pas obj.key.",
+            "Retourne directement la valeur lue."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                {
+                  "name": "Ada"
+                },
+                "name"
+              ],
+              "expected": "Ada",
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [
+                {
+                  "key": 7,
+                  "x": 2
+                },
+                "x"
+              ],
+              "expected": 2,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [{}, "missing"],
+              "expected": {
+                "$undefined": true
+              },
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-own-key",
+          "title": "Vérifier une présence",
+          "target": "containsKey",
+          "minutes": 5,
+          "task": "Renvoie si obj possède elle-même la propriété key avec Object.hasOwn.",
+          "bridge": "C’est le rôle du ok de value, ok := m[key], mais la lecture et le test sont séparés.",
+          "explanation": [
+            "Une valeur 0, false ou \"\" n’indique pas une absence.",
+            "Ne teste donc pas seulement if (obj[key]).",
+            "Object.hasOwn ne remonte pas la chaîne des prototypes."
+          ],
+          "starter": "function containsKey(obj, key) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "La présence et la valeur sont deux questions différentes.",
+            "Passe obj et key à Object.hasOwn."
+          ],
+          "solution": "function containsKey(obj, key) {\n  return Object.hasOwn(obj, key);\n}",
+          "walkthrough": [
+            "La présence et la valeur sont deux questions différentes.",
+            "Passe obj et key à Object.hasOwn.",
+            "Retourne le booléen obtenu."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                {
+                  "a": 0
+                },
+                "a"
+              ],
+              "expected": true,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [{}, "a"],
+              "expected": false,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [{}, "toString"],
+              "expected": false,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-entries",
+          "title": "Additionner des propriétés",
+          "target": "sumProperties",
+          "minutes": 8,
+          "task": "Toutes les valeurs propres sont numériques. Renvoie leur somme.",
+          "bridge": "Object.entries prépare un tableau de couples, puis for...of joue le rôle du range clé/valeur Go.",
+          "explanation": [
+            "Chaque entrée est un tableau à deux éléments.",
+            "const [key, value] récupère les deux éléments.",
+            "La clé n’intervient pas dans cette somme, mais la valeur oui."
+          ],
+          "starter": "function sumProperties(obj) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Initialise une somme à zéro.",
+            "Parcours Object.entries(obj)."
+          ],
+          "solution": "function sumProperties(obj) {\n  let total = 0;\n  for (const [key, value] of Object.entries(obj)) total += value;\n  return total;\n}",
+          "walkthrough": [
+            "Initialise une somme à zéro.",
+            "Parcours Object.entries(obj).",
+            "Ajoute value, pas key."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                {
+                  "a": 2,
+                  "b": 3
+                }
+              ],
+              "expected": 5,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [{}],
+              "expected": 0,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-object-copy",
+          "title": "Changer une propriété sans mutation",
+          "target": "renameCopy",
+          "minutes": 5,
+          "task": "Renvoie [nouvel objet, original] ; le nouvel objet possède name à la valeur donnée et conserve les autres clés.",
+          "bridge": "Comme une map Go, un objet partagé peut être modifié ailleurs ; ici le contrat demande une copie.",
+          "explanation": [
+            "{...obj} recopie les propriétés propres énumérables.",
+            "Une propriété écrite après le spread remplace la valeur précédente.",
+            "L’objet original ne doit pas recevoir d’affectation."
+          ],
+          "starter": "function renameCopy(obj, name) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Commence par déployer obj dans un nouveau littéral.",
+            "Écris name après ...obj."
+          ],
+          "solution": "function renameCopy(obj, name) {\n  const copy = { ...obj, name: name };\n  return [copy, obj];\n}",
+          "walkthrough": [
+            "Commence par déployer obj dans un nouveau littéral.",
+            "Écris name après ...obj.",
+            "Renvoie la copie et obj."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                {
+                  "name": "old",
+                  "score": 2
+                },
+                "new"
+              ],
+              "expected": [
+                {
+                  "name": "new",
+                  "score": 2
+                },
+                {
+                  "name": "old",
+                  "score": 2
+                }
+              ],
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-merge-two",
+          "title": "Gérer les conflits de clés",
+          "target": "mergeTwo",
+          "minutes": 5,
+          "task": "Renvoie un nouvel objet fusionné : les clés de second gagnent en cas de conflit.",
+          "bridge": "L’ordre des écritures décide de la valeur finale, comme des affectations successives dans une map Go.",
+          "explanation": [
+            "Un objet peut contenir plusieurs spreads.",
+            "Le dernier spread remplace les valeurs des clés déjà présentes.",
+            "Cette fusion reste superficielle."
+          ],
+          "starter": "function mergeTwo(first, second) {\n  // Écris ton code ici.\n}\n",
+          "hints": ["Crée un nouvel objet.", "Déploie first en premier."],
+          "solution": "function mergeTwo(first, second) {\n  return { ...first, ...second };\n}",
+          "walkthrough": [
+            "Crée un nouvel objet.",
+            "Déploie first en premier.",
+            "Déploie second en dernier pour qu’il gagne."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                {
+                  "a": 1,
+                  "b": 2
+                },
+                {
+                  "b": 9,
+                  "c": 3
+                }
+              ],
+              "expected": {
+                "a": 1,
+                "b": 9,
+                "c": 3
+              },
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [{}, {}],
+              "expected": {},
+              "calls": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "callbacks",
+      "title": "Fonctions comme valeurs",
+      "goal": "Lire une flèche, transmettre un callback et comprendre map/filter/reduce.",
+      "go": "func apply(n int, fn func(int) int) int {\n    return fn(n)\n}",
+      "js": "function apply(n, fn) {\n  return fn(n);\n}\nconst double = (n) => n * 2;",
+      "notes": [
+        "Comme en Go, une fonction peut être transmise en paramètre. En JS, on omet son type dans la signature mais on l’appelle toujours avec des parenthèses.",
+        "fn désigne une fonction ; fn(value) appelle cette fonction. Passer fn(value) à la place de fn transmettrait son résultat.",
+        "Une fonction fléchée sans accolades retourne son expression : x => x * 2. Avec des accolades, il faut return : x => { return x * 2; }.",
+        "map transforme chaque élément, filter garde les éléments dont le prédicat est vrai, reduce accumule une seule valeur. Commence par savoir les écrire en boucle : la méthode ne remplace pas le raisonnement."
+      ],
+      "checkpoint": ["pipeline", "election-mix", "object-lab"],
+      "lessons": [
+        {
+          "id": "js-learn-call-callback",
+          "title": "Appeler la fonction reçue",
+          "target": "applyTo",
+          "minutes": 5,
+          "task": "transform est une fonction. Renvoie transform(value).",
+          "bridge": "C’est le même principe qu’un paramètre func(int) int en Go, avec une syntaxe plus légère.",
+          "explanation": [
+            "Le test fournit une vraie fonction, pas son nom sous forme de texte.",
+            "La valeur de retour du callback est le résultat voulu.",
+            "Il n’est pas nécessaire de connaître à l’avance les opérations du callback."
+          ],
+          "starter": "function applyTo(value, transform) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "transform est déjà la fonction à utiliser.",
+            "Appelle-la avec value entre parenthèses."
+          ],
+          "solution": "function applyTo(value, transform) {\n  return transform(value);\n}",
+          "walkthrough": [
+            "transform est déjà la fonction à utiliser.",
+            "Appelle-la avec value entre parenthèses.",
+            "Retourne son résultat."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                3,
+                {
+                  "$fn": "double"
+                }
+              ],
+              "expected": 6,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [
+                3,
+                {
+                  "$fn": "increment"
+                }
+              ],
+              "expected": 4,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-map-values",
+          "title": "Transformer tous les éléments",
+          "target": "transformAll",
+          "minutes": 5,
+          "task": "Renvoie un tableau contenant transform(value) pour chaque élément, dans l’ordre.",
+          "bridge": "Une boucle Go qui construit un slice peut se remplacer par map quand chaque entrée donne une sortie.",
+          "explanation": [
+            "map renvoie un nouveau tableau de même longueur.",
+            "Le callback reçoit chaque élément.",
+            "Un callback avec accolades doit retourner sa valeur transformée."
+          ],
+          "starter": "function transformAll(values, transform) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Appelle map sur values.",
+            "Transmets un callback qui appelle transform."
+          ],
+          "solution": "function transformAll(values, transform) {\n  return values.map((value) => transform(value));\n}",
+          "walkthrough": [
+            "Appelle map sur values.",
+            "Transmets un callback qui appelle transform.",
+            "Retourne le tableau fourni par map."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                [1, 2, 3],
+                {
+                  "$fn": "double"
+                }
+              ],
+              "expected": [2, 4, 6],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [
+                [],
+                {
+                  "$fn": "increment"
+                }
+              ],
+              "expected": [],
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-filter-values",
+          "title": "Garder selon un prédicat",
+          "target": "keepMatching",
+          "minutes": 5,
+          "task": "Renvoie uniquement les éléments pour lesquels predicate(value) est vrai.",
+          "bridge": "Un if autour d’un append Go devient souvent filter.",
+          "explanation": [
+            "Un prédicat est une fonction qui renvoie un booléen.",
+            "filter conserve l’ordre relatif des éléments gardés.",
+            "Il ne transforme pas les éléments : c’est le rôle de map."
+          ],
+          "starter": "function keepMatching(values, predicate) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Utilise filter, pas map.",
+            "Le callback fournit la décision garder/rejeter."
+          ],
+          "solution": "function keepMatching(values, predicate) {\n  return values.filter((value) => predicate(value));\n}",
+          "walkthrough": [
+            "Utilise filter, pas map.",
+            "Le callback fournit la décision garder/rejeter.",
+            "Retourne le tableau filtré."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                [1, 2, 3, 4],
+                {
+                  "$fn": "isEven"
+                }
+              ],
+              "expected": [2, 4],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [
+                [-2, 0, 3],
+                {
+                  "$fn": "positive"
+                }
+              ],
+              "expected": [3],
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-reduce-sum",
+          "title": "Comprendre l’accumulateur de reduce",
+          "target": "sumWithReduce",
+          "minutes": 5,
+          "task": "Renvoie la somme de values avec reduce et une valeur initiale explicite de 0.",
+          "bridge": "Le premier argument du callback est l’accumulateur, comme total dans une boucle Go.",
+          "explanation": [
+            "reduce appelle le callback avec l’accumulateur et l’élément courant.",
+            "Le callback doit renvoyer le nouvel accumulateur.",
+            "La valeur initiale permet de traiter [] sans exception."
+          ],
+          "starter": "function sumWithReduce(values) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Le callback reçoit total puis value.",
+            "Son résultat est total + value."
+          ],
+          "solution": "function sumWithReduce(values) {\n  return values.reduce((total, value) => total + value, 0);\n}",
+          "walkthrough": [
+            "Le callback reçoit total puis value.",
+            "Son résultat est total + value.",
+            "Le second argument de reduce est 0."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [[2, 4, 6]],
+              "expected": 12,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[]],
+              "expected": 0,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-compose-two",
+          "title": "Composer dans le bon ordre",
+          "target": "chainTwo",
+          "minutes": 5,
+          "task": "Applique first à value, puis second au résultat. Renvoie la valeur finale.",
+          "bridge": "Des appels imbriqués Go et JS se lisent de l’intérieur vers l’extérieur.",
+          "explanation": [
+            "second(first(value)) appelle first en premier.",
+            "L’ordre change le résultat lorsque les fonctions ne commutent pas.",
+            "Une variable intermédiaire peut rendre le raisonnement plus lisible."
+          ],
+          "starter": "function chainTwo(value, first, second) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Calcule first(value) en premier.",
+            "Conserve ce résultat ou imbrique l’appel."
+          ],
+          "solution": "function chainTwo(value, first, second) {\n  const intermediate = first(value);\n  return second(intermediate);\n}",
+          "walkthrough": [
+            "Calcule first(value) en premier.",
+            "Conserve ce résultat ou imbrique l’appel.",
+            "Applique second seulement à ce résultat."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                3,
+                {
+                  "$fn": "increment"
+                },
+                {
+                  "$fn": "double"
+                }
+              ],
+              "expected": 8,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [
+                3,
+                {
+                  "$fn": "double"
+                },
+                {
+                  "$fn": "increment"
+                }
+              ],
+              "expected": 7,
+              "calls": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "closures",
+      "title": "Closures et curryfication",
+      "goal": "Distinguer les paramètres de maintenant, les paramètres de plus tard et l’état conservé.",
+      "go": "func makeAdder(base int) func(int) int {\n    return func(value int) int { return base + value }\n}",
+      "js": "function makeAdder(base) {\n  return (value) => base + value;\n}\nconst addTen = makeAdder(10);\naddTen(3); // 13",
+      "notes": [
+        "Une closure est une fonction qui garde l’accès aux variables de l’environnement où elle a été créée. Le principe existe aussi en Go.",
+        "makeAdder(10) ne fait pas encore l’addition finale : cet appel fabrique une fonction. Le second appel fournit l’autre paramètre.",
+        "Curryfication signifie répartir plusieurs arguments sur plusieurs appels. Lis chaque paire de parenthèses séparément et note ce que chaque appel renvoie.",
+        "L’état placé dans la fonction extérieure est propre à chaque création. Ne le mets pas dans une variable globale si deux créateurs doivent rester indépendants.",
+        "Une fonction peut se retourner elle-même après avoir traité une valeur. L’appel sans argument peut servir de signal de fin ; dans ce cas, le paramètre vaut undefined. Ce protocole doit être explicitement défini par la consigne."
+      ],
+      "checkpoint": ["character-maker", "election-mix", "pipeline"],
+      "lessons": [
+        {
+          "id": "js-learn-return-function",
+          "title": "Fabriquer une fonction",
+          "target": "makeAdder",
+          "minutes": 5,
+          "task": "Renvoie une fonction qui prend value et renvoie base + value.",
+          "bridge": "C’est une fonction qui renvoie func(int) int en Go, mais JS écrit une fonction sans signature de type.",
+          "explanation": [
+            "Le premier appel reçoit base.",
+            "La fonction renvoyée reçoit value plus tard.",
+            "base reste accessible même après la fin du premier appel."
+          ],
+          "starter": "function makeAdder(base) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Il faut retourner une fonction, pas encore un nombre.",
+            "Cette fonction doit avoir un paramètre value."
+          ],
+          "solution": "function makeAdder(base) {\n  return (value) => base + value;\n}",
+          "walkthrough": [
+            "Il faut retourner une fonction, pas encore un nombre.",
+            "Cette fonction doit avoir un paramètre value.",
+            "Son return peut être implicite si son corps est une expression."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [10],
+              "expected": 13,
+              "calls": [[3]]
+            },
+            {
+              "label": "Cas 2",
+              "args": [-2],
+              "expected": 3,
+              "calls": [[5]]
+            }
+          ]
+        },
+        {
+          "id": "js-learn-curried-predicate",
+          "title": "Mémoriser un seuil",
+          "target": "aboveThreshold",
+          "minutes": 5,
+          "task": "Renvoie une fonction qui reçoit n et renvoie si n est strictement supérieur à minimum.",
+          "bridge": "Un paramètre capturé dans une closure Go conserve aussi le contexte du créateur.",
+          "explanation": [
+            "Le seuil appartient au premier appel.",
+            "Le nombre testé appartient au second.",
+            "Une égalité au seuil ne doit pas être acceptée."
+          ],
+          "starter": "function aboveThreshold(minimum) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Le premier return fabrique la fonction de test.",
+            "Cette fonction compare n au minimum mémorisé."
+          ],
+          "solution": "function aboveThreshold(minimum) {\n  return (n) => n > minimum;\n}",
+          "walkthrough": [
+            "Le premier return fabrique la fonction de test.",
+            "Cette fonction compare n au minimum mémorisé.",
+            "Utilise >, pas >=."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [5],
+              "expected": true,
+              "calls": [[6]]
+            },
+            {
+              "label": "Cas 2",
+              "args": [5],
+              "expected": false,
+              "calls": [[5]]
+            }
+          ]
+        },
+        {
+          "id": "js-learn-private-state",
+          "title": "Mettre à jour un état privé",
+          "target": "makeCounter",
+          "minutes": 5,
+          "task": "Renvoie une fonction sans argument qui incrémente son état de 1 à chaque appel et renvoie cette nouvelle valeur.",
+          "bridge": "L’état d’une closure Go peut évoluer ; let est nécessaire pour réaffecter l’état JS.",
+          "explanation": [
+            "Crée let current dans makeCounter, pas dans la fonction renvoyée.",
+            "Si current était recréé à chaque appel, le compteur repartirait du début.",
+            "Chaque appel à makeCounter fabrique un compteur indépendant."
+          ],
+          "starter": "function makeCounter(start) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Déclare l’état avant de retourner la fonction.",
+            "La fonction intérieure n’a pas de paramètre."
+          ],
+          "solution": "function makeCounter(start) {\n  let current = start;\n  return () => {\n    current += 1;\n    return current;\n  };\n}",
+          "walkthrough": [
+            "Déclare l’état avant de retourner la fonction.",
+            "La fonction intérieure n’a pas de paramètre.",
+            "Incrémente puis retourne current."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [4],
+              "expected": 5,
+              "calls": [[]]
+            },
+            {
+              "label": "Cas 2",
+              "args": [0],
+              "expected": 1,
+              "calls": [[]]
+            }
+          ]
+        },
+        {
+          "id": "js-learn-closure-use",
+          "title": "Vérifier plusieurs appels",
+          "target": "counterSequence",
+          "minutes": 8,
+          "task": "Crée un compteur local qui part de start, appelle-le trois fois et renvoie les trois résultats successifs.",
+          "bridge": "Il s’agit d’exercer la durée de vie d’une variable capturée, pas de créer une variable globale.",
+          "explanation": [
+            "L’état doit être créé une seule fois par counterSequence.",
+            "Trois appels successifs doivent voir les modifications précédentes.",
+            "L’appel suivant de counterSequence repart avec son propre start."
+          ],
+          "starter": "function counterSequence(start) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Utilise une variable let current capturée par next.",
+            "Dans next, incrémente avant de retourner."
+          ],
+          "solution": "function counterSequence(start) {\n  let current = start;\n  const next = () => { current += 1; return current; };\n  return [next(), next(), next()];\n}",
+          "walkthrough": [
+            "Utilise une variable let current capturée par next.",
+            "Dans next, incrémente avant de retourner.",
+            "Appelle réellement next trois fois."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [2],
+              "expected": [3, 4, 5],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [9],
+              "expected": [10, 11, 12],
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-immutable-closure",
+          "title": "Capturer une base sans la modifier",
+          "target": "withBase",
+          "minutes": 5,
+          "task": "Renvoie une fonction qui reçoit un objet extra et retourne un nouvel objet fusionné base puis extra. Ne modifie ni base ni extra.",
+          "bridge": "Une map capturée en Go peut être partagée ; un objet JS capturé aussi. Recrée le résultat à chaque appel.",
+          "explanation": [
+            "La closure mémorise la référence de base.",
+            "Créer un nouvel objet de sortie évite de changer cette base.",
+            "Les propriétés de extra gagnent parce qu’elles sont écrites après celles de base."
+          ],
+          "starter": "function withBase(base) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Retourne une fonction qui reçoit extra.",
+            "Une flèche qui retourne un objet utilise ici ({ ... })."
+          ],
+          "solution": "function withBase(base) {\n  return (extra) => ({ ...base, ...extra });\n}",
+          "walkthrough": [
+            "Retourne une fonction qui reçoit extra.",
+            "Une flèche qui retourne un objet utilise ici ({ ... }).",
+            "Déploie base puis extra dans un nouvel objet."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                {
+                  "a": 1
+                }
+              ],
+              "expected": {
+                "a": 1,
+                "b": 2
+              },
+              "calls": [
+                [
+                  {
+                    "b": 2
+                  }
+                ]
+              ]
+            },
+            {
+              "label": "Cas 2",
+              "args": [
+                {
+                  "a": 1
+                }
+              ],
+              "expected": {
+                "a": 9
+              },
+              "calls": [
+                [
+                  {
+                    "a": 9
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "js-learn-chained-calls",
+          "title": "Enchaîner plusieurs appels",
+          "target": "makeCollector",
+          "minutes": 8,
+          "task": "Renvoie une fonction step. Chaque appel step(mot) ajoute ce mot à une liste privée et renvoie step. Un appel sans argument renvoie une copie de la liste. Les mots sont des chaînes, jamais undefined.",
+          "bridge": "Une closure Go peut aussi retourner une fonction déjà créée ; ici, chaque appel doit décider de renvoyer la fonction ou le résultat final.",
+          "explanation": [
+            "makeCollector() crée une seule liste privée et une fonction step.",
+            "Après step(\"red\"), il faut renvoyer step pour autoriser (\"blue\") juste après.",
+            "Quand aucun argument n’est fourni, le paramètre vaut undefined : on termine avec une copie du résultat."
+          ],
+          "starter": "function makeCollector() {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Déclare words et step dans la fonction extérieure.",
+            "Dans step, distingue word === undefined de l’ajout d’un mot."
+          ],
+          "solution": "function makeCollector() {\n  const words = [];\n  function step(word) {\n    if (word === undefined) return [...words];\n    words.push(word);\n    return step;\n  }\n  return step;\n}",
+          "walkthrough": [
+            "Déclare words et step dans la fonction extérieure.",
+            "Dans step, distingue word === undefined de l’ajout d’un mot.",
+            "Retourne step après un ajout et un nouveau tableau à la fin."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "expected": ["red", "blue"],
+              "calls": [["red"], ["blue"], []]
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "expected": [],
+              "calls": [[]]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grids",
+      "title": "Grilles : séparer ligne et colonne",
+      "goal": "Construire un parcours de grille avec des contrôles de bornes explicites.",
+      "go": "for y, row := range grid {\n    for x, value := range row { /* ... */ }\n}",
+      "js": "for (let y = 0; y < grid.length; y++) {\n  for (let x = 0; x < grid[y].length; x++) { /* ... */ }\n}",
+      "notes": [
+        "grid[y][x] lit la ligne y puis la colonne x. L’écriture x/y dans une réponse ne change pas cet ordre d’accès.",
+        "Vérifie y avant de lire grid[y], sinon l’accès suivant peut échouer. Une grille peut être vide ; certaines consignes peuvent autoriser des lignes de tailles différentes.",
+        "Un voisin horizontal ou vertical change une seule coordonnée de 1. Une diagonale change les deux coordonnées et n’est pas un voisin dans les sujets concernés.",
+        "Pour un mot, on choisit un départ et une direction, puis on avance en comparant chaque lettre. On n’a pas besoin de modifier la grille pour ces recherches orientées.",
+        "Pour une recherche de connexité, utilise une pile de cases à visiter et un Set de cases déjà visitées. Set ressemble à un ensemble construit avec map[string]bool en Go : add mémorise une clé et has teste sa présence.",
+        "push ajoute au sommet d’une pile tableau et pop retire son dernier élément. Marque une case avant d’explorer ses voisins pour ne pas la traiter indéfiniment. Des voisins corrects ne suffisent pas : il faut aussi atteindre toutes les cases du chemin."
+      ],
+      "checkpoint": [
+        "grid-words-finder",
+        "grid-words-finder-2",
+        "snake-path-validator"
+      ],
+      "lessons": [
+        {
+          "id": "js-learn-bounds",
+          "title": "Vérifier les bornes",
+          "target": "insideGrid",
+          "minutes": 5,
+          "task": "Renvoie si y et x désignent une case existante de grid.",
+          "bridge": "Comme en Go, protège l’accès à la ligne avant d’accéder à sa longueur.",
+          "explanation": [
+            "&& arrête l’évaluation dès qu’une condition est fausse.",
+            "Cela permet de ne lire grid[y] qu’après avoir validé y.",
+            "Utilise la longueur de la ligne choisie, pas celle de la première ligne."
+          ],
+          "starter": "function insideGrid(grid, y, x) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Commence par y >= 0 et y < grid.length.",
+            "Ajoute ensuite les bornes de x."
+          ],
+          "solution": "function insideGrid(grid, y, x) {\n  return y >= 0 && y < grid.length && x >= 0 && x < grid[y].length;\n}",
+          "walkthrough": [
+            "Commence par y >= 0 et y < grid.length.",
+            "Ajoute ensuite les bornes de x.",
+            "Enchaîne les conditions avec && dans cet ordre."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [[[1, 2], [3]], 1, 0],
+              "expected": true,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[[1, 2], [3]], 1, 1],
+              "expected": false,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [[], 0, 0],
+              "expected": false,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-count-cells",
+          "title": "Parcourir toutes les cases",
+          "target": "countOnes",
+          "minutes": 8,
+          "task": "Renvoie le nombre de cases strictement égales à 1.",
+          "bridge": "Deux boucles for...of suffisent si les coordonnées ne servent pas.",
+          "explanation": [
+            "La première boucle fournit chaque ligne.",
+            "La seconde fournit chaque valeur de la ligne.",
+            "Une comparaison stricte évite de compter la chaîne \"1\"."
+          ],
+          "starter": "function countOnes(grid) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Un compteur unique existe avant les boucles.",
+            "Compare chaque valeur à 1 avec ===."
+          ],
+          "solution": "function countOnes(grid) {\n  let count = 0;\n  for (const row of grid) for (const value of row) if (value === 1) count++;\n  return count;\n}",
+          "walkthrough": [
+            "Un compteur unique existe avant les boucles.",
+            "Compare chaque valeur à 1 avec ===.",
+            "Retourne le compteur après les deux parcours."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                [
+                  [1, 0],
+                  [1, 1]
+                ]
+              ],
+              "expected": 3,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[]],
+              "expected": 0,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [[["1", 1]]],
+              "expected": 1,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-neighbors",
+          "title": "Compter les voisins directs",
+          "target": "neighborCount",
+          "minutes": 8,
+          "task": "La case (y,x) existe. Compte ses voisins horizontaux et verticaux qui valent 1 ; ignore les diagonales.",
+          "bridge": "Une liste de déplacements remplace quatre blocs presque identiques, en Go comme en JS.",
+          "explanation": [
+            "Les quatre déplacements sont [-1,0], [1,0], [0,-1], [0,1] en ordre [dy,dx].",
+            "Ajoute chaque déplacement à y et x.",
+            "Contrôle les bornes avant de comparer la valeur du voisin."
+          ],
+          "starter": "function neighborCount(grid, y, x) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Utilise les quatre directions, sans diagonale.",
+            "Calcule les nouvelles coordonnées."
+          ],
+          "solution": "function neighborCount(grid, y, x) {\n  let count = 0;\n  for (const [dy, dx] of [[-1,0],[1,0],[0,-1],[0,1]]) {\n    const ny = y + dy, nx = x + dx;\n    if (ny >= 0 && ny < grid.length && nx >= 0 && nx < grid[ny].length && grid[ny][nx] === 1) count++;\n  }\n  return count;\n}",
+          "walkthrough": [
+            "Utilise les quatre directions, sans diagonale.",
+            "Calcule les nouvelles coordonnées.",
+            "Vérifie leur existence avant de lire la case."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                [
+                  [1, 1],
+                  [1, 0]
+                ],
+                0,
+                0
+              ],
+              "expected": 2,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[[1]], 0, 0],
+              "expected": 0,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-horizontal-word",
+          "title": "Suivre une direction",
+          "target": "horizontalMatch",
+          "minutes": 8,
+          "task": "word n’est pas vide. Renvoie si le mot commence en (y,x) horizontalement vers la droite, sans sortir de la grille.",
+          "bridge": "La ligne reste fixe ; seul x augmente avec l’indice de lettre.",
+          "explanation": [
+            "Pour la lettre i, la colonne est x + i.",
+            "La première différence suffit à retourner false.",
+            "Retourne true uniquement après avoir vérifié toutes les lettres."
+          ],
+          "starter": "function horizontalMatch(grid, word, y, x) {\n  // Écris ton code ici.\n}\n",
+          "hints": ["Garde y constant.", "Compare grid[y][x+i] à word[i]."],
+          "solution": "function horizontalMatch(grid, word, y, x) {\n  if (y < 0 || y >= grid.length || x < 0) return false;\n  for (let i = 0; i < word.length; i++) {\n    if (x + i >= grid[y].length || grid[y][x+i] !== word[i]) return false;\n  }\n  return true;\n}",
+          "walkthrough": [
+            "Garde y constant.",
+            "Compare grid[y][x+i] à word[i].",
+            "N’oublie pas la borne de la colonne."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [[["c", "a", "t"]], "cat", 0, 0],
+              "expected": true,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[["c", "a"]], "cat", 0, 0],
+              "expected": false,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [[["x", "c", "a", "t"]], "cat", 0, 1],
+              "expected": true,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-vertical-word",
+          "title": "Changer de direction",
+          "target": "verticalMatch",
+          "minutes": 8,
+          "task": "word n’est pas vide. Renvoie si le mot commence en (y,x) verticalement vers le bas.",
+          "bridge": "Cette fois, x reste fixe et y augmente.",
+          "explanation": [
+            "La lettre i se lit à grid[y+i][x].",
+            "Il faut vérifier la longueur de chaque ligne traversée.",
+            "Une ligne absente ou trop courte suffit à rejeter le mot."
+          ],
+          "starter": "function verticalMatch(grid, word, y, x) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Avance la ligne avec y+i.",
+            "Vérifie la colonne x dans chaque ligne."
+          ],
+          "solution": "function verticalMatch(grid, word, y, x) {\n  if (y < 0 || x < 0) return false;\n  for (let i = 0; i < word.length; i++) {\n    if (y+i >= grid.length || x >= grid[y+i].length || grid[y+i][x] !== word[i]) return false;\n  }\n  return true;\n}",
+          "walkthrough": [
+            "Avance la ligne avec y+i.",
+            "Vérifie la colonne x dans chaque ligne.",
+            "Retourne true à la fin seulement."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [[["g"], ["o"]], "go", 0, 0],
+              "expected": true,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[["g"], []], "go", 0, 0],
+              "expected": false,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [[["x"], ["g"], ["o"]], "go", 1, 0],
+              "expected": true,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-visited-keys",
+          "title": "Mémoriser les cases déjà vues",
+          "target": "uniqueCells",
+          "minutes": 8,
+          "task": "cells contient des couples [y,x] entiers. Renvoie le nombre de cases distinctes, en les mémorisant dans un Set avec une clé de la forme \"y,x\".",
+          "bridge": "En Go, tu pourrais utiliser map[[2]int]bool. Ici, les tableaux sont comparés par identité : deux [1,2] distincts ne sont pas la même clé de Set. Utilise une chaîne de coordonnées.",
+          "explanation": [
+            "new Set() crée une collection sans doublon.",
+            "String(y) + \",\" + String(x) donne une clé stable pour des coordonnées entières.",
+            "seen.add(key) conserve la clé ; seen.size donne le nombre de clés uniques."
+          ],
+          "starter": "function uniqueCells(cells) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Crée un Set avant la boucle.",
+            "Convertis chaque couple en la même chaîne pour les mêmes coordonnées."
+          ],
+          "solution": "function uniqueCells(cells) {\n  const seen = new Set();\n  for (const [y, x] of cells) seen.add(String(y) + \",\" + String(x));\n  return seen.size;\n}",
+          "walkthrough": [
+            "Crée un Set avant la boucle.",
+            "Convertis chaque couple en la même chaîne pour les mêmes coordonnées.",
+            "Renvoie la propriété size, pas length."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                [
+                  [1, 2],
+                  [1, 2],
+                  [2, 1]
+                ]
+              ],
+              "expected": 2,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[]],
+              "expected": 0,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-connected-cells",
+          "title": "Explorer une composante connectée",
+          "target": "reachableOnes",
+          "minutes": 8,
+          "task": "Compte les cases valant 1 accessibles depuis (y,x) par des déplacements horizontaux ou verticaux. Retourne 0 si la case initiale n’existe pas ou ne vaut pas 1. Ne change pas la grille.",
+          "bridge": "C’est un parcours en profondeur avec pile, comme en Go ; le Set mémorise les coordonnées déjà traitées. Il ne s’agit pas encore de valider toutes les règles du serpent.",
+          "explanation": [
+            "La pile commence avec la case de départ. pop retire une case en attente.",
+            "Ignore les cases hors limites, les zéros et les clés déjà visitées. Ajoute la clé au Set avant d’empiler les voisins.",
+            "Le nombre de clés visitées est la taille de la composante, pas forcément le nombre total de 1 de la grille. Pour le vrai serpent, il faut ensuite comparer au total et contrôler le nombre de voisins."
+          ],
+          "starter": "function reachableOnes(grid, y, x) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Déclare stack et seen avant le while.",
+            "À chaque case extraite, valide les bornes et la valeur, puis rejette les clés déjà visitées."
+          ],
+          "solution": "function reachableOnes(grid, y, x) {\n  const stack = [[y, x]];\n  const seen = new Set();\n  while (stack.length > 0) {\n    const [cy, cx] = stack.pop();\n    if (cy < 0 || cy >= grid.length || cx < 0 || cx >= grid[cy].length || grid[cy][cx] !== 1) continue;\n    const key = String(cy) + \",\" + String(cx);\n    if (seen.has(key)) continue;\n    seen.add(key);\n    for (const [dy, dx] of [[-1,0],[1,0],[0,-1],[0,1]]) stack.push([cy+dy, cx+dx]);\n  }\n  return seen.size;\n}",
+          "walkthrough": [
+            "Déclare stack et seen avant le while.",
+            "À chaque case extraite, valide les bornes et la valeur, puis rejette les clés déjà visitées.",
+            "Marque la case, empile ses quatre voisins, puis retourne seen.size après la fin du parcours."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                [
+                  [1, 1, 0],
+                  [0, 1, 0],
+                  [1, 0, 1]
+                ],
+                0,
+                0
+              ],
+              "expected": 3,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [
+                [
+                  [1, 0],
+                  [0, 1]
+                ],
+                0,
+                0
+              ],
+              "expected": 1,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [[], 0, 0],
+              "expected": 0,
+              "calls": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sorting",
+      "title": "Tris : ordre, étapes et compteurs",
+      "goal": "Comprendre une étape de tri avant de reproduire tout un analyseur.",
+      "go": "less := func(a, b int) bool { return a < b }\n// Certains tris Go utilisent un booléen Less.",
+      "js": "const compare = (a, b) => a - b;\n// En JS : négatif, zéro ou positif.",
+      "notes": [
+        "Un comparateur JS renvoie souvent un nombre : négatif si a vient avant b, positif si a vient après b, zéro pour l’égalité.",
+        "Pour échanger deux éléments dans une copie, on peut utiliser une variable temporaire ou la décomposition [copy[i], copy[j]] = [copy[j], copy[i]].",
+        "Une comparaison n’est pas un échange. Dans les analyseurs, les compteurs doivent suivre exactement l’algorithme imposé par la consigne.",
+        "sort ne remplace pas un tri à bulles ou par insertion demandé. On commence ici par une passe et par un décalage, avant les vrais sujets."
+      ],
+      "checkpoint": ["bubble-sort-analyzer", "insertion-sort-analyzer"],
+      "lessons": [
+        {
+          "id": "js-learn-comparator",
+          "title": "Interpréter le signe",
+          "target": "isBefore",
+          "minutes": 5,
+          "task": "Renvoie si comparator place a strictement avant b.",
+          "bridge": "Le booléen attendu se déduit du signe du résultat du comparateur.",
+          "explanation": [
+            "Le callback est fourni par le test.",
+            "N’utilise pas directement a < b : l’ordre peut être décroissant.",
+            "La valeur zéro signifie égalité, pas avant."
+          ],
+          "starter": "function isBefore(a, b, comparator) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Appelle comparator avec a et b.",
+            "Compare le résultat à zéro."
+          ],
+          "solution": "function isBefore(a, b, comparator) {\n  return comparator(a, b) < 0;\n}",
+          "walkthrough": [
+            "Appelle comparator avec a et b.",
+            "Compare le résultat à zéro.",
+            "Le signe recherché est négatif."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                2,
+                5,
+                {
+                  "$fn": "ascending"
+                }
+              ],
+              "expected": true,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [
+                2,
+                5,
+                {
+                  "$fn": "descending"
+                }
+              ],
+              "expected": false,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [
+                3,
+                3,
+                {
+                  "$fn": "ascending"
+                }
+              ],
+              "expected": false,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-swap-copy",
+          "title": "Échanger deux cases",
+          "target": "swapCopy",
+          "minutes": 5,
+          "task": "i et j existent. Renvoie une copie de arr où les deux cases sont échangées.",
+          "bridge": "La décomposition JS peut faire un échange multiple, comme une affectation multiple Go.",
+          "explanation": [
+            "Copie arr avant de modifier ses cases.",
+            "Les deux expressions à droite sont évaluées avant les affectations.",
+            "Un échange d’une case avec elle-même doit fonctionner."
+          ],
+          "starter": "function swapCopy(arr, i, j) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Commence par [...arr].",
+            "Échange uniquement les cases de copy."
+          ],
+          "solution": "function swapCopy(arr, i, j) {\n  const copy = [...arr];\n  [copy[i], copy[j]] = [copy[j], copy[i]];\n  return copy;\n}",
+          "walkthrough": [
+            "Commence par [...arr].",
+            "Échange uniquement les cases de copy.",
+            "Retourne copy."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [[1, 2, 3], 0, 2],
+              "expected": [3, 2, 1],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[4], 0, 0],
+              "expected": [4],
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-bubble-pass",
+          "title": "Faire une seule passe à bulles",
+          "target": "bubblePass",
+          "minutes": 8,
+          "task": "Renvoie une copie après une passe gauche → droite : échange chaque paire voisine si la gauche est plus grande.",
+          "bridge": "Une passe n’est pas le tri complet ; elle pousse le plus grand élément vers la fin.",
+          "explanation": [
+            "Les paires sont (0,1), (1,2), etc.",
+            "La borne i < copy.length - 1 évite une case de droite inexistante.",
+            "Une case peut être déplacée plusieurs fois pendant une seule passe."
+          ],
+          "starter": "function bubblePass(arr) {\n  // Écris ton code ici.\n}\n",
+          "hints": ["Copie arr.", "Compare les voisins dans une seule boucle."],
+          "solution": "function bubblePass(arr) {\n  const copy = [...arr];\n  for (let i = 0; i < copy.length - 1; i++) {\n    if (copy[i] > copy[i+1]) [copy[i], copy[i+1]] = [copy[i+1], copy[i]];\n  }\n  return copy;\n}",
+          "walkthrough": [
+            "Copie arr.",
+            "Compare les voisins dans une seule boucle.",
+            "Ne relance pas une deuxième passe."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [[3, 2, 1]],
+              "expected": [2, 1, 3],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[1, 2]],
+              "expected": [1, 2],
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [[]],
+              "expected": [],
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-comparison-count",
+          "title": "Compter les comparaisons",
+          "target": "inspectNeighbors",
+          "minutes": 8,
+          "task": "Renvoie {comparisons, inversions} : une comparaison par paire voisine, et une inversion si arr[i] > arr[i+1].",
+          "bridge": "Un objet JS sert ici à renvoyer deux résultats nommés, comme une petite struct Go.",
+          "explanation": [
+            "Le compteur comparisons augmente pour chaque paire examinée.",
+            "inversions augmente seulement si la paire est dans le mauvais ordre.",
+            "Ce micro-exercice ne fait aucun échange."
+          ],
+          "starter": "function inspectNeighbors(arr) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Initialise deux compteurs séparés.",
+            "Incrémente comparisons avant le test conditionnel."
+          ],
+          "solution": "function inspectNeighbors(arr) {\n  let comparisons = 0, inversions = 0;\n  for (let i = 0; i < arr.length - 1; i++) {\n    comparisons++;\n    if (arr[i] > arr[i+1]) inversions++;\n  }\n  return { comparisons, inversions };\n}",
+          "walkthrough": [
+            "Initialise deux compteurs séparés.",
+            "Incrémente comparisons avant le test conditionnel.",
+            "Retourne un objet avec les noms exacts."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [[3, 1, 2]],
+              "expected": {
+                "comparisons": 2,
+                "inversions": 1
+              },
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[]],
+              "expected": {
+                "comparisons": 0,
+                "inversions": 0
+              },
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-insert-value",
+          "title": "Insérer dans un préfixe trié",
+          "target": "insertValue",
+          "minutes": 8,
+          "task": "sorted est trié par ordre croissant. Renvoie une copie contenant value à la bonne place.",
+          "bridge": "C’est la brique de décalage du tri par insertion ; garde une copie pour préserver l’entrée.",
+          "explanation": [
+            "Ajoute une case à la fin pour disposer d’espace.",
+            "Décale vers la droite les éléments plus grands que value.",
+            "Place value dans la case libérée après la boucle."
+          ],
+          "starter": "function insertValue(sorted, value) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Commence à la dernière case du tableau trié d’origine.",
+            "Décale uniquement les valeurs supérieures."
+          ],
+          "solution": "function insertValue(sorted, value) {\n  const copy = [...sorted, value];\n  let j = sorted.length - 1;\n  while (j >= 0 && copy[j] > value) {\n    copy[j+1] = copy[j];\n    j--;\n  }\n  copy[j+1] = value;\n  return copy;\n}",
+          "walkthrough": [
+            "Commence à la dernière case du tableau trié d’origine.",
+            "Décale uniquement les valeurs supérieures.",
+            "Après le while, la position libre est j+1."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [[1, 3, 5], 4],
+              "expected": [1, 3, 4, 5],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[], 2],
+              "expected": [2],
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [[2, 2], 2],
+              "expected": [2, 2, 2],
+              "calls": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "recursion",
+      "title": "Objets imbriqués et récursion",
+      "goal": "Définir un cas d’arrêt puis transporter un chemin jusqu’aux feuilles.",
+      "go": "func depth(node Node) int {\n    // cas simple, puis appels sur les enfants\n}",
+      "js": "function depth(value) {\n  if (value === null || typeof value !== \"object\") return 0;\n  // parcourir les enfants puis les combiner\n}",
+      "notes": [
+        "Un appel récursif doit se rapprocher d’un cas d’arrêt. Pour une arborescence JSON finie, on descend vers ses propriétés enfants.",
+        "null doit être traité explicitement avant Object.values ou Object.entries. typeof null vaut \"object\" mais null n’a pas de propriétés à parcourir.",
+        "Un chemin doit être transmis à l’appel suivant : le préfixe du parent ne se reconstruit pas tout seul. Pour le premier niveau, évite de produire un point initial.",
+        "Les entrées de ce chapitre sont des arbres sans référence circulaire. Les cycles demanderaient une stratégie supplémentaire et ne sont pas supposés ici."
+      ],
+      "checkpoint": ["flat-object", "character-maker"],
+      "lessons": [
+        {
+          "id": "js-learn-base-case",
+          "title": "Reconnaître une feuille",
+          "target": "isLeaf",
+          "minutes": 5,
+          "task": "Renvoie true pour null et les valeurs qui ne sont pas des objets ; false pour tableaux et objets.",
+          "bridge": "Le cas d’arrêt doit être explicite avant de parcourir les enfants, comme en Go.",
+          "explanation": [
+            "Les nombres, chaînes et booléens sont des feuilles ici.",
+            "Un tableau, même vide, est un conteneur.",
+            "null est une feuille malgré son typeof historique."
+          ],
+          "starter": "function isLeaf(value) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Teste null explicitement.",
+            "Ajoute le test typeof value !== \"object\"."
+          ],
+          "solution": "function isLeaf(value) {\n  return value === null || typeof value !== \"object\";\n}",
+          "walkthrough": [
+            "Teste null explicitement.",
+            "Ajoute le test typeof value !== \"object\".",
+            "Relie les deux cas par ||."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [null],
+              "expected": true,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [3],
+              "expected": true,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [{}],
+              "expected": false,
+              "calls": []
+            },
+            {
+              "label": "Cas 4",
+              "args": [[]],
+              "expected": false,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-recursive-sum",
+          "title": "Additionner un tableau imbriqué",
+          "target": "sumNested",
+          "minutes": 8,
+          "task": "value est un nombre ou un tableau de telles valeurs. Renvoie la somme de toutes les feuilles numériques.",
+          "bridge": "Chaque sous-tableau est un sous-problème du même type.",
+          "explanation": [
+            "Un nombre peut être renvoyé directement.",
+            "Un tableau demande de sommer les résultats des appels sur ses éléments.",
+            "Un tableau vide contient zéro feuille, donc sa somme vaut 0."
+          ],
+          "starter": "function sumNested(value) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Commence par le cas number.",
+            "Pour le tableau, parcours ses enfants."
+          ],
+          "solution": "function sumNested(value) {\n  if (typeof value === \"number\") return value;\n  let total = 0;\n  for (const child of value) total += sumNested(child);\n  return total;\n}",
+          "walkthrough": [
+            "Commence par le cas number.",
+            "Pour le tableau, parcours ses enfants.",
+            "Additionne les résultats récursifs, pas les enfants bruts."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [3],
+              "expected": 3,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [
+                [
+                  [1, 2],
+                  [3, [4]]
+                ]
+              ],
+              "expected": 10,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [[]],
+              "expected": 0,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-object-leaves",
+          "title": "Compter les feuilles d’un objet",
+          "target": "countLeaves",
+          "minutes": 8,
+          "task": "Pour un arbre JSON, compte les valeurs primitives et null. Un objet ou tableau vide compte pour 0.",
+          "bridge": "Object.values permet de se concentrer sur les enfants sans leurs clés.",
+          "explanation": [
+            "Une feuille compte pour 1.",
+            "Un conteneur additionne les comptes de ses enfants.",
+            "L’absence d’enfant laisse le compteur à zéro."
+          ],
+          "starter": "function countLeaves(value) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Traite null et les primitives avant Object.values.",
+            "Démarre count à zéro pour un conteneur."
+          ],
+          "solution": "function countLeaves(value) {\n  if (value === null || typeof value !== \"object\") return 1;\n  let count = 0;\n  for (const child of Object.values(value)) count += countLeaves(child);\n  return count;\n}",
+          "walkthrough": [
+            "Traite null et les primitives avant Object.values.",
+            "Démarre count à zéro pour un conteneur.",
+            "Ajoute countLeaves(child) pour chaque enfant."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                {
+                  "a": 1,
+                  "b": {
+                    "c": null
+                  }
+                }
+              ],
+              "expected": 2,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [{}],
+              "expected": 0,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [[[1], 2]],
+              "expected": 2,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-join-path",
+          "title": "Construire un chemin",
+          "target": "joinPath",
+          "minutes": 5,
+          "task": "Renvoie key si prefix est vide, sinon prefix + \".\" + key.",
+          "bridge": "Les chemins sont des chaînes reconstruites ; on n’ajoute pas un séparateur avant le premier segment.",
+          "explanation": [
+            "Le cas du préfixe vide évite un point initial.",
+            "La concaténation doit garder le préfixe reçu.",
+            "Les clés passées ici sont des chaînes."
+          ],
+          "starter": "function joinPath(prefix, key) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Traite d’abord prefix === \"\".",
+            "Sinon, intercale un seul point."
+          ],
+          "solution": "function joinPath(prefix, key) {\n  return prefix === \"\" ? key : prefix + \".\" + key;\n}",
+          "walkthrough": [
+            "Traite d’abord prefix === \"\".",
+            "Sinon, intercale un seul point.",
+            "Retourne la chaîne construite."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": ["", "name"],
+              "expected": "name",
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": ["user", "name"],
+              "expected": "user.name",
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-leaf-paths",
+          "title": "Transporter le préfixe récursif",
+          "target": "leafPaths",
+          "minutes": 8,
+          "task": "Renvoie les chemins pointés de toutes les feuilles d’un objet JSON, dans l’ordre d’Object.entries. La racine est un objet ; un conteneur vide ne produit aucun chemin.",
+          "bridge": "Un helper interne peut capturer le tableau de résultats, comme une closure Go.",
+          "explanation": [
+            "Le helper reçoit la valeur courante et son chemin.",
+            "Une feuille ajoute le chemin ; un conteneur continue vers ses enfants.",
+            "Object.entries fournit aussi les indices de tableaux sous forme de chaînes."
+          ],
+          "starter": "function leafPaths(obj) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Crée un helper visit(value, prefix).",
+            "Ajoute prefix uniquement quand value est une feuille."
+          ],
+          "solution": "function leafPaths(obj) {\n  const result = [];\n  function visit(value, prefix) {\n    if (value === null || typeof value !== \"object\") { result.push(prefix); return; }\n    for (const [key, child] of Object.entries(value)) {\n      visit(child, prefix === \"\" ? key : prefix + \".\" + key);\n    }\n  }\n  visit(obj, \"\");\n  return result;\n}",
+          "walkthrough": [
+            "Crée un helper visit(value, prefix).",
+            "Ajoute prefix uniquement quand value est une feuille.",
+            "Transmets le nouveau chemin à chaque appel récursif."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                {
+                  "user": {
+                    "name": "Ada"
+                  },
+                  "tags": ["go", "js"]
+                }
+              ],
+              "expected": ["user.name", "tags.0", "tags.1"],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [{}],
+              "expected": [],
+              "calls": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transfer",
+      "title": "Assembler avant le checkpoint",
+      "goal": "Combiner deux ou trois briques puis revenir aux vrais sujets.",
+      "go": "// Une fonction Go peut recevoir des callbacks et renvoyer une struct.\n// Le changement de syntaxe ne change pas le besoin de tracer les états.",
+      "js": "// En JS, mêmes invariants : entrée, état intermédiaire, sortie.\n// Vérifie le type exact et les effets de bord avant d’optimiser.",
+      "notes": [
+        "Les exercices précédents étaient volontairement petits. Ici, on combine les outils pour vérifier qu’ils restent compris hors de leur exemple initial.",
+        "Avant de coder, écris l’entrée, la sortie et deux cas limites. Trace une petite entrée à la main, puis seulement traduis cette démarche en JS.",
+        "Les cas de test sont publics et ciblés ; les réussir n’est pas équivalent à réussir tous les tests du checkpoint. Les vrais sujets liés au chapitre sont l’étape de transfert suivante.",
+        "En cas d’échec, identifie la brique en cause : callback, copie, borne, compteur ou cas d’arrêt. Reviens à ce petit exercice plutôt que de modifier le programme au hasard."
+      ],
+      "checkpoint": [
+        "pipeline",
+        "election-mix",
+        "object-lab",
+        "character-maker",
+        "flat-object"
+      ],
+      "lessons": [
+        {
+          "id": "js-learn-sum-multiples",
+          "title": "Combiner condition et somme",
+          "target": "sumMultiples",
+          "minutes": 8,
+          "task": "limit est positif ou nul, divisor > 0. Somme les entiers de 0 à limit inclus qui sont multiples de divisor.",
+          "bridge": "La démarche est celle d’une boucle Go avec un if ; seule la syntaxe JS change.",
+          "explanation": [
+            "La borne est inclusive.",
+            "Le modulo sélectionne les valeurs.",
+            "Le résultat est une somme numérique, pas le tableau des valeurs retenues."
+          ],
+          "starter": "function sumMultiples(limit, divisor) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Commence la somme à zéro.",
+            "Parcours les entiers jusqu’à limit inclus."
+          ],
+          "solution": "function sumMultiples(limit, divisor) {\n  let total = 0;\n  for (let n = 0; n <= limit; n++) if (n % divisor === 0) total += n;\n  return total;\n}",
+          "walkthrough": [
+            "Commence la somme à zéro.",
+            "Parcours les entiers jusqu’à limit inclus.",
+            "Ajoute seulement ceux dont le reste est nul."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [10, 3],
+              "expected": 18,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [0, 5],
+              "expected": 0,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [4, 5],
+              "expected": 0,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-row-strings",
+          "title": "Combiner map et join",
+          "target": "rowStrings",
+          "minutes": 5,
+          "task": "rows est un tableau de tableaux de mots. Renvoie une chaîne par ligne, avec ses mots séparés par un espace.",
+          "bridge": "On transforme chaque ligne indépendamment : une entrée donne une sortie.",
+          "explanation": [
+            "map traite le premier niveau.",
+            "join traite les mots d’une ligne.",
+            "Une ligne vide donne la chaîne vide, pas un élément supprimé."
+          ],
+          "starter": "function rowStrings(rows) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Utilise map pour garder le nombre de lignes.",
+            "Dans le callback, retourne row.join(\" \")."
+          ],
+          "solution": "function rowStrings(rows) {\n  return rows.map((row) => row.join(\" \"));\n}",
+          "walkthrough": [
+            "Utilise map pour garder le nombre de lignes.",
+            "Dans le callback, retourne row.join(\" \").",
+            "Ne fusionne pas toutes les lignes entre elles."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [[["red", "blue"], [], ["green"]]],
+              "expected": ["red blue", "", "green"],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [[]],
+              "expected": [],
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-filter-object",
+          "title": "Filtrer des entrées d’objet",
+          "target": "positiveProperties",
+          "minutes": 8,
+          "task": "Toutes les valeurs sont numériques. Renvoie un nouvel objet avec seulement les propriétés dont la valeur est strictement positive.",
+          "bridge": "C’est une construction de map filtrée : les clés gardées doivent conserver leur nom.",
+          "explanation": [
+            "Object.entries fournit des couples clé/valeur.",
+            "Le résultat doit rester un objet, pas un tableau de couples.",
+            "Une valeur zéro est rejetée."
+          ],
+          "starter": "function positiveProperties(obj) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Construis un objet résultat neuf.",
+            "Teste value > 0 dans le parcours."
+          ],
+          "solution": "function positiveProperties(obj) {\n  const result = {};\n  for (const [key, value] of Object.entries(obj)) if (value > 0) result[key] = value;\n  return result;\n}",
+          "walkthrough": [
+            "Construis un objet résultat neuf.",
+            "Teste value > 0 dans le parcours.",
+            "Écris result[key] = value uniquement si le test passe."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                {
+                  "a": 1,
+                  "b": 0,
+                  "c": -2
+                }
+              ],
+              "expected": {
+                "a": 1
+              },
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [{}],
+              "expected": {},
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-apply-series",
+          "title": "Exécuter une suite de fonctions",
+          "target": "applySeries",
+          "minutes": 8,
+          "task": "Applique les fonctions de transforms dans l’ordre et renvoie uniquement la valeur finale. Pour [], renvoie value.",
+          "bridge": "L’accumulateur est cette fois une valeur transformée par des fonctions.",
+          "explanation": [
+            "La valeur courante doit évoluer après chaque appel.",
+            "Le tableau contient de vraies fonctions, pas des noms à évaluer.",
+            "La valeur initiale est déjà le résultat si aucune transformation n’existe."
+          ],
+          "starter": "function applySeries(value, transforms) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "Initialise current avec value.",
+            "Appelle chaque transform avec current."
+          ],
+          "solution": "function applySeries(value, transforms) {\n  let current = value;\n  for (const transform of transforms) current = transform(current);\n  return current;\n}",
+          "walkthrough": [
+            "Initialise current avec value.",
+            "Appelle chaque transform avec current.",
+            "Remplace current par le retour de cet appel."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                3,
+                [
+                  {
+                    "$fn": "increment"
+                  },
+                  {
+                    "$fn": "double"
+                  }
+                ]
+              ],
+              "expected": 8,
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [7, []],
+              "expected": 7,
+              "calls": []
+            }
+          ]
+        },
+        {
+          "id": "js-learn-transform-closure",
+          "title": "Retourner un traitement configurable",
+          "target": "makeValueMapper",
+          "minutes": 8,
+          "task": "Renvoie une fonction qui prend un objet et retourne un nouvel objet où chaque valeur a été passée à transform, avec les mêmes clés.",
+          "bridge": "On combine une closure qui mémorise un callback et un parcours de map/objet.",
+          "explanation": [
+            "Le callback appartient au premier appel.",
+            "L’objet appartient à l’appel de la fonction retournée.",
+            "Le résultat doit être recréé pour chaque appel et conserver les clés."
+          ],
+          "starter": "function makeValueMapper(transform) {\n  // Écris ton code ici.\n}\n",
+          "hints": [
+            "La fonction extérieure retourne une fonction qui reçoit obj.",
+            "Cette fonction intérieure crée un objet result neuf."
+          ],
+          "solution": "function makeValueMapper(transform) {\n  return (obj) => {\n    const result = {};\n    for (const [key, value] of Object.entries(obj)) result[key] = transform(value);\n    return result;\n  };\n}",
+          "walkthrough": [
+            "La fonction extérieure retourne une fonction qui reçoit obj.",
+            "Cette fonction intérieure crée un objet result neuf.",
+            "Pour chaque entrée, applique transform à value en conservant key."
+          ],
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                {
+                  "$fn": "double"
+                }
+              ],
+              "expected": {
+                "a": 4,
+                "b": 6
+              },
+              "calls": [
+                [
+                  {
+                    "a": 2,
+                    "b": 3
+                  }
+                ]
+              ]
+            },
+            {
+              "label": "Cas 2",
+              "args": [
+                {
+                  "$fn": "increment"
+                }
+              ],
+              "expected": {},
+              "calls": [[{}]]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    {
+      "title": "MDN : fonctions et paramètres",
+      "url": "https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Functions"
+    },
+    {
+      "title": "MDN : fonctions fléchées",
+      "url": "https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Functions/Arrow_functions"
+    },
+    {
+      "title": "Go Tour : slices",
+      "url": "https://go.dev/tour/moretypes/7"
+    }
+  ]
+}

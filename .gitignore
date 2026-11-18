@@ -31,3 +31,6 @@ catalog-snapshots/.snapshot-*
 
 # Python validation helpers
 __pycache__/
+
+# Temporary local preview submissions (never version student code)
+/.local-runner/

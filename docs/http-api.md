@@ -33,6 +33,11 @@ sont pas des appels de fonction ou des commandes shell.
 - `mode` absent ou `tests` : correction complète.
 - `mode: preview` : programme autonome ou programme d’appel extrait de la consigne,
   avec les arguments littéraux ; aucune validation de progression côté interface.
+- `mode: lesson` : petite leçon locale Go → JS ; `exerciseId` désigne un identifiant
+  `js-learn-*` du curriculum serveur. Le serveur impose cible et cas publics,
+  utilise exclusivement l’image JS officielle et retourne aussi `checks`
+  (label, expected, actual, passed et error éventuel). Aucun score d’examen
+  n’est modifié. Les paramètres de test ou d’image transmis par le client sont ignorés.
 - `mode: example` : contrat de compatibilité, programme de consigne imposé, sans
   arguments personnalisés. Préférer `preview` pour l’interface actuelle.
 - Le serveur refuse les modes inconnus. Les champs de programme de test, stdin

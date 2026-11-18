@@ -32,8 +32,9 @@ const revisionCatalog = {
   exerciseLinks: require("../learning-content/exercise-links.json"),
 };
 const jsSprintPlan = require("../frontend/learning/js-checkpoint-sprint.json");
+const jsMicroPath = require("../learning-content/js-micro-path/curriculum.json");
 const outputs = {
-  "app.js": `/* ${banner} */\n(function () {\nconst jsSprintPlan = ${JSON.stringify(jsSprintPlan)};\nconst trainingGuides = ${JSON.stringify(guides)};\nconst revisionCatalog = ${JSON.stringify(revisionCatalog)};\n${assemble(manifest.javascript)}\n})();\n`,
+  "app.js": `/* ${banner} */\n(function () {\nconst jsMicroPath = ${JSON.stringify(jsMicroPath)};\nconst jsSprintPlan = ${JSON.stringify(jsSprintPlan)};\nconst trainingGuides = ${JSON.stringify(guides)};\nconst revisionCatalog = ${JSON.stringify(revisionCatalog)};\n${assemble(manifest.javascript)}\n})();\n`,
   "style.css": `/* ${banner} */\n${assemble(manifest.styles)}`,
 };
 // Parse before writing, so invalid source cannot replace a working bundle.

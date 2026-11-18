@@ -377,8 +377,11 @@ la reprise, la libération des places et l’absence de faux résultat de correc
 
 ## Prototype de parcours JavaScript
 
-La pédagogie est décrite dans `frontend/learning/js-checkpoint-sprint.json`,
-intégré au bundle par le builder. La bibliothèque `checkpoint-sprint.js` gère
-les repères locaux, distincts des scores d’examen. Le module d’application du
-même nom ouvre le tableau de bord et suit les défis en entraînement. Voir le
-[guide du prototype](prototype-parcours-js.md) pour les limites et tests à rejouer.
+La pédagogie active est décrite dans `learning-content/js-micro-path/curriculum.json` :
+63 petits exercices Go → JavaScript, regroupés en 12 chapitres. Ce fichier est
+intégré au bundle et lu côté serveur pour construire les tests publics. Les
+soumissions `mode: lesson` utilisent `backend/js_micro_path.go` et le runner
+Docker JS existant. La bibliothèque `js-micro-progress.js` conserve les brouillons
+et le suivi ; `js-micro-path.js` affiche l’étape et l’éditeur. `checkpoint-sprint.js`
+conserve seulement le pont vers les vrais exercices et leurs repères autonomes.
+Voir le [guide détaillé](prototype-parcours-js.md) pour les limites et les tests.

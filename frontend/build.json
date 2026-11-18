@@ -2,6 +2,7 @@
   "javascript": [
     "frontend/lib/attempt-journal.js",
     "frontend/lib/checkpoint-sprint.js",
+    "frontend/lib/js-micro-progress.js",
     "frontend/app/context.js",
     "frontend/app/configuration.js",
     "frontend/app/progress.js",
@@ -19,6 +20,7 @@
     "frontend/app/failure-reaction.js",
     "frontend/app/learning-journal.js",
     "frontend/app/checkpoint-sprint.js",
+    "frontend/app/js-micro-path.js",
     "frontend/app/submission.js",
     "frontend/app/events.js",
     "frontend/app/layout.js",
@@ -44,12 +46,8 @@
     "frontend/styles/motion.css",
     "frontend/styles/revisions.css",
     "frontend/styles/learning-journal.css",
-    "frontend/styles/checkpoint-sprint.css"
+    "frontend/styles/checkpoint-sprint.css",
+    "frontend/styles/js-micro-path.css"
   ],
-  "guides": [
-    "go",
-    "js",
-    "rust",
-    "java"
-  ]
+  "guides": ["go", "js", "rust", "java"]
 }

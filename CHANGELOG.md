@@ -1,5 +1,12 @@
 # Historique fonctionnel
 
+## 17 novembre 2026 — parcours Go vers JavaScript pas à pas
+
+- Refonte du prototype en 63 petits exercices et 12 chapitres, hors calendrier imposé.
+- Comparaisons Go/JS, notions détaillées, squelettes, indices et corrigés commentés.
+- Tests pédagogiques dans Docker avec attendu/obtenu et détection de mutation.
+- Brouillons par étape et progression distincte des scores du checkpoint.
+
 ## 17 novembre 2026 — prototype du parcours JavaScript
 
 - Sept séances ciblant les 19 exercices N1–N4, avec diagnostic, méthodes et fiches.

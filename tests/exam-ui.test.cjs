@@ -1460,7 +1460,159 @@ require("node:test")(
 );
 
 require("node:test")(
-  "JS sprint keeps navigation and evidence separate from standard training and exams",
+  "step-by-step Go to JS path grades small exercises without altering the main editor or exam progress",
+  async () => {
+    const env = await boot();
+    const w = env.w;
+    const original = w.fetch;
+    let submitted;
+    w.fetch = async (url, opts) => {
+      if (url !== "/api/run") return original(url, opts);
+      submitted = JSON.parse(opts.body);
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          success: true,
+          output: "OK",
+          checks: [
+            {
+              label: '<img src=x onerror="alert(1)">',
+              expected: "8",
+              actual: "8",
+              passed: true,
+            },
+          ],
+        }),
+      };
+    };
+    try {
+      draft(w, "KEEP GO DRAFT");
+      click(w, "#js-sprint-open");
+      assert.equal(w.document.querySelectorAll(".micro-chapter").length, 12);
+      assert.equal(w.document.querySelectorAll(".micro-lesson").length, 5);
+      assert.match(
+        w.document.querySelector(".micro-hero").textContent,
+        /0\/63/,
+      );
+      assert.equal(el(w, "code-editor").value, "KEEP GO DRAFT");
+      assert.equal(el(w, "micro-next").disabled, true);
+      el(w, "micro-code").value = "function doubleValue(n) { return n * 2; }";
+      el(w, "micro-code").dispatchEvent(
+        new w.Event("input", { bubbles: true }),
+      );
+      click(w, "#micro-verify");
+      await tick();
+      assert.equal(submitted.mode, "lesson");
+      assert.equal(submitted.exerciseId, "js-learn-return");
+      assert.equal(el(w, "micro-next").disabled, false);
+      assert.equal(el(w, "micro-result").querySelector("img"), null);
+      assert.match(el(w, "micro-result").textContent, /img src=x/);
+      assert.match(el(w, "progress-label").textContent, /0 \/ 3/);
+      assert.equal(el(w, "code-editor").value, "KEEP GO DRAFT");
+      click(w, "#micro-next");
+      assert.match(
+        w.document.querySelector(".micro-title").textContent,
+        /variable/,
+      );
+      assert.equal(el(w, "micro-next").disabled, true);
+      const saved = env.snapshot();
+      const restored = await boot(saved);
+      try {
+        click(restored.w, "#js-sprint-open");
+        assert.match(
+          restored.w.document.querySelector(".micro-title").textContent,
+          /variable/,
+        );
+        assert.match(
+          restored.w.document.querySelector(".micro-hero").textContent,
+          /1\/63/,
+        );
+      } finally {
+        restored.dom.window.close();
+      }
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "micro hints, explained answers and reset preserve existing training progress",
+  async () => {
+    const env = await boot();
+    const w = env.w;
+    try {
+      draft(w, "correct GO");
+      env.advance(15000);
+      click(w, "#run-btn");
+      await tick();
+      draft(w, "DO NOT REPLACE");
+      click(w, "#js-sprint-open");
+      const solution = w.document.querySelector(".micro-solution");
+      assert.equal(solution.open, false);
+      solution.querySelector("summary").click();
+      await tick();
+      assert.equal(solution.open, true);
+      el(w, "micro-code").value = "correct CODE";
+      el(w, "micro-code").dispatchEvent(
+        new w.Event("input", { bubbles: true }),
+      );
+      click(w, "#micro-verify");
+      await tick();
+      let state = JSON.parse(w.localStorage.getItem("z01-js-micro-path-v1"));
+      assert.equal(state.items["js-learn-return"].assisted, true);
+      const reset = [
+        ...el(w, "js-sprint-dialog").querySelectorAll("button"),
+      ].find((b) => b.textContent === "Réinitialiser seulement ce parcours");
+      reset.click();
+      reset.click();
+      assert.match(
+        w.document.querySelector(".micro-hero").textContent,
+        /0\/63/,
+      );
+      assert.equal(el(w, "code-editor").value, "DO NOT REPLACE");
+      assert.match(el(w, "progress-label").textContent, /1 \/ 3/);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "micro infrastructure errors do not count as attempts or passed steps",
+  async () => {
+    const env = await boot();
+    const w = env.w;
+    const original = w.fetch;
+    w.fetch = async (url, opts) =>
+      url === "/api/run"
+        ? {
+            ok: false,
+            status: 503,
+            json: async () => ({
+              success: false,
+              output: "Docker indisponible",
+            }),
+          }
+        : original(url, opts);
+    try {
+      click(w, "#js-sprint-open");
+      click(w, "#micro-verify");
+      await tick();
+      assert.match(el(w, "micro-result").textContent, /Aucun échec/);
+      const state = JSON.parse(w.localStorage.getItem("z01-js-micro-path-v1"));
+      assert.equal(state.items["js-learn-return"].attempts, 0);
+      assert.equal(state.items["js-learn-return"].completed, false);
+      assert.equal(el(w, "micro-next").disabled, true);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "checkpoint bridge retains autonomous evidence and remains unavailable in exam mode",
   async () => {
     const catalogs = Object.fromEntries(
       ["go", "js", "rust", "java"].map((track) => [
@@ -1471,50 +1623,21 @@ require("node:test")(
     const env = await boot({}, false, catalogs);
     const w = env.w;
     try {
-      draft(w, "KEEP MY GO CODE");
       click(w, "#js-sprint-open");
-      assert.ok(el(w, "js-sprint-dialog").open);
-      assert.equal(w.document.querySelectorAll(".sprint-day").length, 7);
-      assert.equal(el(w, "code-editor").value, "KEEP MY GO CODE");
-      click(w, '[name="sprint-quiz-return"][value="1"]');
-      assert.match(el(w, "sprint-diagnostic").textContent, /1\/6 réponses/);
       click(w, '[data-sprint-exercise="factorial"][data-assisted="false"]');
       assert.equal(el(w, "js-sprint-dialog"), null);
-      assert.equal(el(w, "track-js").checked, true);
       assert.ok(w.document.querySelector(".sprint-autonomous"));
-      assert.equal(el(w, "code-editor").value, "");
-      draft(w, "correct SPRINT");
+      draft(w, "correct CHECKPOINT");
       env.advance(15000);
       click(w, "#run-btn");
       await tick();
-      let state = JSON.parse(
+      const oldState = JSON.parse(
         w.localStorage.getItem("z01-js-checkpoint-sprint-v1"),
       );
-      assert.equal(state.attempts.length, 1);
-      assert.equal(state.attempts[0].assisted, false);
-      // Opening the teaching material converts the ongoing attempt to guided.
+      assert.equal(oldState.attempts[0].assisted, false);
       click(w, "#js-sprint-open");
       assert.equal(w.document.querySelector(".sprint-autonomous"), null);
-      click(w, '[data-sprint-exercise="evensum"][data-assisted="true"]');
-      draft(w, "correct GUIDED");
-      env.advance(15000);
-      click(w, "#run-btn");
-      await tick();
-      state = JSON.parse(w.localStorage.getItem("z01-js-checkpoint-sprint-v1"));
-      assert.equal(state.attempts[1].assisted, true);
-      // Tester is excluded from sprint evidence.
-      env.advance(15000);
-      click(w, "#example-btn");
-      await tick();
-      assert.equal(
-        JSON.parse(w.localStorage.getItem("z01-js-checkpoint-sprint-v1"))
-          .attempts.length,
-        2,
-      );
-      click(w, '.exercise-chip[data-id="evensum"]');
-      assert.equal(el(w, "sprint-exercise-banner"), null);
-      click(w, "#mode-learning");
-      assert.equal(el(w, "sprint-exercise-banner"), null);
+      w.document.querySelector(".sprint-dialog-header button").click();
       click(w, "#mode-true-exam");
       click(w, "#js-sprint-open");
       assert.equal(el(w, "js-sprint-dialog"), null);
@@ -1525,49 +1648,7 @@ require("node:test")(
 );
 
 require("node:test")(
-  "sprint lessons preserve code and reset never erases standard progress",
-  async () => {
-    const catalogs = Object.fromEntries(
-      ["go", "js", "rust", "java"].map((track) => [
-        track,
-        require(`../catalog-snapshots/${track}.json`).exercises,
-      ]),
-    );
-    const env = await boot({}, false, catalogs);
-    const w = env.w;
-    try {
-      draft(w, "correct GO");
-      env.advance(15000);
-      click(w, "#run-btn");
-      await tick();
-      draft(w, "DO NOT REPLACE");
-      click(w, "#js-sprint-open");
-      const lesson = [
-        ...el(w, "js-sprint-dialog").querySelectorAll("button"),
-      ].find((b) => b.textContent.includes("Variables, types"));
-      lesson.click();
-      await tick();
-      assert.ok(w.document.querySelector(".sprint-reader h1"));
-      assert.equal(el(w, "code-editor").value, "DO NOT REPLACE");
-      [...el(w, "js-sprint-dialog").querySelectorAll("button")]
-        .find((b) => b.textContent.includes("Revenir à la séance"))
-        .click();
-      const clear = [
-        ...el(w, "js-sprint-dialog").querySelectorAll("button"),
-      ].find((b) => b.textContent.includes("Réinitialiser"));
-      clear.click();
-      assert.equal(clear.textContent, "Confirmer la réinitialisation");
-      clear.click();
-      assert.match(el(w, "progress-label").textContent, /1 \/ 61/);
-      assert.equal(el(w, "code-editor").value, "DO NOT REPLACE");
-    } finally {
-      env.dom.window.close();
-    }
-  },
-);
-
-require("node:test")(
-  "sprint never presents a changed catalog group as a ready challenge",
+  "changed checkpoint catalog groups disable their teaching bridge",
   async () => {
     const catalogs = Object.fromEntries(
       ["go", "js", "rust", "java"].map((track) => [
@@ -1587,7 +1668,6 @@ require("node:test")(
       );
       assert.match(row.textContent, /Groupe modifié/);
       assert.equal(row.querySelector('[data-assisted="false"]').disabled, true);
-      assert.equal(row.querySelector('[data-assisted="true"]').disabled, true);
     } finally {
       env.dom.window.close();
     }

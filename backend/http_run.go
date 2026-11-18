@@ -40,7 +40,7 @@ func handleRun(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.Mode != "" && req.Mode != "tests" && req.Mode != "example" && req.Mode != "preview" {
+	if req.Mode != "" && req.Mode != "tests" && req.Mode != "example" && req.Mode != "preview" && req.Mode != "lesson" {
 		writeRunError(w, http.StatusBadRequest, "Mode d’exécution inconnu.")
 		return
 	}
@@ -69,6 +69,28 @@ func handleRun(w http.ResponseWriter, r *http.Request) {
 		req.Stdin = ""
 		req.TestMode = "auto"
 	}
+	if req.Mode == "lesson" {
+		lesson, err := findMicroLesson(req.ExerciseID)
+		if err != nil {
+			if errors.Is(err, errMicroNotFound) {
+				writeRunError(w, http.StatusNotFound, "Petit exercice inconnu.")
+			} else {
+				writeRunError(w, http.StatusServiceUnavailable, "Contenu pédagogique indisponible.")
+			}
+			return
+		}
+		if !ensureRunnerImage(w, officialImage("module-js")) {
+			return
+		}
+		result, err := runMicroLesson(lesson, req.Code)
+		if err != nil {
+			writeRunError(w, http.StatusServiceUnavailable, err.Error())
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(result)
+		return
+	}
 	// Keep language lookup order stable; every runner shares the same response contract.
 	for _, runner := range []struct {
 		track   string
@@ -84,18 +106,7 @@ func handleRun(w http.ResponseWriter, r *http.Request) {
 		if ex == nil {
 			continue
 		}
-		ready, err := runnerImages.ready(exerciseImage(runner.track, *ex))
-		if err != nil {
-			writeRunError(w, http.StatusServiceUnavailable, err.Error())
-			return
-		}
-		if !ready {
-			w.Header().Set("Content-Type", "application/json")
-			w.Header().Set("Retry-After", "5")
-			w.WriteHeader(http.StatusAccepted)
-			_ = json.NewEncoder(w).Encode(map[string]any{
-				"status": "preparing", "output": "Préparation de la moulinette… Premier téléchargement en cours, cela peut prendre plusieurs minutes. Aucun résultat n’a encore été évalué.",
-			})
+		if !ensureRunnerImage(w, exerciseImage(runner.track, *ex)) {
 			return
 		}
 		var ok bool
@@ -109,4 +120,21 @@ func handleRun(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeRunError(w, http.StatusNotFound, "Exercice inconnu: "+req.ExerciseID)
+}
+
+// Preparation shares the same contract for checkpoint and teaching exercises.
+func ensureRunnerImage(w http.ResponseWriter, image string) bool {
+	ready, err := runnerImages.ready(image)
+	if err != nil {
+		writeRunError(w, http.StatusServiceUnavailable, err.Error())
+		return false
+	}
+	if ready {
+		return true
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Retry-After", "5")
+	w.WriteHeader(http.StatusAccepted)
+	_ = json.NewEncoder(w).Encode(map[string]any{"status": "preparing", "output": "Préparation de la moulinette… Premier téléchargement en cours, cela peut prendre plusieurs minutes. Aucun résultat n’a encore été évalué."})
+	return false
 }
