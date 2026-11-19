@@ -78,8 +78,8 @@ func TestCompiledMicroCurriculaAndTrustedSolutions(t *testing.T) {
 					})
 				}
 			}
-			if count != 18 {
-				t.Fatalf("expected 18 teaching steps, got %d", count)
+			if count != 30 {
+				t.Fatalf("expected 30 teaching steps, got %d", count)
 			}
 		})
 	}

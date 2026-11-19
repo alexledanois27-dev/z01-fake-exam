@@ -1,5 +1,12 @@
 # Historique fonctionnel
 
+## 19 novembre 2026 — parcours harmonisés à 30 étapes
+
+- 30 petits exercices par langage : 120 étapes au total.
+- 12 étapes supplémentaires dans chacun des parcours Go, Rust et Java.
+- Sélection JS resserrée à 30 étapes réparties dans les 12 chapitres.
+- Migration des étapes JS conservées vers v2 sans modifier la sauvegarde v1.
+
 ## 19 novembre 2026 — onglet Apprendre et parcours multilangages
 
 - Parcours JS déplacé dans une page principale Apprendre, adaptée au langage courant.

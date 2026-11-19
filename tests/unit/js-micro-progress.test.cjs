@@ -16,13 +16,13 @@ function setup(raw) {
     raw: () => value,
   };
 }
-test("Go to JS curriculum gives sixty-three small explained exercises and covers all target checkpoint subjects", () => {
+test("Go to JS curriculum gives thirty small explained exercises and covers all target checkpoint subjects", () => {
   assert.equal(plan.modules.length, 12);
-  assert.equal(lessons.length, 63);
-  assert.equal(new Set(lessons.map((l) => l.id)).size, 63);
+  assert.equal(lessons.length, 30);
+  assert.equal(new Set(lessons.map((l) => l.id)).size, 30);
   const ids = new Set();
   for (const chapter of plan.modules) {
-    assert.ok(chapter.lessons.length >= 5);
+    assert.ok(chapter.lessons.length >= 2);
     assert.ok(chapter.go && chapter.js && chapter.notes.length >= 4);
     chapter.checkpoint.forEach((id) => ids.add(id));
     for (const l of chapter.lessons) {
@@ -123,7 +123,7 @@ test("all language curricula have precise steps and valid catalogue bridges", ()
       ),
     );
     const lessons = plan.modules.flatMap((m) => m.lessons);
-    assert.equal(lessons.length, track === "js" ? 63 : 18);
+    assert.equal(lessons.length, 30);
     for (const module of plan.modules) {
       assert.ok(module.notes.length >= 4);
       for (const id of module.checkpoint)
@@ -139,4 +139,37 @@ test("all language curricula have precise steps and valid catalogue bridges", ()
       }
     }
   }
+});
+
+test("shortened JS path imports retained steps while keeping the old 63-step backup untouched", () => {
+  const id = lessons[0].id;
+  const original = JSON.stringify({
+    version: 1,
+    selected: "js-learn-const",
+    items: {
+      [id]: { draft: "old answer", completed: true, lastPassed: true },
+      "js-learn-const": { draft: "archived answer", completed: true },
+    },
+  });
+  const memory = new Map([["z01-js-micro-path-v1", original]]);
+  const getStorage = () => ({
+    getItem: (key) => memory.get(key) ?? null,
+    setItem: (key, value) => memory.set(key, value),
+  });
+  const options = {
+    plan,
+    key: plan.storageKey,
+    legacyKey: plan.legacyStorageKey,
+    getStorage,
+  };
+  const store = create(options);
+  assert.equal(store.state(id).draft, "old answer");
+  assert.equal(store.summary().completed, 1);
+  assert.equal(store.summary().total, 30);
+  assert.equal(store.selected(), id);
+  store.select(id);
+  assert.equal(memory.get("z01-js-micro-path-v1"), original);
+  store.clear();
+  assert.equal(create(options).summary().completed, 0);
+  assert.equal(memory.get("z01-js-micro-path-v1"), original);
 });

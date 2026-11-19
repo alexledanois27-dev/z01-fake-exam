@@ -378,15 +378,16 @@ la reprise, la libération des places et l’absence de faux résultat de correc
 ## Parcours Apprendre
 
 Les fichiers `learning-content/{go,js,rust,java}-micro-path/curriculum.json`
-contiennent 117 petits exercices maintenus : 63 JS et 18 par autre langage.
+contiennent 120 petits exercices maintenus : 30 dans chacun des quatre langages.
 Le build les intègre au bundle ; le serveur les lit depuis un chemin fixe validé.
 `backend/js_micro_path.go` conserve son nom historique mais sélectionne désormais
 le moteur du langage : Node, Go, rustc ou javac/java, exclusivement dans Docker.
 Les expressions d’appel des cas compilés viennent des fichiers maintenus, jamais
 du client. Les retours sont comparés à leur représentation textuelle de référence.
 
-`js-micro-progress.js` accepte une clé de stockage explicite ; l’ancienne clé JS
-reste inchangée. `js-micro-path.js` affiche le parcours courant dans le panneau
+`js-micro-progress.js` accepte une clé et une ancienne clé de migration explicites.
+JS utilise désormais v2 : les étapes conservées sont importées depuis v1 si v2
+n’existe pas encore. La clé v1 reste intacte, y compris ses étapes retirées. `js-micro-path.js` affiche le parcours courant dans le panneau
 `learn-path-panel` de l’onglet Apprendre, sans modale. Les brouillons, indices et
 réussites ne se mélangent ni entre langages ni avec les scores d’examen.
 Les réponses en retard sont invalidées par un compteur de génération de vue.

@@ -1,6 +1,6 @@
 > Mise à jour : le parcours se trouve désormais dans l’onglet **Apprendre**,
 > en pleine page et selon le langage sélectionné. Go, Rust et Java disposent aussi
-> d’un premier parcours de 18 étapes chacun. Voir [le guide actuel](parcours-apprendre.md).
+> d’un premier parcours de 30 étapes chacun. Voir [le guide actuel](parcours-apprendre.md).
 > Les détails ci-dessous décrivent le contenu JS et son historique.
 
 # Prototype : de Go au checkpoint JavaScript, pas à pas
@@ -8,7 +8,7 @@
 Branche `feat/js-checkpoint-sprint`, issue de `main` (`ae2d1ea`). Le prototype a
 été réorienté : il ne propose plus de calendrier de sept séances ni un simple
 regroupement des sujets. Il explique les différences Go → JS et les fait
-pratiquer dans **63 petits exercices**, répartis en **12 chapitres**.
+pratiquer dans **30 petits exercices**, répartis en **12 chapitres**.
 
 ## Ce que l’apprenant fait
 
@@ -35,18 +35,18 @@ oblige à vérifier de nouveau avant d’utiliser le bouton Étape suivante.
 
 | Chapitre | Petites briques |
 | --- | --- |
-| Syntaxe Go → JS | return, let, const, typeof, égalité stricte |
-| Nombres et boucles | conditions, modulo, division entière, somme, while |
-| Briques du N1 | valeur absolue, diviseurs propres, produit, couple d’états, répétition |
-| Chaînes | length, accès protégé, mots, préfixe, inversion ASCII |
-| Tableaux | ajout copié, inversion copiée, groupes, deux niveaux, copies imbriquées |
-| Objets | clé variable, présence propre, entries, copie, fusion |
-| Callbacks | appel, map, filter, reduce, composition |
-| Closures | fonction retournée, seuil capturé, état privé, appels successifs, base copiée, appels chaînés |
-| Grilles | bornes, comptage, voisins, recherches, Set et connexité |
-| Tris | comparateur, échange, passe à bulles, compteurs, insertion |
-| Récursion | feuille, somme imbriquée, feuilles d’objet, chemin, chemins des feuilles |
-| Assemblage | multiples, lignes de texte, objet filtré, suite de fonctions, mapper capturé |
+| Syntaxe Go → JS | return, let, égalité stricte |
+| Nombres et boucles | modulo, somme |
+| Briques du N1 | diviseurs propres, couple d’états |
+| Chaînes | découpage en mots, inversion |
+| Tableaux | ajout copié, groupes, copies imbriquées |
+| Objets | présence propre, entries |
+| Callbacks | map, filter, reduce |
+| Closures | fonction retournée, état privé, appels chaînés |
+| Grilles | bornes, Set, connexité |
+| Tris | comparateur, passe à bulles |
+| Récursion | cas de base, feuilles d’objet, chemins des feuilles |
+| Assemblage | multiples, mapper capturé |
 
 Le public visé sait déjà programmer en Go. On ne réexplique pas ce qu’est une
 boucle dans l’absolu : on rend explicites les parenthèses de for, l’absence de
@@ -69,7 +69,7 @@ révisions et sujets complets. Aucun calendrier ne force à avancer sans compren
 `learning-content/js-micro-path/curriculum.json` contient toute la matière :
 chapitres, exemples Go/JS, explications, signatures, squelettes, indices,
 solutions commentées et tests publics. C’est le fichier à modifier pour améliorer
-la pédagogie. Les tests vérifient ses 63 corrections maintenues et la couverture
+la pédagogie. Les tests vérifient ses 30 corrections maintenues et la couverture
 réelle des liens vers le checkpoint. Ne pas ajouter une solution sans cas limites.
 
 `frontend/lib/js-micro-progress.js` gère le suivi indépendant. Le module
@@ -116,7 +116,7 @@ du endpoint et du confinement utilisent Docker. Le curriculum est copié avec
 
 ## Stockage et reprise
 
-Clé `z01-js-micro-path-v1` : étape sélectionnée, brouillon par étape (8 000
+Clé `z01-js-micro-path-v2` (reprise des étapes conservées depuis v1, laissée intacte) : étape sélectionnée, brouillon par étape (8 000
 caractères maximum), aides consultées, tentatives et réussites. Les champs sont
 normalisés au chargement, les identifiants inconnus ignorés et les compteurs bornés.
 Un code trop long n’est pas tronqué silencieusement : l’interface demande de le
@@ -144,7 +144,7 @@ que le résultat obtenu est undefined. Puis corriger, passer à l’étape suiva
 recharger et vérifier le brouillon. Tester aussi une inversion qui modifie son
 entrée, un callback oublié et une closure qui renvoie un nombre trop tôt.
 
-`make check` couvre les parcours UI, le stockage, les 63 corrections, la mutation,
+`make check` couvre les parcours UI, le stockage, les 30 corrections, la mutation,
 les erreurs de retour/curryfication, le contrat HTTP et les paramètres client
 ignorés. Un retour d’apprenant reste nécessaire : relever les points de blocage
 sur les premiers chapitres, puis vérifier le transfert sur des sujets complets.

@@ -20,10 +20,10 @@ En examen strict actif, l’accès reste verrouillé comme les autres onglets.
 
 | Langage | Étapes | Chapitres | Objectif du premier parcours |
 | --- | --- | --- | --- |
-| Go | 18 | 6 | Contrats, bornes, boucles, UTF-8, copies, ensembles, algorithmes. |
-| JavaScript | 63 | 12 | Transition depuis Go et briques des sujets N1 à N4. |
-| Rust | 18 | 6 | Expressions, possession, emprunts, UTF-8, Option/Result, collections, enum. |
-| Java | 18 | 6 | Méthodes, String, tableaux, collections, objets, validation et exceptions. |
+| Go | 30 | 6 | Contrats, bornes, boucles, UTF-8, copies, ensembles, algorithmes. |
+| JavaScript | 30 | 12 | Transition depuis Go et briques des sujets N1 à N4. |
+| Rust | 30 | 6 | Expressions, possession, emprunts, UTF-8, Option/Result, collections, enum. |
+| Java | 30 | 6 | Méthodes, String, tableaux, collections, objets, validation et exceptions. |
 
 Les nouvelles étapes sont des exercices locaux rédigés pour l’apprentissage ;
 elles ne proviennent pas de l’API officielle. Les ponts ouvrent les vrais sujets
@@ -64,14 +64,18 @@ possède un identifiant stable, un squelette, une solution, des indices, un
 raisonnement détaillé et au moins deux cas publics. Les expressions `invoke`
 sont du code de test maintenu côté dépôt, pas du contenu importé d’une API.
 
-Stockage : `z01-{go,js,rust,java}-micro-path-v1`. Les réussites d’entraînement et
-les sessions d’examen utilisent d’autres clés. La clé JS historique est conservée.
+Stockage : `z01-{go,rust,java}-micro-path-v1` et `z01-js-micro-path-v2`.
+Les réussites d’entraînement et les sessions d’examen utilisent d’autres clés.
+Au premier usage sans v2, les données des étapes JS conservées sont lues depuis
+`z01-js-micro-path-v1`. Cette ancienne sauvegarde des 63 étapes reste intacte,
+y compris les brouillons retirés du parcours. La sélection revient à la première
+étape si l’étape précédente a disparu. Réinitialiser v2 ne réimporte pas v1.
 La réinitialisation vise uniquement le parcours du langage courant. Ce stockage
 reste local au navigateur et au port, sans compte ni synchronisation.
 
 Validation normale : `make check`. Les tests compilent les corrections maintenues
 avec les outils de l’hôte lorsqu’ils existent ; aucun code utilisateur n’y passe.
-Pour valider les 54 corrections compilées dans les vraies images, les précharger
+Pour valider les 90 corrections compilées dans les vraies images, les précharger
 puis lancer depuis la racine, avec un TMPDIR visible du daemon Docker :
 
 ```sh

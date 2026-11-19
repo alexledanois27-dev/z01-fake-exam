@@ -59,7 +59,7 @@ func TestEveryMaintainedMicroSolutionPassesPublicCases(t *testing.T) {
 			})
 		}
 	}
-	if count != 63 {
+	if count != 30 {
 		t.Fatalf("unexpected curriculum size: %d", count)
 	}
 }

@@ -148,6 +148,100 @@
             "Le modulo exprime le critère sans boucle.",
             "Le résultat est déjà un bool."
           ]
+        },
+        {
+          "id": "go-learn-clamp",
+          "title": "Traduire un intervalle fermé",
+          "target": "Clamp",
+          "minutes": 8,
+          "task": "Ramène n dans [low,high], avec low<=high.",
+          "bridge": "Trois cas exclusifs suffisent : trop petit, trop grand, déjà dedans.",
+          "explanation": [
+            "Si n<low, la réponse est low.",
+            "Si n>high, la réponse est high.",
+            "Les bornes elles-mêmes sont déjà valides : utilise < et >, pas une correction arbitraire."
+          ],
+          "starter": "func Clamp(n,low,high int) int {\n    return n\n}",
+          "solution": "func Clamp(n, low, high int) int {\n\tif n < low {\n\t\treturn low\n\t}\n\tif n > high {\n\t\treturn high\n\t}\n\treturn n\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "Clamp(-2,0,10)",
+              "expectedText": "0"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "Clamp(20,0,10)",
+              "expectedText": "10"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "Clamp(5,0,10)",
+              "expectedText": "5"
+            },
+            {
+              "label": "Cas 4",
+              "args": [],
+              "invoke": "Clamp(0,0,10)",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Traite les deux dépassements avant le retour final.",
+            "Le dernier retour peut simplement renvoyer n."
+          ],
+          "walkthrough": [
+            "La précondition low<=high définit un intervalle cohérent.",
+            "Chaque garde traite un dépassement précis.",
+            "Le cas restant inclut les deux bornes."
+          ]
+        },
+        {
+          "id": "go-learn-safe-divide",
+          "title": "Retourner une valeur et sa validité",
+          "target": "SafeDivide",
+          "minutes": 8,
+          "task": "Pour de petits int, renvoie le quotient entier et true ; si d==0 renvoie 0,false.",
+          "bridge": "Un bool de validité évite de confondre un quotient nul et un échec.",
+          "explanation": [
+            "La signature possède deux retours : (int,bool).",
+            "Le cas d==0 est traité avant n/d.",
+            "Une division valide peut aussi donner zéro, donc le bool est nécessaire."
+          ],
+          "starter": "func SafeDivide(n,d int) (int,bool) {\n    return 0,false\n}",
+          "solution": "func SafeDivide(n, d int) (int, bool) {\n\tif d == 0 {\n\t\treturn 0, false\n\t}\n\treturn n / d, true\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "SafeDivide(7,2)",
+              "expectedText": "3 true"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "SafeDivide(1,2)",
+              "expectedText": "0 true"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "SafeDivide(4,0)",
+              "expectedText": "0 false"
+            }
+          ],
+          "hints": [
+            "Utilise une garde sur d==0.",
+            "Un succès retourne n/d,true."
+          ],
+          "walkthrough": [
+            "La garde protège le calcul.",
+            "La division suit la troncature entière de Go.",
+            "Le bool exprime la validité indépendamment du quotient."
+          ]
         }
       ]
     },
@@ -293,6 +387,88 @@
             "La mise à jour simultanée conserve l’ancien b.",
             "Le test b!=0 protège le modulo."
           ]
+        },
+        {
+          "id": "go-learn-digit-sum",
+          "title": "Extraire et accumuler les chiffres",
+          "target": "DigitSum",
+          "minutes": 8,
+          "task": "Pour n>=0, renvoie la somme de ses chiffres décimaux.",
+          "bridge": "Le modulo extrait le dernier chiffre ; la division le retire.",
+          "explanation": [
+            "n%10 donne le chiffre des unités.",
+            "n/=10 prépare le nombre restant.",
+            "Pour n==0, la somme initiale zéro est déjà correcte."
+          ],
+          "starter": "func DigitSum(n int) int {\n    return 0\n}",
+          "solution": "func DigitSum(n int) int {\n\ttotal := 0\n\tfor n > 0 {\n\t\ttotal += n % 10\n\t\tn /= 10\n\t}\n\treturn total\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "DigitSum(1203)",
+              "expectedText": "6"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "DigitSum(9)",
+              "expectedText": "9"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "DigitSum(0)",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Ajoute n%10 à total.",
+            "Divise ensuite n par 10 à chaque tour."
+          ],
+          "walkthrough": [
+            "Le chiffre courant est ajouté une seule fois.",
+            "n décroît jusqu’à zéro.",
+            "L’accumulateur représente la somme des chiffres déjà retirés."
+          ]
+        },
+        {
+          "id": "go-learn-count-evens",
+          "title": "Distinguer compter et additionner",
+          "target": "EvenCount",
+          "minutes": 8,
+          "task": "Compte les entiers pairs de values, zéro compris.",
+          "bridge": "Le compteur ajoute 1 par valeur retenue, pas la valeur elle-même.",
+          "explanation": [
+            "Un entier pair satisfait n%2==0.",
+            "Les entiers négatifs pairs satisfont aussi cette condition.",
+            "La slice vide donne naturellement un compteur nul."
+          ],
+          "starter": "func EvenCount(values []int) int {\n    return 0\n}",
+          "solution": "func EvenCount(values []int) int {\n\tcount := 0\n\tfor _, n := range values {\n\t\tif n%2 == 0 {\n\t\t\tcount++\n\t\t}\n\t}\n\treturn count\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "EvenCount([]int{-2,0,3,4})",
+              "expectedText": "3"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "EvenCount([]int{})",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Parcours les valeurs avec range.",
+            "Quand le modulo est nul, fais count++."
+          ],
+          "walkthrough": [
+            "Le test de parité ne dépend pas du signe.",
+            "Compter est différent de sommer.",
+            "Le retour se situe après tout le parcours."
+          ]
         }
       ]
     },
@@ -423,6 +599,88 @@
             "La garde évite un indice -1.",
             "On renvoie une valeur sans l’afficher."
           ]
+        },
+        {
+          "id": "go-learn-first-word",
+          "title": "Extraire le premier mot",
+          "target": "FirstWord",
+          "minutes": 8,
+          "task": "Renvoie le premier mot séparé par des espaces blancs, ou \"\". strings.Fields est disponible.",
+          "bridge": "Le contrôle du vide doit précéder words[0].",
+          "explanation": [
+            "Fields ignore les blancs au début et les séparateurs multiples.",
+            "Une entrée composée de blancs produit zéro mot.",
+            "Le premier mot se trouve à l’indice 0."
+          ],
+          "starter": "func FirstWord(s string) string {\n    return \"\"\n}",
+          "solution": "func FirstWord(s string) string {\n\twords := strings.Fields(s)\n\tif len(words) == 0 {\n\t\treturn \"\"\n\t}\n\treturn words[0]\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "FirstWord(\"  hello Go  \")",
+              "expectedText": "hello"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "FirstWord(\"  \")",
+              "expectedText": ""
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "FirstWord(\"Go\")",
+              "expectedText": "Go"
+            }
+          ],
+          "hints": [
+            "Découpe avec strings.Fields(s).",
+            "Après la garde, renvoie words[0]."
+          ],
+          "walkthrough": [
+            "Le découpage traite les blancs multiples.",
+            "La garde empêche un accès hors limites.",
+            "L’extraction ne modifie pas le texte."
+          ]
+        },
+        {
+          "id": "go-learn-ascii-upper",
+          "title": "Transformer seulement un domaine annoncé",
+          "target": "UpperASCII",
+          "minutes": 8,
+          "task": "Remplace a..z par A..Z ; laisse toutes les autres runes inchangées.",
+          "bridge": "La différence entre les codes ASCII de a et A est constante.",
+          "explanation": [
+            "Teste r>='a' && r<='z'.",
+            "Soustrais 'a'-'A' seulement dans cette plage.",
+            "Le parcours en runes conserve les caractères non ASCII sans essayer de les convertir."
+          ],
+          "starter": "func UpperASCII(s string) string {\n    return s\n}",
+          "solution": "func UpperASCII(s string) string {\n\tout := []rune(s)\n\tfor i, r := range out {\n\t\tif r >= 'a' && r <= 'z' {\n\t\t\tout[i] = r - ('a' - 'A')\n\t\t}\n\t}\n\treturn string(out)\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "UpperASCII(\"aZ-é!\")",
+              "expectedText": "AZ-é!"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "UpperASCII(\"\")",
+              "expectedText": ""
+            }
+          ],
+          "hints": [
+            "Convertis en []rune pour écrire dans une copie.",
+            "La garde exclut les accents et la ponctuation."
+          ],
+          "walkthrough": [
+            "Le contrat porte uniquement sur les minuscules ASCII.",
+            "Le décalage convertit chaque lettre de la plage.",
+            "Les autres runes sont copiées telles quelles."
+          ]
         }
       ]
     },
@@ -546,6 +804,94 @@
             "La garde évite une boucle qui n’avance pas.",
             "Les intervalles sont [start,end).",
             "Chaque groupe est copié."
+          ]
+        },
+        {
+          "id": "go-learn-concat-copy",
+          "title": "Assembler deux slices indépendamment",
+          "target": "Concat",
+          "minutes": 8,
+          "task": "Renvoie les éléments de a puis de b dans une nouvelle slice.",
+          "bridge": "append(a,b...) peut réutiliser le tableau de a ; pars d’une copie.",
+          "explanation": [
+            "Copie a dans une nouvelle slice.",
+            "Ajoute ensuite les éléments de b avec b....",
+            "Le résultat conserve les doublons et l’ordre."
+          ],
+          "starter": "func Concat(a,b []int) []int {\n    return []int{}\n}",
+          "solution": "func Concat(a, b []int) []int { out := append([]int{}, a...); return append(out, b...) }",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "Concat([]int{1,2},[]int{3})",
+              "expectedText": "[1 2 3]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "Concat([]int{},[]int{4})",
+              "expectedText": "[4]"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "Concat([]int{},[]int{})",
+              "expectedText": "[]"
+            }
+          ],
+          "hints": [
+            "Commence par append([]int{},a...).",
+            "Utilise append(out,b...)."
+          ],
+          "walkthrough": [
+            "La nouvelle slice ne commence pas dans le tableau de a.",
+            "Le dépliage ajoute chaque élément.",
+            "Les slices vides ne demandent pas de traitement spécial."
+          ]
+        },
+        {
+          "id": "go-learn-rotate",
+          "title": "Faire tourner avec le modulo",
+          "target": "RotateLeft",
+          "minutes": 8,
+          "task": "Pour k>=0, renvoie une copie tournée de k positions vers la gauche.",
+          "bridge": "L’indice source de la sortie i est (i+k)%n.",
+          "explanation": [
+            "Traite n==0 avant un modulo par n.",
+            "Ramène k dans [0,n) avec k%=n.",
+            "Alloue la sortie pour ne pas déplacer les éléments d’entrée."
+          ],
+          "starter": "func RotateLeft(values []int,k int) []int {\n    return []int{}\n}",
+          "solution": "func RotateLeft(values []int, k int) []int {\n\tn := len(values)\n\tout := make([]int, n)\n\tif n == 0 {\n\t\treturn out\n\t}\n\tk %= n\n\tfor i := range out {\n\t\tout[i] = values[(i+k)%n]\n\t}\n\treturn out\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "RotateLeft([]int{1,2,3},1)",
+              "expectedText": "[2 3 1]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "RotateLeft([]int{1,2,3},4)",
+              "expectedText": "[2 3 1]"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "RotateLeft([]int{},2)",
+              "expectedText": "[]"
+            }
+          ],
+          "hints": [
+            "Protège n==0 avant k%=n.",
+            "Lis values[(i+k)%n] pour chaque sortie."
+          ],
+          "walkthrough": [
+            "Le modulo fait reboucler l’indice.",
+            "Réduire k évite les tours complets inutiles.",
+            "La nouvelle allocation conserve l’entrée."
           ]
         }
       ]
@@ -679,6 +1025,94 @@
             "Le compteur suffit pour un seul type de parenthèse.",
             "Un total final nul ne suffit pas à lui seul.",
             "Plusieurs types exigeraient une pile."
+          ]
+        },
+        {
+          "id": "go-learn-duplicate",
+          "title": "Arrêter à la première répétition",
+          "target": "HasDuplicate",
+          "minutes": 8,
+          "task": "Renvoie true si values contient une valeur au moins deux fois.",
+          "bridge": "Un ensemble répond à la question « déjà rencontré ? ».",
+          "explanation": [
+            "Initialise une map[int]bool.",
+            "Teste la présence avant de marquer la valeur.",
+            "La première répétition permet de terminer immédiatement."
+          ],
+          "starter": "func HasDuplicate(values []int) bool {\n    return false\n}",
+          "solution": "func HasDuplicate(values []int) bool {\n\tseen := map[int]bool{}\n\tfor _, n := range values {\n\t\tif seen[n] {\n\t\t\treturn true\n\t\t}\n\t\tseen[n] = true\n\t}\n\treturn false\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "HasDuplicate([]int{1,2,1})",
+              "expectedText": "true"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "HasDuplicate([]int{1,2,3})",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "HasDuplicate([]int{})",
+              "expectedText": "false"
+            }
+          ],
+          "hints": [
+            "Vérifie seen[n] avant l’affectation.",
+            "Une lecture absente vaut false."
+          ],
+          "walkthrough": [
+            "L’ordre test puis marquage évite de se détecter soi-même.",
+            "La map mémorise les valeurs déjà passées.",
+            "Sans répétition, le retour final est false."
+          ]
+        },
+        {
+          "id": "go-learn-anagram",
+          "title": "Comparer deux fréquences",
+          "target": "Anagram",
+          "minutes": 8,
+          "task": "Renvoie si a et b contiennent les mêmes runes avec les mêmes fréquences, sans ignorer espaces ni casse.",
+          "bridge": "Deux ensembles identiques ne suffisent pas : les quantités comptent.",
+          "explanation": [
+            "Incrémente un compteur par rune de a.",
+            "Décrémente pour chaque rune de b.",
+            "Tous les compteurs doivent être nuls à la fin."
+          ],
+          "starter": "func Anagram(a,b string) bool {\n    return false\n}",
+          "solution": "func Anagram(a, b string) bool {\n\tcounts := map[rune]int{}\n\tfor _, r := range a {\n\t\tcounts[r]++\n\t}\n\tfor _, r := range b {\n\t\tcounts[r]--\n\t}\n\tfor _, count := range counts {\n\t\tif count != 0 {\n\t\t\treturn false\n\t\t}\n\t}\n\treturn true\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "Anagram(\"été\",\"téé\")",
+              "expectedText": "true"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "Anagram(\"aab\",\"abb\")",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "Anagram(\"Go\",\"go\")",
+              "expectedText": "false"
+            }
+          ],
+          "hints": [
+            "Utilise map[rune]int, pas map[rune]bool.",
+            "Une valeur non nulle suffit à conclure false."
+          ],
+          "walkthrough": [
+            "Les incréments et décréments compensent les occurrences communes.",
+            "Une rune absente d’un côté laisse un écart.",
+            "La comparaison reste sensible à la casse et aux espaces."
           ]
         }
       ]
@@ -827,6 +1261,88 @@
             "Chaque candidat est testé indépendamment.",
             "break quitte uniquement la boucle intérieure.",
             "total cumule seulement les candidats acceptés."
+          ]
+        },
+        {
+          "id": "go-learn-binary-search",
+          "title": "Réduire une recherche de moitié",
+          "target": "BinaryContains",
+          "minutes": 8,
+          "task": "Pour une slice triée croissante, renvoie si target est présent.",
+          "bridge": "Les bornes décrivent un intervalle de recherche qui se réduit.",
+          "explanation": [
+            "low commence à 0 et high à len(values)-1.",
+            "mid:=low+(high-low)/2 évite d’additionner directement les deux bornes.",
+            "Écarte mid après une comparaison qui ne trouve pas target."
+          ],
+          "starter": "func BinaryContains(values []int,target int) bool {\n    return false\n}",
+          "solution": "func BinaryContains(values []int, target int) bool {\n\tlow, high := 0, len(values)-1\n\tfor low <= high {\n\t\tmid := low + (high-low)/2\n\t\tif values[mid] == target {\n\t\t\treturn true\n\t\t}\n\t\tif values[mid] < target {\n\t\t\tlow = mid + 1\n\t\t} else {\n\t\t\thigh = mid - 1\n\t\t}\n\t}\n\treturn false\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "BinaryContains([]int{1,3,5,7},5)",
+              "expectedText": "true"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "BinaryContains([]int{1,3,5,7},4)",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "BinaryContains([]int{},1)",
+              "expectedText": "false"
+            }
+          ],
+          "hints": [
+            "La boucle est low<=high.",
+            "Utilise mid+1 ou mid-1 pour progresser."
+          ],
+          "walkthrough": [
+            "Le tri est une précondition essentielle.",
+            "Chaque comparaison supprime une moitié de l’intervalle.",
+            "Le vide commence avec high=-1 et ne lit aucun élément."
+          ]
+        },
+        {
+          "id": "go-learn-sorted-copy",
+          "title": "Trier une copie",
+          "target": "SortedCopy",
+          "minutes": 8,
+          "task": "Renvoie une copie triée croissante sans modifier values. sort.Ints est disponible ici.",
+          "bridge": "Le tri standard modifie sa slice : copie avant son appel.",
+          "explanation": [
+            "Construis une slice indépendante.",
+            "sort.Ints(out) trie en place et ne renvoie pas la slice.",
+            "Renvoie out après cet appel."
+          ],
+          "starter": "func SortedCopy(values []int) []int {\n    return []int{}\n}",
+          "solution": "func SortedCopy(values []int) []int { out := append([]int{}, values...); sort.Ints(out); return out }",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "SortedCopy([]int{3,-1,3,2})",
+              "expectedText": "[-1 2 3 3]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "SortedCopy([]int{})",
+              "expectedText": "[]"
+            }
+          ],
+          "hints": [
+            "La copie précède sort.Ints.",
+            "Le retour vient après le tri."
+          ],
+          "walkthrough": [
+            "Les doublons sont conservés.",
+            "Le tri travaille seulement sur la copie.",
+            "Dans un vrai sujet, vérifie si sort est autorisé."
           ]
         }
       ]

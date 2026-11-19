@@ -1,7 +1,11 @@
 const microStores = Object.fromEntries(
   Object.entries(microPaths).map(([track, plan]) => [
     track,
-    JSMicroProgress.create({ plan, key: `z01-${track}-micro-path-v1` }),
+    JSMicroProgress.create({
+      plan,
+      key: plan.storageKey || `z01-${track}-micro-path-v1`,
+      legacyKey: plan.legacyStorageKey,
+    }),
   ]),
 );
 let microPlan = microPaths.js;

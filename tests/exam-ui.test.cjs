@@ -1491,10 +1491,10 @@ require("node:test")(
       draft(w, "KEEP GO DRAFT");
       click(w, "#mode-path");
       assert.equal(w.document.querySelectorAll(".micro-chapter").length, 12);
-      assert.equal(w.document.querySelectorAll(".micro-lesson").length, 5);
+      assert.equal(w.document.querySelectorAll(".micro-lesson").length, 3);
       assert.match(
         w.document.querySelector(".micro-hero").textContent,
-        /0\/63/,
+        /0\/30/,
       );
       assert.equal(el(w, "code-editor").value, "KEEP GO DRAFT");
       assert.equal(el(w, "micro-next").disabled, true);
@@ -1527,7 +1527,7 @@ require("node:test")(
         );
         assert.match(
           restored.w.document.querySelector(".micro-hero").textContent,
-          /1\/63/,
+          /1\/30/,
         );
       } finally {
         restored.dom.window.close();
@@ -1562,7 +1562,7 @@ require("node:test")(
       );
       click(w, "#micro-verify");
       await tick();
-      let state = JSON.parse(w.localStorage.getItem("z01-js-micro-path-v1"));
+      let state = JSON.parse(w.localStorage.getItem("z01-js-micro-path-v2"));
       assert.equal(state.items["js-learn-return"].assisted, true);
       const reset = [
         ...el(w, "js-sprint-dialog").querySelectorAll("button"),
@@ -1571,7 +1571,7 @@ require("node:test")(
       reset.click();
       assert.match(
         w.document.querySelector(".micro-hero").textContent,
-        /0\/63/,
+        /0\/30/,
       );
       assert.equal(el(w, "code-editor").value, "DO NOT REPLACE");
       assert.match(el(w, "progress-label").textContent, /0 \/ 0/);
@@ -1604,7 +1604,7 @@ require("node:test")(
       click(w, "#micro-verify");
       await tick();
       assert.match(el(w, "micro-result").textContent, /Aucun échec/);
-      const state = JSON.parse(w.localStorage.getItem("z01-js-micro-path-v1"));
+      const state = JSON.parse(w.localStorage.getItem("z01-js-micro-path-v2"));
       assert.equal(state.items["js-learn-return"].attempts, 0);
       assert.equal(state.items["js-learn-return"].completed, false);
       assert.equal(el(w, "micro-next").disabled, true);
@@ -1699,10 +1699,10 @@ require("node:test")(
       assert.equal(el(w, "learn-path-panel").hidden, false);
       assert.ok(el(w, "app").classList.contains("path-mode"));
       for (const [track, count, chapters] of [
-        ["go", 18, 6],
-        ["js", 63, 12],
-        ["rust", 18, 6],
-        ["java", 18, 6],
+        ["go", 30, 6],
+        ["js", 30, 12],
+        ["rust", 30, 6],
+        ["java", 30, 6],
       ]) {
         click(w, `#track-${track}`);
         assert.equal(el(w, "mode-path").checked, true);
@@ -1761,7 +1761,7 @@ require("node:test")(
       await tick();
       assert.match(
         w.document.querySelector(".micro-hero").textContent,
-        /0\/18/,
+        /0\/30/,
       );
       assert.equal(el(w, "micro-next").disabled, true);
       assert.equal(

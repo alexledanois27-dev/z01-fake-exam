@@ -3,6 +3,7 @@
   function create({
     plan,
     key = "z01-js-micro-path-v1",
+    legacyKey = null,
     getStorage = () => root.localStorage,
   }) {
     const lessons = plan.modules.flatMap((m) => m.lessons);
@@ -10,7 +11,11 @@
     let saved = true;
     let data = { version: 1, selected: lessons[0].id, items: {} };
     try {
-      const raw = JSON.parse(getStorage().getItem(key));
+      const storage = getStorage();
+      const current = storage.getItem(key);
+      const raw = JSON.parse(
+        current === null && legacyKey ? storage.getItem(legacyKey) : current,
+      );
       if (raw?.version === 1) {
         if (ids.has(raw.selected)) data.selected = raw.selected;
         for (const lesson of lessons) {

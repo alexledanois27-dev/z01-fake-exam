@@ -142,6 +142,91 @@
             "L’intervalle est vide lorsque n=0.",
             "L’accumulateur garde la somme des éléments déjà vus."
           ]
+        },
+        {
+          "id": "rust-learn-even",
+          "title": "Renvoyer un booléen",
+          "target": "is_even",
+          "minutes": 8,
+          "task": "Renvoie si n est pair.",
+          "bridge": "Le bool Rust se renvoie comme une expression, sans conversion.",
+          "explanation": [
+            "% calcule le reste de la division entière.",
+            "n%2==0 est déjà une valeur bool.",
+            "La condition fonctionne aussi pour les entiers négatifs pairs."
+          ],
+          "starter": "fn is_even(n: i32) -> bool {\n    false\n}",
+          "solution": "fn is_even(n: i32) -> bool {\n    n%2==0\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "is_even(-4)",
+              "expectedText": "true"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "is_even(3)",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "is_even(0)",
+              "expectedText": "true"
+            }
+          ],
+          "hints": ["Calcule le reste par 2.", "Compare ce reste à zéro."],
+          "walkthrough": [
+            "Le modulo exprime la parité.",
+            "Aucune instruction if n’est nécessaire.",
+            "L’expression finale garde son absence de point-virgule."
+          ]
+        },
+        {
+          "id": "rust-learn-maximum",
+          "title": "Choisir entre deux valeurs",
+          "target": "maximum",
+          "minutes": 8,
+          "task": "Renvoie le plus grand de a et b.",
+          "bridge": "Un if expression remplace deux return Go.",
+          "explanation": [
+            "La condition a>b décide de la branche.",
+            "Chaque branche fournit un i32.",
+            "En cas d’égalité, renvoyer b donne aussi le maximum."
+          ],
+          "starter": "fn maximum(a: i32,b: i32) -> i32 {\n    0\n}",
+          "solution": "fn maximum(a: i32,b: i32) -> i32 {\n    if a>b {\n        a\n    }\n    else {\n        b\n    }\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "maximum(2,7)",
+              "expectedText": "7"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "maximum(-2,-5)",
+              "expectedText": "-2"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "maximum(3,3)",
+              "expectedText": "3"
+            }
+          ],
+          "hints": [
+            "Écris if a>b.",
+            "Les blocs doivent fournir a ou b sans ;."
+          ],
+          "walkthrough": [
+            "Le type des branches doit coïncider.",
+            "Les négatifs ne demandent pas de cas spécial.",
+            "L’égalité ne change pas la valeur maximale."
+          ]
         }
       ]
     },
@@ -271,6 +356,82 @@
             "Le contrat d’emprunt rend l’intention explicite.",
             "Les éléments i32 sont copiables.",
             "L’appelant conserve son entrée."
+          ]
+        },
+        {
+          "id": "rust-learn-borrow-sum",
+          "title": "Lire une slice empruntée",
+          "target": "sum_values",
+          "minutes": 8,
+          "task": "Renvoie la somme des petits i32 empruntés dans values.",
+          "bridge": "for &n extrait une copie de chaque entier derrière sa référence.",
+          "explanation": [
+            "&[i32] ne prend pas possession de la collection.",
+            "i32 implémente Copy : copier la valeur ne déplace pas l’élément d’entrée.",
+            "Un accumulateur mut rassemble les valeurs."
+          ],
+          "starter": "fn sum_values(values: &[i32]) -> i32 {\n    0\n}",
+          "solution": "fn sum_values(values: &[i32]) -> i32 {\n    let mut total=0;\n    for &n in values {\n        total+=n;\n    }\n    total\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "sum_values(&[1,-2,4])",
+              "expectedText": "3"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "sum_values(&[])",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Crée let mut total=0.",
+            "Utilise for &n in values pour travailler avec des i32."
+          ],
+          "walkthrough": [
+            "L’emprunt reste partagé.",
+            "Chaque entier est copié avant l’addition.",
+            "La collection appelante demeure utilisable."
+          ]
+        },
+        {
+          "id": "rust-learn-replace-copy",
+          "title": "Changer un élément dans une copie",
+          "target": "replace_first",
+          "minutes": 8,
+          "task": "Renvoie un Vec copié de values dont le premier élément devient x, si présent.",
+          "bridge": "La mutation doit viser la copie possédée, pas la slice empruntée.",
+          "explanation": [
+            "to_vec() construit le Vec indépendant.",
+            "first_mut() renvoie Option<&mut i32>.",
+            "if let Some(first) permet de traiter seulement le cas présent."
+          ],
+          "starter": "fn replace_first(values: &[i32],x: i32) -> Vec<i32> {\n    Vec::new()\n}",
+          "solution": "fn replace_first(values: &[i32],x: i32) -> Vec<i32> {\n    let mut out=values.to_vec();\n    if let Some(first)=out.first_mut() {\n        *first=x;\n    }\n    out\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "replace_first(&[1,2],9)",
+              "expectedText": "[9, 2]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "replace_first(&[],9)",
+              "expectedText": "[]"
+            }
+          ],
+          "hints": [
+            "Crée un Vec mutable avec to_vec().",
+            "Écris *first=x dans le if let."
+          ],
+          "walkthrough": [
+            "L’Option évite une indexation dangereuse.",
+            "* donne accès à la valeur derrière l’emprunt mutable.",
+            "L’emprunt se termine avant le retour du Vec."
           ]
         }
       ]
@@ -402,6 +563,79 @@
             "Le résultat ne possède pas une nouvelle allocation.",
             "La durée de vie du retour est liée à l’unique emprunt d’entrée par élision.",
             "Le secours statique vide reste valide."
+          ]
+        },
+        {
+          "id": "rust-learn-word-count",
+          "title": "Compter les mots",
+          "target": "word_count",
+          "minutes": 8,
+          "task": "Compte les mots séparés par espaces blancs.",
+          "bridge": "split_whitespace se rapproche de strings.Fields en Go sans allouer une liste entière.",
+          "explanation": [
+            "La méthode produit un itérateur de &str.",
+            "Les espaces au début et à la fin sont ignorés.",
+            "count() consomme l’itérateur et donne usize."
+          ],
+          "starter": "fn word_count(s: &str) -> usize {\n    0\n}",
+          "solution": "fn word_count(s: &str) -> usize {\n    s.split_whitespace().count()\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "word_count(\"  go   rust  \")",
+              "expectedText": "2"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "word_count(\" \t \")",
+              "expectedText": "0"
+            }
+          ],
+          "hints": ["Pars de split_whitespace().", "Termine par count()."],
+          "walkthrough": [
+            "Les séparateurs multiples ne créent pas de mots vides.",
+            "Les sous-chaînes restent empruntées.",
+            "Le comptage suffit, aucune collecte n’est utile."
+          ]
+        },
+        {
+          "id": "rust-learn-ascii-upper",
+          "title": "Choisir une conversion ASCII",
+          "target": "upper_ascii",
+          "minutes": 8,
+          "task": "Renvoie une String où seules les minuscules ASCII sont converties en majuscules.",
+          "bridge": "Un contrat ASCII est plus étroit qu’une transformation Unicode générale.",
+          "explanation": [
+            "to_ascii_uppercase() existe directement sur str.",
+            "La méthode fabrique un String et conserve l’entrée.",
+            "Les caractères non ASCII, comme é, restent inchangés."
+          ],
+          "starter": "fn upper_ascii(s: &str) -> String {\n    String::new()\n}",
+          "solution": "fn upper_ascii(s: &str) -> String {\n    s.to_ascii_uppercase()\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "upper_ascii(\"aZ-é!\")",
+              "expectedText": "\"AZ-é!\""
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "upper_ascii(\"\")",
+              "expectedText": "\"\""
+            }
+          ],
+          "hints": [
+            "Cherche la méthode contenant ascii.",
+            "Le type renvoyé par cette méthode est déjà String."
+          ],
+          "walkthrough": [
+            "La méthode exprime précisément le domaine du contrat.",
+            "Elle évite de casser UTF-8 avec une indexation d’octets.",
+            "Une conversion Unicode complète aurait d’autres règles."
           ]
         }
       ]
@@ -540,6 +774,94 @@
             "Les entiers négatifs fonctionnent sans sentinelle arbitraire.",
             "Le retour respecte exactement Option<i32>."
           ]
+        },
+        {
+          "id": "rust-learn-safe-index",
+          "title": "Transformer Option<&T> en Option<T>",
+          "target": "at",
+          "minutes": 8,
+          "task": "Renvoie Some(valeur) à index, ou None si cet indice est absent.",
+          "bridge": "get correspond à une indexation qui peut échouer sans panic.",
+          "explanation": [
+            "values.get(index) renvoie Option<&i32>.",
+            "copied() transforme la référence en valeur i32.",
+            "Un indice égal à len() est déjà absent."
+          ],
+          "starter": "fn at(values: &[i32],index: usize) -> Option<i32> {\n    None\n}",
+          "solution": "fn at(values: &[i32],index: usize) -> Option<i32> {\n    values.get(index).copied()\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "at(&[4,8],1)",
+              "expectedText": "Some(8)"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "at(&[4,8],2)",
+              "expectedText": "None"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "at(&[],0)",
+              "expectedText": "None"
+            }
+          ],
+          "hints": [
+            "Utilise get au lieu de values[index].",
+            "Ajoute copied() pour respecter le retour."
+          ],
+          "walkthrough": [
+            "get gère les bornes.",
+            "La valeur i32 peut être copiée.",
+            "L’absence est visible dans le type du retour."
+          ]
+        },
+        {
+          "id": "rust-learn-safe-divide",
+          "title": "Représenter un calcul impossible",
+          "target": "safe_divide",
+          "minutes": 8,
+          "task": "Pour de petits i32, renvoie Some(n/d), ou None si d==0.",
+          "bridge": "Option remplace ici un couple quotient, validité de Go.",
+          "explanation": [
+            "None indique que la division n’existe pas dans ce contrat.",
+            "Some(0) reste un résultat valide.",
+            "Le domaine de petits i32 exclut le cas de débordement i32::MIN/-1."
+          ],
+          "starter": "fn safe_divide(n: i32,d: i32) -> Option<i32> {\n    None\n}",
+          "solution": "fn safe_divide(n: i32,d: i32) -> Option<i32> {\n    if d==0 {\n        None\n    }\n    else {\n        Some(n/d)\n    }\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "safe_divide(7,2)",
+              "expectedText": "Some(3)"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "safe_divide(1,2)",
+              "expectedText": "Some(0)"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "safe_divide(4,0)",
+              "expectedText": "None"
+            }
+          ],
+          "hints": [
+            "Traite d==0 avant la division.",
+            "Le succès doit être enveloppé dans Some."
+          ],
+          "walkthrough": [
+            "Le if empêche la division interdite.",
+            "Le type conserve la distinction entre zéro et absence.",
+            "Les deux branches produisent Option<i32>."
+          ]
         }
       ]
     },
@@ -673,6 +995,82 @@
             "Les clés empruntent le texte qui vit pendant l’appel.",
             "entry gère création et recherche.",
             "Un mot absent compte zéro."
+          ]
+        },
+        {
+          "id": "rust-learn-sorted-copy",
+          "title": "Trier une collection possédée",
+          "target": "sorted_copy",
+          "minutes": 8,
+          "task": "Renvoie un Vec trié croissant, sans changer la source.",
+          "bridge": "sort() exige de pouvoir modifier un Vec : commence par une copie.",
+          "explanation": [
+            "to_vec() copie la slice.",
+            "let mut permet de trier cette nouvelle collection.",
+            "sort() modifie le Vec et ne renvoie pas un nouveau Vec."
+          ],
+          "starter": "fn sorted_copy(values: &[i32]) -> Vec<i32> {\n    Vec::new()\n}",
+          "solution": "fn sorted_copy(values: &[i32]) -> Vec<i32> {\n    let mut out=values.to_vec();\n    out.sort();\n    out\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "sorted_copy(&[3,-1,3,2])",
+              "expectedText": "[-1, 2, 3, 3]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "sorted_copy(&[])",
+              "expectedText": "[]"
+            }
+          ],
+          "hints": [
+            "Crée let mut out=values.to_vec().",
+            "Trie, puis renvoie out sur une ligne distincte."
+          ],
+          "walkthrough": [
+            "Les doublons ne sont pas supprimés.",
+            "Seule la copie possède un emprunt mutable pendant le tri.",
+            "La source reste lisible par l’appelant."
+          ]
+        },
+        {
+          "id": "rust-learn-unique",
+          "title": "Conserver l’ordre avec un ensemble",
+          "target": "unique",
+          "minutes": 8,
+          "task": "Renvoie les entiers distincts dans l’ordre de leur première apparition.",
+          "bridge": "HashSet décide, Vec mémorise l’ordre.",
+          "explanation": [
+            "HashSet::insert renvoie true seulement si la valeur était absente.",
+            "Parcours values dans l’ordre.",
+            "Ajoute au Vec uniquement lorsque insert renvoie true."
+          ],
+          "starter": "fn unique(values: &[i32]) -> Vec<i32> {\n    Vec::new()\n}",
+          "solution": "fn unique(values: &[i32]) -> Vec<i32> {\n    let mut seen=std::collections::HashSet::new();\n    let mut out=Vec::new();\n    for &n in values {\n        if seen.insert(n) {\n            out.push(n);\n        }\n    }\n    out\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "unique(&[3,1,3,2,1])",
+              "expectedText": "[3, 1, 2]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "unique(&[])",
+              "expectedText": "[]"
+            }
+          ],
+          "hints": [
+            "Utilise le bool renvoyé par seen.insert(n).",
+            "Ne reconstruis pas le Vec en parcourant le HashSet."
+          ],
+          "walkthrough": [
+            "L’insertion effectue le test de présence.",
+            "Le Vec respecte l’ordre d’entrée.",
+            "L’ordre non garanti du HashSet ne fuit pas dans le résultat."
           ]
         }
       ]
@@ -819,6 +1217,94 @@
             "Les variantes sont préfixées par le type.",
             "Le compilateur vérifie l’exhaustivité.",
             "Ce principe prépare les règles par cas des vrais sujets."
+          ]
+        },
+        {
+          "id": "rust-learn-balanced",
+          "title": "Vérifier tous les préfixes",
+          "target": "balanced",
+          "minutes": 8,
+          "task": "Pour du texte composé uniquement de ( et ), renvoie si les parenthèses sont équilibrées.",
+          "bridge": "Un compte final nul ne suffit pas : aucun préfixe ne doit être négatif.",
+          "explanation": [
+            "Une ouverture augmente depth.",
+            "Une fermeture diminue depth.",
+            "Refuse immédiatement un depth négatif, puis exige zéro à la fin."
+          ],
+          "starter": "fn balanced(s: &str) -> bool {\n    false\n}",
+          "solution": "fn balanced(s: &str) -> bool {\n    let mut depth=0;\n    for ch in s.chars() {\n        if ch=='(' {\n            depth+=1;\n        }\n        else {\n            depth-=1;\n        }\n        if depth<0 {\n            return false;\n        }\n    }\n    depth==0\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "balanced(\"(())()\")",
+              "expectedText": "true"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "balanced(\")(\")",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "balanced(\"(()\")",
+              "expectedText": "false"
+            }
+          ],
+          "hints": [
+            "Utilise un entier signé pour depth.",
+            "Contrôle aussi le résultat après la boucle."
+          ],
+          "walkthrough": [
+            "L’entier signé représente un préfixe invalide.",
+            "Le retour anticipé rejette une fermeture sans ouverture.",
+            "Le retour final rejette les ouvertures encore en attente."
+          ]
+        },
+        {
+          "id": "rust-learn-factorial",
+          "title": "Récursion et type du résultat",
+          "target": "factorial",
+          "minutes": 8,
+          "task": "Pour n<=12, calcule n! par récursion en u32.",
+          "bridge": "Le cas de base et la réduction n-1 sont identiques au raisonnement Go.",
+          "explanation": [
+            "0! et 1! valent 1.",
+            "n*factorial(n-1) assemble un problème plus petit.",
+            "La borne n<=12 garantit que le résultat tient dans u32."
+          ],
+          "starter": "fn factorial(n: u32) -> u32 {\n    0\n}",
+          "solution": "fn factorial(n: u32) -> u32 {\n    if n<=1 {\n        1\n    }\n    else {\n        n*factorial(n-1)\n    }\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "factorial(0)",
+              "expectedText": "1"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "factorial(5)",
+              "expectedText": "120"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "factorial(12)",
+              "expectedText": "479001600"
+            }
+          ],
+          "hints": [
+            "Traite n<=1 avant n-1.",
+            "Le if peut être l’expression finale entière."
+          ],
+          "walkthrough": [
+            "Le cas de base évite aussi la soustraction sous zéro.",
+            "Chaque appel réduit n.",
+            "Le calcul se termine en remontant les multiplications."
           ]
         }
       ]

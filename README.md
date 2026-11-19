@@ -79,13 +79,12 @@ sans solution complète du sujet. Voir [le guide des fiches](learning-content/RE
 ### Apprendre pas à pas
 
 L’onglet **Apprendre**, à côté d’Entraînement, Examen et Fiches, affiche une vraie
-page de cours pour le langage sélectionné : **63 exercices JavaScript** et
-**18 exercices dans chacun des parcours Go, Rust et Java** (117 au total).
+page de cours pour le langage sélectionné : **30 exercices dans chacun des quatre langages** (120 au total).
 Le parcours Go consolide les acquis ; Rust et Java expliquent les différences
 avec Go : possession et emprunts, types, méthodes, classes et collections.
 Chaque petite étape comporte explications, squelette modifiable, tests publics
 exécutés dans Docker, indices et corrigé commenté. Les brouillons et la progression
-sont séparés par langage, avec conservation de la progression JS précédente.
+sont séparés par langage, avec reprise des étapes JS conservées et sauvegarde intacte de l’ancien parcours.
 Les ponts renvoient ensuite aux vrais sujets du catalogue.
 
 Ces parcours locaux sont pédagogiques, distincts des énoncés officiels et des scores

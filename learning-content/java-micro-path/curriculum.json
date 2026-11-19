@@ -139,6 +139,97 @@
             "La variable i reste locale à la boucle.",
             "Le résultat n’est renvoyé qu’après l’accumulation."
           ]
+        },
+        {
+          "id": "java-learn-clamp",
+          "title": "Traduire trois branches",
+          "target": "clamp",
+          "minutes": 8,
+          "task": "Ramène n dans [low,high], avec low<=high.",
+          "bridge": "Les conditions se traduisent directement depuis Go ; Java exige les parenthèses du if.",
+          "explanation": [
+            "n<low donne low.",
+            "n>high donne high.",
+            "Sinon n est déjà dans l’intervalle fermé."
+          ],
+          "starter": "static int clamp(int n,int low,int high) {\n    return n;\n}",
+          "solution": "static int clamp(int n,int low,int high) {\n    if(n<low)return low;\n    if(n>high)return high;\n    return n;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "clamp(-2,0,10)",
+              "expectedText": "0"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "clamp(20,0,10)",
+              "expectedText": "10"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "clamp(5,0,10)",
+              "expectedText": "5"
+            },
+            {
+              "label": "Cas 4",
+              "args": [],
+              "invoke": "clamp(0,0,10)",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Traite les dépassements avec deux if.",
+            "Le dernier retour renvoie n."
+          ],
+          "walkthrough": [
+            "Les gardes traitent des cas exclusifs.",
+            "Les bornes sont incluses.",
+            "Chaque branche retourne un int."
+          ]
+        },
+        {
+          "id": "java-learn-multiple",
+          "title": "Court-circuiter une opération interdite",
+          "target": "isMultiple",
+          "minutes": 8,
+          "task": "Renvoie si n est multiple de d ; renvoie false pour d==0.",
+          "bridge": "Comme en Go, && évite d’évaluer la droite lorsque la gauche est fausse.",
+          "explanation": [
+            "Le reste n%d vaut zéro pour un multiple.",
+            "Le modulo par zéro est interdit.",
+            "Place d!=0 avant le modulo dans l’expression."
+          ],
+          "starter": "static boolean isMultiple(int n,int d) {\n    return false;\n}",
+          "solution": "static boolean isMultiple(int n,int d) {\n    return d!=0 && n%d==0;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "isMultiple(12,3)",
+              "expectedText": "true"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "isMultiple(7,2)",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "isMultiple(1,0)",
+              "expectedText": "false"
+            }
+          ],
+          "hints": ["Commence par d!=0.", "Relie au test du reste avec &&."],
+          "walkthrough": [
+            "Le court-circuit protège la division.",
+            "La comparaison produit déjà boolean.",
+            "Le retour n’a pas besoin de if supplémentaire."
+          ]
         }
       ]
     },
@@ -272,6 +363,94 @@
             "L’indice ne dépasse pas la fin.",
             "== convient ici aux valeurs primitives char.",
             "Le vide produit zéro sans cas spécial."
+          ]
+        },
+        {
+          "id": "java-learn-reverse-ascii",
+          "title": "Construire un texte en boucle",
+          "target": "reverseAscii",
+          "minutes": 8,
+          "task": "Pour une String ASCII non-null, renvoie le texte inversé.",
+          "bridge": "StringBuilder joue le rôle d’un tampon mutable plutôt que d’une chaîne modifiée.",
+          "explanation": [
+            "String est immuable.",
+            "Parcours i de length()-1 jusqu’à zéro inclus.",
+            "append ajoute chaque char au builder ; toString produit le résultat."
+          ],
+          "starter": "static String reverseAscii(String s) {\n    return \"\";\n}",
+          "solution": "static String reverseAscii(String s) {\n    StringBuilder out=new StringBuilder();\n    for(int i=s.length()-1;i>=0;i--) {\n        out.append(s.charAt(i));\n    }\n    return out.toString();\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "reverseAscii(\"Go!\")",
+              "expectedText": "!oG"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "reverseAscii(\"\")",
+              "expectedText": ""
+            }
+          ],
+          "hints": [
+            "Déclare un StringBuilder avant la boucle.",
+            "Le dernier indice est s.length()-1."
+          ],
+          "walkthrough": [
+            "La précondition ASCII évite le problème des paires UTF-16.",
+            "La boucle vide commence à -1 et ne lit rien.",
+            "Le builder assemble la sortie sans modifier s."
+          ]
+        },
+        {
+          "id": "java-learn-last-word",
+          "title": "Nettoyer puis découper",
+          "target": "lastWord",
+          "minutes": 8,
+          "task": "Pour une String ASCII non-null, renvoie le dernier mot séparé par blancs ASCII, ou \"\".",
+          "bridge": "Il faut distinguer une chaîne sans mot du dernier élément d’un découpage.",
+          "explanation": [
+            "trim() retire les blancs ASCII de bord définis par cette méthode.",
+            "Traite la chaîne nettoyée vide avant split.",
+            "split(\"\\s+\") regroupe les séparateurs blancs ASCII."
+          ],
+          "starter": "static String lastWord(String s) {\n    return \"\";\n}",
+          "solution": "static String lastWord(String s) {\n    String clean=s.trim();\n    if(clean.isEmpty())return \"\";\n    String[] words=clean.split(\"\\\\s+\");\n    return words[words.length-1];\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "lastWord(\"  hello   Java  \")",
+              "expectedText": "Java"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "lastWord(\"   \")",
+              "expectedText": ""
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "lastWord(\"Go\")",
+              "expectedText": "Go"
+            },
+            {
+              "label": "Tabulation entre deux mots",
+              "args": [],
+              "invoke": "lastWord(\"Go\\tJava\")",
+              "expectedText": "Java"
+            }
+          ],
+          "hints": [
+            "Commence par une String clean=s.trim().",
+            "Le dernier indice vaut words.length-1."
+          ],
+          "walkthrough": [
+            "Le contrat est volontairement ASCII.",
+            "La garde évite d’interpréter une chaîne vide comme un mot.",
+            "Le regroupement + évite les séparateurs répétés."
           ]
         }
       ]
@@ -413,6 +592,88 @@
             "La boucle for-each lit chaque int.",
             "Le secours n’est utilisé qu’en absence de données."
           ]
+        },
+        {
+          "id": "java-learn-rotate",
+          "title": "Faire reboucler un indice",
+          "target": "rotateLeft",
+          "minutes": 8,
+          "task": "Pour k>=0, renvoie un nouveau tableau tourné de k positions vers la gauche.",
+          "bridge": "L’indice source est (i+k)%n, comme pour une slice Go.",
+          "explanation": [
+            "Un tableau vide interdit le modulo par sa longueur zéro.",
+            "Réduis k avec k%=n.",
+            "Lis la source pour remplir une nouvelle allocation."
+          ],
+          "starter": "static int[] rotateLeft(int[] values,int k) {\n    return new int[0];\n}",
+          "solution": "static int[] rotateLeft(int[] values,int k) {\n    int n=values.length;\n    int[] out=new int[n];\n    if(n==0)return out;\n    k%=n;\n    for(int i=0;i<n;i++)out[i]=values[(i+k)%n];\n    return out;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(rotateLeft(new int[]{1,2,3},1))",
+              "expectedText": "[2, 3, 1]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(rotateLeft(new int[]{1,2,3},4))",
+              "expectedText": "[2, 3, 1]"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(rotateLeft(new int[]{},1))",
+              "expectedText": "[]"
+            }
+          ],
+          "hints": [
+            "Place la garde n==0 avant k%=n.",
+            "Chaque out[i] lit une position rebouclée."
+          ],
+          "walkthrough": [
+            "La garde traite la collection vide.",
+            "Le modulo conserve une rotation équivalente.",
+            "Les données sources restent intactes."
+          ]
+        },
+        {
+          "id": "java-learn-concat",
+          "title": "Allouer la bonne taille",
+          "target": "concat",
+          "minutes": 8,
+          "task": "Renvoie les éléments de a puis ceux de b dans un nouveau tableau.",
+          "bridge": "Contrairement à append Go, un tableau Java exige sa taille dès l’allocation.",
+          "explanation": [
+            "La longueur résultat est a.length+b.length.",
+            "Les éléments de a occupent les premiers indices.",
+            "L’élément b[i] se place à a.length+i."
+          ],
+          "starter": "static int[] concat(int[] a,int[] b) {\n    return new int[0];\n}",
+          "solution": "static int[] concat(int[] a,int[] b) {\n    int[] out=new int[a.length+b.length];\n    for(int i=0;i<a.length;i++)out[i]=a[i];\n    for(int i=0;i<b.length;i++)out[a.length+i]=b[i];\n    return out;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(concat(new int[]{1,2},new int[]{3}))",
+              "expectedText": "[1, 2, 3]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(concat(new int[]{},new int[]{4}))",
+              "expectedText": "[4]"
+            }
+          ],
+          "hints": [
+            "Alloue une seule fois la somme des longueurs.",
+            "Décale les indices de b par a.length."
+          ],
+          "walkthrough": [
+            "La sortie ne partage pas ses éléments primitifs avec les entrées.",
+            "Le décalage commence juste après a.",
+            "Les boucles gèrent naturellement les tableaux vides."
+          ]
         }
       ]
     },
@@ -547,6 +808,88 @@
             "Les clés String sont comparées par contenu par la Map.",
             "La casse reste significative."
           ]
+        },
+        {
+          "id": "java-learn-sum-list",
+          "title": "Déballer un Integer",
+          "target": "sumList",
+          "minutes": 8,
+          "task": "Renvoie la somme des petits entiers d’une List<Integer> sans élément null.",
+          "bridge": "La boucle int n:values utilise l’unboxing de Integer vers int.",
+          "explanation": [
+            "Une List<Integer> contient des objets enveloppes.",
+            "Java extrait ici automatiquement leur valeur primitive.",
+            "La précondition non-null évite une NullPointerException pendant cet unboxing."
+          ],
+          "starter": "static int sumList(java.util.List<Integer> values) {\n    return 0;\n}",
+          "solution": "static int sumList(java.util.List<Integer> values) {\n    int total=0;\n    for(int n:values)total+=n;\n    return total;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "sumList(java.util.Arrays.asList(1,-2,4))",
+              "expectedText": "3"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "sumList(java.util.Collections.emptyList())",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Déclare un total int.",
+            "La boucle for-each peut utiliser directement int n."
+          ],
+          "walkthrough": [
+            "La collection est seulement lue.",
+            "L’unboxing intervient avant l’addition.",
+            "Une liste vide laisse total à zéro."
+          ]
+        },
+        {
+          "id": "java-learn-first-unique",
+          "title": "Séparer compter et choisir",
+          "target": "firstUnique",
+          "minutes": 8,
+          "task": "Renvoie le premier char de s apparaissant une seule fois, ou ? ; s est ASCII non-null.",
+          "bridge": "Une première passe calcule les fréquences ; une seconde respecte l’ordre du texte.",
+          "explanation": [
+            "Une Map<Character,Integer> stocke les compteurs.",
+            "getOrDefault(ch,0)+1 calcule le compteur suivant.",
+            "Le choix final doit parcourir s, pas la HashMap dont l’ordre n’est pas garanti."
+          ],
+          "starter": "static char firstUnique(String s) {\n    return '?';\n}",
+          "solution": "static char firstUnique(String s) {\n    java.util.HashMap<Character,Integer> counts=new java.util.HashMap<>();\n    for(int i=0;i<s.length();i++) {\n        char ch=s.charAt(i);\n        counts.put(ch,counts.getOrDefault(ch,0)+1);\n    }\n    for(int i=0;i<s.length();i++) {\n        char ch=s.charAt(i);\n        if(counts.get(ch)==1)return ch;\n    }\n    return '?';\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "firstUnique(\"aabcb\")",
+              "expectedText": "c"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "firstUnique(\"aabb\")",
+              "expectedText": "?"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "firstUnique(\"zab\")",
+              "expectedText": "z"
+            }
+          ],
+          "hints": [
+            "Ne choisis pas pendant la première passe : une répétition peut arriver plus tard.",
+            "Après les comptes, cherche le premier compteur égal à 1."
+          ],
+          "walkthrough": [
+            "Les deux passes répondent à deux questions différentes.",
+            "L’ordre est fourni par la String.",
+            "Le secours couvre les chaînes sans char unique."
+          ]
         }
       ]
     },
@@ -680,6 +1023,82 @@
             "La règle s’applique à toute construction.",
             "Le champ reste privé.",
             "Le retour passe par une méthode plutôt qu’une affectation extérieure."
+          ]
+        },
+        {
+          "id": "java-learn-point",
+          "title": "Initialiser plusieurs champs",
+          "target": "pointSum",
+          "minutes": 8,
+          "task": "Déclare une classe imbriquée Point avec champs privés final int x,y et constructeur Point(int x,int y). Ajoute int sum(). pointSum(x,y) crée le Point puis renvoie sum().",
+          "bridge": "Un objet peut fixer plusieurs valeurs dès sa construction, comme une struct Go.",
+          "explanation": [
+            "this.x=x affecte le champ avec le paramètre homonyme.",
+            "final empêche la réaffectation du champ après initialisation.",
+            "sum() est une méthode d’instance qui lit les deux champs."
+          ],
+          "starter": "static class Point {\n    private final int x,y;\n    Point(int x,int y) { this.x=x; this.y=y; }\n    int sum() { return 0; }\n}\nstatic int pointSum(int x,int y) {\n    return 0;\n}",
+          "solution": "static class Point {\n    private final int x,y;\n    Point(int x,int y) {\n        this.x=x;\n        this.y=y;\n    }\n    int sum() {\n        return x+y;\n    }\n}\nstatic int pointSum(int x,int y) {\n    return new Point(x,y).sum();\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "pointSum(2,3)",
+              "expectedText": "5"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "pointSum(-2,2)",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "sum() renvoie x+y.",
+            "Le wrapper appelle new Point(x,y).sum()."
+          ],
+          "walkthrough": [
+            "Les champs final sont tous initialisés par le constructeur.",
+            "Ils sont privés et n’ont pas de méthode de modification.",
+            "La méthode d’instance utilise l’état du Point créé."
+          ]
+        },
+        {
+          "id": "java-learn-instances",
+          "title": "Séparer les états de deux instances",
+          "target": "independent",
+          "minutes": 8,
+          "task": "Déclare Counter avec champ privé value, constructeur Counter(int start) et int increment(). independent(a,b) crée deux compteurs ; incrémente le premier deux fois et le second une fois, puis renvoie le résultat du second.",
+          "bridge": "Un champ d’instance appartient à un objet ; un champ static serait partagé.",
+          "explanation": [
+            "value ne doit pas être static.",
+            "Les deux new créent des instances distinctes.",
+            "L’incrément du premier ne doit pas influencer le second."
+          ],
+          "starter": "static class Counter {\n    private int value;\n    Counter(int start) { value=start; }\n    int increment() { return value; }\n}\nstatic int independent(int a,int b) {\n    return 0;\n}",
+          "solution": "static class Counter {\n    private int value;\n    Counter(int start) {\n        value=start;\n    }\n    int increment() {\n        return ++value;\n    }\n}\nstatic int independent(int a,int b) {\n    Counter first=new Counter(a);\n    Counter second=new Counter(b);\n    first.increment();\n    first.increment();\n    return second.increment();\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "independent(100,3)",
+              "expectedText": "4"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "independent(-2,0)",
+              "expectedText": "1"
+            }
+          ],
+          "hints": [
+            "La déclaration du champ reste private int value.",
+            "Crée deux objets, puis appelle leurs méthodes séparément."
+          ],
+          "walkthrough": [
+            "Chaque constructeur initialise son propre objet.",
+            "++value incrémente avant de produire la valeur.",
+            "Le retour du second dépend uniquement de b et de son unique incrément."
           ]
         }
       ]
@@ -829,6 +1248,100 @@
             "La terminaison dépend de n qui diminue.",
             "Les appels empilent leurs calculs restants.",
             "Le domaine exclut les résultats hors capacité int."
+          ]
+        },
+        {
+          "id": "java-learn-binary-search",
+          "title": "Réduire un intervalle de recherche",
+          "target": "binaryContains",
+          "minutes": 8,
+          "task": "Pour un tableau trié croissant non-null, renvoie si target est présent.",
+          "bridge": "Le raisonnement de recherche binaire se traduit depuis Go avec les mêmes invariants.",
+          "explanation": [
+            "low et high encadrent les positions encore possibles.",
+            "mid=low+(high-low)/2 choisit le milieu.",
+            "Après un échec, utilise mid+1 ou mid-1 pour éliminer aussi mid."
+          ],
+          "starter": "static boolean binaryContains(int[] values,int target) {\n    return false;\n}",
+          "solution": "static boolean binaryContains(int[] values,int target) {\n    int low=0,high=values.length-1;\n    while(low<=high) {\n        int mid=low+(high-low)/2;\n        if(values[mid]==target)return true;\n        if(values[mid]<target)low=mid+1;\n        else high=mid-1;\n    }\n    return false;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "binaryContains(new int[]{1,3,5,7},5)",
+              "expectedText": "true"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "binaryContains(new int[]{1,3,5,7},4)",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "binaryContains(new int[]{},1)",
+              "expectedText": "false"
+            }
+          ],
+          "hints": [
+            "La boucle continue tant que low<=high.",
+            "La branche dépend de values[mid]<target."
+          ],
+          "walkthrough": [
+            "Le tri est nécessaire pour supprimer une moitié.",
+            "La réduction stricte évite une boucle infinie.",
+            "Le tableau vide ne déclenche aucune lecture."
+          ]
+        },
+        {
+          "id": "java-learn-balanced",
+          "title": "Contrôler les préfixes et la fin",
+          "target": "balanced",
+          "minutes": 8,
+          "task": "Pour une String contenant seulement ( et ), renvoie si les parenthèses sont équilibrées.",
+          "bridge": "Le même compteur de profondeur qu’en Go suffit pour un seul type de parenthèse.",
+          "explanation": [
+            "Une ouverture ajoute 1.",
+            "Une fermeture retire 1 et ne doit jamais produire un négatif.",
+            "À la fin, depth doit revenir à zéro."
+          ],
+          "starter": "static boolean balanced(String s) {\n    return false;\n}",
+          "solution": "static boolean balanced(String s) {\n    int depth=0;\n    for(int i=0;i<s.length();i++) {\n        if(s.charAt(i)=='(')depth++;\n        else depth--;\n        if(depth<0)return false;\n    }\n    return depth==0;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "balanced(\"(())()\")",
+              "expectedText": "true"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "balanced(\")(\")",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "balanced(\"(()\")",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 4",
+              "args": [],
+              "invoke": "balanced(\"\")",
+              "expectedText": "true"
+            }
+          ],
+          "hints": [
+            "Traite depth<0 à l’intérieur de la boucle.",
+            "Le dernier return vérifie depth==0."
+          ],
+          "walkthrough": [
+            "La vérification du préfixe repère une fermeture anticipée.",
+            "La vérification finale repère une ouverture non fermée.",
+            "Plusieurs types de délimiteurs exigeraient une pile."
           ]
         }
       ]
