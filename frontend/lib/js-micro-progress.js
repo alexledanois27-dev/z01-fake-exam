@@ -1,9 +1,12 @@
 /* This local teaching progress is separate from checkpoint/exam scores. */
 (function (root) {
-  function create({ plan, getStorage = () => root.localStorage }) {
+  function create({
+    plan,
+    key = "z01-js-micro-path-v1",
+    getStorage = () => root.localStorage,
+  }) {
     const lessons = plan.modules.flatMap((m) => m.lessons);
     const ids = new Set(lessons.map((l) => l.id));
-    const key = "z01-js-micro-path-v1";
     let saved = true;
     let data = { version: 1, selected: lessons[0].id, items: {} };
     try {

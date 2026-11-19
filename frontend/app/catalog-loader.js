@@ -66,7 +66,7 @@ async function loadExercises() {
     renderChips();
     updateTrueExamControls();
     const source = getTrackExercises();
-    if (!trueExamMode && source.length) {
+    if (!pathMode && !learningMode && !trueExamMode && source.length) {
       const target = saved && source.find((ex) => exId(ex) === saved.selected);
       selectExercise(exId(target || source[0]));
     } else if (trueExamMode && !trueExamSeries.length) {

@@ -1,3 +1,8 @@
+> Mise à jour : le parcours se trouve désormais dans l’onglet **Apprendre**,
+> en pleine page et selon le langage sélectionné. Go, Rust et Java disposent aussi
+> d’un premier parcours de 18 étapes chacun. Voir [le guide actuel](parcours-apprendre.md).
+> Les détails ci-dessous décrivent le contenu JS et son historique.
+
 # Prototype : de Go au checkpoint JavaScript, pas à pas
 
 Branche `feat/js-checkpoint-sprint`, issue de `main` (`ae2d1ea`). Le prototype a
@@ -7,7 +12,7 @@ pratiquer dans **63 petits exercices**, répartis en **12 chapitres**.
 
 ## Ce que l’apprenant fait
 
-Ouvrir **Parcours JS ↗**, puis suivre la prochaine étape. Chaque page présente :
+Ouvrir **Apprendre**, puis suivre la prochaine étape. Chaque page présente :
 
 1. Un repère Go et son équivalent ou sa différence JavaScript, dans le chapitre.
 2. Une notion précise, expliquée avant de demander du code.
@@ -130,7 +135,7 @@ volontaire d’un vrai sujet depuis le pont suit les règles d’entraînement h
 PORT=8096 make start
 ```
 
-Ouvrir http://127.0.0.1:8096/ puis **Parcours JS ↗**. Un autre port sépare le
+Ouvrir http://127.0.0.1:8096/ puis **Apprendre**. Un autre port sépare le
 stockage du navigateur, pas le code : deux serveurs du même checkout servent la
 branche courante. Une comparaison avec main demande un second checkout.
 

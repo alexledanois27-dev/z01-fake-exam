@@ -2,6 +2,7 @@ package backend
 
 import (
 	"context"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -10,6 +11,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -17,13 +19,16 @@ var errMicroNotFound = errors.New("petit exercice inconnu")
 var microIdentifier = regexp.MustCompile(`^[A-Za-z_$][A-Za-z0-9_$]*$`)
 
 type jsMicroTest struct {
-	Label    string          `json:"label"`
-	Args     json.RawMessage `json:"args"`
-	Expected json.RawMessage `json:"expected"`
-	Calls    json.RawMessage `json:"calls"`
+	Label        string          `json:"label"`
+	Invoke       string          `json:"invoke"`
+	ExpectedText string          `json:"expectedText"`
+	Args         json.RawMessage `json:"args"`
+	Expected     json.RawMessage `json:"expected"`
+	Calls        json.RawMessage `json:"calls"`
 }
 type jsMicroLesson struct {
 	ID       string        `json:"id"`
+	Track    string        `json:"-"`
 	Target   string        `json:"target"`
 	Solution string        `json:"solution"`
 	Tests    []jsMicroTest `json:"tests"`
@@ -46,22 +51,39 @@ type jsMicroResult struct {
 	Checks  []jsMicroCheck `json:"checks,omitempty"`
 }
 
-func readMicroCurriculum() (jsMicroCurriculum, error) {
+func readMicroCurriculum() (jsMicroCurriculum, error) { return readTrackCurriculum("js") }
+func readTrackCurriculum(track string) (jsMicroCurriculum, error) {
 	var curriculum jsMicroCurriculum
-	file, err := os.Open(filepath.Join(rootDir, "learning-content", "js-micro-path", "curriculum.json"))
+	switch track {
+	case "go", "js", "rust", "java":
+	default:
+		return curriculum, errMicroNotFound
+	}
+	file, err := os.Open(filepath.Join(rootDir, "learning-content", track+"-micro-path", "curriculum.json"))
 	if err != nil {
 		return curriculum, err
 	}
 	defer file.Close()
-	raw, err := io.ReadAll(io.LimitReader(file, 512<<10+1))
+	raw, err := io.ReadAll(io.LimitReader(file, (512<<10)+1))
 	if err != nil || len(raw) > 512<<10 {
 		return curriculum, fmt.Errorf("contenu pédagogique trop volumineux ou illisible")
 	}
-	err = json.Unmarshal(raw, &curriculum)
-	return curriculum, err
+	if err = json.Unmarshal(raw, &curriculum); err != nil {
+		return curriculum, err
+	}
+	for i := range curriculum.Modules {
+		for j := range curriculum.Modules[i].Lessons {
+			curriculum.Modules[i].Lessons[j].Track = track
+		}
+	}
+	return curriculum, nil
 }
 func findMicroLesson(id string) (jsMicroLesson, error) {
-	curriculum, err := readMicroCurriculum()
+	track, _, ok := strings.Cut(id, "-learn-")
+	if !ok {
+		return jsMicroLesson{}, errMicroNotFound
+	}
+	curriculum, err := readTrackCurriculum(track)
 	if err != nil {
 		return jsMicroLesson{}, err
 	}
@@ -76,6 +98,76 @@ func findMicroLesson(id string) (jsMicroLesson, error) {
 		}
 	}
 	return jsMicroLesson{}, errMicroNotFound
+}
+func microImage(lesson jsMicroLesson) string {
+	track := lesson.Track
+	if track == "" {
+		track = "js"
+	}
+	return officialImage("module-" + track)
+}
+
+// Invocation expressions come only from maintained curriculum files, never from request fields.
+func compiledMicroProgram(lesson jsMicroLesson, source string) (string, string, string) {
+	var body strings.Builder
+	switch lesson.Track {
+	case "go":
+		body.WriteString("package main\nimport (\"fmt\";\"strings\";\"sort\";\"strconv\")\nvar _=strings.Fields;var _=sort.Ints;var _=strconv.Itoa\n" + source + "\nfunc main(){\n")
+		for i, test := range lesson.Tests {
+			fmt.Fprintf(&body, "{actual:=fmt.Sprint(%s);fmt.Printf(\"\\n__Z01_CASE__%d|%%x\\n\",[]byte(actual))}\n", test.Invoke, i)
+		}
+		body.WriteString("}\n")
+		return body.String(), "micro.go", "go run /workspace/micro.go"
+	case "rust":
+		body.WriteString(source + "\nfn main(){\n")
+		for i, test := range lesson.Tests {
+			fmt.Fprintf(&body, "{let actual=format!(\"{:?}\",%s);let hex:String=actual.as_bytes().iter().map(|b|format!(\"{:02x}\",b)).collect();println!(\"\\n__Z01_CASE__%d|{}\",hex);}\n", test.Invoke, i)
+		}
+		body.WriteString("}\n")
+		return body.String(), "micro.rs", "rustc --edition=2024 /workspace/micro.rs -o /workspace/micro && exec /workspace/micro"
+	case "java":
+		body.WriteString("public class Lesson {\n" + source + "\npublic static void main(String[] args) {\n")
+		for i, test := range lesson.Tests {
+			fmt.Fprintf(&body, "{String actual=String.valueOf(%s);StringBuilder hex=new StringBuilder();for(byte b:actual.getBytes(java.nio.charset.StandardCharsets.UTF_8))hex.append(String.format(\"%%02x\",b&255));System.out.println(\"\\n__Z01_CASE__%d|\"+hex);}\n", test.Invoke, i)
+		}
+		body.WriteString("}}\n")
+		return body.String(), "Lesson.java", "mkdir -p /workspace/build && javac -J-Xmx128m -d /workspace/build /workspace/Lesson.java && exec java -Xmx128m -cp /workspace/build Lesson"
+	}
+	return "", "", ""
+}
+func parseCompiledMicroOutput(lesson jsMicroLesson, raw string) (jsMicroResult, error) {
+	values := map[int]string{}
+	for _, line := range strings.Split(raw, "\n") {
+		if !strings.HasPrefix(line, "__Z01_CASE__") {
+			continue
+		}
+		index, value, ok := strings.Cut(strings.TrimPrefix(line, "__Z01_CASE__"), "|")
+		if !ok {
+			continue
+		}
+		i, err := strconv.Atoi(index)
+		if err != nil || i < 0 || i >= len(lesson.Tests) {
+			continue
+		}
+		bytes, err := hex.DecodeString(value)
+		if err != nil || len(bytes) > 4096 {
+			continue
+		}
+		values[i] = string(bytes)
+	}
+	if len(values) != len(lesson.Tests) {
+		return jsMicroResult{}, fmt.Errorf("résultat pédagogique incomplet")
+	}
+	result := jsMicroResult{Success: true, Output: "Tous les cas de ce petit exercice sont réussis."}
+	for i, test := range lesson.Tests {
+		passed := values[i] == test.ExpectedText
+		result.Success = result.Success && passed
+		result.Checks = append(result.Checks, jsMicroCheck{Label: test.Label, Expected: test.ExpectedText, Actual: values[i], Passed: passed})
+	}
+	if !result.Success {
+		result.Output = "Compare les résultats attendus et obtenus, puis reprends l’explication."
+	}
+	return result, nil
 }
 
 // Source is written to a file and executed ONLY by Node inside the existing
@@ -164,14 +256,20 @@ func runMicroLesson(lesson jsMicroLesson, source string) (jsMicroResult, error) 
 	if err := os.Chmod(dir, 0755); err != nil {
 		return jsMicroResult{}, err
 	}
-	if err := os.WriteFile(filepath.Join(dir, "micro.js"), []byte(microProgram(lesson, source)), 0644); err != nil {
+	program, file, script := compiledMicroProgram(lesson, source)
+	if lesson.Track == "js" || lesson.Track == "" {
+		program = microProgram(lesson, source)
+		file = "micro.js"
+		script = "exec node /workspace/micro.js"
+	}
+	if err := os.WriteFile(filepath.Join(dir, file), []byte(program), 0644); err != nil {
 		return jsMicroResult{}, err
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), runTimeout())
 	defer cancel()
 	args := append([]string{"run", "--rm", "--platform", "linux/amd64"}, baseDockerRunArgs("")...)
 	args = withOptionalCPULimit(args)
-	args = append(args, "--entrypoint", "node", "-w", "/workspace", "-v", dir+":/workspace:rw", officialImage("module-js"), "/workspace/micro.js")
+	args = append(args, "--entrypoint", "sh", "-w", "/workspace", "-v", dir+":/workspace:rw", microImage(lesson), "-c", "set -e\n"+script)
 	cmd := dockerRunCommand(ctx, args)
 	var stdout, stderr limitedOutput
 	cmd.Stdout, cmd.Stderr = &stdout, &stderr
@@ -184,9 +282,14 @@ func runMicroLesson(lesson jsMicroLesson, source string) (jsMicroResult, error) 
 		if !errors.As(err, &exit) || exit.ExitCode() == 125 || exit.ExitCode() == 126 || exit.ExitCode() == 127 {
 			return jsMicroResult{}, fmt.Errorf("exécution Docker indisponible : %s", strings.TrimSpace(stderr.String()))
 		}
-		return jsMicroResult{Output: "Erreur JavaScript :\n" + stderr.String()}, nil
+		return jsMicroResult{Output: "Erreur de compilation ou d’exécution :\n" + stderr.String()}, nil
 	}
-	result, err := parseMicroOutput(stdout.String())
+	var result jsMicroResult
+	if lesson.Track == "js" || lesson.Track == "" {
+		result, err = parseMicroOutput(stdout.String())
+	} else {
+		result, err = parseCompiledMicroOutput(lesson, stdout.String())
+	}
 	if err != nil {
 		return jsMicroResult{Output: "Le programme s’est arrêté avant les tests ou produit trop de sortie. Garde la fonction demandée et retire les affichages excessifs."}, nil
 	}

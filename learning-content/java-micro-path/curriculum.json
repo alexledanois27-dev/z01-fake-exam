@@ -1,0 +1,837 @@
+{
+  "version": 1,
+  "track": "java",
+  "title": "Go → Java, des méthodes aux objets",
+  "description": "Signatures, String, tableaux, collections, instances et erreurs : des exercices courts pour traduire tes acquis Go en Java.",
+  "audience": "PARCOURS PAS À PAS · PROTOTYPE",
+  "instructions": "Écris seulement les méthodes static et les types imbriqués demandés. Le moteur fournit la classe Lesson et son main. Utilise les noms complets java.util si nécessaire ; aucun package ni import à ajouter. Les entrées ne sont pas null sauf indication contraire.",
+  "modules": [
+    {
+      "id": "methods",
+      "title": "De la fonction Go à la méthode Java",
+      "goal": "Comprendre static, les types et le retour.",
+      "go": "func double(n int) int { return n*2 }",
+      "example": "static int doubleValue(int n) {\n    return n * 2;\n}",
+      "notes": [
+        "Une méthode Java vit dans une classe. Dans ces petits exercices, le moteur fournit la classe Lesson : tu écris seulement les méthodes demandées.",
+        "static signifie que la méthode appartient à la classe et ne nécessite pas de créer une instance avec new.",
+        "Le type de retour précède le nom. Les paramètres s’écrivent type puis nom, contrairement à Go.",
+        "Les instructions se terminent par ;. System.out.println affiche une valeur mais ne remplace pas return."
+      ],
+      "checkpoint": ["java-area-calculator", "java-factorial"],
+      "lessons": [
+        {
+          "id": "java-learn-return",
+          "title": "Renvoyer depuis une méthode",
+          "target": "doubleValue",
+          "minutes": 8,
+          "task": "Renvoie le double de n, pour de petits int.",
+          "bridge": "int doubleValue(int n) remplace func doubleValue(n int) int.",
+          "explanation": [
+            "Le type de retour est int.",
+            "return doit fournir une expression de ce type.",
+            "Le moteur appelle la méthode static sans instance."
+          ],
+          "starter": "static int doubleValue(int n) {\n    return 0;\n}",
+          "solution": "static int doubleValue(int n) {\n    return n*2;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "doubleValue(4)",
+              "expectedText": "8"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "doubleValue(-3)",
+              "expectedText": "-6"
+            }
+          ],
+          "hints": [
+            "Multiplie n par 2.",
+            "Termine return par un point-virgule."
+          ],
+          "walkthrough": [
+            "La signature reste identique.",
+            "Le calcul produit un int.",
+            "La valeur repart vers le test sans affichage."
+          ]
+        },
+        {
+          "id": "java-learn-division",
+          "title": "Comprendre la division entière",
+          "target": "half",
+          "minutes": 8,
+          "task": "Renvoie n/2 avec troncature vers zéro, pour un int.",
+          "bridge": "Comme entre deux int en Go, la division entière perd la partie fractionnaire.",
+          "explanation": [
+            "7/2 donne 3 avec des int.",
+            "-7/2 donne -3, pas -4.",
+            "Le retour doit rester int, sans conversion en double."
+          ],
+          "starter": "static int half(int n) {\n    return 0;\n}",
+          "solution": "static int half(int n) {\n    return n/2;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "half(7)",
+              "expectedText": "3"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "half(-7)",
+              "expectedText": "-3"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "half(0)",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Divise directement n par l’entier 2.",
+            "2.0 changerait le type du calcul."
+          ],
+          "walkthrough": [
+            "Les deux opérandes sont entiers.",
+            "Le résultat tronque vers zéro.",
+            "Aucun arrondi supplémentaire n’est demandé."
+          ]
+        },
+        {
+          "id": "java-learn-sum",
+          "title": "Écrire une boucle Java",
+          "target": "sumTo",
+          "minutes": 8,
+          "task": "Pour 0<=n<=1000, renvoie la somme de 1 à n.",
+          "bridge": "Le for Go devient for(initialisation;condition;mise à jour).",
+          "explanation": [
+            "Déclare int total=0 avant la boucle.",
+            "La condition i<=n inclut n.",
+            "return se situe après la fermeture de la boucle."
+          ],
+          "starter": "static int sumTo(int n) {\n    return 0;\n}",
+          "solution": "static int sumTo(int n) {\n    int total=0;\n    for(int i=1;i<=n;i++) {\n        total+=i;\n    }\n    return total;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "sumTo(0)",
+              "expectedText": "0"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "sumTo(5)",
+              "expectedText": "15"
+            }
+          ],
+          "hints": [
+            "Utilise for(int i=1;i<=n;i++).",
+            "Ajoute i à total à chaque tour."
+          ],
+          "walkthrough": [
+            "Le cas zéro garde total nul.",
+            "La variable i reste locale à la boucle.",
+            "Le résultat n’est renvoyé qu’après l’accumulation."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "strings",
+      "title": "String : égalité et indices",
+      "goal": "Ne pas confondre référence, contenu et caractère.",
+      "go": "a == b // compare le texte des strings",
+      "example": "a.equals(b) // compare le contenu",
+      "notes": [
+        "String est un objet immuable. En Java == compare les références des objets ; equals compare le contenu d’une String.",
+        "s.length() compte les unités UTF-16, comme JavaScript, pas les octets UTF-8 de len(s) en Go. Un caractère hors du plan de base peut occuper deux unités.",
+        "charAt(i) lit une unité char et exige 0<=i<s.length(). La chaîne vide nécessite une garde.",
+        "La concaténation produit une nouvelle String ; StringBuilder est utile pour construire du texte dans une boucle."
+      ],
+      "checkpoint": [
+        "java-strlen",
+        "java-count-char",
+        "java-almost-palindrome"
+      ],
+      "lessons": [
+        {
+          "id": "java-learn-equals",
+          "title": "Comparer le contenu",
+          "target": "sameText",
+          "minutes": 8,
+          "task": "Renvoie si a et b contiennent le même texte. Les arguments ne sont pas null.",
+          "bridge": "L’égalité des strings Go correspond à equals en Java.",
+          "explanation": [
+            "Deux objets distincts peuvent contenir le même texte.",
+            "== peut sembler marcher sur des littéraux à cause de leur partage.",
+            "Le contrat non-null autorise a.equals(b)."
+          ],
+          "starter": "static boolean sameText(String a,String b) {\n    return false;\n}",
+          "solution": "static boolean sameText(String a,String b) {\n    return a.equals(b);\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "sameText(new String(\"go\"),new String(\"go\"))",
+              "expectedText": "true"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "sameText(\"Go\",\"go\")",
+              "expectedText": "false"
+            }
+          ],
+          "hints": [
+            "Appelle a.equals(b).",
+            "Ne te fie pas à == sur deux littéraux."
+          ],
+          "walkthrough": [
+            "Le test crée des références distinctes.",
+            "equals examine le contenu.",
+            "La comparaison respecte les majuscules."
+          ]
+        },
+        {
+          "id": "java-learn-first",
+          "title": "Protéger une indexation",
+          "target": "firstOr",
+          "minutes": 8,
+          "task": "Renvoie la première unité char, ou fallback si s est vide. s non-null.",
+          "bridge": "Le contrôle de longueur joue le même rôle qu’avant s[0] en Go.",
+          "explanation": [
+            "isEmpty() teste la chaîne vide.",
+            "charAt(0) exige au moins une unité.",
+            "Le résultat char s’écrit avec des apostrophes."
+          ],
+          "starter": "static char firstOr(String s,char fallback) {\n    return fallback;\n}",
+          "solution": "static char firstOr(String s,char fallback) {\n    if(s.isEmpty())return fallback;\n    return s.charAt(0);\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "firstOr(\"Java\",'?')",
+              "expectedText": "J"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "firstOr(\"\",'?')",
+              "expectedText": "?"
+            }
+          ],
+          "hints": [
+            "Traite isEmpty() avant charAt.",
+            "Lis charAt(0) dans le cas non vide."
+          ],
+          "walkthrough": [
+            "La garde évite une exception.",
+            "Le contrat porte sur une unité UTF-16.",
+            "Un emoji peut avoir deux char : ce n’est pas un découpage en graphèmes."
+          ]
+        },
+        {
+          "id": "java-learn-count",
+          "title": "Parcourir une String",
+          "target": "countChar",
+          "minutes": 8,
+          "task": "Compte les unités char égales à wanted, dans une String non-null.",
+          "bridge": "La boucle indexée lit des char Java, pas des runes Go.",
+          "explanation": [
+            "Les indices vont de 0 à length()-1.",
+            "charAt(i) fournit l’unité à comparer.",
+            "Un compteur int suffit pour ce parcours."
+          ],
+          "starter": "static int countChar(String s,char wanted) {\n    return 0;\n}",
+          "solution": "static int countChar(String s,char wanted) {\n    int total=0;\n    for(int i=0;i<s.length();i++) {\n        if(s.charAt(i)==wanted)total++;\n    }\n    return total;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "countChar(\"banana\",'a')",
+              "expectedText": "3"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "countChar(\"\",'a')",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "La condition est i<s.length().",
+            "Incrémente seulement quand charAt(i)==wanted."
+          ],
+          "walkthrough": [
+            "L’indice ne dépasse pas la fin.",
+            "== convient ici aux valeurs primitives char.",
+            "Le vide produit zéro sans cas spécial."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "arrays",
+      "title": "Tableaux et copies",
+      "goal": "Transformer une copie et traiter les bornes.",
+      "go": "out := append([]int{}, values...)",
+      "example": "int[] out = values.clone();",
+      "notes": [
+        "Un int[] a une longueur fixe accessible par .length, sans parenthèses.",
+        "Affecter int[] b=a partage le même objet : les éléments ne sont pas copiés.",
+        "clone() copie un tableau d’int. Pour un tableau de tableaux, cette copie ne duplique pas chaque sous-tableau.",
+        "Les entrées de ces exercices ne sont pas null. Le tableau vide reste un cas distinct, avec length==0."
+      ],
+      "checkpoint": [
+        "java-reverse-array",
+        "java-rotate-array",
+        "java-average-calc"
+      ],
+      "lessons": [
+        {
+          "id": "java-learn-copy",
+          "title": "Modifier une copie",
+          "target": "replaceFirst",
+          "minutes": 8,
+          "task": "Renvoie une copie dont le premier élément devient x, ou une copie vide. Ne modifie pas values.",
+          "bridge": "La référence Java se partage plus directement encore qu’une vue de slice Go.",
+          "explanation": [
+            "clone() crée le nouveau tableau.",
+            "Vérifie out.length>0 avant out[0].",
+            "Renvoie out, pas values."
+          ],
+          "starter": "static int[] replaceFirst(int[] values,int x) {\n    return new int[0];\n}",
+          "solution": "static int[] replaceFirst(int[] values,int x) {\n    int[] out=values.clone();\n    if(out.length>0)out[0]=x;\n    return out;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(replaceFirst(new int[]{1,2},9))",
+              "expectedText": "[9, 2]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(replaceFirst(new int[]{},9))",
+              "expectedText": "[]"
+            }
+          ],
+          "hints": [
+            "Crée out avec values.clone().",
+            "Écris seulement dans out."
+          ],
+          "walkthrough": [
+            "Les deux tableaux deviennent indépendants.",
+            "La garde protège le vide.",
+            "Arrays.toString dans le test affiche les éléments du retour."
+          ]
+        },
+        {
+          "id": "java-learn-reverse",
+          "title": "Relier deux indices",
+          "target": "reverse",
+          "minutes": 8,
+          "task": "Renvoie un nouveau tableau dont l’ordre est inversé.",
+          "bridge": "La position i de la sortie lit length-1-i dans l’entrée.",
+          "explanation": [
+            "Alloue un tableau de même longueur.",
+            "Parcours les indices de sortie.",
+            "Lis l’élément symétrique sans écrire dans values."
+          ],
+          "starter": "static int[] reverse(int[] values) {\n    return new int[0];\n}",
+          "solution": "static int[] reverse(int[] values) {\n    int[] out=new int[values.length];\n    for(int i=0;i<out.length;i++)out[i]=values[values.length-1-i];\n    return out;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(reverse(new int[]{1,2,3}))",
+              "expectedText": "[3, 2, 1]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(reverse(new int[]{}))",
+              "expectedText": "[]"
+            }
+          ],
+          "hints": [
+            "La dernière position est length-1.",
+            "Soustrais i pour reculer dans l’entrée."
+          ],
+          "walkthrough": [
+            "Chaque position de sortie reçoit une valeur.",
+            "Le tableau vide n’exécute aucune lecture.",
+            "La source reste intacte."
+          ]
+        },
+        {
+          "id": "java-learn-minimum",
+          "title": "Éviter une mauvaise sentinelle",
+          "target": "minimumOr",
+          "minutes": 8,
+          "task": "Renvoie le minimum, ou fallback pour un tableau vide.",
+          "bridge": "Initialiser à zéro échoue quand tous les éléments sont positifs.",
+          "explanation": [
+            "La garde traite le tableau vide.",
+            "Le premier élément est un minimum provisoire valide.",
+            "Chaque élément plus petit remplace ce minimum."
+          ],
+          "starter": "static int minimumOr(int[] values,int fallback) {\n    return fallback;\n}",
+          "solution": "static int minimumOr(int[] values,int fallback) {\n    if(values.length==0)return fallback;\n    int min=values[0];\n    for(int n:values) {\n        if(n<min)min=n;\n    }\n    return min;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "minimumOr(new int[]{5,2,9},0)",
+              "expectedText": "2"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "minimumOr(new int[]{-1,-4},0)",
+              "expectedText": "-4"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "minimumOr(new int[]{},7)",
+              "expectedText": "7"
+            }
+          ],
+          "hints": [
+            "Traite length==0 avant values[0].",
+            "Initialise min avec values[0], pas zéro."
+          ],
+          "walkthrough": [
+            "La sentinelle vient des données.",
+            "La boucle for-each lit chaque int.",
+            "Le secours n’est utilisé qu’en absence de données."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "collections",
+      "title": "Listes, ensembles et fréquences",
+      "goal": "Choisir une collection selon la question posée.",
+      "go": "map[string]int{}",
+      "example": "new java.util.HashMap<String,Integer>()",
+      "notes": [
+        "ArrayList<Integer> grandit dynamiquement ; int[] a une taille fixe. Les génériques utilisent Integer et non le primitif int.",
+        "Java convertit souvent int et Integer automatiquement : c’est l’autoboxing. Attention aux Integer null qu’on ne peut pas déballer en int.",
+        "HashSet décide si un élément est déjà présent. HashMap associe une clé à une valeur, sans promettre d’ordre de parcours.",
+        "Utilise getOrDefault pour traiter une clé absente sans confondre absence et valeur null."
+      ],
+      "checkpoint": [
+        "java-first-unique",
+        "java-top-frequents",
+        "java-todo-list"
+      ],
+      "lessons": [
+        {
+          "id": "java-learn-positive",
+          "title": "Construire une liste dynamique",
+          "target": "positive",
+          "minutes": 8,
+          "task": "Renvoie une ArrayList des entiers strictement positifs, en conservant l’ordre.",
+          "bridge": "add joue le rôle de l’ajout Go à la collection résultat.",
+          "explanation": [
+            "La déclaration utilise ArrayList<Integer>.",
+            "new construit une liste vide.",
+            "Chaque n>0 est ajouté avec out.add(n)."
+          ],
+          "starter": "static java.util.ArrayList<Integer> positive(int[] values) {\n    return new java.util.ArrayList<>();\n}",
+          "solution": "static java.util.ArrayList<Integer> positive(int[] values) {\n    java.util.ArrayList<Integer> out=new java.util.ArrayList<>();\n    for(int n:values)if(n>0)out.add(n);\n    return out;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "positive(new int[]{-1,0,3,2})",
+              "expectedText": "[3, 2]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "positive(new int[]{})",
+              "expectedText": "[]"
+            }
+          ],
+          "hints": [
+            "Crée la liste avant la boucle.",
+            "Garde n>0 et utilise add."
+          ],
+          "walkthrough": [
+            "La liste gère sa capacité.",
+            "L’autoboxing transforme chaque int ajouté.",
+            "L’ordre suit le tableau source."
+          ]
+        },
+        {
+          "id": "java-learn-distinct",
+          "title": "Compter les valeurs distinctes",
+          "target": "distinctCount",
+          "minutes": 8,
+          "task": "Renvoie le nombre de valeurs distinctes dans values.",
+          "bridge": "Un Set correspond à une map utilisée comme ensemble en Go.",
+          "explanation": [
+            "HashSet<Integer> ne garde qu’une occurrence par valeur.",
+            "add peut être répété sans dupliquer un élément.",
+            "size() donne le nombre d’éléments distincts."
+          ],
+          "starter": "static int distinctCount(int[] values) {\n    return 0;\n}",
+          "solution": "static int distinctCount(int[] values) {\n    java.util.HashSet<Integer> seen=new java.util.HashSet<>();\n    for(int n:values)seen.add(n);\n    return seen.size();\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "distinctCount(new int[]{2,2,3,2})",
+              "expectedText": "2"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "distinctCount(new int[]{})",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Ajoute toutes les valeurs à un HashSet.",
+            "Renvoie sa size()."
+          ],
+          "walkthrough": [
+            "L’ensemble applique l’unicité.",
+            "Aucun tri n’est nécessaire.",
+            "L’ordre de l’ensemble n’intervient pas dans un simple compte."
+          ]
+        },
+        {
+          "id": "java-learn-frequency",
+          "title": "Compter avec une Map",
+          "target": "frequency",
+          "minutes": 8,
+          "task": "Compte les String exactement égales à wanted dans words ; aucun élément null.",
+          "bridge": "La clé absente vaut zéro en Go, mais Java demande ici un défaut explicite.",
+          "explanation": [
+            "HashMap<String,Integer> stocke un compteur par mot.",
+            "getOrDefault(word,0) lit un compteur ou zéro.",
+            "put remplace le compteur par sa nouvelle valeur."
+          ],
+          "starter": "static int frequency(String[] words,String wanted) {\n    return 0;\n}",
+          "solution": "static int frequency(String[] words,String wanted) {\n    java.util.HashMap<String,Integer> counts=new java.util.HashMap<>();\n    for(String word:words)counts.put(word,counts.getOrDefault(word,0)+1);\n    return counts.getOrDefault(wanted,0);\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "frequency(new String[]{\"go\",\"java\",\"go\"},\"go\")",
+              "expectedText": "2"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "frequency(new String[]{\"Java\"},\"java\")",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Lis l’ancien compteur avec getOrDefault.",
+            "Enregistre ancien+1 avec put."
+          ],
+          "walkthrough": [
+            "L’absence est gérée à l’incrément et au retour.",
+            "Les clés String sont comparées par contenu par la Map.",
+            "La casse reste significative."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "objects",
+      "title": "Objets, constructeurs et encapsulation",
+      "goal": "Passer des structures Go aux instances Java.",
+      "go": "type Counter struct { value int }",
+      "example": "static class Counter {\n    private int value;\n    Counter(int start) { value = start; }\n}",
+      "notes": [
+        "Une classe décrit des champs et méthodes. new Counter(3) crée une instance dont le constructeur initialise les champs.",
+        "Le constructeur porte le nom de la classe et ne déclare aucun type de retour.",
+        "Un champ private doit être manipulé via le code de sa classe : cela permet de protéger un invariant.",
+        "Le static class ci-dessus est une classe imbriquée dans Lesson, l’enveloppe du parcours. Dans un vrai projet, Counter peut être une classe de fichier distinct."
+      ],
+      "checkpoint": [
+        "java-config-protector",
+        "java-builder-blueprint",
+        "java-todo-list"
+      ],
+      "lessons": [
+        {
+          "id": "java-learn-constructor",
+          "title": "Initialiser un objet",
+          "target": "initial",
+          "minutes": 8,
+          "task": "Déclare Counter avec un champ int value et un constructeur Counter(int start). initial(start) crée un objet puis renvoie son champ.",
+          "bridge": "Une instance regroupe un état, comme une struct Go.",
+          "explanation": [
+            "Le constructeur s’appelle Counter.",
+            "this.value distingue le champ d’un éventuel paramètre value.",
+            "new appelle le constructeur et produit la référence."
+          ],
+          "starter": "static class Counter {\n    int value;\n    Counter(int start) { }\n}\nstatic int initial(int start) {\n    return 0;\n}",
+          "solution": "static class Counter {\n    int value;\n    Counter(int start) {\n        this.value=start;\n    }\n}\nstatic int initial(int start) {\n    Counter counter=new Counter(start);\n    return counter.value;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "initial(4)",
+              "expectedText": "4"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "initial(-2)",
+              "expectedText": "-2"
+            }
+          ],
+          "hints": [
+            "Affecte start au champ du constructeur.",
+            "Dans initial, crée new Counter(start)."
+          ],
+          "walkthrough": [
+            "Le constructeur fixe l’état initial.",
+            "La variable counter contient une référence à l’instance.",
+            "Le champ relu correspond à cette instance."
+          ]
+        },
+        {
+          "id": "java-learn-method",
+          "title": "Faire évoluer un état",
+          "target": "incrementTwice",
+          "minutes": 8,
+          "task": "Déclare Counter avec champ privé value, constructeur et méthode int increment(). incrementTwice(start) crée Counter puis appelle increment deux fois et renvoie le dernier résultat.",
+          "bridge": "Une méthode d’instance agit sur son propre objet, comme une méthode sur pointeur Go.",
+          "explanation": [
+            "increment n’est pas static : elle utilise le champ de son objet.",
+            "Chaque appel augmente value de un.",
+            "Deux instances distinctes auraient deux états distincts."
+          ],
+          "starter": "static class Counter {\n    private int value;\n    Counter(int start) { value=start; }\n    int increment() { return value; }\n}\nstatic int incrementTwice(int start) {\n    return 0;\n}",
+          "solution": "static class Counter {\n    private int value;\n    Counter(int start) {\n        value=start;\n    }\n    int increment() {\n        value++;\n        return value;\n    }\n}\nstatic int incrementTwice(int start) {\n    Counter c=new Counter(start);\n    c.increment();\n    return c.increment();\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "incrementTwice(3)",
+              "expectedText": "5"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "incrementTwice(0)",
+              "expectedText": "2"
+            }
+          ],
+          "hints": [
+            "Incrémente le champ dans increment().",
+            "Utilise deux appels sur le même objet c."
+          ],
+          "walkthrough": [
+            "L’état est conservé entre les appels de cette instance.",
+            "private masque le champ aux autres classes ordinaires.",
+            "Le deuxième appel donne start+2."
+          ]
+        },
+        {
+          "id": "java-learn-validation",
+          "title": "Protéger un invariant",
+          "target": "safeStart",
+          "minutes": 8,
+          "task": "Déclare Counter dont le constructeur remplace tout start négatif par zéro. Ajoute int value() pour lire le champ privé. safeStart(start) renvoie cette lecture.",
+          "bridge": "Un constructeur peut faire respecter une règle dès la création.",
+          "explanation": [
+            "L’invariant choisi est value>=0.",
+            "Le ternaire condition?a:b choisit une des deux valeurs.",
+            "Une méthode de lecture peut exposer l’état sans proposer d’écriture arbitraire."
+          ],
+          "starter": "static class Counter {\n    private int value;\n    Counter(int start) { }\n    int value() { return value; }\n}\nstatic int safeStart(int start) {\n    return 0;\n}",
+          "solution": "static class Counter {\n    private int value;\n    Counter(int start) {\n        value=start<0?0:start;\n    }\n    int value() {\n        return value;\n    }\n}\nstatic int safeStart(int start) {\n    return new Counter(start).value();\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "safeStart(-3)",
+              "expectedText": "0"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "safeStart(5)",
+              "expectedText": "5"
+            }
+          ],
+          "hints": [
+            "Choisis 0 lorsque start<0.",
+            "Appelle value() sur la nouvelle instance."
+          ],
+          "walkthrough": [
+            "La règle s’applique à toute construction.",
+            "Le champ reste privé.",
+            "Le retour passe par une méthode plutôt qu’une affectation extérieure."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "algorithms",
+      "title": "Erreurs et algorithmes",
+      "goal": "Assembler une méthode fiable avant les sujets complets.",
+      "go": "n, err := strconv.Atoi(text)",
+      "example": "try { return Integer.parseInt(text); }\ncatch (NumberFormatException e) { return fallback; }",
+      "notes": [
+        "Java signale certaines erreurs par exception plutôt que par retour explicite. try/catch permet de traiter un échec attendu.",
+        "Ne capture pas toutes les exceptions pour cacher une erreur de programme : vise le type d’échec attendu.",
+        "Les algorithmes déjà connus en Go restent utiles. Traduis séparément la signature, les collections et la mécanique de contrôle.",
+        "Ce parcours prépare les prérequis : les sujets de dates, structures chaînées et patrons de conception demandent ensuite leurs fiches et leur contrat propre."
+      ],
+      "checkpoint": [
+        "java-next-prime",
+        "java-factorial",
+        "java-factorial-master"
+      ],
+      "lessons": [
+        {
+          "id": "java-learn-parse",
+          "title": "Gérer une conversion invalide",
+          "target": "parseOr",
+          "minutes": 8,
+          "task": "Convertis text en int, ou renvoie fallback si Integer.parseInt échoue. text non-null.",
+          "bridge": "L’exception NumberFormatException remplace ici le err de Go.",
+          "explanation": [
+            "Integer.parseInt analyse un entier signé décimal.",
+            "Un texte invalide ou hors plage déclenche NumberFormatException.",
+            "catch contient la stratégie de secours choisie."
+          ],
+          "starter": "static int parseOr(String text,int fallback) {\n    return fallback;\n}",
+          "solution": "static int parseOr(String text,int fallback) {\n    try {\n        return Integer.parseInt(text);\n    }\n    catch(NumberFormatException e) {\n        return fallback;\n    }\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "parseOr(\"42\",0)",
+              "expectedText": "42"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "parseOr(\"oops\",7)",
+              "expectedText": "7"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "parseOr(\"2147483648\",-1)",
+              "expectedText": "-1"
+            }
+          ],
+          "hints": [
+            "Place parseInt dans try.",
+            "Capture NumberFormatException et renvoie fallback."
+          ],
+          "walkthrough": [
+            "Le succès renvoie le nombre.",
+            "L’erreur ne termine pas toute l’exécution.",
+            "Les débordements sont aussi des conversions invalides."
+          ]
+        },
+        {
+          "id": "java-learn-prime",
+          "title": "Tester un diviseur",
+          "target": "isPrime",
+          "minutes": 8,
+          "task": "Pour n>=0, renvoie si n est premier.",
+          "bridge": "La logique de primalité est indépendante du langage.",
+          "explanation": [
+            "n<2 est exclu.",
+            "Teste d tant que d<=n/d.",
+            "Un seul diviseur suffit à répondre false."
+          ],
+          "starter": "static boolean isPrime(int n) {\n    return false;\n}",
+          "solution": "static boolean isPrime(int n) {\n    if(n<2)return false;\n    for(int d=2;d<=n/d;d++) {\n        if(n%d==0)return false;\n    }\n    return true;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "isPrime(1)",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "isPrime(49)",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "isPrime(97)",
+              "expectedText": "true"
+            }
+          ],
+          "hints": ["Commence à d=2.", "Utilise la division pour éviter d*d."],
+          "walkthrough": [
+            "La garde protège les petits nombres.",
+            "Les facteurs viennent par paires.",
+            "Le retour true suit la boucle complète."
+          ]
+        },
+        {
+          "id": "java-learn-recursion",
+          "title": "Construire un cas de base",
+          "target": "factorial",
+          "minutes": 8,
+          "task": "Pour 0<=n<=12, renvoie n! récursivement.",
+          "bridge": "Le même raisonnement récursif Go s’exprime dans une méthode static.",
+          "explanation": [
+            "Le cas n<=1 renvoie 1.",
+            "n-1 rapproche du cas de base.",
+            "La limite n<=12 garde le résultat dans int."
+          ],
+          "starter": "static int factorial(int n) {\n    return 0;\n}",
+          "solution": "static int factorial(int n) {\n    if(n<=1)return 1;\n    return n*factorial(n-1);\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "factorial(0)",
+              "expectedText": "1"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "factorial(5)",
+              "expectedText": "120"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "factorial(12)",
+              "expectedText": "479001600"
+            }
+          ],
+          "hints": [
+            "Résous le plus petit cas sans appel.",
+            "Retourne n*factorial(n-1) pour les autres."
+          ],
+          "walkthrough": [
+            "La terminaison dépend de n qui diminue.",
+            "Les appels empilent leurs calculs restants.",
+            "Le domaine exclut les résultats hors capacité int."
+          ]
+        }
+      ]
+    }
+  ]
+}

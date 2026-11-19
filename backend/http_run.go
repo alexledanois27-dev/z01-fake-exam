@@ -79,7 +79,7 @@ func handleRun(w http.ResponseWriter, r *http.Request) {
 			}
 			return
 		}
-		if !ensureRunnerImage(w, officialImage("module-js")) {
+		if !ensureRunnerImage(w, microImage(lesson)) {
 			return
 		}
 		result, err := runMicroLesson(lesson, req.Code)

@@ -110,3 +110,33 @@ test("micro storage stays bounded and does not overwrite a large draft silently"
   assert.equal(blocked.saveDraft(id, "memory draft"), false);
   assert.equal(blocked.state(id).draft, "memory draft");
 });
+
+test("all language curricula have precise steps and valid catalogue bridges", () => {
+  const allIds = new Set();
+  for (const track of ["go", "js", "rust", "java"]) {
+    const plan = require(
+      `../../learning-content/${track}-micro-path/curriculum.json`,
+    );
+    const catalogue = new Set(
+      require(`../../catalog-snapshots/${track}.json`).exercises.map(
+        (ex) => ex.id,
+      ),
+    );
+    const lessons = plan.modules.flatMap((m) => m.lessons);
+    assert.equal(lessons.length, track === "js" ? 63 : 18);
+    for (const module of plan.modules) {
+      assert.ok(module.notes.length >= 4);
+      for (const id of module.checkpoint)
+        assert.ok(catalogue.has(id), `${track} bridge ${id}`);
+      for (const lesson of module.lessons) {
+        assert.ok(!allIds.has(lesson.id));
+        allIds.add(lesson.id);
+        assert.ok(lesson.id.startsWith(`${track}-learn-`));
+        assert.ok(lesson.explanation.length >= 3);
+        assert.ok(lesson.walkthrough.length >= 3);
+        assert.equal(lesson.hints.length, 2);
+        assert.ok(lesson.tests.length >= 2);
+      }
+    }
+  }
+});

@@ -94,6 +94,7 @@ let rustExercises = [];
 let javaExercises = [];
 let currentExercise = null;
 let learningMode = false;
+let pathMode = false;
 let currentLevelFilter = "all";
 let trueExamMode = false;
 let trueExamSeries = [];

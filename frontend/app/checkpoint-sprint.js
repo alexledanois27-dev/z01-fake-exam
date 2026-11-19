@@ -157,8 +157,5 @@ function openSprintDashboard() {
     sprintActive.assisted = true;
     syncSprintContext(currentExercise);
   }
-  openMicroPath();
+  setAppMode("path");
 }
-document
-  .getElementById("js-sprint-open")
-  .addEventListener("click", openSprintDashboard);

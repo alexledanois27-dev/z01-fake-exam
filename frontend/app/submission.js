@@ -82,6 +82,7 @@ async function requestCorrection(payload, onPreparing, expired = () => false) {
 }
 
 function runCode(options = {}) {
+  if (pathMode) return Promise.resolve(false);
   if (submissionRunning) return pendingRun || Promise.resolve(false);
   const finalSubmission = options.finalSubmission === true;
   const example = options.example === true;

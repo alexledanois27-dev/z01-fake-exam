@@ -1,5 +1,13 @@
 # Historique fonctionnel
 
+## 19 novembre 2026 — onglet Apprendre et parcours multilangages
+
+- Parcours JS déplacé dans une page principale Apprendre, adaptée au langage courant.
+- 54 nouvelles étapes expliquées : 18 en Go, 18 en Rust et 18 en Java.
+- Brouillons, indices et progression séparés par langage ; données JS conservées.
+- Tests pédagogiques Go/Rust/Java dans les images Docker isolées existantes.
+- Ponts vers le catalogue et protection contre les résultats tardifs après navigation.
+
 ## 17 novembre 2026 — parcours Go vers JavaScript pas à pas
 
 - Refonte du prototype en 63 petits exercices et 12 chapitres, hors calendrier imposé.

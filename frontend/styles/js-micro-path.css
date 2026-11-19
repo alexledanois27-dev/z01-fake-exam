@@ -336,3 +336,41 @@
     flex-wrap: wrap;
   }
 }
+
+/* The learning paths are a main tab, never an overlay. */
+#learn-path-panel {
+  min-height: 0;
+  overflow: auto;
+  flex: 1;
+}
+#learn-path-panel[hidden] {
+  display: none;
+}
+.path-mode .app-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
+.path-mode .catalog-panel,
+.path-mode .workspace-header,
+.path-mode .layout,
+.path-mode .learning-panel,
+.path-mode .exam-lobby,
+.path-mode .exam-report,
+.path-mode .sprint-exercise-banner {
+  display: none !important;
+}
+.micro-page {
+  width: 100%;
+  max-width: 1450px;
+  margin: 0 auto;
+}
+.path-mode .workspace {
+  min-width: 0;
+}
+.mode-switch {
+  flex-wrap: wrap;
+}
+@media (max-width: 650px) {
+  .micro-page .sprint-body {
+    padding: 16px;
+  }
+}

@@ -31,7 +31,7 @@ La fonction `window.getExamTimerContext` reste le contrat explicite avec le time
 | `context.js` | Références DOM, éditeur, état partagé et statut d’exécution. |
 | `configuration.js` | Niveaux, alias et données initiales des fiches. |
 | `progress.js` | Persistance et identité de la visite dans l’éditeur. |
-| `navigation.js` | Langage courant, navigation entre les trois modes. |
+| `navigation.js` | Langage courant, navigation entre les quatre onglets. |
 | `exam-controller.js` | Série, échéance, soumission finale et bilan. |
 | `exercise-model.js` | Identifiants, sélection des niveaux et métadonnées d’exercice. |
 | `markdown.js` | Conversion Markdown et assainissement du HTML. |
@@ -375,13 +375,20 @@ précharger les images avant les tests Docker lancés hors du handler HTTP. Les
 tests simulés vérifient le regroupement des demandes, la pause après échec,
 la reprise, la libération des places et l’absence de faux résultat de correction.
 
-## Prototype de parcours JavaScript
+## Parcours Apprendre
 
-La pédagogie active est décrite dans `learning-content/js-micro-path/curriculum.json` :
-63 petits exercices Go → JavaScript, regroupés en 12 chapitres. Ce fichier est
-intégré au bundle et lu côté serveur pour construire les tests publics. Les
-soumissions `mode: lesson` utilisent `backend/js_micro_path.go` et le runner
-Docker JS existant. La bibliothèque `js-micro-progress.js` conserve les brouillons
-et le suivi ; `js-micro-path.js` affiche l’étape et l’éditeur. `checkpoint-sprint.js`
-conserve seulement le pont vers les vrais exercices et leurs repères autonomes.
-Voir le [guide détaillé](prototype-parcours-js.md) pour les limites et les tests.
+Les fichiers `learning-content/{go,js,rust,java}-micro-path/curriculum.json`
+contiennent 117 petits exercices maintenus : 63 JS et 18 par autre langage.
+Le build les intègre au bundle ; le serveur les lit depuis un chemin fixe validé.
+`backend/js_micro_path.go` conserve son nom historique mais sélectionne désormais
+le moteur du langage : Node, Go, rustc ou javac/java, exclusivement dans Docker.
+Les expressions d’appel des cas compilés viennent des fichiers maintenus, jamais
+du client. Les retours sont comparés à leur représentation textuelle de référence.
+
+`js-micro-progress.js` accepte une clé de stockage explicite ; l’ancienne clé JS
+reste inchangée. `js-micro-path.js` affiche le parcours courant dans le panneau
+`learn-path-panel` de l’onglet Apprendre, sans modale. Les brouillons, indices et
+réussites ne se mélangent ni entre langages ni avec les scores d’examen.
+Les réponses en retard sont invalidées par un compteur de génération de vue.
+Le pont autonome JS reste dans `checkpoint-sprint.js` ; les autres ponts ouvrent
+l’entraînement habituel. Voir [le guide](parcours-apprendre.md).

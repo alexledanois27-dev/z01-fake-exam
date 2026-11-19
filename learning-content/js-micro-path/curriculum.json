@@ -1136,6 +1136,12 @@
                 [[1, 2], [3]]
               ],
               "calls": []
+            },
+            {
+              "label": "Une ligne, valeur nulle",
+              "args": [[[5]], 0],
+              "expected": [[[0]], [[5]]],
+              "calls": []
             }
           ]
         }
@@ -1351,6 +1357,17 @@
                   "name": "old",
                   "score": 2
                 }
+              ],
+              "calls": []
+            },
+            {
+              "label": "Objet sans nom initial",
+              "args": [{}, "Ada"],
+              "expected": [
+                {
+                  "name": "Ada"
+                },
+                {}
               ],
               "calls": []
             }

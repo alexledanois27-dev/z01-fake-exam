@@ -92,14 +92,15 @@
               id="mode-learning"
             /><span>Fiches</span></label
           >
+          <label class="mode-option"
+            ><input
+              type="radio"
+              name="app-mode"
+              value="path"
+              id="mode-path"
+            /><span>Apprendre</span></label
+          >
         </div>
-        <button
-          id="js-sprint-open"
-          type="button"
-          class="button button-subtle sprint-launch"
-        >
-          Parcours JS ↗
-        </button>
         <details class="accent-menu" id="accent-menu">
           <summary
             aria-label="Choisir la nuance de l’interface"
@@ -640,6 +641,11 @@ Les résultats de tes tests apparaîtront ici.
               </div>
             </section>
           </div>
+          <section
+            id="learn-path-panel"
+            aria-label="Parcours pas à pas"
+            hidden
+          ></section>
           <section
             id="learning-panel"
             class="learning-panel"

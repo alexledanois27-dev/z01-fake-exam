@@ -1464,6 +1464,7 @@ require("node:test")(
   async () => {
     const env = await boot();
     const w = env.w;
+    click(w, "#track-js");
     const original = w.fetch;
     let submitted;
     w.fetch = async (url, opts) => {
@@ -1488,7 +1489,7 @@ require("node:test")(
     };
     try {
       draft(w, "KEEP GO DRAFT");
-      click(w, "#js-sprint-open");
+      click(w, "#mode-path");
       assert.equal(w.document.querySelectorAll(".micro-chapter").length, 12);
       assert.equal(w.document.querySelectorAll(".micro-lesson").length, 5);
       assert.match(
@@ -1508,7 +1509,7 @@ require("node:test")(
       assert.equal(el(w, "micro-next").disabled, false);
       assert.equal(el(w, "micro-result").querySelector("img"), null);
       assert.match(el(w, "micro-result").textContent, /img src=x/);
-      assert.match(el(w, "progress-label").textContent, /0 \/ 3/);
+      assert.match(el(w, "progress-label").textContent, /0 \/ 0/);
       assert.equal(el(w, "code-editor").value, "KEEP GO DRAFT");
       click(w, "#micro-next");
       assert.match(
@@ -1519,7 +1520,7 @@ require("node:test")(
       const saved = env.snapshot();
       const restored = await boot(saved);
       try {
-        click(restored.w, "#js-sprint-open");
+        click(restored.w, "#mode-path");
         assert.match(
           restored.w.document.querySelector(".micro-title").textContent,
           /variable/,
@@ -1542,13 +1543,14 @@ require("node:test")(
   async () => {
     const env = await boot();
     const w = env.w;
+    click(w, "#track-js");
     try {
       draft(w, "correct GO");
       env.advance(15000);
       click(w, "#run-btn");
       await tick();
       draft(w, "DO NOT REPLACE");
-      click(w, "#js-sprint-open");
+      click(w, "#mode-path");
       const solution = w.document.querySelector(".micro-solution");
       assert.equal(solution.open, false);
       solution.querySelector("summary").click();
@@ -1572,7 +1574,7 @@ require("node:test")(
         /0\/63/,
       );
       assert.equal(el(w, "code-editor").value, "DO NOT REPLACE");
-      assert.match(el(w, "progress-label").textContent, /1 \/ 3/);
+      assert.match(el(w, "progress-label").textContent, /0 \/ 0/);
     } finally {
       env.dom.window.close();
     }
@@ -1584,6 +1586,7 @@ require("node:test")(
   async () => {
     const env = await boot();
     const w = env.w;
+    click(w, "#track-js");
     const original = w.fetch;
     w.fetch = async (url, opts) =>
       url === "/api/run"
@@ -1597,7 +1600,7 @@ require("node:test")(
           }
         : original(url, opts);
     try {
-      click(w, "#js-sprint-open");
+      click(w, "#mode-path");
       click(w, "#micro-verify");
       await tick();
       assert.match(el(w, "micro-result").textContent, /Aucun échec/);
@@ -1622,8 +1625,9 @@ require("node:test")(
     );
     const env = await boot({}, false, catalogs);
     const w = env.w;
+    click(w, "#track-js");
     try {
-      click(w, "#js-sprint-open");
+      click(w, "#mode-path");
       click(w, '[data-sprint-exercise="factorial"][data-assisted="false"]');
       assert.equal(el(w, "js-sprint-dialog"), null);
       assert.ok(w.document.querySelector(".sprint-autonomous"));
@@ -1635,11 +1639,13 @@ require("node:test")(
         w.localStorage.getItem("z01-js-checkpoint-sprint-v1"),
       );
       assert.equal(oldState.attempts[0].assisted, false);
-      click(w, "#js-sprint-open");
+      click(w, "#mode-path");
       assert.equal(w.document.querySelector(".sprint-autonomous"), null);
-      w.document.querySelector(".sprint-dialog-header button").click();
+      click(w, "#mode-exam");
       click(w, "#mode-true-exam");
-      click(w, "#js-sprint-open");
+      click(w, 'input[name="exam-kind"][value="strict"]');
+      click(w, "#exam-start");
+      click(w, "#mode-path");
       assert.equal(el(w, "js-sprint-dialog"), null);
     } finally {
       env.dom.window.close();
@@ -1661,13 +1667,109 @@ require("node:test")(
     );
     const env = await boot({}, false, catalogs);
     const w = env.w;
+    click(w, "#track-js");
     try {
-      click(w, "#js-sprint-open");
+      click(w, "#mode-path");
       const row = w.document.querySelector(
         '.sprint-exercise[data-exercise="factorial"]',
       );
       assert.match(row.textContent, /Groupe modifié/);
       assert.equal(row.querySelector('[data-assisted="false"]').disabled, true);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "Apprendre is a full page with independent editable paths for all four languages",
+  async () => {
+    const catalogs = Object.fromEntries(
+      ["go", "js", "rust", "java"].map((track) => [
+        track,
+        require(`../catalog-snapshots/${track}.json`).exercises,
+      ]),
+    );
+    const env = await boot({}, false, catalogs);
+    const w = env.w;
+    try {
+      assert.equal(el(w, "js-sprint-open"), null);
+      click(w, "#mode-path");
+      assert.equal(w.document.querySelector("dialog#js-sprint-dialog"), null);
+      assert.equal(el(w, "learn-path-panel").hidden, false);
+      assert.ok(el(w, "app").classList.contains("path-mode"));
+      for (const [track, count, chapters] of [
+        ["go", 18, 6],
+        ["js", 63, 12],
+        ["rust", 18, 6],
+        ["java", 18, 6],
+      ]) {
+        click(w, `#track-${track}`);
+        assert.equal(el(w, "mode-path").checked, true);
+        assert.equal(
+          w.document.querySelectorAll(".micro-chapter").length,
+          chapters,
+        );
+        assert.match(
+          w.document.querySelector(".micro-hero").textContent,
+          new RegExp(`0/${count}`),
+        );
+        const code = el(w, "micro-code");
+        code.value = `DRAFT ${track}`;
+        code.dispatchEvent(new w.Event("input", { bubbles: true }));
+        click(w, "#micro-verify");
+        await tick();
+        assert.equal(env.requests.at(-1).exerciseId, `${track}-learn-return`);
+        assert.equal(env.requests.at(-1).code, `DRAFT ${track}`);
+        assert.equal(el(w, "micro-next").disabled, true);
+        click(w, "#mode-learning");
+        await tick();
+        assert.equal(el(w, "learn-path-panel").hidden, true);
+        assert.equal(el(w, "js-sprint-dialog"), null);
+        click(w, "#mode-path");
+        assert.equal(el(w, "micro-code").value, `DRAFT ${track}`);
+      }
+      click(w, "#track-rust");
+      assert.equal(el(w, "micro-code").value, "DRAFT rust");
+      click(w, "#mode-exam");
+      assert.equal(el(w, "learn-path-panel").hidden, true);
+      assert.equal(el(w, "mode-exam").checked, true);
+      assert.equal(el(w, "js-sprint-dialog"), null);
+      const restored = await boot(env.snapshot(), false, catalogs);
+      try {
+        click(restored.w, "#mode-path");
+        assert.equal(el(restored.w, "micro-code").value, "DRAFT rust");
+      } finally {
+        restored.dom.window.close();
+      }
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "changing learning language rejects a late result from the previous path",
+  async () => {
+    const env = await boot({}, true);
+    const w = env.w;
+    try {
+      click(w, "#mode-path");
+      click(w, "#micro-verify");
+      click(w, "#track-java");
+      env.release();
+      await tick();
+      assert.match(
+        w.document.querySelector(".micro-hero").textContent,
+        /0\/18/,
+      );
+      assert.equal(el(w, "micro-next").disabled, true);
+      assert.equal(
+        JSON.parse(w.localStorage.getItem("z01-go-micro-path-v1")).items[
+          "go-learn-return"
+        ].attempts,
+        0,
+      );
     } finally {
       env.dom.window.close();
     }

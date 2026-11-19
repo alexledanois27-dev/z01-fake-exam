@@ -1,0 +1,827 @@
+{
+  "version": 1,
+  "track": "rust",
+  "title": "Go → Rust, comprendre avant d’assembler",
+  "description": "Possession, emprunts, UTF-8, Option, Result et collections : une notion à la fois, puis les sujets du catalogue.",
+  "audience": "PARCOURS PAS À PAS · PROTOTYPE",
+  "instructions": "Écris les fonctions et types demandés, sans fn main. Les entrées respectent les domaines annoncés. Les résultats de texte sont affichés avec les guillemets du format Debug Rust.",
+  "modules": [
+    {
+      "id": "syntax",
+      "title": "Passer de Go à Rust",
+      "goal": "Lire une signature et produire une valeur.",
+      "go": "func double(n int) int { return n*2 }",
+      "example": "fn double(n: i32) -> i32 {\n    n * 2\n}",
+      "notes": [
+        "fn remplace func ; le type suit le nom du paramètre après :. -> indique le type de retour.",
+        "La dernière expression sans point-virgule est la valeur renvoyée. Ajouter ; la transforme en instruction qui ne fournit plus ce retour.",
+        "let déclare une liaison immuable par défaut ; let mut autorise une réaffectation. En Go, une variable ordinaire est déjà réaffectable.",
+        "Le test appelle ta fonction directement. Écris fn avec le nom et les types donnés, sans fn main."
+      ],
+      "checkpoint": [
+        "rust-checkpoint-negative-spelling",
+        "rust-checkpoint-count-factorial-steps"
+      ],
+      "lessons": [
+        {
+          "id": "rust-learn-return",
+          "title": "Renvoyer une expression",
+          "target": "double_value",
+          "minutes": 8,
+          "task": "Renvoie le double de n (petits i32).",
+          "bridge": "Le return Go devient ici la dernière expression sans ;.",
+          "explanation": [
+            "i32 est un entier signé sur 32 bits.",
+            "n*2 est l’expression résultat.",
+            "Tu peux écrire return n*2; mais le style expression est courant."
+          ],
+          "starter": "fn double_value(n: i32) -> i32 {\n    0\n}",
+          "solution": "fn double_value(n: i32) -> i32 {\n    n*2\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "double_value(4)",
+              "expectedText": "8"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "double_value(-3)",
+              "expectedText": "-6"
+            }
+          ],
+          "hints": [
+            "Remplace 0 par le produit.",
+            "Ne mets pas de ; après l’expression finale."
+          ],
+          "walkthrough": [
+            "Le paramètre porte son type.",
+            "Le produit reste i32 dans le domaine fourni.",
+            "L’expression finale fournit le retour."
+          ]
+        },
+        {
+          "id": "rust-learn-condition",
+          "title": "Utiliser if comme valeur",
+          "target": "absolute",
+          "minutes": 8,
+          "task": "Pour -1000<=n<=1000, renvoie sa valeur absolue.",
+          "bridge": "En Go on renvoie dans chaque branche ; Rust permet un if expression.",
+          "explanation": [
+            "Les branches doivent produire un même type.",
+            "n<0 choisit la branche négative.",
+            "Les parenthèses autour de la condition sont inutiles."
+          ],
+          "starter": "fn absolute(n: i32) -> i32 {\n    0\n}",
+          "solution": "fn absolute(n: i32) -> i32 {\n    if n<0 {\n        -n\n    }\n    else {\n        n\n    }\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "absolute(-5)",
+              "expectedText": "5"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "absolute(0)",
+              "expectedText": "0"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "absolute(7)",
+              "expectedText": "7"
+            }
+          ],
+          "hints": [
+            "Écris if n<0.",
+            "Chaque branche se termine par sa valeur sans ;."
+          ],
+          "walkthrough": [
+            "Le domaine exclut i32::MIN dont l’opposé ne tient pas dans i32.",
+            "Les deux branches donnent i32.",
+            "Le if entier devient la valeur de la fonction."
+          ]
+        },
+        {
+          "id": "rust-learn-accumulate",
+          "title": "Déclarer une accumulation mutable",
+          "target": "sum_to",
+          "minutes": 8,
+          "task": "Pour n<=1000, renvoie la somme de 1 à n inclus.",
+          "bridge": "let mut total correspond à ton accumulateur Go.",
+          "explanation": [
+            "1..=n inclut n ; 1..n l’exclurait.",
+            "total doit être mut car += le modifie.",
+            "Le retour total se place après la boucle."
+          ],
+          "starter": "fn sum_to(n: u32) -> u32 {\n    0\n}",
+          "solution": "fn sum_to(n: u32) -> u32 {\n    let mut total=0;\n    for i in 1..=n {\n        total+=i;\n    }\n    total\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "sum_to(0)",
+              "expectedText": "0"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "sum_to(5)",
+              "expectedText": "15"
+            }
+          ],
+          "hints": [
+            "Déclare let mut total=0.",
+            "Parcours 1..=n puis renvoie total."
+          ],
+          "walkthrough": [
+            "u32 exclut les nombres négatifs.",
+            "L’intervalle est vide lorsque n=0.",
+            "L’accumulateur garde la somme des éléments déjà vus."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ownership",
+      "title": "Possession et emprunts",
+      "goal": "Comprendre pourquoi une valeur reste utilisable ou est déplacée.",
+      "go": "func size(s string) int { return len(s) }",
+      "example": "fn size(s: &str) -> usize { s.len() }",
+      "notes": [
+        "String possède un texte alloué ; &str est une vue empruntée sur du texte UTF-8. Une fonction qui lit seulement peut souvent recevoir &str.",
+        "Passer un String par valeur déplace généralement sa possession ; le nom appelant n’est plus utilisable après ce déplacement.",
+        "Un emprunt partagé &T permet de lire. Un emprunt exclusif &mut T permet de modifier, sans emprunt concurrent incompatible.",
+        "clone fabrique une copie explicite. Ce n’est pas un remplacement systématique des emprunts : choisis selon le contrat."
+      ],
+      "checkpoint": [
+        "rust-checkpoint-own-and-return",
+        "rust-checkpoint-drop-the-blog"
+      ],
+      "lessons": [
+        {
+          "id": "rust-learn-borrow",
+          "title": "Lire sans prendre possession",
+          "target": "byte_length",
+          "minutes": 8,
+          "task": "Renvoie le nombre d’octets du texte emprunté.",
+          "bridge": "Comme len(string) en Go, str.len() mesure les octets.",
+          "explanation": [
+            "&str ne prend pas possession d’un String appelant.",
+            "len() renvoie usize, le type des tailles et indices.",
+            "La lecture n’a pas besoin de mut."
+          ],
+          "starter": "fn byte_length(s: &str) -> usize {\n    0\n}",
+          "solution": "fn byte_length(s: &str) -> usize {\n    s.len()\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "byte_length(\"é\")",
+              "expectedText": "2"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "byte_length(\"\")",
+              "expectedText": "0"
+            }
+          ],
+          "hints": ["Appelle s.len().", "La signature attend déjà un usize."],
+          "walkthrough": [
+            "L’emprunt reste en lecture seule.",
+            "UTF-8 explique les deux octets de é.",
+            "Aucune allocation n’est nécessaire."
+          ]
+        },
+        {
+          "id": "rust-learn-owned",
+          "title": "Construire une valeur possédée",
+          "target": "add_bang",
+          "minutes": 8,
+          "task": "Renvoie un nouveau String contenant s suivi de !.",
+          "bridge": "Un retour String possède le résultat après la fin de l’appel.",
+          "explanation": [
+            "s.to_owned() copie le contenu emprunté.",
+            "push ajoute un char à une String mutable.",
+            "Renvoie out pour déplacer cette nouvelle valeur vers l’appelant."
+          ],
+          "starter": "fn add_bang(s: &str) -> String {\n    String::new()\n}",
+          "solution": "fn add_bang(s: &str) -> String {\n    let mut out=s.to_owned();\n    out.push('!');\n    out\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "add_bang(\"Go\")",
+              "expectedText": "\"Go!\""
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "add_bang(\"\")",
+              "expectedText": "\"!\""
+            }
+          ],
+          "hints": [
+            "Crée let mut out=s.to_owned().",
+            "Ajoute le char avec out.push('!')."
+          ],
+          "walkthrough": [
+            "La copie sépare le résultat de l’entrée.",
+            "mut autorise push.",
+            "L’expression out transfère la possession du résultat."
+          ]
+        },
+        {
+          "id": "rust-learn-clone",
+          "title": "Copier une collection",
+          "target": "with_value",
+          "minutes": 8,
+          "task": "Renvoie un Vec contenant values puis x. Ne modifie pas la slice empruntée.",
+          "bridge": "&[i32] est une vue de collection ; Vec<i32> possède ses éléments.",
+          "explanation": [
+            "to_vec() copie les i32 de la slice.",
+            "push nécessite un Vec mutable.",
+            "La slice d’entrée ne propose pas ici de mutation."
+          ],
+          "starter": "fn with_value(values: &[i32], x: i32) -> Vec<i32> {\n    Vec::new()\n}",
+          "solution": "fn with_value(values: &[i32], x: i32) -> Vec<i32> {\n    let mut out=values.to_vec();\n    out.push(x);\n    out\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "with_value(&[1,2],3)",
+              "expectedText": "[1, 2, 3]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "with_value(&[],4)",
+              "expectedText": "[4]"
+            }
+          ],
+          "hints": [
+            "Convertis values en Vec.",
+            "Ajoute x puis renvoie le Vec."
+          ],
+          "walkthrough": [
+            "Le contrat d’emprunt rend l’intention explicite.",
+            "Les éléments i32 sont copiables.",
+            "L’appelant conserve son entrée."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "strings",
+      "title": "Texte UTF-8 et parcours",
+      "goal": "Parcourir le texte avec les bons éléments.",
+      "go": "for _, r := range s { /* rune */ }",
+      "example": "for ch in s.chars() { /* char */ }",
+      "notes": [
+        "Une str est du UTF-8. Rust refuse s[0] : un indice d’octet ne désigne pas nécessairement un caractère complet.",
+        "chars() produit des valeurs char, des valeurs scalaires Unicode. Comme les runes Go, ce ne sont pas des graphèmes visibles complets.",
+        "split_whitespace() parcourt les mots et ignore les séparateurs blancs multiples.",
+        "collect::<String>() assemble un itérateur de char ; le type peut aussi être inféré grâce au retour de la fonction."
+      ],
+      "checkpoint": [
+        "rust-checkpoint-reverse-it",
+        "rust-checkpoint-counting-words",
+        "rust-checkpoint-modify-letter"
+      ],
+      "lessons": [
+        {
+          "id": "rust-learn-chars",
+          "title": "Compter les caractères scalaires",
+          "target": "char_count",
+          "minutes": 8,
+          "task": "Compte les char de s.",
+          "bridge": "Le range Go se rapproche de chars() en Rust.",
+          "explanation": [
+            "s.len() compte les octets.",
+            "s.chars() fournit un itérateur de char.",
+            "count() consomme cet itérateur et renvoie usize."
+          ],
+          "starter": "fn char_count(s: &str) -> usize {\n    0\n}",
+          "solution": "fn char_count(s: &str) -> usize {\n    s.chars().count()\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "char_count(\"été\")",
+              "expectedText": "3"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "char_count(\"\")",
+              "expectedText": "0"
+            }
+          ],
+          "hints": ["Pars de s.chars().", "Termine par .count()."],
+          "walkthrough": [
+            "Le texte est décodé, pas indexé par octets.",
+            "L’itérateur est consommé une seule fois.",
+            "Aucune copie de String n’est nécessaire."
+          ]
+        },
+        {
+          "id": "rust-learn-reverse",
+          "title": "Inverser les char",
+          "target": "reverse_chars",
+          "minutes": 8,
+          "task": "Renvoie les char de s en ordre inverse.",
+          "bridge": "Go utilise souvent []rune ; Rust peut chaîner des itérateurs.",
+          "explanation": [
+            "chars() donne les unités voulues.",
+            "rev() inverse l’ordre du parcours.",
+            "collect() construit une String depuis ces char."
+          ],
+          "starter": "fn reverse_chars(s: &str) -> String {\n    String::new()\n}",
+          "solution": "fn reverse_chars(s: &str) -> String {\n    s.chars().rev().collect()\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "reverse_chars(\"été!\")",
+              "expectedText": "\"!été\""
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "reverse_chars(\"\")",
+              "expectedText": "\"\""
+            }
+          ],
+          "hints": [
+            "Enchaîne chars().rev().",
+            "Le retour String permet d’inférer collect()."
+          ],
+          "walkthrough": [
+            "Les octets UTF-8 restent cohérents.",
+            "La source n’est pas modifiée.",
+            "Les graphèmes combinés peuvent être séparés : ce n’est pas le contrat ici."
+          ]
+        },
+        {
+          "id": "rust-learn-last-word",
+          "title": "Retourner un emprunt",
+          "target": "last_word",
+          "minutes": 8,
+          "task": "Renvoie le dernier mot de s ou une str vide.",
+          "bridge": "Le résultat peut emprunter directement une partie de l’entrée.",
+          "explanation": [
+            "split_whitespace() fournit des &str.",
+            "last() renvoie Option<&str>.",
+            "unwrap_or(\"\") donne une valeur de secours sans panic."
+          ],
+          "starter": "fn last_word(s: &str) -> &str {\n    \"\"\n}",
+          "solution": "fn last_word(s: &str) -> &str {\n    s.split_whitespace().last().unwrap_or(\"\")\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "last_word(\"  hello Rust  \")",
+              "expectedText": "\"Rust\""
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "last_word(\"  \")",
+              "expectedText": "\"\""
+            }
+          ],
+          "hints": [
+            "Prends last() sur split_whitespace().",
+            "Traite None avec unwrap_or(\"\")."
+          ],
+          "walkthrough": [
+            "Le résultat ne possède pas une nouvelle allocation.",
+            "La durée de vie du retour est liée à l’unique emprunt d’entrée par élision.",
+            "Le secours statique vide reste valide."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "options",
+      "title": "Option et Result",
+      "goal": "Traiter l’absence et les erreurs explicitement.",
+      "go": "value, ok := values[key]",
+      "example": "match value { Some(x) => x, None => 0 }",
+      "notes": [
+        "Option<T> signifie Some(valeur) ou None : il rend l’absence visible dans le type.",
+        "Result<T,E> signifie Ok(valeur) ou Err(erreur), utile pour les conversions qui peuvent échouer.",
+        "match force à considérer les variantes couvertes ; unwrap peut déclencher un panic si la valeur n’existe pas.",
+        "Contrairement au couple valeur, erreur souvent utilisé en Go, le succès et l’échec sont deux variantes d’une même valeur."
+      ],
+      "checkpoint": [
+        "rust-checkpoint-smallest",
+        "rust-checkpoint-get-document-id",
+        "rust-checkpoint-check-user-name"
+      ],
+      "lessons": [
+        {
+          "id": "rust-learn-first",
+          "title": "Lire le premier élément sans panic",
+          "target": "first_or",
+          "minutes": 8,
+          "task": "Renvoie le premier entier ou fallback si values est vide.",
+          "bridge": "get/first remplace l’indexation risquée quand l’élément peut manquer.",
+          "explanation": [
+            "first() renvoie Option<&i32>.",
+            "Some(x) contient une référence à l’entier.",
+            "*x copie l’entier référencé."
+          ],
+          "starter": "fn first_or(values: &[i32], fallback: i32) -> i32 {\n    fallback\n}",
+          "solution": "fn first_or(values: &[i32], fallback: i32) -> i32 {\n    match values.first() {\n        Some(x)=>*x,None=>fallback\n    }\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "first_or(&[8,9],0)",
+              "expectedText": "8"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "first_or(&[],7)",
+              "expectedText": "7"
+            }
+          ],
+          "hints": ["Écris match values.first().", "Some(x) doit donner *x."],
+          "walkthrough": [
+            "La lecture ne panique pas sur le vide.",
+            "Le match traite Some et None.",
+            "i32 est Copy donc le retour ne déplace pas l’entrée."
+          ]
+        },
+        {
+          "id": "rust-learn-parse",
+          "title": "Convertir sans unwrap",
+          "target": "parse_or",
+          "minutes": 8,
+          "task": "Convertis s en i32 ; renvoie fallback si la conversion échoue.",
+          "bridge": "Le strconv.Atoi de Go se rapproche de parse::<i32>().",
+          "explanation": [
+            "parse::<i32>() indique le type visé.",
+            "Le retour est Result<i32,_>.",
+            "unwrap_or(fallback) choisit une valeur en cas d’erreur."
+          ],
+          "starter": "fn parse_or(s: &str, fallback: i32) -> i32 {\n    fallback\n}",
+          "solution": "fn parse_or(s: &str, fallback: i32) -> i32 {\n    s.parse::<i32>().unwrap_or(fallback)\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "parse_or(\"42\",0)",
+              "expectedText": "42"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "parse_or(\"oops\",9)",
+              "expectedText": "9"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "parse_or(\"2147483648\",-1)",
+              "expectedText": "-1"
+            }
+          ],
+          "hints": [
+            "Appelle parse::<i32>().",
+            "Termine par unwrap_or(fallback)."
+          ],
+          "walkthrough": [
+            "Le type i32 impose sa plage.",
+            "Un texte invalide produit Err.",
+            "Le secours évite le panic d’un unwrap."
+          ]
+        },
+        {
+          "id": "rust-learn-minimum",
+          "title": "Réduire un problème avec Option",
+          "target": "smallest",
+          "minutes": 8,
+          "task": "Renvoie Some(minimum) ou None pour une slice vide.",
+          "bridge": "Sans élément initial, zéro n’est pas un minimum universel.",
+          "explanation": [
+            "iter() prête les éléments.",
+            "min() renvoie Option<&i32>.",
+            "copied() transforme cette référence optionnelle en i32 copié."
+          ],
+          "starter": "fn smallest(values: &[i32]) -> Option<i32> {\n    None\n}",
+          "solution": "fn smallest(values: &[i32]) -> Option<i32> {\n    values.iter().min().copied()\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "smallest(&[3,-2,8])",
+              "expectedText": "Some(-2)"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "smallest(&[])",
+              "expectedText": "None"
+            }
+          ],
+          "hints": [
+            "Cherche le minimum sur values.iter().",
+            "Utilise copied() pour obtenir Option<i32>."
+          ],
+          "walkthrough": [
+            "L’absence reste représentée par None.",
+            "Les entiers négatifs fonctionnent sans sentinelle arbitraire.",
+            "Le retour respecte exactement Option<i32>."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "collections",
+      "title": "Vec, filtrage et tables",
+      "goal": "Construire sans modifier la source.",
+      "go": "out := []int{}",
+      "example": "let mut out = Vec::new();",
+      "notes": [
+        "Vec<T> est une collection dynamique possédée ; &[T] permet de la lire sans la prendre.",
+        "iter() fournit des références. copied() copie les éléments Copy ; into_iter() peut consommer la collection possédée.",
+        "filter décide de conserver ou non un élément. map transforme chaque élément ; collect construit la collection finale.",
+        "HashMap sert aux recherches et fréquences, mais ne promet pas l’ordre d’itération."
+      ],
+      "checkpoint": [
+        "rust-checkpoint-partial-sums",
+        "rust-checkpoint-insertion-sort",
+        "rust-checkpoint-counting-words"
+      ],
+      "lessons": [
+        {
+          "id": "rust-learn-filter",
+          "title": "Filtrer avec un itérateur",
+          "target": "positive",
+          "minutes": 8,
+          "task": "Renvoie les entiers strictement positifs en conservant l’ordre.",
+          "bridge": "Le filtre et la collecte remplacent une boucle d’append Go.",
+          "explanation": [
+            "copied() transforme &i32 en i32 dans le flux.",
+            "filter reçoit néanmoins une référence sur l’élément testé.",
+            "collect() construit le Vec de retour."
+          ],
+          "starter": "fn positive(values: &[i32]) -> Vec<i32> {\n    Vec::new()\n}",
+          "solution": "fn positive(values: &[i32]) -> Vec<i32> {\n    values.iter().copied().filter(|n| *n>0).collect()\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "positive(&[-1,0,3,2])",
+              "expectedText": "[3, 2]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "positive(&[])",
+              "expectedText": "[]"
+            }
+          ],
+          "hints": [
+            "Commence par iter().copied().",
+            "Dans filter utilise |n| *n>0."
+          ],
+          "walkthrough": [
+            "L’emprunt de la source reste partagé.",
+            "Le prédicat retourne bool.",
+            "La collecte maintient l’ordre des éléments conservés."
+          ]
+        },
+        {
+          "id": "rust-learn-partial",
+          "title": "Accumuler des sommes partielles",
+          "target": "partial_sums",
+          "minutes": 8,
+          "task": "Renvoie la somme de chaque préfixe. Pour [2,3,4], renvoie [2,5,9]. Petits i32.",
+          "bridge": "Deux états ont des rôles distincts : total et collection résultat.",
+          "explanation": [
+            "total vaut zéro avant le premier élément.",
+            "Pour chaque valeur, additionne puis pousse le nouveau total.",
+            "Un &value dans la boucle copie les i32 empruntés."
+          ],
+          "starter": "fn partial_sums(values: &[i32]) -> Vec<i32> {\n    Vec::new()\n}",
+          "solution": "fn partial_sums(values: &[i32]) -> Vec<i32> {\n    let mut total=0;\n    let mut out=Vec::new();\n    for &value in values {\n        total+=value;\n        out.push(total);\n    }\n    out\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "partial_sums(&[2,3,4])",
+              "expectedText": "[2, 5, 9]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "partial_sums(&[-1,2])",
+              "expectedText": "[-1, 1]"
+            }
+          ],
+          "hints": [
+            "Déclare total et out en mut.",
+            "Pousse total après son addition."
+          ],
+          "walkthrough": [
+            "L’ordre des deux instructions est essentiel.",
+            "La boucle emprunte la slice.",
+            "Le Vec produit est indépendant."
+          ]
+        },
+        {
+          "id": "rust-learn-frequency",
+          "title": "Utiliser une HashMap",
+          "target": "count_word",
+          "minutes": 8,
+          "task": "Compte les mots exactement égaux à wanted, séparés par espaces blancs.",
+          "bridge": "Une table de fréquence correspond à map[string]int en Go.",
+          "explanation": [
+            "Crée une HashMap<&str,usize>.",
+            "entry(word).or_insert(0) donne un compteur mutable initialisé.",
+            "get(wanted).copied().unwrap_or(0) traite l’absence."
+          ],
+          "starter": "fn count_word(s: &str, wanted: &str) -> usize {\n    0\n}",
+          "solution": "fn count_word(s: &str, wanted: &str) -> usize {\n    let mut counts=std::collections::HashMap::new();\n    for word in s.split_whitespace() {\n        *counts.entry(word).or_insert(0usize)+=1;\n    }\n    counts.get(wanted).copied().unwrap_or(0)\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "count_word(\"go rust go\",\"go\")",
+              "expectedText": "2"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "count_word(\"rust\",\"Go\")",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "L’incrément nécessite * devant la référence du compteur.",
+            "Les clés distinguent majuscules et minuscules."
+          ],
+          "walkthrough": [
+            "Les clés empruntent le texte qui vit pendant l’appel.",
+            "entry gère création et recherche.",
+            "Un mot absent compte zéro."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "algorithms",
+      "title": "Assembler pour les sujets",
+      "goal": "Relier syntaxe, erreurs et algorithmes.",
+      "go": "for d := 2; d <= n/d; d++ {}",
+      "example": "let mut d = 2;\nwhile d <= n / d { d += 1; }",
+      "notes": [
+        "Commence par traduire le contrat du vrai sujet, pas par copier une solution voisine.",
+        "Les entiers ont une largeur explicite ; les tests pédagogiques bornent les valeurs pour éviter les débordements.",
+        "Un enum représente un choix nommé de variantes ; match permet de traduire une règle par variante.",
+        "Les sujets de structures, traits et durées de vie plus avancés nécessitent ensuite leurs fiches dédiées : ce premier parcours pose les prérequis."
+      ],
+      "checkpoint": [
+        "rust-checkpoint-prime-checker",
+        "rust-checkpoint-lucas-number",
+        "rust-checkpoint-dress-code"
+      ],
+      "lessons": [
+        {
+          "id": "rust-learn-prime",
+          "title": "Chercher un diviseur",
+          "target": "is_prime",
+          "minutes": 8,
+          "task": "Renvoie si n est premier pour n<=10000.",
+          "bridge": "La démarche est identique en Go ; la syntaxe de boucle change.",
+          "explanation": [
+            "n<2 n’est pas premier.",
+            "d doit être mutable pour avancer.",
+            "d<=n/d évite de multiplier d par lui-même."
+          ],
+          "starter": "fn is_prime(n: u32) -> bool {\n    false\n}",
+          "solution": "fn is_prime(n: u32) -> bool {\n    if n<2 {\n        return false;\n    }\n    let mut d=2;\n    while d<=n/d {\n        if n%d==0 {\n            return false;\n        }\n        d+=1;\n    }\n    true\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "is_prime(1)",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "is_prime(49)",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "is_prime(97)",
+              "expectedText": "true"
+            }
+          ],
+          "hints": [
+            "Protège les petits nombres.",
+            "Incrémente d après le test."
+          ],
+          "walkthrough": [
+            "Le modulo repère un facteur.",
+            "Le retour anticipé arrête la recherche.",
+            "L’absence de facteur conduit à true."
+          ]
+        },
+        {
+          "id": "rust-learn-sequence",
+          "title": "Faire avancer deux états",
+          "target": "fib",
+          "minutes": 8,
+          "task": "Pour n<=20, calcule F0=0, F1=1, Fn=Fn-1+Fn-2.",
+          "bridge": "Comme l’affectation multiple Go, le tuple évite d’écraser un ancien état.",
+          "explanation": [
+            "a et b représentent deux termes successifs.",
+            "Chaque tour transforme (a,b) en (b,a+b).",
+            "Après n tours, a est Fn."
+          ],
+          "starter": "fn fib(n: u32) -> u32 {\n    0\n}",
+          "solution": "fn fib(n: u32) -> u32 {\n    let(mut a,mut b)=(0,1);\n    for _ in 0..n {\n        (a,b)=(b,a+b);\n    }\n    a\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "fib(0)",
+              "expectedText": "0"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "fib(1)",
+              "expectedText": "1"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "fib(10)",
+              "expectedText": "55"
+            }
+          ],
+          "hints": [
+            "Initialise (0,1).",
+            "Effectue exactement n mises à jour simultanées."
+          ],
+          "walkthrough": [
+            "Le domaine borne la taille du résultat.",
+            "Le tuple est calculé avant les affectations.",
+            "La valeur a évite un décalage d’un terme."
+          ]
+        },
+        {
+          "id": "rust-learn-enum",
+          "title": "Distinguer des variantes",
+          "target": "label",
+          "minutes": 8,
+          "task": "Déclare enum Access { Read, Write }. Renvoie \"read\" ou \"write\" selon la variante reçue.",
+          "bridge": "Un enum Rust est plus expressif qu’un entier servant de code.",
+          "explanation": [
+            "Déclare le type avant la fonction.",
+            "match access couvre les deux variantes.",
+            "&'static str désigne ici les littéraux de texte conservés pour toute l’exécution."
+          ],
+          "starter": "enum Access { Read, Write }\nfn label(access: Access) -> &'static str {\n    \"\"\n}",
+          "solution": "enum Access {\n    Read, Write\n}\nfn label(access: Access) -> &'static str {\n    match access {\n        Access::Read=>\"read\",Access::Write=>\"write\"\n    }\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "label(Access::Read)",
+              "expectedText": "\"read\""
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "label(Access::Write)",
+              "expectedText": "\"write\""
+            }
+          ],
+          "hints": [
+            "Écris une branche par variante.",
+            "Les littéraux \"read\" et \"write\" conviennent au retour."
+          ],
+          "walkthrough": [
+            "Les variantes sont préfixées par le type.",
+            "Le compilateur vérifie l’exhaustivité.",
+            "Ce principe prépare les règles par cas des vrais sujets."
+          ]
+        }
+      ]
+    }
+  ]
+}

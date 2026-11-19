@@ -1,5 +1,26 @@
-const microStore = JSMicroProgress.create({ plan: jsMicroPath });
-const microLessons = jsMicroPath.modules.flatMap((module) => module.lessons);
+const microStores = Object.fromEntries(
+  Object.entries(microPaths).map(([track, plan]) => [
+    track,
+    JSMicroProgress.create({ plan, key: `z01-${track}-micro-path-v1` }),
+  ]),
+);
+let microPlan = microPaths.js;
+let microStore = microStores.js;
+let microLessons = microPlan.modules.flatMap((module) => module.lessons);
+function activateMicroTrack() {
+  microEpoch++;
+  destroyMicroEditor();
+  microPlan = microPaths[currentTrack];
+  microStore = microStores[currentTrack];
+  microLessons = microPlan.modules.flatMap((module) => module.lessons);
+  microFeedback = null;
+}
+function microLanguage() {
+  return { go: "Go", js: "JavaScript", rust: "Rust", java: "Java" }[
+    currentTrack
+  ];
+}
+
 let microEditor = null;
 let microRunning = false;
 let microEpoch = 0;
@@ -73,7 +94,7 @@ function refreshMicroActions() {
       `${summary.independent} sans indice ni corrigé`;
     card.querySelector("progress").value = summary.completed;
   }
-  for (const [index, module] of jsMicroPath.modules.entries()) {
+  for (const [index, module] of microPlan.modules.entries()) {
     const label = document.querySelector(
       `[data-micro-chapter="${module.id}"] .micro-kicker`,
     );
@@ -130,7 +151,7 @@ async function verifyMicroCode() {
       if (response.status === 202 && data.status === "preparing") {
         if (epoch === microEpoch && status?.isConnected)
           status.textContent = String(
-            data.output || "Préparation du moteur JavaScript…",
+            data.output || "Préparation du moteur " + microLanguage() + "…",
           );
         await new Promise((resolve) => setTimeout(resolve, 5000));
         continue;
@@ -190,9 +211,11 @@ function renderMicroFeedback() {
   for (const [testIndex, check] of feedback.checks.entries()) {
     const row = sprintNode("section", undefined, "micro-check");
     const test = microCurrent().tests[testIndex];
-    const call = test
-      ? `${microCurrent().target}(${test.args.map(microDisplayValue).join(", ")})${(test.calls || []).map((args) => `(${args.map(microDisplayValue).join(", ")})`).join("")}`
-      : "";
+    const call =
+      test?.invoke ||
+      (test
+        ? `${microCurrent().target}(${test.args.map(microDisplayValue).join(", ")})${(test.calls || []).map((args) => `(${args.map(microDisplayValue).join(", ")})`).join("")}`
+        : "");
     row.append(
       sprintNode(
         "strong",
@@ -216,7 +239,7 @@ function renderMicroPath() {
   const body = dialog.querySelector(".sprint-body");
   body.replaceChildren();
   const lesson = microCurrent();
-  const chapter = jsMicroPath.modules.find((module) =>
+  const chapter = microPlan.modules.find((module) =>
     module.lessons.some((row) => row.id === lesson.id),
   );
   const index = microLessons.indexOf(lesson);
@@ -224,11 +247,16 @@ function renderMicroPath() {
   const hero = sprintNode("section", undefined, "micro-hero");
   const intro = sprintNode("div");
   intro.append(
-    sprintNode("p", "POUR LES DÉVELOPPEURS GO · PROTOTYPE", "micro-kicker"),
-    sprintNode("h2", "Go → JavaScript, une brique à la fois."),
     sprintNode(
       "p",
-      "Pas besoin de réapprendre à programmer : on explicite les différences de langage, puis on assemble les briques nécessaires aux niveaux 1 à 4 du checkpoint.",
+      microPlan.audience || "POUR LES DÉVELOPPEURS GO · PROTOTYPE",
+      "micro-kicker",
+    ),
+    sprintNode("h2", microPlan.title),
+    sprintNode(
+      "p",
+      microPlan.description ||
+        "On explicite les différences avec Go, puis on assemble les briques nécessaires aux niveaux 1 à 4 du checkpoint JavaScript.",
     ),
   );
   const stats = sprintNode("div", undefined, "micro-progress-card");
@@ -246,7 +274,7 @@ function renderMicroPath() {
   body.append(hero);
   const grid = sprintNode("div", undefined, "micro-grid");
   const nav = sprintNode("nav", undefined, "micro-navigation");
-  nav.setAttribute("aria-label", "Chapitres Go vers JavaScript");
+  nav.setAttribute("aria-label", "Chapitres " + microLanguage());
   nav.append(
     sprintButton(
       "Reprendre ma prochaine étape →",
@@ -254,7 +282,7 @@ function renderMicroPath() {
       "button button-primary",
     ),
   );
-  for (const [moduleIndex, module] of jsMicroPath.modules.entries()) {
+  for (const [moduleIndex, module] of microPlan.modules.entries()) {
     const done = module.lessons.filter(
       (l) => microStore.state(l.id).completed,
     ).length;
@@ -316,8 +344,14 @@ function renderMicroPath() {
   );
   const compare = sprintNode("div", undefined, "micro-language-pair");
   compare.append(
-    microCodeBlock(chapter.go, "TON REPÈRE GO"),
-    microCodeBlock(chapter.js, "L’ÉQUIVALENT / LA DIFFÉRENCE JS"),
+    microCodeBlock(
+      chapter.go,
+      currentTrack === "go" ? "LE REPÈRE" : "TON REPÈRE GO",
+    ),
+    microCodeBlock(
+      chapter.js || chapter.example,
+      "À ÉCRIRE EN " + microLanguage(),
+    ),
   );
   introduction.append(compare);
   for (const note of chapter.notes) introduction.append(sprintNode("p", note));
@@ -336,7 +370,8 @@ function renderMicroPath() {
     sprintNode("p", lesson.task),
     sprintNode(
       "p",
-      "Garde le nom de la fonction. N’ajoute ni package, ni main, ni export. Dans ces exercices, les arguments reçus doivent rester intacts.",
+      microPlan.instructions ||
+        "Garde le nom de la fonction. N’ajoute ni package, ni main, ni export. Dans ces exercices, les arguments reçus doivent rester intacts.",
       "sprint-caption",
     ),
   );
@@ -354,7 +389,7 @@ function renderMicroPath() {
     examples.append(
       sprintNode(
         "p",
-        `${i + 1}. ${lesson.target}(${test.args.map(microDisplayValue).join(", ")})${calls} → ${microDisplayValue(test.expected)}`,
+        `${i + 1}. ${test.invoke || `${lesson.target}(${test.args.map(microDisplayValue).join(", ")})${calls}`} → ${test.expectedText ?? microDisplayValue(test.expected)}`,
       ),
     );
   }
@@ -372,7 +407,7 @@ function renderMicroPath() {
   const textarea = document.createElement("textarea");
   textarea.id = "micro-code";
   textarea.spellcheck = false;
-  textarea.setAttribute("aria-label", "Ton code JavaScript");
+  textarea.setAttribute("aria-label", "Ton code " + microLanguage());
   textarea.value = state.draft;
   textarea.rows = 8;
   const onChange = (code) => {
@@ -485,17 +520,19 @@ function renderMicroPath() {
       "Ces petits tests ne remplacent pas les sujets complets. Assemble les notions dans ces exercices du catalogue, puis refais-les sans aide.",
     ),
   );
-  for (const id of chapter.checkpoint) bridge.append(sprintExerciseRow(id));
-  if (chapter === jsMicroPath.modules.at(-1))
+  for (const id of chapter.checkpoint)
+    bridge.append(
+      currentTrack === "js" ? sprintExerciseRow(id) : microCatalogRow(id),
+    );
+  if (chapter === microPlan.modules.at(-1))
     bridge.append(
       sprintButton(
-        "Ouvrir les examens JavaScript",
+        "Ouvrir les examens " + microLanguage(),
         () => {
           if (microRunning || submissionRunning || examFocusLocked()) return;
           closeSprintDashboard();
           sprintActive = null;
           setAppMode("exam");
-          setTrackMode("js");
           setAppMode("true-exam");
         },
         "button button-primary",
@@ -532,39 +569,40 @@ function renderMicroPath() {
       parent: editorHost,
       onChange,
       onRun: verifyMicroCode,
-      ariaLabel: "Ton code JavaScript",
+      ariaLabel: "Ton code " + microLanguage(),
     });
-    microEditor.setDocument(state.draft, "micro:" + lesson.id, "js");
+    microEditor.setDocument(state.draft, "micro:" + lesson.id, currentTrack);
     textarea.hidden = true;
   } else editorHost.hidden = true;
   if (microFeedback?.id === lesson.id) renderMicroFeedback();
   refreshMicroActions();
 }
+function microCatalogRow(id) {
+  const row = sprintNode("article", undefined, "sprint-exercise");
+  const target = getTrackExercises().find((ex) => exId(ex) === id);
+  const button = sprintButton("Ouvrir en entraînement", () => {
+    if (microRunning || submissionRunning || examFocusLocked()) return;
+    setAppMode("exam");
+    currentLevelFilter = "all";
+    exerciseQuery = "";
+    searchEl.value = "";
+    renderLevelFilters();
+    renderChips();
+    selectExercise(id);
+  });
+  button.disabled = !target || microRunning;
+  row.append(sprintNode("strong", target ? exTitle(target) : id), button);
+  return row;
+}
 function openMicroPath() {
-  if (trueExamMode || examFocusLocked()) return;
+  if (!pathMode || trueExamMode || examFocusLocked()) return;
   closeRevisionLesson();
   closeLearningJournal();
   closeSprintDashboard();
-  const dialog = sprintNode("dialog", undefined, "sprint-dialog micro-dialog");
-  dialog.id = "js-sprint-dialog";
-  dialog.setAttribute("aria-labelledby", "sprint-title");
-  const header = sprintNode("header", undefined, "sprint-dialog-header");
-  const title = sprintNode("strong", "Go → JavaScript · pas à pas");
-  title.id = "sprint-title";
-  const close = sprintButton("Fermer ✕", () => {
-    microEpoch++;
-    closeSprintDashboard();
-  });
-  header.append(title, close);
-  dialog.append(header, sprintNode("div", undefined, "sprint-body"));
-  document.body.append(dialog);
-  dialog.addEventListener("close", () => {
-    microEpoch++;
-    destroyMicroEditor();
-    dialog.remove();
-  });
+  const panel = document.getElementById("learn-path-panel");
+  const view = sprintNode("div", undefined, "micro-page");
+  view.id = "js-sprint-dialog";
+  view.append(sprintNode("div", undefined, "sprint-body"));
+  panel.replaceChildren(view);
   renderMicroPath();
-  if (typeof dialog.showModal === "function") dialog.showModal();
-  else dialog.setAttribute("open", "");
-  close.focus();
 }

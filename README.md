@@ -53,6 +53,7 @@ de préparation apparaît comme **Correction indisponible**.
 | Entraînement | Choix du langage, niveau et exercice ; aides progressives ; réussites conservées ; pas de chronomètre. |
 | Examen libre | Série future masquée, sans timer ; possibilité de passer un exercice. |
 | Examen réel | 3 heures, aucun saut, passage automatique après réussite ; bilan au rendu ou à l’expiration. |
+| Apprendre | Parcours progressif en pleine page, petits exercices et corrigés par langage. |
 | Fiches | Révisions Markdown, avec espace de lecture élargi. |
 
 En examen réel, les onglets internes sont masqués et verrouillés jusqu’au rendu.
@@ -75,16 +76,22 @@ Ces références complètent les aides progressives et sont masquées en examen.
 Les nouvelles fiches contiennent syntaxe, exemples autonomes, pièges et checklist,
 sans solution complète du sujet. Voir [le guide des fiches](learning-content/README.md).
 
-### Prototype : apprendre JavaScript en venant de Go
+### Apprendre pas à pas
 
-**Parcours JS ↗** explique les différences Go → JavaScript à travers **63 petits
-exercices en 12 chapitres**. Chaque étape comporte explication, comparaison,
-fonction à compléter, tests dans Docker, indices et corrigé commenté. Les
-brouillons se reprennent automatiquement. Les résultats attendus et obtenus
-s’affichent avant de passer à la suite ; les mutations d’entrée sont contrôlées.
-Des ponts relient ensuite les briques aux 19 sujets de référence N1 à N4.
-Le suivi reste distinct des scores d’entraînement et d’examen. Ce prototype
-ne garantit pas une note au vrai checkpoint ; [guide du parcours](docs/prototype-parcours-js.md).
+L’onglet **Apprendre**, à côté d’Entraînement, Examen et Fiches, affiche une vraie
+page de cours pour le langage sélectionné : **63 exercices JavaScript** et
+**18 exercices dans chacun des parcours Go, Rust et Java** (117 au total).
+Le parcours Go consolide les acquis ; Rust et Java expliquent les différences
+avec Go : possession et emprunts, types, méthodes, classes et collections.
+Chaque petite étape comporte explications, squelette modifiable, tests publics
+exécutés dans Docker, indices et corrigé commenté. Les brouillons et la progression
+sont séparés par langage, avec conservation de la progression JS précédente.
+Les ponts renvoient ensuite aux vrais sujets du catalogue.
+
+Ces parcours locaux sont pédagogiques, distincts des énoncés officiels et des scores
+d’examen. Le premier contenu Go/Rust/Java pose les prérequis ; il ne couvre pas
+encore tous les sujets avancés. Aucun parcours ne garantit une note ou un délai.
+Voir [le guide des parcours](docs/parcours-apprendre.md).
 
 ### Historique et bilan d’apprentissage
 

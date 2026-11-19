@@ -10,7 +10,13 @@ function slugify(str) {
 
 function updateModeLabel() {
   if (!modeInputs.length) return;
-  const mode = learningMode ? "learning" : trueExamMode ? "true-exam" : "exam";
+  const mode = pathMode
+    ? "path"
+    : learningMode
+      ? "learning"
+      : trueExamMode
+        ? "true-exam"
+        : "exam";
   const previousMode = appEl.dataset.motionMode;
   if (previousMode && previousMode !== mode) {
     revealPanel(
@@ -20,9 +26,10 @@ function updateModeLabel() {
     );
   }
   appEl.dataset.motionMode = mode;
-  document.querySelector(".catalog-panel").inert = learningMode;
+  document.querySelector(".catalog-panel").inert = learningMode || pathMode;
   document.querySelector(".breadcrumb").firstChild.textContent =
     {
+      path: "Mon parcours",
       learning: "Mes fiches",
       "true-exam": "Ma session d’examen",
       exam: "Mon entraînement",
@@ -124,7 +131,10 @@ function updateTrackDependentUi() {
     renderTrainingGuide(null);
   }
 
-  if (trueExamMode) {
+  if (pathMode) {
+    activateMicroTrack();
+    openMicroPath();
+  } else if (trueExamMode) {
     startTrueExamSeries();
   } else if (!learningMode) {
     renderLevelFilters();
@@ -199,6 +209,7 @@ function setTrackMode(mode) {
   if (
     !trueExamMode &&
     !learningMode &&
+    !pathMode &&
     saved &&
     getTrackExercises().some((ex) => exId(ex) === saved.selected)
   ) {
@@ -214,6 +225,30 @@ function setAppMode(mode) {
     return;
   }
   const normalized = (mode || "exam").toString().toLowerCase();
+  if (pathMode) {
+    microEpoch++;
+    closeSprintDashboard();
+  }
+  pathMode = false;
+  appEl.classList.remove("path-mode");
+  document.getElementById("learn-path-panel").hidden = true;
+  if (normalized === "path") {
+    if (trueExamMode) setTrueExamMode(false);
+    if (learningMode) setLearningMode(false);
+    pathMode = true;
+    sprintActive = null;
+    appEl.classList.remove("sprint-autonomous");
+    document.getElementById("sprint-exercise-banner")?.remove();
+    appEl.classList.add("path-mode");
+    document.getElementById("learn-path-panel").hidden = false;
+    examTitleEl.textContent = "Apprendre pas à pas";
+    document.getElementById("exercise-level").textContent = "";
+    updateModeLabel();
+    activateMicroTrack();
+    openMicroPath();
+    savePersonalSession();
+    return;
+  }
   if (normalized === "learning") {
     setTrueExamMode(false);
     setLearningMode(true);
