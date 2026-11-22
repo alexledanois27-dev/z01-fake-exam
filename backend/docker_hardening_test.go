@@ -114,3 +114,15 @@ func TestRunnerRejectsCataloguePathTraversal(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestNativeWorkspaceMountDriveAndMode(t *testing.T) {
+	source, target, err := splitWorkspaceMount(filepath.Join(t.TempDir(), "with spaces") + ":/workspace:rw")
+	if err != nil || source == "" || target != "/workspace" {
+		t.Fatal(source, target, err)
+	}
+	for _, bad := range []string{"relative:/workspace:rw", "/tmp/a:/workspace:ro", "/tmp/a,other:/workspace:rw", "/tmp/a\nother:/workspace:rw"} {
+		if _, _, err := splitWorkspaceMount(bad); err == nil {
+			t.Fatal("unsafe mount accepted", bad)
+		}
+	}
+}

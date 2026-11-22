@@ -46,26 +46,28 @@ lance le code quand elle est disponible. Ce téléchargement possède son propre
 délai de dix minutes et ne compte pas comme un échec de l’exercice. Un problème
 de préparation apparaît comme **Correction indisponible**.
 
-### Lancer depuis les applications Ubuntu
+### Lancer sans Make sur Linux, Windows ou macOS
 
-Un raccourci **Z01 Fake Exam** peut ouvrir le site sans saisir `make`. Une seule
-installation depuis le dossier du projet :
+Python 3, Go et Docker doivent être installés. Docker Desktop doit utiliser des
+conteneurs Linux sur Windows/macOS. Les fichiers suivants se lancent depuis le
+dossier complet du projet :
 
-```sh
-python3 scripts/install-launcher.py
-```
+| Système | Démarrage |
+| --- | --- |
+| Ubuntu/Linux | Raccourci **Z01 Fake Exam** dans les applications après `python3 scripts/install-launcher.py`. |
+| Windows | Double-cliquer **Lancer Z01 Fake Exam.cmd**. |
+| macOS | Double-cliquer **Lancer Z01 Fake Exam.command**. |
 
-Ensuite, chercher **Z01 Fake Exam** dans les applications Ubuntu et l’épingler
-aux favoris. Le lanceur démarre le même serveur Go, attend qu’il soit prêt puis
-ouvre le navigateur sur `http://127.0.0.1:8092`. Le terminal reste ouvert pour les
-messages ; `Ctrl+C` ou sa fermeture arrête l’instance lancée. Si le site est déjà
-ouvert, il ouvre simplement le navigateur. Un port occupé par un autre service
-est signalé sans arrêter ce service ni changer automatiquement de port.
+L’installateur crée aussi un raccourci sur le Bureau Windows/macOS :
+`py -3 scripts/install-launcher.py` sur Windows, ou
+`python3 scripts/install-launcher.py` sur macOS. `--destination` permet de choisir
+un autre dossier de raccourcis sur ces deux systèmes.
 
-Le lanceur nécessite Python 3, Go et `xdg-open` ; Docker reste nécessaire pour
-corriger. Il ne déploie rien, ne démarre pas Docker avec sudo et ne s’installe
-pas au démarrage de la session. Après déplacement du dossier, réinstaller le
-raccourci. Voir [le guide du lanceur](docs/lanceur-local.md).
+Le lanceur attend que le serveur soit prêt puis ouvre `http://127.0.0.1:8092`.
+Garder le terminal ouvert ; utiliser `Ctrl+C` pour arrêter l’instance créée.
+Une instance déjà ouverte est réutilisée. Un autre service sur le port est signalé
+sans être arrêté. Le lanceur ne fait ni installation de dépendances, ni autostart,
+ni déploiement. Voir [les détails et limites de validation](docs/lanceur-local.md).
 
 ## Parcours disponibles
 
@@ -82,8 +84,10 @@ Le plein écran est demandé ; une sortie de plein écran ou un changement d’o
 impose un écran de reprise, sans arrêter le temps. Le navigateur conserve ses
 commandes système : cela ne constitue pas une protection anti-triche.
 
-Les niveaux JavaScript correspondent aux groupes d’examen de l’API (N1 à N7),
-également conservés dans les copies locales.
+Les niveaux JS (N1 à N7) et Rust (N1 à N10) viennent de `attrs.group` dans l’API.
+Java possède trois checkpoints distincts, chacun avec N1 à N5. Choisir son
+checkpoint en entraînement ou avant une nouvelle session ; une session Java
+ne mélange plus leurs groupes. Ces métadonnées sont aussi conservées hors ligne.
 
 ### Réviser pendant l’entraînement
 
@@ -108,8 +112,8 @@ restent présentes pour les trois autres langages.
 Chaque petite étape comporte explications, squelette modifiable, tests publics
 exécutés dans Docker, indices et corrigé commenté. Les brouillons et la progression
 sont séparés par langage, avec reprise des étapes JS conservées et sauvegarde intacte de l’ancien parcours.
-Les ponts renvoient ensuite aux 175 sujets du catalogue. Les niveaux JS N1 à N7
-sont représentés ; les autres copies locales ne fournissent pas de niveau officiel.
+Les ponts renvoient ensuite aux 175 sujets du catalogue, avec leurs groupes
+officiels JS/Rust/Java. Les groupes Java restent associés à leur checkpoint.
 
 Ces parcours locaux sont pédagogiques, distincts des énoncés officiels et des scores
 d’examen. Ces 30 étapes préparent des notions communes ; elles ne remplacent pas la pratique

@@ -73,5 +73,63 @@ class LauncherTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             installer.desktop_quote('/tmp/bad\npath')
 
+
+class PortableLauncherTests(unittest.TestCase):
+    def test_browser_dispatch_for_mac_and_windows(self):
+        with patch.dict(os.environ, {'Z01_NO_BROWSER': '0'}):
+            with patch.object(launcher.sys, 'platform', 'darwin'), patch.object(launcher.subprocess, 'Popen') as spawn:
+                launcher.open_site('http://127.0.0.1:8092')
+                self.assertEqual(spawn.call_args.args[0], ['open', 'http://127.0.0.1:8092'])
+            with patch.object(launcher.sys, 'platform', 'win32'), patch.object(launcher.webbrowser, 'open', return_value=True) as browser:
+                launcher.open_site('http://127.0.0.1:8092')
+                browser.assert_called_once_with('http://127.0.0.1:8092', new=2)
+
+    def test_windows_group_and_break_event(self):
+        with patch.object(launcher.sys, 'platform', 'win32'), patch.object(launcher.subprocess, 'CREATE_NEW_PROCESS_GROUP', 512, create=True), patch.object(launcher.signal, 'CTRL_BREAK_EVENT', 1, create=True):
+            self.assertEqual(launcher.process_options(), {'creationflags': 512})
+            process = MagicMock(pid=7123)
+            process.poll.return_value = None
+            launcher.stop_process(process)
+            process.send_signal.assert_called_once_with(1)
+            process.wait.assert_called_once_with(timeout=3)
+
+    def test_windows_forced_cleanup_is_only_owned_tree(self):
+        with patch.object(launcher.sys, 'platform', 'win32'), patch.object(launcher.signal, 'CTRL_BREAK_EVENT', 1, create=True), patch.object(launcher.subprocess, 'run') as run:
+            process = MagicMock(pid=7123)
+            process.poll.return_value = None
+            process.wait.side_effect = [subprocess.TimeoutExpired('go', 3), 0]
+            launcher.stop_process(process)
+            self.assertEqual(run.call_args.args[0], ['taskkill', '/PID', '7123', '/T', '/F'])
+            self.assertNotIn('/IM', run.call_args.args[0])
+
+    def test_mac_and_windows_shortcuts_use_quoted_python_and_script(self):
+        for platform, suffix in [('darwin', '.command'), ('win32', '.cmd')]:
+            with self.subTest(platform=platform), tempfile.TemporaryDirectory(prefix='z01 shortcut ') as directory, patch.object(installer.sys, 'platform', platform):
+                target = installer.main(directory)
+                content = target.read_text()
+                self.assertEqual(target.suffix, suffix)
+                self.assertIn(str(installer.ROOT / 'scripts/launch.py'), content)
+                self.assertIn(installer.sys.executable, content)
+                self.assertNotIn('sudo', content)
+                if platform == 'darwin':
+                    self.assertEqual(target.stat().st_mode & 0o777, 0o755)
+                    subprocess.run(['bash', '-n', str(target)], check=True)
+                else:
+                    self.assertIn('if errorlevel 1 pause', content)
+
+    def test_windows_paths_escape_percent_and_reject_line_breaks(self):
+        self.assertEqual(installer.batch_quote('C:\\A B\\100%\\python.exe'), '"C:\\A B\\100%%\\python.exe"')
+        for bad in ['bad\npath', 'bad"path', 'bad\rpath']:
+            with self.assertRaises(ValueError):
+                installer.batch_quote(bad)
+
+    def test_finished_process_is_never_killed(self):
+        process = MagicMock()
+        process.poll.return_value = 0
+        with patch.object(launcher.os, 'killpg') as kill, patch.object(launcher.subprocess, 'run') as run:
+            launcher.stop_process(process)
+            kill.assert_not_called()
+            run.assert_not_called()
+
 if __name__ == '__main__':
     unittest.main()

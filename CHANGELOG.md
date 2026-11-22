@@ -1,5 +1,14 @@
 # Historique fonctionnel
 
+## 22 novembre 2026 — groupes officiels et lanceurs multiplateformes
+
+- Rust N1–N10 et Java N1–N5 depuis attrs.group ; suppression du classement par indice.
+- Checkpoint Java conservé dans le catalogue, le filtre et les nouvelles sessions.
+- Anciennes réussites et sessions Java historiques conservées.
+- Copies locales et références Apprendre actualisées avec les groupes officiels.
+- Lanceurs Windows .cmd et macOS .command, avec installateur de raccourci adapté.
+- Gestion du navigateur et de l’arrêt par système ; montages Docker compatibles avec les chemins de lecteur Windows.
+
 ## 22 novembre 2026 — lanceur Ubuntu et progression avancée
 
 - Raccourci utilisateur Z01 Fake Exam : démarrage, attente, navigateur et arrêt propre.

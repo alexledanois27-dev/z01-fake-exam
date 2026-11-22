@@ -4,8 +4,8 @@
 
 Garder les parcours utilisateur et les contrats HTTP stables. Une nouvelle
 session d’examen ne réutilise jamais le code d’entraînement. Une exécution du
-programme d’exemple ne valide jamais un exercice. Une nouvelle série prend un exercice par niveau disponible, dans l’ordre N1 à N10
-(N1 à N7 pour le catalogue JavaScript actuel), indépendamment du filtre ou de
+programme d’exemple ne valide jamais un exercice. Une nouvelle série prend un exercice par groupe disponible, dans l’ordre N1 à N10
+(JS N1 à N7, Rust N1 à N10, Java N1 à N5 dans le checkpoint sélectionné), indépendamment du filtre ou de
 l’exercice d’entraînement. Une session reprise conserve sa série et sa position.
 Les exercices à venir restent
 masqués en examen. Les données du navigateur restent locales.
@@ -401,13 +401,34 @@ résultat. Les 120 corrections disposent d’un test d’intégration Docker exp
 Les associations couvrent tous les sujets des snapshots ; elles préparent des
 notions communes et ne prouvent pas une couverture exhaustive de chaque contrat.
 
-## Lanceur local Ubuntu
+## Groupes officiels et checkpoints Java
 
-`scripts/install-launcher.py` écrit uniquement un raccourci utilisateur dans
-`$XDG_DATA_HOME/applications` (ou `~/.local/share/applications`). Le champ Exec
-contient le chemin de Python et du script, sans commande shell interpolée.
-`scripts/launch.py` démarre `go -C backend run ./cmd/dev`, avec écoute loopback,
-attente de `/api/version`, ouverture de navigateur et nettoyage de son groupe de
-processus. Le champ `application: z01-fake-exam` identifie une instance réutilisable.
-Aucun processus d’un port occupé n’est arrêté. Tests : `tests/test_launcher.py`,
-inclus dans `make check`. Voir [le guide](lanceur-local.md).
+`Exercise.Level` reprend `attrs.group` pour JS/Rust/Java. `Exercise.Checkpoint`
+conserve le parent Rust/Java. Ne pas utiliser `attrs.level` (niveau de cursus),
+ni générer un groupe depuis l’indice de tableau. Une absence reste non classée.
+Les snapshots conservent le groupe et le checkpoint ; `levelsUpdatedAt` date
+une actualisation de métadonnées sans prétendre avoir retéléchargé les énoncés.
+
+Les choix Java d’entraînement et d’examen sont distincts dans la session
+personnelle. Les nouvelles sessions sont stockées sous `[java, type, checkpoint]`,
+avec les mêmes IDs de sujets et un groupe par rang. Les résultats d’entraînement
+restent sous leurs anciennes clés. Les sessions historiques `[java, type]` ne sont
+pas supprimées : le bouton de reprise historique préserve leur série, leurs
+brouillons et leur échéance. Aucune nouvelle session ne réutilise ce mélange.
+
+## Lanceur local multiplateforme
+
+`scripts/install-launcher.py` crée un `.desktop` Linux, un `.cmd` Windows ou
+un `.command` macOS. Les lanceurs racine permettent aussi le double-clic sans
+installer un raccourci. Les chemins sont cités selon le format cible, sans
+interpolation de texte utilisateur dans une commande shell.
+
+`scripts/launch.py` choisit le navigateur du système et le cycle de processus :
+groupe POSIX sur Linux/macOS, nouveau groupe Windows avec CTRL_BREAK puis
+nettoyage de son seul arbre si nécessaire. L’écoute reste loopback. Le lanceur
+ne tue pas de service découvert sur un port et ne déploie rien.
+
+Les tests couvrent les branches Windows/macOS par simulation sur Linux et la
+compilation Go pour Windows amd64/macOS arm64. Ce n’est pas un essai natif sur
+ces deux systèmes ; leurs particularités Docker Desktop et bureau restent à
+valider sur les machines cibles. Voir [le guide](lanceur-local.md).
