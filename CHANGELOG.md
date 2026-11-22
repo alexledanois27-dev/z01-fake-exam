@@ -1,5 +1,13 @@
 # Historique fonctionnel
 
+## 22 novembre 2026 — lanceur graphique et versions
+
+- Fenêtre locale dans le style du site, démarrage, ouverture, arrêt et journal repliable.
+- Raccourcis sans console Linux, Windows (.vbs) et macOS (.app).
+- Vérification GitHub en lecture seule : à jour, mise à jour, avance et divergence.
+- Aucun remplacement automatique ; les modifications locales sont signalées.
+- Service de contrôle limité à la boucle locale, secret par lancement et contrôle d’origine.
+
 ## 22 novembre 2026 — groupes officiels et lanceurs multiplateformes
 
 - Rust N1–N10 et Java N1–N5 depuis attrs.group ; suppression du classement par indice.

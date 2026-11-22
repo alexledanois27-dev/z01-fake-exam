@@ -5,6 +5,7 @@ from pathlib import Path
 import sys
 import shlex
 import argparse
+import plistlib
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -20,9 +21,9 @@ def install_linux():
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text('[Desktop Entry]\nType=Application\nName=Z01 Fake Exam\n'
                       'Comment=Apprendre et préparer les checkpoints\n'
-                      'Exec=' + desktop_quote(sys.executable) + ' ' + desktop_quote(str(ROOT / 'scripts/launch.py')) + '\n'
+                      'Exec=' + desktop_quote(sys.executable) + ' ' + desktop_quote(str(ROOT / 'scripts/launcher_gui.py')) + '\n'
                       'Icon=' + str(ROOT / 'assets/z01-logo.png') + '\n'
-                      'Terminal=true\nCategories=Education;\nStartupNotify=false\n', encoding='utf-8')
+                      'Terminal=false\nCategories=Education;\nStartupNotify=false\n', encoding='utf-8')
     target.chmod(0o755)
     print('Lanceur installé :', target)
     print('Cherche « Z01 Fake Exam » dans les applications Ubuntu. Tu peux l’épingler aux favoris.')
@@ -45,18 +46,32 @@ def desktop_dir():
 
 def install_portable(destination):
     destination.mkdir(parents=True, exist_ok=True)
-    script = str(ROOT / 'scripts/launch.py')
+    script = str(ROOT / 'scripts/launcher_gui.py')
     if sys.platform == 'win32':
-        target = destination / 'Z01 Fake Exam.cmd'
-        content = '@echo off\r\nsetlocal\r\n' + batch_quote(sys.executable) + ' ' + batch_quote(script) + '\r\nif errorlevel 1 pause\r\n'
+        target = destination / 'Z01 Fake Exam.vbs'
+        python = Path(sys.executable)
+        windowed = python.with_name('pythonw.exe')
+        executable = str(windowed if windowed.is_file() else python)
+        # VBScript doubles string quotes; Run window style 0 hides the console.
+        command = '"' + executable + '" "' + script + '"'
+        if any(c in command for c in '\r\n'):
+            raise ValueError('Chemin invalide.')
+        target.write_text('Set shell = CreateObject("WScript.Shell")\n'
+                          'shell.Run "' + command.replace('"', '""') + '", 0, False\n', encoding='utf-16')
     elif sys.platform == 'darwin':
-        target = destination / 'Z01 Fake Exam.command'
-        content = '#!/bin/bash\nexec ' + shlex.quote(sys.executable) + ' ' + shlex.quote(script) + '\n'
+        target = destination / 'Z01 Fake Exam.app'
+        contents = target / 'Contents'
+        binary = contents / 'MacOS/launcher'
+        binary.parent.mkdir(parents=True, exist_ok=True)
+        # Finder launches an application bundle without opening Terminal.
+        binary.write_text('#!/bin/bash\nexec ' + shlex.quote(sys.executable) + ' ' + shlex.quote(script) + '\n')
+        binary.chmod(0o755)
+        with (contents / 'Info.plist').open('wb') as info:
+            plistlib.dump({'CFBundleName': 'Z01 Fake Exam', 'CFBundleIdentifier': 'local.z01.fakeexam.launcher',
+                          'CFBundleExecutable': 'launcher', 'CFBundlePackageType': 'APPL',
+                          'CFBundleVersion': '1', 'LSUIElement': True}, info)
     else:
         raise RuntimeError('Système non pris en charge.')
-    target.write_bytes(content.encode('utf-8'))
-    if sys.platform != 'win32':
-        target.chmod(0o755)
     print('Raccourci créé :', target)
     print('Double-clique ce fichier pour lancer le site. Go, Python 3 et Docker restent nécessaires.')
     return target

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Z01 Fake Exam · Lanceur</title>
+    <link rel="stylesheet" href="/launcher.css" />
+    <script src="/launcher.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <a
+          class="brand"
+          href="https://github.com/alexledanois27-dev/z01-fake-exam"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Z01<span>FAKE EXAM</span></a
+        ><span class="eyebrow">TON ESPACE LOCAL</span>
+      </header>
+      <section class="hero">
+        <p class="eyebrow">APPRENDRE. S’ENTRAÎNER. PROGRESSER.</p>
+        <h1>Prêt pour le<br /><em>prochain niveau ?</em></h1>
+        <p class="intro">
+          Tes exercices, tes révisions et tes checkpoints.<br />Tout commence
+          ici.
+        </p>
+      </section>
+      <section class="panel">
+        <div class="status-row">
+          <span id="indicator" class="indicator"></span
+          ><span id="status" role="status">Démarrage…</span
+          ><span class="badge">LOCAL</span>
+        </div>
+        <p id="message">Préparation de ton espace.</p>
+        <div class="actions">
+          <a
+            id="open"
+            class="button primary disabled"
+            aria-disabled="true"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Ouvrir Fake Exam <span>↗</span></a
+          ><button id="start" hidden>Démarrer</button
+          ><button id="stop" disabled>Arrêter le serveur</button>
+        </div>
+        <details>
+          <summary>Détails du démarrage</summary>
+          <pre id="log">En attente…</pre>
+        </details>
+      </section>
+      <section class="update panel">
+        <div class="section-head">
+          <h2>TOUJOURS À JOUR</h2>
+          <button id="check" class="text-button">Vérifier ↻</button>
+        </div>
+        <p id="update-message" role="status">
+          Vérification des mises à jour GitHub…
+        </p>
+        <div class="version-row">
+          <code id="version">Version locale</code
+          ><a
+            id="changes"
+            href="https://github.com/alexledanois27-dev/z01-fake-exam/commits/main/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Voir les changements ↗</a
+          >
+        </div>
+        <p class="muted">
+          Aucune installation automatique. Ton code local reste intact.
+        </p>
+      </section>
+      <footer>
+        <span>Go · JavaScript · Rust · Java</span
+        ><button id="quit" class="text-button">Quitter le lanceur</button>
+      </footer>
+      <p class="footnote">
+        Fermer cette fenêtre laisse le serveur actif. « Quitter le lanceur »
+        arrête uniquement l’instance qu’il a créée.
+      </p>
+    </main>
+  </body>
+</html>
