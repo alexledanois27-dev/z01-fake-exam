@@ -112,3 +112,43 @@ document.querySelectorAll('input[name="exam-kind"]').forEach((input) =>
 );
 
 // --- Gestion du redimensionnement ---
+
+// Checkpoint selection affects new Java series, never an already running session.
+document
+  .getElementById("java-checkpoint-filter")
+  .addEventListener("change", (event) => {
+    if (examFocusLocked() || trueExamMode || submissionRunning) {
+      renderJavaCheckpointControls();
+      return;
+    }
+    exerciseQuery = "";
+    searchEl.value = "";
+    javaTrainingCheckpoint = JAVA_CHECKPOINTS.includes(event.target.value)
+      ? event.target.value
+      : "all";
+    currentLevelFilter = "all";
+    savePersonalSession();
+    renderLevelFilters();
+    renderChips();
+    restoreTrainingExercise();
+    renderJavaCheckpointControls();
+  });
+document
+  .getElementById("java-exam-checkpoint")
+  .addEventListener("change", (event) => {
+    if (currentExam || examFocusLocked() || submissionRunning) {
+      renderJavaCheckpointControls();
+      return;
+    }
+    javaExamCheckpoint = JAVA_CHECKPOINTS.includes(event.target.value)
+      ? event.target.value
+      : JAVA_CHECKPOINTS[0];
+    savePersonalSession();
+    renderExamView();
+  });
+document
+  .getElementById("exam-resume-legacy-java")
+  .addEventListener("click", () => {
+    if (currentTrack === "java" && trueExamMode && !examFocusLocked())
+      startTrueExamSeries(false, true);
+  });

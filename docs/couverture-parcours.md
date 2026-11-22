@@ -2,7 +2,7 @@
 
 Chaque langage conserve 30 petits exercices. Les liens ci-dessous associent les 175 sujets des snapshots aux chapitres qui préparent des notions utiles. Une association ne constitue ni une solution du sujet ni une garantie de réussite.
 
-JavaScript fournit des niveaux N1 à N7 dans son catalogue. Les trois autres snapshots n’ont pas de niveau officiel ; aucune numérotation n’est déduite de leur ordre.
+Les groupes officiels viennent de `attrs.group` : JS N1 à N7, Rust N1 à N10 et Java N1 à N5 dans chacun des trois checkpoints. Go conserve son classement local. Aucun groupe Rust/Java n’est déduit de l’ordre des exercices.
 
 ## Go
 
@@ -204,69 +204,69 @@ Chapitre transversal : ses notions sont réutilisées dans la suite du parcours.
 
 5 petites étapes ; 1 sujets associés.
 
-- `rust-checkpoint-count-factorial-steps`
+- `rust-checkpoint-count-factorial-steps` · final-checkpoint-rust · N3
 
 ### Possession et emprunts
 
 5 petites étapes ; 1 sujets associés.
 
-- `rust-checkpoint-own-and-return`
+- `rust-checkpoint-own-and-return` · final-checkpoint-rust · N4
 
 ### Texte UTF-8 et parcours
 
 5 petites étapes ; 7 sujets associés.
 
-- `rust-checkpoint-brackets-matching`
-- `rust-checkpoint-inv-pyramid`
-- `rust-checkpoint-modify-letter`
-- `rust-checkpoint-negative-spelling`
-- `rust-checkpoint-reverse-it`
-- `rust-checkpoint-rot21`
-- `rust-checkpoint-scytale-decoder`
+- `rust-checkpoint-brackets-matching` · final-checkpoint-rust · N10
+- `rust-checkpoint-inv-pyramid` · final-checkpoint-rust · N3
+- `rust-checkpoint-modify-letter` · final-checkpoint-rust · N3
+- `rust-checkpoint-negative-spelling` · final-checkpoint-rust · N8
+- `rust-checkpoint-reverse-it` · final-checkpoint-rust · N2
+- `rust-checkpoint-rot21` · final-checkpoint-rust · N5
+- `rust-checkpoint-scytale-decoder` · final-checkpoint-rust · N7
 
 ### Option et Result
 
 5 petites étapes ; 4 sujets associés.
 
-- `rust-checkpoint-check-user-name`
-- `rust-checkpoint-get-document-id`
-- `rust-checkpoint-office-worker`
-- `rust-checkpoint-profanity-filter`
+- `rust-checkpoint-check-user-name` · final-checkpoint-rust · N4
+- `rust-checkpoint-get-document-id` · final-checkpoint-rust · N5
+- `rust-checkpoint-office-worker` · final-checkpoint-rust · N7
+- `rust-checkpoint-profanity-filter` · final-checkpoint-rust · N6
 
 ### Vec, filtrage et tables
 
 5 petites étapes ; 8 sujets associés.
 
-- `rust-checkpoint-counting-words`
-- `rust-checkpoint-filter-table`
-- `rust-checkpoint-insertion-sort`
-- `rust-checkpoint-lunch-queue`
-- `rust-checkpoint-order-books`
-- `rust-checkpoint-organize-garage`
-- `rust-checkpoint-partial-sums`
-- `rust-checkpoint-smallest`
+- `rust-checkpoint-counting-words` · final-checkpoint-rust · N3
+- `rust-checkpoint-filter-table` · final-checkpoint-rust · N9
+- `rust-checkpoint-insertion-sort` · final-checkpoint-rust · N5
+- `rust-checkpoint-lunch-queue` · final-checkpoint-rust · N8
+- `rust-checkpoint-order-books` · final-checkpoint-rust · N6
+- `rust-checkpoint-organize-garage` · final-checkpoint-rust · N8
+- `rust-checkpoint-partial-sums` · final-checkpoint-rust · N2
+- `rust-checkpoint-smallest` · final-checkpoint-rust · N2
 
 ### Traits, types récursifs et états partagés
 
 5 petites étapes ; 17 sujets associés.
 
-- `rust-checkpoint-blood-types-s`
-- `rust-checkpoint-brain-fuck`
-- `rust-checkpoint-car-rental`
-- `rust-checkpoint-display-table`
-- `rust-checkpoint-dress-code`
-- `rust-checkpoint-drop-the-blog`
-- `rust-checkpoint-flat-tree`
-- `rust-checkpoint-format-me`
-- `rust-checkpoint-lucas-number`
-- `rust-checkpoint-matrix-determinant`
-- `rust-checkpoint-matrix-display`
-- `rust-checkpoint-moving-targets`
-- `rust-checkpoint-nextprime`
-- `rust-checkpoint-previousprime`
-- `rust-checkpoint-prime-checker`
-- `rust-checkpoint-queens`
-- `rust-checkpoint-rpn`
+- `rust-checkpoint-blood-types-s` · final-checkpoint-rust · N8
+- `rust-checkpoint-brain-fuck` · final-checkpoint-rust · N10
+- `rust-checkpoint-car-rental` · final-checkpoint-rust · N7
+- `rust-checkpoint-display-table` · final-checkpoint-rust · N6
+- `rust-checkpoint-dress-code` · final-checkpoint-rust · N5
+- `rust-checkpoint-drop-the-blog` · final-checkpoint-rust · N9
+- `rust-checkpoint-flat-tree` · final-checkpoint-rust · N5
+- `rust-checkpoint-format-me` · final-checkpoint-rust · N4
+- `rust-checkpoint-lucas-number` · final-checkpoint-rust · N3
+- `rust-checkpoint-matrix-determinant` · final-checkpoint-rust · N4
+- `rust-checkpoint-matrix-display` · final-checkpoint-rust · N7
+- `rust-checkpoint-moving-targets` · final-checkpoint-rust · N9
+- `rust-checkpoint-nextprime` · final-checkpoint-rust · N1
+- `rust-checkpoint-previousprime` · final-checkpoint-rust · N1
+- `rust-checkpoint-prime-checker` · final-checkpoint-rust · N6
+- `rust-checkpoint-queens` · final-checkpoint-rust · N8
+- `rust-checkpoint-rpn` · final-checkpoint-rust · N5
 
 ## Java
 
@@ -276,73 +276,73 @@ Chapitre transversal : ses notions sont réutilisées dans la suite du parcours.
 
 5 petites étapes ; 7 sujets associés.
 
-- `java-area-calculator`
-- `java-digitcount`
-- `java-goodbye-mars`
-- `java-multiplication-table`
-- `java-system-logger`
-- `java-unit-converter`
-- `java-universal-greeting`
+- `java-area-calculator` · checkpoint-02-java · N2
+- `java-digitcount` · checkpoint-01-java · N3
+- `java-goodbye-mars` · checkpoint-01-java · N1
+- `java-multiplication-table` · checkpoint-01-java · N2
+- `java-system-logger` · checkpoint-01-java · N1
+- `java-unit-converter` · checkpoint-01-java · N2
+- `java-universal-greeting` · checkpoint-01-java · N1
 
 ### String : égalité et indices
 
 5 petites étapes ; 7 sujets associés.
 
-- `java-almost-palindrome`
-- `java-breakdown-url`
-- `java-config-protector`
-- `java-count-char`
-- `java-html-validator`
-- `java-longest-common-prefix`
-- `java-strlen`
+- `java-almost-palindrome` · checkpoint-01-java · N5
+- `java-breakdown-url` · checkpoint-03-java · N2
+- `java-config-protector` · checkpoint-03-java · N2
+- `java-count-char` · checkpoint-01-java · N3
+- `java-html-validator` · checkpoint-03-java · N2
+- `java-longest-common-prefix` · checkpoint-03-java · N4
+- `java-strlen` · checkpoint-01-java · N3
 
 ### Tableaux et copies
 
 5 petites étapes ; 4 sujets associés.
 
-- `java-harmonious-fusion`
-- `java-reverse-array`
-- `java-rotate-array`
-- `java-sort-array`
+- `java-harmonious-fusion` · checkpoint-02-java · N4
+- `java-reverse-array` · checkpoint-01-java · N4
+- `java-rotate-array` · checkpoint-01-java · N4
+- `java-sort-array` · checkpoint-01-java · N4
 
 ### Listes, ensembles et fréquences
 
 5 petites étapes ; 5 sujets associés.
 
-- `java-distinct-substring-length`
-- `java-first-unique`
-- `java-check-anagram`
-- `java-steady-sequence`
-- `java-top-frequents`
+- `java-distinct-substring-length` · checkpoint-02-java · N4
+- `java-first-unique` · checkpoint-03-java · N4
+- `java-check-anagram` · checkpoint-02-java · N4
+- `java-steady-sequence` · checkpoint-02-java · N5
+- `java-top-frequents` · checkpoint-03-java · N4
 
 ### Objets, constructeurs et encapsulation
 
 5 petites étapes ; 9 sujets associés.
 
-- `java-builder-blueprint`
-- `java-circular-linked-list`
-- `java-double-linked-list`
-- `java-factorial-master`
-- `java-factory-blueprint`
-- `java-flexisort`
-- `java-single-linked-list`
-- `java-singleton-blueprint`
-- `java-todo-list`
+- `java-builder-blueprint` · checkpoint-03-java · N3
+- `java-circular-linked-list` · checkpoint-02-java · N3
+- `java-double-linked-list` · checkpoint-02-java · N3
+- `java-factorial-master` · checkpoint-02-java · N2
+- `java-factory-blueprint` · checkpoint-03-java · N3
+- `java-flexisort` · checkpoint-02-java · N2
+- `java-single-linked-list` · checkpoint-02-java · N3
+- `java-singleton-blueprint` · checkpoint-03-java · N3
+- `java-todo-list` · checkpoint-02-java · N1
 
 ### Abstraction, matrices et calendrier
 
 5 petites étapes ; 13 sujets associés.
 
-- `java-age-finder`
-- `java-is-armstrong`
-- `java-average-calc`
-- `java-date-formatter`
-- `java-day-of-week`
-- `java-factorial`
-- `java-maximal-square`
-- `java-monthly-period`
-- `java-next-prime`
-- `java-perfect-number`
-- `java-spiral-matrix`
-- `java-time-tracker`
-- `java-valid-sudoku`
+- `java-age-finder` · checkpoint-03-java · N1
+- `java-is-armstrong` · checkpoint-03-java · N5
+- `java-average-calc` · checkpoint-01-java · N2
+- `java-date-formatter` · checkpoint-02-java · N1
+- `java-day-of-week` · checkpoint-03-java · N1
+- `java-factorial` · checkpoint-01-java · N5
+- `java-maximal-square` · checkpoint-02-java · N5
+- `java-monthly-period` · checkpoint-03-java · N1
+- `java-next-prime` · checkpoint-01-java · N5
+- `java-perfect-number` · checkpoint-03-java · N5
+- `java-spiral-matrix` · checkpoint-02-java · N5
+- `java-time-tracker` · checkpoint-02-java · N1
+- `java-valid-sudoku` · checkpoint-03-java · N5

@@ -349,9 +349,18 @@ function renderMicroPath() {
     sprintNode(
       "p",
       chapter.officialLevels?.length
-        ? "Niveaux officiels associés : " +
+        ? currentTrack === "java" && chapter.checkpointGroups
+          ? Object.entries(chapter.checkpointGroups)
+              .map(
+                ([checkpoint, groups]) =>
+                  javaCheckpointLabel(checkpoint) +
+                  " : " +
+                  groups.map((level) => "N" + level).join(", "),
+              )
+              .join(" · ")
+          : "Niveaux officiels associés : " +
             chapter.officialLevels.map((level) => "N" + level).join(", ")
-        : "Progression pédagogique par compétences ; aucun niveau officiel fourni dans ce catalogue.",
+        : "Progression pédagogique par compétences ; aucun groupe officiel fourni pour ces sujets.",
       "sprint-caption",
     ),
   );

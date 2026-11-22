@@ -64,7 +64,7 @@ func LoadRustExercises() ([]Exercise, error) {
 		if runner == "" {
 			runner = strings.ReplaceAll(child.Key, "-", "_")
 		}
-		list = append(list, Exercise{ID: "rust-checkpoint-" + child.Key, Title: child.Name, Runner: runner, Template: rustTemplate(file), Statement: rustStatementPlaceholder(child.Attrs.Subject), ExpectedFiles: []string{file}, Image: found.image, SubjectURL: child.Attrs.Subject})
+		list = append(list, Exercise{Level: child.Attrs.Group, Checkpoint: zoneCheckpoint(found.exam), ID: "rust-checkpoint-" + child.Key, Title: child.Name, Runner: runner, Template: rustTemplate(file), Statement: rustStatementPlaceholder(child.Attrs.Subject), ExpectedFiles: []string{file}, Image: found.image, SubjectURL: child.Attrs.Subject})
 	}
 	sortExercises(list)
 	hydrateZoneStatements(ctx, list)

@@ -56,6 +56,12 @@ function savePersonalSession() {
           : "exam",
     filter: currentLevelFilter,
     examKind,
+    ...(currentTrack === "java"
+      ? {
+          trainingCheckpoint: javaTrainingCheckpoint,
+          examCheckpoint: javaExamCheckpoint,
+        }
+      : {}),
   });
   persistPersonal();
 }

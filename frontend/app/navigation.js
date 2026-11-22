@@ -88,6 +88,7 @@ function updateTrackLabel() {
 }
 
 function updateTrackDependentUi() {
+  renderJavaCheckpointControls();
   document.getElementById("example-preview").hidden = true;
   exampleBtn.disabled = true;
   renderGoRestrictions(null);
@@ -194,6 +195,7 @@ function setTrackMode(mode) {
     // noop
   }
   const saved = personalStore.session(currentTrack);
+  if (currentTrack === "java") restoreJavaCheckpoints(saved);
   const ready = personalReady;
   personalReady = false;
   currentLevelFilter = (saved && saved.filter) || "all";
@@ -211,7 +213,7 @@ function setTrackMode(mode) {
     !learningMode &&
     !pathMode &&
     saved &&
-    getTrackExercises().some((ex) => exId(ex) === saved.selected)
+    getCatalogExercises().some((ex) => exId(ex) === saved.selected)
   ) {
     selectExercise(saved.selected);
   }

@@ -1,19 +1,20 @@
 function renderLevelFilters() {
   if (!levelFiltersEl) return;
   levelFiltersEl.innerHTML = "";
-  const levels = isJsTrack()
-    ? [
-        ...new Set(
-          getTrackExercises()
-            .map((ex) => ex.level)
-            .filter(Number.isInteger),
-        ),
-      ].sort((a, b) => a - b)
-    : Array.from({ length: 10 }, (_, i) => i + 1);
+  const levels =
+    currentTrack !== "go"
+      ? [
+          ...new Set(
+            getCatalogExercises()
+              .map((ex) => ex.level)
+              .filter(Number.isInteger),
+          ),
+        ].sort((a, b) => a - b)
+      : Array.from({ length: 10 }, (_, i) => i + 1);
   const filters = [
     { id: "all", label: "Tous" },
     ...levels.map((level) => ({ id: String(level), label: `N${level}` })),
-    ...(isJsTrack() && getTrackExercises().some((ex) => !ex.level)
+    ...(currentTrack !== "go" && getCatalogExercises().some((ex) => !ex.level)
       ? [{ id: "unclassified", label: "Non classés" }]
       : []),
   ];
@@ -32,7 +33,7 @@ function renderLevelFilters() {
       label.textContent = "Tous les niveaux";
       const count = document.createElement("span");
       count.className = "level-filter-count";
-      count.textContent = String(getTrackExercises().length);
+      count.textContent = String(getCatalogExercises().length);
       chip.append(label, count);
     } else if (f.id === "unclassified") {
       chip.textContent = f.label;
@@ -45,7 +46,7 @@ function renderLevelFilters() {
       number.textContent = f.id;
       chip.append(prefix, number);
       chip.setAttribute("aria-label", `Niveau ${f.id}`);
-      const count = getTrackExercises().filter(
+      const count = getCatalogExercises().filter(
         (ex) => String(ex.level) === f.id,
       ).length;
       chip.title = `Niveau ${f.id} · ${count} exercice${count > 1 ? "s" : ""}`;
@@ -89,7 +90,7 @@ function renderChips() {
   chipsContainer.innerHTML = "";
   if (trueExamMode) return;
   const list = getActiveExercises();
-  const source = getTrackExercises();
+  const source = getCatalogExercises();
   const passed = source.filter(
     (ex) => personalStore.result(currentTrack, exId(ex))?.success,
   ).length;
@@ -163,6 +164,19 @@ function selectExercise(id) {
     return;
   const ex = getTrackExercises().find((e) => exId(e) === id);
   if (!ex) return;
+  if (
+    currentTrack === "java" &&
+    !trueExamMode &&
+    javaTrainingCheckpoint !== "all" &&
+    ex.checkpoint !== javaTrainingCheckpoint &&
+    JAVA_CHECKPOINTS.includes(ex.checkpoint)
+  ) {
+    javaTrainingCheckpoint = ex.checkpoint;
+    currentLevelFilter = "all";
+    renderJavaCheckpointControls();
+    renderLevelFilters();
+    renderChips();
+  }
   saveCurrentDraft();
   currentExercise = ex;
   editorIdentity = {

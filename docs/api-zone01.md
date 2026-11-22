@@ -2,7 +2,7 @@
 
 Cette documentation décrit les endpoints publics utilisés par **cette version**
 de Z01 Fake Exam. Les chemins et nombres ci-dessous ont été vérifiés le
-**28 octobre 2026**. Ce n’est pas une spécification officielle de Zone01 : leurs
+**22 novembre 2026**. Ce n’est pas une spécification officielle de Zone01 : leurs
 ressources peuvent changer indépendamment de notre dépôt.
 
 Pour les routes de notre propre serveur, voir [http-api.md](http-api.md).
@@ -79,7 +79,8 @@ Exemple simplifié de nœud JavaScript :
 | `key` | Identifiant officiel ; sert à la correspondance et au runner. |
 | `name` | Nom du nœud ; utilisé selon les adaptateurs de langage. |
 | `path` | Identifier le checkpoint sélectionné. |
-| `attrs.group` | Groupe d’examen JavaScript, exposé comme `level` (N1 à N7 dans le catalogue vérifié). |
+| `attrs.group` | Groupe d’exercice exposé comme `level` : JS N1–N7, Rust N1–N10, Java N1–N5 par checkpoint. |
+| `attrs.level` | Niveau du cursus, distinct du groupe d’exercice ; il n’est pas utilisé comme difficulté N1/N2. |
 | `attrs.subject` | Chemin du Markdown à télécharger. |
 | `attrs.expectedFiles` | Fichiers attendus ; JS reprend actuellement le fichier officiel unique. |
 | `attrs.allowedFunctions` | Règles disponibles dans le catalogue, notamment utilisées pour Go. |
@@ -89,6 +90,23 @@ Exemple simplifié de nœud JavaScript :
 `cooldown` figure dans l’exemple parce que le catalogue l’annonce, mais il **n’est
 pas appliqué automatiquement** par notre code. Les 10/15 secondes de l’interface
 et la limitation de fréquence serveur sont nos propres réglages.
+
+### Groupes Rust et Java corrigés
+
+L’import des groupes Rust/Java omettait auparavant `attrs.group`. L’interface
+les remplaçait par `(index % 10) + 1` : ces classements n’étaient pas officiels.
+Cette substitution est supprimée. Une métadonnée absente reste **Non classée**,
+sans reconstitution depuis l’ordre alphabétique des exercices.
+
+Chaque exercice Rust/Java expose aussi `checkpoint`, issu du nom final du chemin
+parent : `final-checkpoint-rust` ou `checkpoint-01-java` à `checkpoint-03-java`.
+Java n’a pas un N1 global couvrant tout le cursus : ses trois checkpoints
+recommencent chacun à N1. Une nouvelle session choisit un checkpoint puis un
+exercice par groupe, de N1 à N5 dans ce checkpoint uniquement.
+
+Les copies locales Rust/Java conservent ces champs. `levelsUpdatedAt` date la
+vérification des métadonnées ; `savedAt` reste la date des énoncés conservés.
+Les identifiants d’exercices ne changent pas, donc leurs réussites restent lisibles.
 
 ## 3. Téléchargement d’une consigne
 

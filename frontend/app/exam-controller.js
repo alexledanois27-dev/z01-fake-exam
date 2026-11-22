@@ -4,6 +4,7 @@ function updateTrueExamStatus(message) {
 }
 
 function updateTrueExamControls() {
+  renderJavaCheckpointControls();
   for (const input of [...modeInputs, ...trackInputs])
     input.disabled =
       examFocusLocked() ||
@@ -51,7 +52,7 @@ function updateTrueExamControls() {
 
 function restoreTrainingExercise() {
   const saved = personalStore.session(currentTrack) || {};
-  const source = getTrackExercises();
+  const source = getCatalogExercises();
   const target =
     source.find(
       (ex) => exId(ex) === (saved.trainingSelected || saved.selected),
@@ -101,7 +102,12 @@ function buildTrueExamSeries() {
 }
 
 function getExamSource() {
-  return isJsTrack() ? jsExercises : getTrackExercises();
+  const source = getTrackExercises().filter(
+    (ex) => Number.isInteger(ex.level) && ex.level > 0,
+  );
+  return currentTrack === "java"
+    ? source.filter((ex) => ex.checkpoint === javaExamCheckpoint)
+    : source;
 }
 
 function renderExamReport() {
@@ -190,9 +196,17 @@ function renderExamView() {
       .forEach((input) => (input.checked = input.value === examKind));
     document.getElementById("exam-start").disabled =
       !getExamSource().length || submissionRunning;
-    const saved = examRepo.current(currentTrack, examKind);
+    const saved = examRepo.current(
+      currentTrack,
+      examKind,
+      currentTrack === "java" ? javaExamCheckpoint : null,
+    );
     document.getElementById("exam-resume").hidden =
       !saved || saved.phase === "finished";
+    const historical =
+      currentTrack === "java" ? examRepo.current("java", examKind) : null;
+    document.getElementById("exam-resume-legacy-java").hidden =
+      !historical || historical.phase === "finished";
   }
   if (report) {
     examTitleEl.textContent = "Bilan d’examen";
@@ -202,7 +216,7 @@ function renderExamView() {
   }
   if (trueExamMode && currentExam && !report) {
     updateTrueExamStatus(
-      `${currentExam.kind === "strict" ? "Chronométré · 3 h" : "Libre · sans timer"} — exercice ${currentExam.index + 1} / ${currentExam.series.length}`,
+      `${currentExam.kind === "strict" ? "Chronométré · 3 h" : "Libre · sans timer"}${currentTrack === "java" ? " · " + (currentExam.checkpoint ? javaCheckpointLabel(currentExam.checkpoint) : "Ancienne session Java · classement historique") : ""} — exercice ${currentExam.index + 1} / ${currentExam.series.length}`,
     );
   }
   updateTrueExamControls();
@@ -217,7 +231,7 @@ window.getExamTimerContext = () => ({
   finishedAt: currentExam?.finishedAt || null,
 });
 
-function startTrueExamSeries(fresh = false) {
+function startTrueExamSeries(fresh = false, legacy = false) {
   if (!trueExamMode) return;
   saveCurrentDraft();
   if (fresh) {
@@ -227,14 +241,25 @@ function startTrueExamSeries(fresh = false) {
         "Aucun exercice disponible pour ce langage.";
       return;
     }
-    currentExam = examRepo.start(currentTrack, examKind, ids);
-  } else currentExam = examRepo.current(currentTrack, examKind);
-  if (!getExamSource().length) currentExam = null;
+    currentExam = examRepo.start(
+      currentTrack,
+      examKind,
+      ids,
+      currentTrack === "java" ? javaExamCheckpoint : null,
+    );
+  } else
+    currentExam = examRepo.current(
+      currentTrack,
+      examKind,
+      currentTrack === "java" && !legacy ? javaExamCheckpoint : null,
+    );
+  if (!(legacy ? getTrackExercises() : getExamSource()).length)
+    currentExam = null;
   currentExercise = null;
   editorIdentity = null;
   trueExamSeries = currentExam
     ? currentExam.series
-        .map((id) => getExamSource().find((ex) => exId(ex) === id))
+        .map((id) => getTrackExercises().find((ex) => exId(ex) === id))
         .filter(Boolean)
     : [];
   trueExamIndex = currentExam?.index ?? -1;

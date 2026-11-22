@@ -1298,26 +1298,35 @@ require("node:test")(
         click(w, "#mode-exam");
         click(w, "#track-" + track);
         click(w, '#level-filters [data-filter="5"]');
-        assert.equal(el(w, "exercise-level").textContent, "Niveau 5", track);
+        assert.match(el(w, "exercise-level").textContent, /Niveau 5$/, track);
         draft(w, "TRAINING ONLY");
         click(w, "#mode-true-exam");
         click(w, 'input[name="exam-kind"][value="strict"]');
         click(w, "#exam-start");
-        assert.equal(el(w, "exercise-level").textContent, "Niveau 1", track);
+        assert.match(el(w, "exercise-level").textContent, /Niveau 1$/, track);
         assert.equal(el(w, "code-editor").value, "", track);
         assertNoFuture(w);
         const sessions = JSON.parse(
           w.localStorage.getItem("personal-exam-sessions-v2"),
         ).sessions;
-        const session = sessions[JSON.stringify([track, "strict"])];
+        const session =
+          sessions[
+            JSON.stringify(
+              track === "java"
+                ? [track, "strict", "checkpoint-01-java"]
+                : [track, "strict"],
+            )
+          ];
         assert.equal(session.index, 0, track);
-        assert.equal(session.series.length, track === "js" ? 7 : 10, track);
+        assert.equal(
+          session.series.length,
+          track === "js" ? 7 : track === "java" ? 5 : 10,
+          track,
+        );
         if (track !== "go") {
           const levels = session.series.map((id) => {
             const exercise = catalogs[track].find((ex) => ex.id === id);
-            return (
-              exercise.level || (catalogs[track].indexOf(exercise) % 10) + 1
-            );
+            return exercise.level;
           });
           assert.deepEqual(
             levels,
@@ -1328,9 +1337,9 @@ require("node:test")(
         // A reload resumes the actual exam, never the training selection.
         const restored = await boot(env.snapshot(), false, catalogs);
         try {
-          assert.equal(
+          assert.match(
             el(restored.w, "exercise-level").textContent,
-            "Niveau 1",
+            /Niveau 1$/,
             track,
           );
         } finally {
@@ -1816,6 +1825,162 @@ require("node:test")(
       assert.equal(el(w, "mode-exam").checked, true);
       assert.equal(el(w, "app").classList.contains("path-mode"), false);
       assert.equal(el(w, "exam-title").textContent, target.title);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "Rust/Java never fabricate missing levels from catalogue order",
+  async () => {
+    const catalogs = {
+      go: fixtures,
+      rust: [
+        { id: "rust-unknown", title: "Unknown", statement: "# X" },
+        { id: "rust-known", title: "Known", statement: "# Y", level: 2 },
+      ],
+      java: [
+        {
+          id: "java-unknown",
+          title: "Unknown",
+          statement: "# Z",
+          checkpoint: "checkpoint-01-java",
+        },
+      ],
+    };
+    const env = await boot({}, false, catalogs);
+    const w = env.w;
+    try {
+      click(w, "#track-rust");
+      assert.ok(w.document.querySelector('[data-filter="unclassified"]'));
+      assert.equal(w.document.querySelector('[data-filter="1"]'), null);
+      click(w, '[data-filter="unclassified"]');
+      assert.match(el(w, "exercise-level").textContent, /Sans niveau/);
+      assert.equal(w.document.querySelectorAll(".exercise-chip").length, 1);
+      click(w, "#track-java");
+      click(w, "#mode-true-exam");
+      assert.equal(el(w, "exam-start").disabled, true);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "Java filters and new exams use one official checkpoint with independent resume",
+  async () => {
+    const catalogs = Object.fromEntries(
+      ["go", "js", "rust", "java"].map((track) => [
+        track,
+        require(`../catalog-snapshots/${track}.json`).exercises,
+      ]),
+    );
+    const env = await boot({}, false, catalogs);
+    const w = env.w;
+    const change = (id, value) => {
+      el(w, id).value = value;
+      el(w, id).dispatchEvent(new w.Event("change", { bubbles: true }));
+    };
+    try {
+      click(w, "#track-java");
+      change("java-checkpoint-filter", "checkpoint-02-java");
+      assert.equal(w.document.querySelectorAll(".exercise-chip").length, 15);
+      assert.equal(w.document.querySelector('[data-filter="6"]'), null);
+      assert.match(el(w, "exercise-level").textContent, /Checkpoint Java 2/);
+      click(w, "#mode-true-exam");
+      change("java-exam-checkpoint", "checkpoint-03-java");
+      click(w, "#exam-start");
+      let sessions = JSON.parse(
+        w.localStorage.getItem("personal-exam-sessions-v2"),
+      ).sessions;
+      const cp3 =
+        sessions[JSON.stringify(["java", "free", "checkpoint-03-java"])];
+      assert.equal(cp3.series.length, 5);
+      for (const [index, id] of cp3.series.entries()) {
+        const ex = catalogs.java.find((ex) => ex.id === id);
+        assert.equal(ex.checkpoint, "checkpoint-03-java");
+        assert.equal(ex.level, index + 1);
+      }
+      assert.equal(el(w, "java-exam-checkpoint").disabled, true);
+      draft(w, "CP3 DRAFT");
+      click(w, "#mode-exam");
+      click(w, "#mode-true-exam");
+      click(w, "#true-exam-restart");
+      change("java-exam-checkpoint", "checkpoint-02-java");
+      click(w, "#exam-start");
+      draft(w, "CP2 DRAFT");
+      sessions = JSON.parse(
+        w.localStorage.getItem("personal-exam-sessions-v2"),
+      ).sessions;
+      assert.equal(
+        sessions[JSON.stringify(["java", "free", "checkpoint-03-java"])].drafts[
+          cp3.series[0]
+        ],
+        "CP3 DRAFT",
+      );
+      const restored = await boot(env.snapshot(), false, catalogs);
+      try {
+        assert.equal(el(restored.w, "code-editor").value, "CP2 DRAFT");
+        assert.match(
+          el(restored.w, "exercise-level").textContent,
+          /Checkpoint Java 2 · Niveau 1/,
+        );
+      } finally {
+        restored.dom.window.close();
+      }
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "legacy Java exam drafts remain resumable without mixing new scoped series",
+  async () => {
+    const catalogs = Object.fromEntries(
+      ["go", "js", "rust", "java"].map((track) => [
+        track,
+        require(`../catalog-snapshots/${track}.json`).exercises,
+      ]),
+    );
+    const ids = ["java-goodbye-mars", "java-date-formatter"];
+    const legacy = {
+      id: "legacy-java",
+      track: "java",
+      kind: "free",
+      series: ids,
+      index: 0,
+      phase: "running",
+      startedAt: 1700000000000,
+      deadline: null,
+      drafts: { [ids[0]]: "LEGACY JAVA" },
+      results: {},
+      skipped: {},
+      finishedAt: null,
+      finishReason: null,
+    };
+    const env = await boot(
+      {
+        "personal-exam-sessions-v2": JSON.stringify({
+          version: 2,
+          sessions: { [JSON.stringify(["java", "free"])]: legacy },
+        }),
+      },
+      false,
+      catalogs,
+    );
+    const w = env.w;
+    try {
+      click(w, "#track-java");
+      click(w, "#mode-true-exam");
+      assert.equal(el(w, "exam-resume-legacy-java").hidden, false);
+      click(w, "#exam-resume-legacy-java");
+      assert.equal(el(w, "code-editor").value, "LEGACY JAVA");
+      assert.match(
+        el(w, "true-exam-status").textContent,
+        /classement historique/,
+      );
     } finally {
       env.dom.window.close();
     }

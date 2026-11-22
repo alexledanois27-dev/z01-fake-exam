@@ -36,7 +36,7 @@ func LoadJavaExercises() ([]Exercise, error) {
 			runner = javaClassName(child.Key)
 		}
 		files := javaExpectedFiles(child.Attrs.ExpectedFiles, runner)
-		list = append(list, Exercise{ID: "java-" + child.Key, Title: runner, Runner: runner, Template: javaTemplate(files), Statement: javaStatementPlaceholder(child.Attrs.Subject), ExpectedFiles: files, Image: found.image, SubjectURL: child.Attrs.Subject})
+		list = append(list, Exercise{Level: child.Attrs.Group, Checkpoint: zoneCheckpoint(found.exam), ID: "java-" + child.Key, Title: runner, Runner: runner, Template: javaTemplate(files), Statement: javaStatementPlaceholder(child.Attrs.Subject), ExpectedFiles: files, Image: found.image, SubjectURL: child.Attrs.Subject})
 	}
 	sortExercises(list)
 	hydrateZoneStatements(ctx, list)

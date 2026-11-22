@@ -105,3 +105,8 @@ Le middleware ajoute les en-têtes de sécurité et interdit le cache des API. V
 Le endpoint `/api/version` expose aussi `application: "z01-fake-exam"` en plus de
 `sha` et `dirty`. Le lanceur local s’en sert pour reconnaître une instance existante,
 sans prendre le contrôle d’un autre service sur le même port.
+
+Les exercices Rust/Java exposent `level` depuis `attrs.group`, et `checkpoint`
+depuis leur examen parent. Java conserve trois checkpoints à groupes N1–N5 ;
+ces groupes ne sont pas renumérotés en N1–N15. `attrs.level` désigne le cursus
+et ne constitue pas le niveau de l’exercice. Le runner conserve les mêmes IDs.

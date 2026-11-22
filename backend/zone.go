@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"path"
 	"sort"
 	"strings"
 	"sync"
@@ -52,6 +53,8 @@ type zoneExam struct {
 	path  string // chemin dans le catalogue, ex. /rouen/cursus-cda/checkpoint
 	image string // moulinette si le catalogue n'en annonce pas
 }
+
+func zoneCheckpoint(exam zoneExam) string { return path.Base(exam.path) }
 
 // zoneExamExercise est un exercice d'examen tel que le catalogue le décrit.
 type zoneExamExercise struct {

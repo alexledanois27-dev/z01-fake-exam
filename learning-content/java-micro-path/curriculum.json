@@ -240,7 +240,11 @@
           ]
         }
       ],
-      "officialLevels": []
+      "officialLevels": [1, 2, 3],
+      "checkpointGroups": {
+        "checkpoint-01-java": [1, 2, 3],
+        "checkpoint-02-java": [2]
+      }
     },
     {
       "id": "strings",
@@ -473,7 +477,11 @@
           ]
         }
       ],
-      "officialLevels": []
+      "officialLevels": [2, 3, 4, 5],
+      "checkpointGroups": {
+        "checkpoint-01-java": [3, 5],
+        "checkpoint-03-java": [2, 4]
+      }
     },
     {
       "id": "arrays",
@@ -697,7 +705,11 @@
           ]
         }
       ],
-      "officialLevels": []
+      "officialLevels": [4],
+      "checkpointGroups": {
+        "checkpoint-01-java": [4],
+        "checkpoint-02-java": [4]
+      }
     },
     {
       "id": "collections",
@@ -928,7 +940,11 @@
           ]
         }
       ],
-      "officialLevels": []
+      "officialLevels": [4, 5],
+      "checkpointGroups": {
+        "checkpoint-02-java": [4, 5],
+        "checkpoint-03-java": [4]
+      }
     },
     {
       "id": "objects",
@@ -1145,7 +1161,11 @@
           "minutes": 12
         }
       ],
-      "officialLevels": []
+      "officialLevels": [1, 2, 3],
+      "checkpointGroups": {
+        "checkpoint-02-java": [1, 2, 3],
+        "checkpoint-03-java": [3]
+      }
     },
     {
       "id": "algorithms",
@@ -1388,7 +1408,12 @@
           "minutes": 12
         }
       ],
-      "officialLevels": []
+      "officialLevels": [1, 2, 5],
+      "checkpointGroups": {
+        "checkpoint-01-java": [2, 5],
+        "checkpoint-02-java": [1, 5],
+        "checkpoint-03-java": [1, 5]
+      }
     }
   ],
   "storageKey": "z01-java-micro-path-v2",

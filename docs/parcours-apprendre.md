@@ -33,9 +33,10 @@ Les petits exercices ne couvrent pas tous les cas particuliers de ces sujets.
 Les fiches et la pratique complète restent nécessaires, notamment pour les
 variantes de matrices, de structures et de règles métier.
 
-Les niveaux officiels JS N1 à N7 sont représentés dans les chapitres et leurs
-liens. Les snapshots Go, Rust et Java n’indiquent pas de niveau officiel : leur
-progression est pédagogique par compétences, sans inventer une classification.
+Les chapitres affichent les groupes officiels associés : JS N1 à N7, Rust N1 à N10,
+Java N1 à N5 séparément pour chacun des trois checkpoints. Ils proviennent de
+`attrs.group`, pas du niveau de cursus `attrs.level`. Go conserve son classement
+local existant. Les étapes de cours restent organisées par compétences.
 Voir [la carte des associations](couverture-parcours.md).
 
 ## Contrat des moteurs
