@@ -25,6 +25,15 @@ def install_linux():
                       'Icon=' + str(ROOT / 'assets/z01-logo.png') + '\n'
                       'Terminal=false\nCategories=Education;\nStartupNotify=false\n', encoding='utf-8')
     target.chmod(0o755)
+    # Plasma pins can hold their own copy instead of rereading applications/.
+    cached = target.parent.parent / 'plasma_icons/z01-fake-exam.desktop'
+    if cached.is_file():
+        previous = cached.read_text(encoding='utf-8')
+        owned_paths = [str(ROOT / 'scripts' / name) for name in ('launch.py', 'launcher_gui.py')]
+        if 'Name=Z01 Fake Exam\n' in previous and any(path in previous for path in owned_paths):
+            cached.write_text(target.read_text(encoding='utf-8'), encoding='utf-8')
+            cached.chmod(0o755)
+            print('Raccourci épinglé KDE actualisé :', cached)
     print('Lanceur installé :', target)
     print('Cherche « Z01 Fake Exam » dans les applications Ubuntu. Tu peux l’épingler aux favoris.')
     print('Après déplacement du dossier, relance cet installateur. Pour retirer le raccourci, supprime ce fichier .desktop.')

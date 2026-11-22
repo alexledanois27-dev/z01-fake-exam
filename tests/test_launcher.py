@@ -66,6 +66,27 @@ class LauncherTests(unittest.TestCase):
             if launcher.shutil.which('desktop-file-validate'):
                 subprocess.run(['desktop-file-validate', str(path)], check=True)
 
+    def test_plasma_pinned_copy_is_updated_with_application_shortcut(self):
+        with tempfile.TemporaryDirectory(prefix='z01 kde ') as directory, patch.dict(os.environ, {'XDG_DATA_HOME': directory}):
+            cached = Path(directory) / 'plasma_icons/z01-fake-exam.desktop'
+            cached.parent.mkdir()
+            cached.write_text('Name=Z01 Fake Exam\nExec="' + str(installer.ROOT / 'scripts/launch.py') + '"\nTerminal=true\n')
+            installer.main()
+            content = cached.read_text()
+            self.assertIn('launcher_gui.py', content)
+            self.assertIn('Terminal=false', content)
+            self.assertNotIn('Terminal=true', content)
+            self.assertEqual(content, (Path(directory) / 'applications/z01-fake-exam.desktop').read_text())
+
+    def test_plasma_copy_for_another_checkout_is_not_overwritten(self):
+        with tempfile.TemporaryDirectory(prefix='z01 kde ') as directory, patch.dict(os.environ, {'XDG_DATA_HOME': directory}):
+            cached = Path(directory) / 'plasma_icons/z01-fake-exam.desktop'
+            cached.parent.mkdir()
+            content = 'Name=Z01 Fake Exam\nExec=/another/project/scripts/launch.py\n'
+            cached.write_text(content)
+            installer.main()
+            self.assertEqual(cached.read_text(), content)
+
     def test_exec_quoting_preserves_special_paths(self):
         self.assertEqual(installer.desktop_quote('/tmp/a b'), '"/tmp/a b"')
         self.assertIn('%%', installer.desktop_quote('/tmp/100%'))

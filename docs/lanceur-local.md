@@ -31,7 +31,8 @@ py -3 scripts/install-launcher.py
 
 `--destination "dossier"` choisit le dossier du raccourci Windows/macOS. Windows
 prend en compte un dossier OneDrive/Desktop existant. Après déplacement du projet
-ou de Python, relancer l’installateur. Les anciens raccourcis `.cmd`/`.command`
+ou de Python, relancer l’installateur. Sous KDE, la copie du raccourci épinglé
+dans `plasma_icons` est également actualisée lorsqu’elle pointe vers ce projet. Les anciens raccourcis `.cmd`/`.command`
 créés sur le Bureau peuvent être supprimés manuellement ; ils ne sont pas effacés.
 
 À la racine, **Lancer Z01 Fake Exam.vbs** ouvre directement le lanceur Windows,
