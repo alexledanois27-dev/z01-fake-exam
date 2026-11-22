@@ -101,3 +101,7 @@ Dans un aperçu, success signifie seulement que l’exécution a abouti. Le code
 Les sorties des processus sont bornées et affichées comme texte, jamais comme HTML.
 Le middleware ajoute les en-têtes de sécurité et interdit le cache des API. Voir
 [la préparation de mise en ligne](mise-en-ligne.md) pour les limites complètes.
+
+Le endpoint `/api/version` expose aussi `application: "z01-fake-exam"` en plus de
+`sha` et `dirty`. Le lanceur local s’en sert pour reconnaître une instance existante,
+sans prendre le contrôle d’un autre service sur le même port.

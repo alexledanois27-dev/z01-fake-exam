@@ -21,13 +21,14 @@ func TestVersionReportsBinaryRevision(t *testing.T) {
 			response := httptest.NewRecorder()
 			mux.ServeHTTP(response, httptest.NewRequest("GET", "/api/version", nil))
 			var got struct {
-				SHA   string `json:"sha"`
-				Dirty bool   `json:"dirty"`
+				Application string `json:"application"`
+				SHA         string `json:"sha"`
+				Dirty       bool   `json:"dirty"`
 			}
 			if err := json.Unmarshal(response.Body.Bytes(), &got); err != nil {
 				t.Fatal(err)
 			}
-			if response.Code != 200 || got.SHA != BuildSHA || !got.Dirty || response.Header().Get("Cache-Control") != "no-store" {
+			if response.Code != 200 || got.Application != "z01-fake-exam" || got.SHA != BuildSHA || !got.Dirty || response.Header().Get("Cache-Control") != "no-store" {
 				t.Fatalf("incorrect version response: %s", response.Body.String())
 			}
 		})
