@@ -41,12 +41,12 @@ oblige à vérifier de nouveau avant d’utiliser le bouton Étape suivante.
 | Chaînes | découpage en mots, inversion |
 | Tableaux | ajout copié, groupes, copies imbriquées |
 | Objets | présence propre, entries |
-| Callbacks | map, filter, reduce |
+| Callbacks | map, filter |
 | Closures | fonction retournée, état privé, appels chaînés |
 | Grilles | bornes, Set, connexité |
-| Tris | comparateur, passe à bulles |
-| Récursion | cas de base, feuilles d’objet, chemins des feuilles |
-| Assemblage | multiples, mapper capturé |
+| Promesses N5 | course avec délai, allSettled, relance |
+| Structures profondes N6 | copie gelée, égalité, chemin protégé |
+| Proxy et transformation N7 | trap get, transformation récursive de clés |
 
 Le public visé sait déjà programmer en Go. On ne réexplique pas ce qu’est une
 boucle dans l’absolu : on rend explicites les parenthèses de for, l’absence de
@@ -56,12 +56,12 @@ les références de tableaux/objets et les callbacks. Les unités UTF-16 ne sont
 pas assimilées aux octets Go ou aux runes ; les exercices de chaînes qui le
 nécessitent déclarent leur contrat ASCII.
 
-L’objectif est d’assembler progressivement les outils utiles aux **19 sujets
-N1–N4** du catalogue de référence. Les liens de chapitre couvrent ces 19 sujets.
-Les Promises/async des niveaux suivants ne font pas partie de ce périmètre.
+L’objectif est d’assembler progressivement les outils utiles aux **31 sujets
+N1–N7** du catalogue de référence. Les liens de chapitre couvrent ces 31 sujets.
+Les chapitres N5 à N7 ajoutent Promise/async, structures profondes et Proxy.
 Les niveaux et les conditions du vrai checkpoint peuvent changer. Réussir les
 cas publics des petits exercices ne garantit ni une note ni un délai d’apprentissage.
-Le rythme de 5–8 minutes par petit exercice est indicatif, hors lecture approfondie,
+Le rythme de 5–12 minutes par petit exercice est indicatif, hors lecture approfondie,
 révisions et sujets complets. Aucun calendrier ne force à avancer sans comprendre.
 
 ## Organisation du contenu
@@ -116,7 +116,7 @@ du endpoint et du confinement utilisent Docker. Le curriculum est copié avec
 
 ## Stockage et reprise
 
-Clé `z01-js-micro-path-v2` (reprise des étapes conservées depuis v1, laissée intacte) : étape sélectionnée, brouillon par étape (8 000
+Clé `z01-js-micro-path-v3` (reprise des étapes conservées depuis v2 ou v1, laissées intactes) : étape sélectionnée, brouillon par étape (8 000
 caractères maximum), aides consultées, tentatives et réussites. Les champs sont
 normalisés au chargement, les identifiants inconnus ignorés et les compteurs bornés.
 Un code trop long n’est pas tronqué silencieusement : l’interface demande de le

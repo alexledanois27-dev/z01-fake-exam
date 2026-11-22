@@ -385,11 +385,29 @@ le moteur du langage : Node, Go, rustc ou javac/java, exclusivement dans Docker.
 Les expressions d’appel des cas compilés viennent des fichiers maintenus, jamais
 du client. Les retours sont comparés à leur représentation textuelle de référence.
 
-`js-micro-progress.js` accepte une clé et une ancienne clé de migration explicites.
-JS utilise désormais v2 : les étapes conservées sont importées depuis v1 si v2
-n’existe pas encore. La clé v1 reste intacte, y compris ses étapes retirées. `js-micro-path.js` affiche le parcours courant dans le panneau
+`js-micro-progress.js` accepte une clé et des clés de migration explicites.
+JS utilise v3, avec priorité à v2 puis v1 si v2 est absente ; les autres parcours
+utilisent v2 depuis v1. Les sauvegardes précédentes ne sont jamais écrasées.
+`js-micro-path.js` affiche le parcours courant dans le panneau
 `learn-path-panel` de l’onglet Apprendre, sans modale. Les brouillons, indices et
 réussites ne se mélangent ni entre langages ni avec les scores d’examen.
 Les réponses en retard sont invalidées par un compteur de génération de vue.
 Le pont autonome JS reste dans `checkpoint-sprint.js` ; les autres ponts ouvrent
 l’entraînement habituel. Voir [le guide](parcours-apprendre.md).
+
+
+Le curriculum JS attend maintenant aussi les Promise avant de comparer leur
+résultat. Les 120 corrections disposent d’un test d’intégration Docker explicite.
+Les associations couvrent tous les sujets des snapshots ; elles préparent des
+notions communes et ne prouvent pas une couverture exhaustive de chaque contrat.
+
+## Lanceur local Ubuntu
+
+`scripts/install-launcher.py` écrit uniquement un raccourci utilisateur dans
+`$XDG_DATA_HOME/applications` (ou `~/.local/share/applications`). Le champ Exec
+contient le chemin de Python et du script, sans commande shell interpolée.
+`scripts/launch.py` démarre `go -C backend run ./cmd/dev`, avec écoute loopback,
+attente de `/api/version`, ouverture de navigateur et nettoyage de son groupe de
+processus. Le champ `application: z01-fake-exam` identifie une instance réutilisable.
+Aucun processus d’un port occupé n’est arrêté. Tests : `tests/test_launcher.py`,
+inclus dans `make check`. Voir [le guide](lanceur-local.md).

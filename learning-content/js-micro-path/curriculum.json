@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "title": "De Go au checkpoint JavaScript",
   "target": "Comprendre puis résoudre les niveaux 1 à 4",
   "preserveInputs": true,
@@ -16,7 +16,7 @@
         "return termine la fonction et transmet une valeur au test. console.log affiche une valeur mais ne remplace jamais return.",
         "Les accolades entourent le corps. Les points-virgules sont souvent insérés automatiquement ; pour éviter les pièges, garde return et son expression sur la même ligne."
       ],
-      "checkpoint": ["factorial", "evensum"],
+      "checkpoint": [],
       "lessons": [
         {
           "id": "js-learn-return",
@@ -30,7 +30,7 @@
             "n * 2 calcule un nombre ; return transmet ce nombre.",
             "console.log(n * 2) ne suffit pas : la fonction renverrait undefined."
           ],
-          "starter": "function doubleValue(n) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function doubleValue(n) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Utilise le paramètre n, pas une valeur écrite en dur.",
             "Multiplie n par 2."
@@ -74,7 +74,7 @@
             "La déclaration n’a lieu qu’une fois ; ensuite on écrit result += 3.",
             "Évite var : sa portée diffère de let et n’aide pas pour ces exercices."
           ],
-          "starter": "function addBonus(score) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function addBonus(score) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Déclare result avec let et la valeur score.",
             "Modifie result après sa déclaration."
@@ -112,7 +112,7 @@
             "Le résultat d’une comparaison est déjà un booléen : inutile d’ajouter if puis return true/false.",
             "Les tableaux et objets sont comparés par identité avec ===, pas par contenu."
           ],
-          "starter": "function sameValue(a, b) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function sameValue(a, b) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Compare directement a et b.",
             "Utilise trois signes égal."
@@ -144,7 +144,8 @@
             }
           ]
         }
-      ]
+      ],
+      "officialLevels": []
     },
     {
       "id": "numbers",
@@ -158,13 +159,7 @@
         "Le modulo % permet de tester la divisibilité. Pour un entier négatif, son reste peut être négatif ; normalise avec Math.abs si la consigne le demande.",
         "Un accumulateur de somme commence à 0, un accumulateur de produit à 1. Le return est placé après la boucle si tous les éléments doivent être traités."
       ],
-      "checkpoint": [
-        "evensum",
-        "divisorfinder",
-        "factorial",
-        "perfectnum",
-        "fibonacci"
-      ],
+      "checkpoint": ["evensum", "factorial"],
       "lessons": [
         {
           "id": "js-learn-modulo",
@@ -178,7 +173,7 @@
             "Un reste nul signifie que la division tombe juste.",
             "Ce test fonctionne aussi avec n négatif lorsque le reste vaut zéro."
           ],
-          "starter": "function isMultiple(n, divisor) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function isMultiple(n, divisor) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Calcule le reste, pas le quotient.",
             "Compare le reste à zéro avec ===."
@@ -222,7 +217,7 @@
             "La borne <= n inclut n.",
             "Pour n = 0, la boucle ne démarre pas et la somme initiale est le bon résultat."
           ],
-          "starter": "function sumUntil(n) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function sumUntil(n) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Commence total à zéro.",
             "Ajoute chaque entier de 1 à n inclus."
@@ -254,7 +249,8 @@
             }
           ]
         }
-      ]
+      ],
+      "officialLevels": [1]
     },
     {
       "id": "patterns",
@@ -268,7 +264,7 @@
         "La récurrence de Fibonacci demande de conserver deux états. Calcule la valeur suivante avant d’écraser les valeurs nécessaires au calcul.",
         "Un mini-exercice entraîne ici une seule brique ; les vrais sujets liés au bas du chapitre demandent de les assembler."
       ],
-      "checkpoint": ["divisorfinder", "perfectnum", "factorial", "fibonacci"],
+      "checkpoint": ["divisorfinder", "fibonacci", "perfectnum"],
       "lessons": [
         {
           "id": "js-learn-proper-divisors",
@@ -282,7 +278,7 @@
             "Teste chaque candidat avec le modulo.",
             "Le résultat doit être un tableau, même quand aucun candidat ne convient."
           ],
-          "starter": "function smallDivisors(n) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function smallDivisors(n) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Crée [] avant la boucle.",
             "Ajoute d seulement si n % d === 0."
@@ -326,7 +322,7 @@
             "Évaluer [b, a + b] ne modifie pas les arguments.",
             "Ce couple est la brique d’une version itérative de Fibonacci."
           ],
-          "starter": "function nextPair(a, b) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function nextPair(a, b) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Le premier élément du résultat est b.",
             "Le second utilise encore les anciens a et b."
@@ -352,7 +348,8 @@
             }
           ]
         }
-      ]
+      ],
+      "officialLevels": [1]
     },
     {
       "id": "strings",
@@ -366,11 +363,7 @@
         "split sépare en tableau, join reconstruit une chaîne. trim enlève les blancs aux extrémités ; split(/\\s+/) gère plusieurs espaces entre les mots.",
         "slice(start, end) inclut start et exclut end, comme beaucoup de découpages Go. Les exercices précisent ici les cas vides et le type de résultat."
       ],
-      "checkpoint": [
-        "sentencepyramid",
-        "palindromic-chains",
-        "grid-words-finder"
-      ],
+      "checkpoint": ["sentencepyramid"],
       "lessons": [
         {
           "id": "js-learn-split-words",
@@ -384,7 +377,7 @@
             "Une chaîne vide découpée naïvement donne [\"\"], pas [].",
             "/\\s+/ signifie une suite d’un ou plusieurs caractères blancs."
           ],
-          "starter": "function wordsOf(text) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function wordsOf(text) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Conserve le texte nettoyé dans une variable.",
             "Retourne [] avant split si cette variable est vide."
@@ -428,7 +421,7 @@
             "reverse modifie ce tableau temporaire.",
             "join(\"\") retire les séparateurs pour reconstruire une chaîne."
           ],
-          "starter": "function reverseAscii(text) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function reverseAscii(text) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Commence par split(\"\").",
             "Inverse le tableau, pas directement la chaîne."
@@ -460,7 +453,8 @@
             }
           ]
         }
-      ]
+      ],
+      "officialLevels": [2]
     },
     {
       "id": "arrays",
@@ -476,6 +470,7 @@
       ],
       "checkpoint": [
         "array-reverse-chunks",
+        "grid-words-finder",
         "nested-array-reverser",
         "palindromic-chains"
       ],
@@ -492,7 +487,7 @@
             "value devient son dernier élément.",
             "La copie reste superficielle pour les éléments qui sont eux-mêmes des objets."
           ],
-          "starter": "function appendCopy(arr, value) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function appendCopy(arr, value) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Commence un nouveau littéral [].",
             "Déploie arr avec ...arr."
@@ -530,7 +525,7 @@
             "La boucle doit continuer tant que le début du groupe est dans le tableau.",
             "Chaque groupe est ajouté au tableau de résultat avec push."
           ],
-          "starter": "function chunksOf(arr, size) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function chunksOf(arr, size) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Avance l’indice du début de groupe de size à chaque tour.",
             "Le groupe est arr.slice(i, i + size)."
@@ -568,7 +563,7 @@
             "Chaque row doit aussi être copiée.",
             "On modifie ensuite copy[0][0], jamais rows[0][0]."
           ],
-          "starter": "function editFirstCopy(rows, value) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function editFirstCopy(rows, value) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Construis un tableau de nouvelles lignes.",
             "Copie chaque ligne avec [...row]."
@@ -597,7 +592,8 @@
             }
           ]
         }
-      ]
+      ],
+      "officialLevels": [2]
     },
     {
       "id": "objects",
@@ -612,10 +608,10 @@
         "Deux variables peuvent partager un même objet. {...obj} crée une copie superficielle. Les clés d’objets sont des chaînes (ou des symboles), contrairement à une map Go typée."
       ],
       "checkpoint": [
-        "object-lab",
-        "election-mix",
         "character-maker",
-        "flat-object"
+        "election-mix",
+        "flat-object",
+        "object-lab"
       ],
       "lessons": [
         {
@@ -630,7 +626,7 @@
             "Ne teste donc pas seulement if (obj[key]).",
             "Object.hasOwn ne remonte pas la chaîne des prototypes."
           ],
-          "starter": "function containsKey(obj, key) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function containsKey(obj, key) {\n  // Écris ton code ici.\n}",
           "hints": [
             "La présence et la valeur sont deux questions différentes.",
             "Passe obj et key à Object.hasOwn."
@@ -679,7 +675,7 @@
             "const [key, value] récupère les deux éléments.",
             "La clé n’intervient pas dans cette somme, mais la valeur oui."
           ],
-          "starter": "function sumProperties(obj) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function sumProperties(obj) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Initialise une somme à zéro.",
             "Parcours Object.entries(obj)."
@@ -710,7 +706,8 @@
             }
           ]
         }
-      ]
+      ],
+      "officialLevels": [4]
     },
     {
       "id": "callbacks",
@@ -724,7 +721,7 @@
         "Une fonction fléchée sans accolades retourne son expression : x => x * 2. Avec des accolades, il faut return : x => { return x * 2; }.",
         "map transforme chaque élément, filter garde les éléments dont le prédicat est vrai, reduce accumule une seule valeur. Commence par savoir les écrire en boucle : la méthode ne remplace pas le raisonnement."
       ],
-      "checkpoint": ["pipeline", "election-mix", "object-lab"],
+      "checkpoint": ["pipeline"],
       "lessons": [
         {
           "id": "js-learn-map-values",
@@ -738,7 +735,7 @@
             "Le callback reçoit chaque élément.",
             "Un callback avec accolades doit retourner sa valeur transformée."
           ],
-          "starter": "function transformAll(values, transform) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function transformAll(values, transform) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Appelle map sur values.",
             "Transmets un callback qui appelle transform."
@@ -786,7 +783,7 @@
             "filter conserve l’ordre relatif des éléments gardés.",
             "Il ne transforme pas les éléments : c’est le rôle de map."
           ],
-          "starter": "function keepMatching(values, predicate) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function keepMatching(values, predicate) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Utilise filter, pas map.",
             "Le callback fournit la décision garder/rejeter."
@@ -821,46 +818,9 @@
               "calls": []
             }
           ]
-        },
-        {
-          "id": "js-learn-reduce-sum",
-          "title": "Comprendre l’accumulateur de reduce",
-          "target": "sumWithReduce",
-          "minutes": 5,
-          "task": "Renvoie la somme de values avec reduce et une valeur initiale explicite de 0.",
-          "bridge": "Le premier argument du callback est l’accumulateur, comme total dans une boucle Go.",
-          "explanation": [
-            "reduce appelle le callback avec l’accumulateur et l’élément courant.",
-            "Le callback doit renvoyer le nouvel accumulateur.",
-            "La valeur initiale permet de traiter [] sans exception."
-          ],
-          "starter": "function sumWithReduce(values) {\n  // Écris ton code ici.\n}\n",
-          "hints": [
-            "Le callback reçoit total puis value.",
-            "Son résultat est total + value."
-          ],
-          "solution": "function sumWithReduce(values) {\n  return values.reduce((total, value) => total + value, 0);\n}",
-          "walkthrough": [
-            "Le callback reçoit total puis value.",
-            "Son résultat est total + value.",
-            "Le second argument de reduce est 0."
-          ],
-          "tests": [
-            {
-              "label": "Cas 1",
-              "args": [[2, 4, 6]],
-              "expected": 12,
-              "calls": []
-            },
-            {
-              "label": "Cas 2",
-              "args": [[]],
-              "expected": 0,
-              "calls": []
-            }
-          ]
         }
-      ]
+      ],
+      "officialLevels": [4]
     },
     {
       "id": "closures",
@@ -875,7 +835,7 @@
         "L’état placé dans la fonction extérieure est propre à chaque création. Ne le mets pas dans une variable globale si deux créateurs doivent rester indépendants.",
         "Une fonction peut se retourner elle-même après avoir traité une valeur. L’appel sans argument peut servir de signal de fin ; dans ce cas, le paramètre vaut undefined. Ce protocole doit être explicitement défini par la consigne."
       ],
-      "checkpoint": ["character-maker", "election-mix", "pipeline"],
+      "checkpoint": [],
       "lessons": [
         {
           "id": "js-learn-return-function",
@@ -889,7 +849,7 @@
             "La fonction renvoyée reçoit value plus tard.",
             "base reste accessible même après la fin du premier appel."
           ],
-          "starter": "function makeAdder(base) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function makeAdder(base) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Il faut retourner une fonction, pas encore un nombre.",
             "Cette fonction doit avoir un paramètre value."
@@ -927,7 +887,7 @@
             "Si current était recréé à chaque appel, le compteur repartirait du début.",
             "Chaque appel à makeCounter fabrique un compteur indépendant."
           ],
-          "starter": "function makeCounter(start) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function makeCounter(start) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Déclare l’état avant de retourner la fonction.",
             "La fonction intérieure n’a pas de paramètre."
@@ -965,7 +925,7 @@
             "Après step(\"red\"), il faut renvoyer step pour autoriser (\"blue\") juste après.",
             "Quand aucun argument n’est fourni, le paramètre vaut undefined : on termine avec une copie du résultat."
           ],
-          "starter": "function makeCollector() {\n  // Écris ton code ici.\n}\n",
+          "starter": "function makeCollector() {\n  // Écris ton code ici.\n}",
           "hints": [
             "Déclare words et step dans la fonction extérieure.",
             "Dans step, distingue word === undefined de l’ajout d’un mot."
@@ -991,7 +951,8 @@
             }
           ]
         }
-      ]
+      ],
+      "officialLevels": []
     },
     {
       "id": "grids",
@@ -1008,8 +969,9 @@
         "push ajoute au sommet d’une pile tableau et pop retire son dernier élément. Marque une case avant d’explorer ses voisins pour ne pas la traiter indéfiniment. Des voisins corrects ne suffisent pas : il faut aussi atteindre toutes les cases du chemin."
       ],
       "checkpoint": [
-        "grid-words-finder",
+        "bubble-sort-analyzer",
         "grid-words-finder-2",
+        "insertion-sort-analyzer",
         "snake-path-validator"
       ],
       "lessons": [
@@ -1025,7 +987,7 @@
             "Cela permet de ne lire grid[y] qu’après avoir validé y.",
             "Utilise la longueur de la ligne choisie, pas celle de la première ligne."
           ],
-          "starter": "function insideGrid(grid, y, x) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function insideGrid(grid, y, x) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Commence par y >= 0 et y < grid.length.",
             "Ajoute ensuite les bornes de x."
@@ -1069,7 +1031,7 @@
             "String(y) + \",\" + String(x) donne une clé stable pour des coordonnées entières.",
             "seen.add(key) conserve la clé ; seen.size donne le nombre de clés uniques."
           ],
-          "starter": "function uniqueCells(cells) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function uniqueCells(cells) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Crée un Set avant la boucle.",
             "Convertis chaque couple en la même chaîne pour les mêmes coordonnées."
@@ -1113,12 +1075,12 @@
             "Ignore les cases hors limites, les zéros et les clés déjà visitées. Ajoute la clé au Set avant d’empiler les voisins.",
             "Le nombre de clés visitées est la taille de la composante, pas forcément le nombre total de 1 de la grille. Pour le vrai serpent, il faut ensuite comparer au total et contrôler le nombre de voisins."
           ],
-          "starter": "function reachableOnes(grid, y, x) {\n  // Écris ton code ici.\n}\n",
+          "starter": "function reachableOnes(grid, y, x) {\n  // Écris ton code ici.\n}",
           "hints": [
             "Déclare stack et seen avant le while.",
             "À chaque case extraite, valide les bornes et la valeur, puis rejette les clés déjà visitées."
           ],
-          "solution": "function reachableOnes(grid, y, x) {\n  const stack = [[y, x]];\n  const seen = new Set();\n  while (stack.length > 0) {\n    const [cy, cx] = stack.pop();\n    if (cy < 0 || cy >= grid.length || cx < 0 || cx >= grid[cy].length || grid[cy][cx] !== 1) continue;\n    const key = String(cy) + \",\" + String(cx);\n    if (seen.has(key)) continue;\n    seen.add(key);\n    for (const [dy, dx] of [[-1,0],[1,0],[0,-1],[0,1]]) stack.push([cy+dy, cx+dx]);\n  }\n  return seen.size;\n}",
+          "solution": "function reachableOnes(grid, y, x) {\n  const stack = [[y, x]];\n  const seen = new Set();\n  while (stack.length > 0) {\n    const [cy, cx] = stack.pop();\n    if (\n      cy < 0 ||\n      cy >= grid.length ||\n      cx < 0 ||\n      cx >= grid[cy].length ||\n      grid[cy][cx] !== 1\n    )\n      continue;\n    const key = String(cy) + \",\" + String(cx);\n    if (seen.has(key)) continue;\n    seen.add(key);\n    for (const [dy, dx] of [\n      [-1, 0],\n      [1, 0],\n      [0, -1],\n      [0, 1],\n    ])\n      stack.push([cy + dy, cx + dx]);\n  }\n  return seen.size;\n}",
           "walkthrough": [
             "Déclare stack et seen avant le while.",
             "À chaque case extraite, valide les bornes et la valeur, puis rejette les clés déjà visitées.",
@@ -1160,410 +1122,500 @@
             }
           ]
         }
-      ]
+      ],
+      "officialLevels": [3]
     },
     {
       "id": "sorting",
-      "title": "Tris : ordre, étapes et compteurs",
-      "goal": "Comprendre une étape de tri avant de reproduire tout un analyseur.",
-      "go": "less := func(a, b int) bool { return a < b }\n// Certains tris Go utilisent un booléen Less.",
-      "js": "const compare = (a, b) => a - b;\n// En JS : négatif, zéro ou positif.",
+      "title": "N5 · Promesses, concurrence et relance",
+      "goal": "Comprendre le résultat différé, les rejets et les stratégies de coordination.",
+      "go": "// Go : select sur un résultat et un timer\n// JS : Promise.race sur des promesses concurrentes",
+      "js": "async function load() {\n  const value = await Promise.resolve(4);\n  return value * 2;\n}",
       "notes": [
-        "Un comparateur JS renvoie souvent un nombre : négatif si a vient avant b, positif si a vient après b, zéro pour l’égalité.",
-        "Pour échanger deux éléments dans une copie, on peut utiliser une variable temporaire ou la décomposition [copy[i], copy[j]] = [copy[j], copy[i]].",
-        "Une comparaison n’est pas un échange. Dans les analyseurs, les compteurs doivent suivre exactement l’algorithme imposé par la consigne.",
-        "sort ne remplace pas un tri à bulles ou par insertion demandé. On commence ici par une passe et par un décalage, avant les vrais sujets."
+        "Go peut lancer des goroutines ; JavaScript coordonne souvent des opérations asynchrones avec Promise. Une Promise représente un succès futur ou un rejet, pas la valeur finale immédiate.",
+        "async fait toujours renvoyer une Promise. await attend son résultat dans une fonction async et relance son erreur en cas de rejet ; il ne bloque pas le processus comme une attente active.",
+        "Promise.all attend toutes les réussites et préserve l’ordre des entrées, pas l’ordre d’achèvement. Le premier rejet fait rejeter la combinaison. Promise.allSettled permet de recueillir aussi les échecs.",
+        "Une échéance avec Promise.race fait gagner la première résolution ou le premier rejet. Elle n’annule pas automatiquement les autres opérations : nettoie les timers et distingue délai global et délai par étape.",
+        "Pour relancer, il faut une fonction qui crée une nouvelle tentative. Réattendre la même Promise rejetée ne recommence aucun travail."
       ],
-      "checkpoint": ["bubble-sort-analyzer", "insertion-sort-analyzer"],
+      "checkpoint": [
+        "exam-grader",
+        "final-attempt",
+        "sleep-breaker",
+        "zoo-race"
+      ],
       "lessons": [
         {
-          "id": "js-learn-comparator",
-          "title": "Interpréter le signe",
-          "target": "isBefore",
-          "minutes": 5,
-          "task": "Renvoie si comparator place a strictement avant b.",
-          "bridge": "Le booléen attendu se déduit du signe du résultat du comparateur.",
+          "id": "js-learn-timed-winner",
+          "title": "Faire une course avec une échéance",
+          "target": "timedWinner",
+          "task": "delays contient des délais entiers non négatifs en ms ; limit est un délai positif. Lance une Promise par délai et renvoie l’indice de la première résolue, ou \"timeout\" si l’échéance gagne. Annule les timers encore en attente.",
+          "bridge": "Promise.race ne supprime pas les opérations perdantes : leur nettoyage reste à ta charge.",
           "explanation": [
-            "Le callback est fourni par le test.",
-            "N’utilise pas directement a < b : l’ordre peut être décroissant.",
-            "La valeur zéro signifie égalité, pas avant."
+            "Chaque Promise reçoit un resolve qui sera appelé par setTimeout.",
+            "Le tableau de jobs contient aussi une Promise d’échéance. Promise.race observe la première qui se termine.",
+            "Conserve les identifiants des timers et nettoie-les dans finally, y compris lorsque l’entrée est vide."
           ],
-          "starter": "function isBefore(a, b, comparator) {\n  // Écris ton code ici.\n}\n",
-          "hints": [
-            "Appelle comparator avec a et b.",
-            "Compare le résultat à zéro."
-          ],
-          "solution": "function isBefore(a, b, comparator) {\n  return comparator(a, b) < 0;\n}",
-          "walkthrough": [
-            "Appelle comparator avec a et b.",
-            "Compare le résultat à zéro.",
-            "Le signe recherché est négatif."
-          ],
+          "starter": "async function timedWinner(delays, limit) {\n  return \"timeout\";\n}",
+          "solution": "async function timedWinner(delays, limit) {\n  const timers = [];\n  const jobs = delays.map(\n    (delay, index) =>\n      new Promise((resolve) => {\n        timers.push(setTimeout(() => resolve(index), delay));\n      }),\n  );\n  jobs.push(\n    new Promise((resolve) => {\n      timers.push(setTimeout(() => resolve(\"timeout\"), limit));\n    }),\n  );\n  try {\n    return await Promise.race(jobs);\n  } finally {\n    for (const timer of timers) clearTimeout(timer);\n  }\n}",
           "tests": [
             {
-              "label": "Cas 1",
-              "args": [
-                2,
-                5,
-                {
-                  "$fn": "ascending"
-                }
-              ],
-              "expected": true,
+              "label": "Une opération finit avant le délai",
+              "args": [[1, 30], 80],
+              "expected": 0,
               "calls": []
             },
             {
-              "label": "Cas 2",
-              "args": [
-                2,
-                5,
-                {
-                  "$fn": "descending"
-                }
-              ],
-              "expected": false,
+              "label": "Le délai expire avant les opérations",
+              "args": [[60], 1],
+              "expected": "timeout",
               "calls": []
             },
             {
-              "label": "Cas 3",
-              "args": [
-                3,
-                3,
-                {
-                  "$fn": "ascending"
-                }
-              ],
-              "expected": false,
+              "label": "Sans opération",
+              "args": [[], 1],
+              "expected": "timeout",
               "calls": []
             }
-          ]
+          ],
+          "hints": [
+            "La Promise de délai se trouve dans le même Promise.race que les jobs.",
+            "Le finally s’exécute après return await ; clearTimeout nettoie les perdants."
+          ],
+          "walkthrough": [
+            "Tous les timers sont programmés sans attente séquentielle.",
+            "La course peut renvoyer un indice ou le marqueur de délai.",
+            "finally libère les timers même si la course est déjà finie."
+          ],
+          "minutes": 10
         },
         {
-          "id": "js-learn-bubble-pass",
-          "title": "Faire une seule passe à bulles",
-          "target": "bubblePass",
-          "minutes": 8,
-          "task": "Renvoie une copie après une passe gauche → droite : échange chaque paire voisine si la gauche est plus grande.",
-          "bridge": "Une passe n’est pas le tri complet ; elle pousse le plus grand élément vers la fin.",
+          "id": "js-learn-settled",
+          "title": "Recueillir succès et rejets",
+          "target": "settledValues",
+          "task": "Chaque entrée est {ok:boolean,value}. Crée une Promise résolue si ok, rejetée sinon ; renvoie les valeurs réussies ou \"erreur\" dans l’ordre initial.",
+          "bridge": "allSettled sert à observer tous les résultats sans abandonner au premier rejet.",
           "explanation": [
-            "Les paires sont (0,1), (1,2), etc.",
-            "La borne i < copy.length - 1 évite une case de droite inexistante.",
-            "Une case peut être déplacée plusieurs fois pendant une seule passe."
+            "Transforme les entrées avec map.",
+            "allSettled retourne des objets status et value/reason.",
+            "Une seconde map extrait value pour fulfilled et \"erreur\" pour rejected."
           ],
-          "starter": "function bubblePass(arr) {\n  // Écris ton code ici.\n}\n",
-          "hints": ["Copie arr.", "Compare les voisins dans une seule boucle."],
-          "solution": "function bubblePass(arr) {\n  const copy = [...arr];\n  for (let i = 0; i < copy.length - 1; i++) {\n    if (copy[i] > copy[i+1]) [copy[i], copy[i+1]] = [copy[i+1], copy[i]];\n  }\n  return copy;\n}",
-          "walkthrough": [
-            "Copie arr.",
-            "Compare les voisins dans une seule boucle.",
-            "Ne relance pas une deuxième passe."
-          ],
+          "starter": "async function settledValues(rows) {\n  return [];\n}",
+          "solution": "async function settledValues(rows) {\n  const jobs = rows.map((row) =>\n    row.ok ? Promise.resolve(row.value) : Promise.reject(row.value),\n  );\n  const results = await Promise.allSettled(jobs);\n  return results.map((result) =>\n    result.status === \"fulfilled\" ? result.value : \"erreur\",\n  );\n}",
           "tests": [
             {
               "label": "Cas 1",
-              "args": [[3, 2, 1]],
-              "expected": [2, 1, 3],
+              "args": [
+                [
+                  {
+                    "ok": true,
+                    "value": 3
+                  },
+                  {
+                    "ok": false,
+                    "value": "x"
+                  },
+                  {
+                    "ok": true,
+                    "value": 0
+                  }
+                ]
+              ],
+              "expected": [3, "erreur", 0],
               "calls": []
             },
             {
               "label": "Cas 2",
-              "args": [[1, 2]],
-              "expected": [1, 2],
-              "calls": []
-            },
-            {
-              "label": "Cas 3",
               "args": [[]],
               "expected": [],
               "calls": []
             }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "recursion",
-      "title": "Objets imbriqués et récursion",
-      "goal": "Définir un cas d’arrêt puis transporter un chemin jusqu’aux feuilles.",
-      "go": "func depth(node Node) int {\n    // cas simple, puis appels sur les enfants\n}",
-      "js": "function depth(value) {\n  if (value === null || typeof value !== \"object\") return 0;\n  // parcourir les enfants puis les combiner\n}",
-      "notes": [
-        "Un appel récursif doit se rapprocher d’un cas d’arrêt. Pour une arborescence JSON finie, on descend vers ses propriétés enfants.",
-        "null doit être traité explicitement avant Object.values ou Object.entries. typeof null vaut \"object\" mais null n’a pas de propriétés à parcourir.",
-        "Un chemin doit être transmis à l’appel suivant : le préfixe du parent ne se reconstruit pas tout seul. Pour le premier niveau, évite de produire un point initial.",
-        "Les entrées de ce chapitre sont des arbres sans référence circulaire. Les cycles demanderaient une stratégie supplémentaire et ne sont pas supposés ici."
-      ],
-      "checkpoint": ["flat-object", "character-maker"],
-      "lessons": [
-        {
-          "id": "js-learn-base-case",
-          "title": "Reconnaître une feuille",
-          "target": "isLeaf",
-          "minutes": 5,
-          "task": "Renvoie true pour null et les valeurs qui ne sont pas des objets ; false pour tableaux et objets.",
-          "bridge": "Le cas d’arrêt doit être explicite avant de parcourir les enfants, comme en Go.",
-          "explanation": [
-            "Les nombres, chaînes et booléens sont des feuilles ici.",
-            "Un tableau, même vide, est un conteneur.",
-            "null est une feuille malgré son typeof historique."
           ],
-          "starter": "function isLeaf(value) {\n  // Écris ton code ici.\n}\n",
           "hints": [
-            "Teste null explicitement.",
-            "Ajoute le test typeof value !== \"object\"."
+            "Utilise Promise.allSettled(jobs).",
+            "Le status de réussite s’écrit \"fulfilled\"."
           ],
-          "solution": "function isLeaf(value) {\n  return value === null || typeof value !== \"object\";\n}",
           "walkthrough": [
-            "Teste null explicitement.",
-            "Ajoute le test typeof value !== \"object\".",
-            "Relie les deux cas par ||."
+            "Tous les rejets ont un observateur.",
+            "Les résultats restent alignés sur les entrées.",
+            "Zéro est une réussite valide, pas une valeur à remplacer."
           ],
+          "minutes": 10
+        },
+        {
+          "id": "js-learn-retry",
+          "title": "Créer une nouvelle tentative",
+          "target": "retryValue",
+          "task": "Pour failures>=0 et limit>=1, crée une opération locale qui rejette les failures premières tentatives puis résout \"ok\". Essaie au maximum limit fois et renvoie \"échec\" si aucune ne réussit.",
+          "bridge": "Une relance réexécute une fonction ; elle ne réutilise pas une Promise déjà rejetée.",
+          "explanation": [
+            "Le compteur attempts vit dans une closure.",
+            "Chaque appel à operation crée une nouvelle Promise.",
+            "try/await/catch permet de continuer après un rejet jusqu’à limit."
+          ],
+          "starter": "async function retryValue(failures, limit) {\n  return \"échec\";\n}",
+          "solution": "async function retryValue(failures, limit) {\n  let attempts = 0;\n  const operation = () =>\n    ++attempts <= failures\n      ? Promise.reject(new Error(\"échec\"))\n      : Promise.resolve(\"ok\");\n  for (let i = 0; i < limit; i++) {\n    try {\n      return await operation();\n    } catch (error) {}\n  }\n  return \"échec\";\n}",
           "tests": [
             {
               "label": "Cas 1",
-              "args": [null],
-              "expected": true,
+              "args": [2, 3],
+              "expected": "ok",
               "calls": []
             },
             {
               "label": "Cas 2",
-              "args": [3],
-              "expected": true,
+              "args": [3, 3],
+              "expected": "échec",
               "calls": []
             },
             {
               "label": "Cas 3",
-              "args": [{}],
-              "expected": false,
+              "args": [0, 1],
+              "expected": "ok",
+              "calls": []
+            }
+          ],
+          "hints": [
+            "Le return await operation() doit être dans le try.",
+            "Le retour \"échec\" vient après toute la boucle."
+          ],
+          "walkthrough": [
+            "Le compteur permet de simuler une opération instable sans réseau.",
+            "Chaque itération crée une nouvelle tentative.",
+            "Un succès termine immédiatement les relances."
+          ],
+          "minutes": 10
+        }
+      ],
+      "officialLevels": [5]
+    },
+    {
+      "id": "recursion",
+      "title": "N6 · Structures profondes et identité",
+      "goal": "Distinguer égalité de contenu, copie indépendante et protection récursive.",
+      "go": "func depth(node Node) int {\n    // cas simple, puis appels sur les enfants\n}",
+      "js": "const child = { value: 1 };\nconst copy = { ...child };\n// copy !== child, mais les sous-objets demandent aussi une copie.",
+      "notes": [
+        "En Go une structure contenant des pointeurs peut partager des objets ; en JS une copie superficielle conserve aussi les références des sous-objets et tableaux.",
+        "Pour les arbres JSON de ces leçons, distingue null, tableau, objet et primitive. null est un cas terminal malgré typeof null === \"object\".",
+        "Une récursion traite un enfant plus petit à chaque appel. Les cycles, Date, Map, Set, fonctions et symboles sont exclus ici ; les vrais sujets peuvent exiger d’autres contrats.",
+        "Object.freeze ne gèle que le niveau courant. Pour une protection profonde, parcours les enfants avant de geler l’objet. Freeze n’est pas une copie.",
+        "Pour comparer deux structures, les références peuvent différer malgré un contenu égal. Vérifie le type de collection, les clés propres et chaque valeur."
+      ],
+      "checkpoint": ["deep-clone", "deep-equal", "deep-find", "deep-freeze"],
+      "lessons": [
+        {
+          "id": "js-learn-clone-frozen",
+          "title": "Copier et geler tous les niveaux",
+          "target": "cloneFrozenReport",
+          "task": "Pour un arbre JSON dont la racine est objet ou tableau, renvoie {copy,independent,frozen}. copy est une copie récursive gelée ; independent vérifie que chaque objet de la copie diffère de son original ; frozen vérifie Object.isFrozen à chaque niveau.",
+          "bridge": "Les trois propriétés rendent visibles la copie, le partage et la protection.",
+          "explanation": [
+            "Les primitives et null sont renvoyés tels quels par le helper de copie.",
+            "Copie séparément les tableaux et les propriétés propres des objets.",
+            "Le rapport doit parcourir réellement les objets pour vérifier les deux booléens, pas les coder en dur."
+          ],
+          "starter": "function cloneFrozenReport(value) {\n  return { copy: value, independent: false, frozen: false };\n}",
+          "solution": "function cloneFrozenReport(value) {\n  function clone(x) {\n    if (x === null || typeof x !== \"object\") return x;\n    const out = Array.isArray(x)\n      ? x.map(clone)\n      : Object.fromEntries(Object.entries(x).map(([k, v]) => [k, clone(v)]));\n    return Object.freeze(out);\n  }\n  const copy = clone(value);\n  function independent(a, b) {\n    return (\n      a === null ||\n      typeof a !== \"object\" ||\n      (a !== b && Object.keys(a).every((k) => independent(a[k], b[k])))\n    );\n  }\n  function frozen(x) {\n    return (\n      x === null ||\n      typeof x !== \"object\" ||\n      (Object.isFrozen(x) && Object.values(x).every(frozen))\n    );\n  }\n  return { copy, independent: independent(value, copy), frozen: frozen(copy) };\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                {
+                  "a": [
+                    1,
+                    {
+                      "b": 2
+                    }
+                  ]
+                }
+              ],
+              "expected": {
+                "copy": {
+                  "a": [
+                    1,
+                    {
+                      "b": 2
+                    }
+                  ]
+                },
+                "independent": true,
+                "frozen": true
+              },
               "calls": []
             },
             {
-              "label": "Cas 4",
+              "label": "Cas 2",
               "args": [[]],
-              "expected": false,
+              "expected": {
+                "copy": [],
+                "independent": true,
+                "frozen": true
+              },
               "calls": []
             }
-          ]
+          ],
+          "hints": [
+            "Clone les enfants avant Object.freeze(out).",
+            "Pour chaque objet, compare les références et vérifie aussi ses descendants."
+          ],
+          "walkthrough": [
+            "Chaque allocation sépare une branche de son original.",
+            "Le gel suit la récursion pour couvrir les descendants.",
+            "Le rapport distingue ces deux obligations."
+          ],
+          "minutes": 10
         },
         {
-          "id": "js-learn-object-leaves",
-          "title": "Compter les feuilles d’un objet",
-          "target": "countLeaves",
-          "minutes": 8,
-          "task": "Pour un arbre JSON, compte les valeurs primitives et null. Un objet ou tableau vide compte pour 0.",
-          "bridge": "Object.values permet de se concentrer sur les enfants sans leurs clés.",
+          "id": "js-learn-deep-equal",
+          "title": "Comparer sans JSON.stringify",
+          "target": "deepEqual",
+          "task": "Compare récursivement des arbres JSON. L’ordre des clés objet ne compte pas ; l’ordre des tableaux compte.",
+          "bridge": "Les chaînes JSON peuvent différer par l’ordre des clés pour des objets équivalents.",
           "explanation": [
-            "Une feuille compte pour 1.",
-            "Un conteneur additionne les comptes de ses enfants.",
-            "L’absence d’enfant laisse le compteur à zéro."
+            "Commence par a===b.",
+            "Refuse null ou une primitive face à un objet différent.",
+            "Compare Array.isArray, les clés propres puis chaque sous-valeur."
           ],
-          "starter": "function countLeaves(value) {\n  // Écris ton code ici.\n}\n",
-          "hints": [
-            "Traite null et les primitives avant Object.values.",
-            "Démarre count à zéro pour un conteneur."
-          ],
-          "solution": "function countLeaves(value) {\n  if (value === null || typeof value !== \"object\") return 1;\n  let count = 0;\n  for (const child of Object.values(value)) count += countLeaves(child);\n  return count;\n}",
-          "walkthrough": [
-            "Traite null et les primitives avant Object.values.",
-            "Démarre count à zéro pour un conteneur.",
-            "Ajoute countLeaves(child) pour chaque enfant."
-          ],
+          "starter": "function deepEqual(a, b) {\n  return false;\n}",
+          "solution": "function deepEqual(a, b) {\n  if (a === b) return true;\n  if (\n    a === null ||\n    b === null ||\n    typeof a !== \"object\" ||\n    typeof b !== \"object\"\n  )\n    return false;\n  if (Array.isArray(a) !== Array.isArray(b)) return false;\n  const keys = Object.keys(a);\n  return (\n    keys.length === Object.keys(b).length &&\n    keys.every((key) => Object.hasOwn(b, key) && deepEqual(a[key], b[key]))\n  );\n}",
           "tests": [
             {
               "label": "Cas 1",
               "args": [
                 {
                   "a": 1,
-                  "b": {
-                    "c": null
-                  }
+                  "b": [2]
+                },
+                {
+                  "b": [2],
+                  "a": 1
                 }
               ],
-              "expected": 2,
+              "expected": true,
               "calls": []
             },
             {
               "label": "Cas 2",
-              "args": [{}],
-              "expected": 0,
+              "args": [
+                [1, 2],
+                [2, 1]
+              ],
+              "expected": false,
               "calls": []
             },
             {
               "label": "Cas 3",
-              "args": [[[1], 2]],
-              "expected": 2,
+              "args": [null, {}],
+              "expected": false,
               "calls": []
             }
-          ]
+          ],
+          "hints": [
+            "Compare la nature tableau/objet avant les clés.",
+            "Chaque clé de a doit exister dans b."
+          ],
+          "walkthrough": [
+            "L’égalité immédiate traite les primitives identiques.",
+            "Les gardes empêchent Object.keys(null).",
+            "L’égalité structurelle vérifie tous les descendants."
+          ],
+          "minutes": 10
         },
         {
-          "id": "js-learn-leaf-paths",
-          "title": "Transporter le préfixe récursif",
-          "target": "leafPaths",
-          "minutes": 8,
-          "task": "Renvoie les chemins pointés de toutes les feuilles d’un objet JSON, dans l’ordre d’Object.entries. La racine est un objet ; un conteneur vide ne produit aucun chemin.",
-          "bridge": "Un helper interne peut capturer le tableau de résultats, comme une closure Go.",
+          "id": "js-learn-deep-find",
+          "title": "Traverser un chemin sécurisé",
+          "target": "deepFind",
+          "task": "Lis path (tableau de clés) dans root ; renvoie null si une propriété propre manque. Un chemin vide renvoie root.",
+          "bridge": "On généralise l’accès map[key] Go en répétant une étape protégée.",
           "explanation": [
-            "Le helper reçoit la valeur courante et son chemin.",
-            "Une feuille ajoute le chemin ; un conteneur continue vers ses enfants.",
-            "Object.entries fournit aussi les indices de tableaux sous forme de chaînes."
+            "current représente la valeur atteinte jusqu’ici.",
+            "Avant une clé, refuse null et les valeurs qui ne sont pas des objets.",
+            "Object.hasOwn évite d’accéder à une propriété héritée."
           ],
-          "starter": "function leafPaths(obj) {\n  // Écris ton code ici.\n}\n",
-          "hints": [
-            "Crée un helper visit(value, prefix).",
-            "Ajoute prefix uniquement quand value est une feuille."
-          ],
-          "solution": "function leafPaths(obj) {\n  const result = [];\n  function visit(value, prefix) {\n    if (value === null || typeof value !== \"object\") { result.push(prefix); return; }\n    for (const [key, child] of Object.entries(value)) {\n      visit(child, prefix === \"\" ? key : prefix + \".\" + key);\n    }\n  }\n  visit(obj, \"\");\n  return result;\n}",
-          "walkthrough": [
-            "Crée un helper visit(value, prefix).",
-            "Ajoute prefix uniquement quand value est une feuille.",
-            "Transmets le nouveau chemin à chaque appel récursif."
-          ],
+          "starter": "function deepFind(root, path) {\n  return null;\n}",
+          "solution": "function deepFind(root, path) {\n  let current = root;\n  for (const key of path) {\n    if (\n      current === null ||\n      typeof current !== \"object\" ||\n      !Object.hasOwn(current, key)\n    )\n      return null;\n    current = current[key];\n  }\n  return current;\n}",
           "tests": [
             {
               "label": "Cas 1",
               "args": [
                 {
-                  "user": {
-                    "name": "Ada"
-                  },
-                  "tags": ["go", "js"]
-                }
+                  "a": [
+                    {
+                      "b": 3
+                    }
+                  ]
+                },
+                ["a", "0", "b"]
               ],
-              "expected": ["user.name", "tags.0", "tags.1"],
+              "expected": 3,
               "calls": []
             },
             {
               "label": "Cas 2",
-              "args": [{}],
-              "expected": [],
+              "args": [{}, ["toString"]],
+              "expected": null,
+              "calls": []
+            },
+            {
+              "label": "Cas 3",
+              "args": [
+                {
+                  "x": 0
+                },
+                []
+              ],
+              "expected": {
+                "x": 0
+              },
               "calls": []
             }
-          ]
+          ],
+          "hints": [
+            "Boucle sur path, pas sur les propriétés de root.",
+            "Le test de présence doit précéder current[key]."
+          ],
+          "walkthrough": [
+            "La valeur courante évolue après chaque clé valide.",
+            "Les propriétés héritées sont exclues.",
+            "Le chemin vide ne fait aucune lecture."
+          ],
+          "minutes": 10
         }
-      ]
+      ],
+      "officialLevels": [6]
     },
     {
       "id": "transfer",
-      "title": "Assembler avant le checkpoint",
-      "goal": "Combiner deux ou trois briques puis revenir aux vrais sujets.",
-      "go": "// Une fonction Go peut recevoir des callbacks et renvoyer une struct.\n// Le changement de syntaxe ne change pas le besoin de tracer les états.",
-      "js": "// En JS, mêmes invariants : entrée, état intermédiaire, sortie.\n// Vérifie le type exact et les effets de bord avant d’optimiser.",
+      "title": "N7 · Proxy et transformation récursive",
+      "goal": "Intercepter un accès et transformer des clés sans modifier la source.",
+      "go": "// Une map Go ne permet pas d’intercepter une lecture.\n// Un wrapper explicite joue un rôle voisin du Proxy JS.",
+      "js": "const proxy = new Proxy(target, {\n  get(target, key, receiver) {\n    return Reflect.get(target, key, receiver);\n  }\n});",
       "notes": [
-        "Les exercices précédents étaient volontairement petits. Ici, on combine les outils pour vérifier qu’ils restent compris hors de leur exemple initial.",
-        "Avant de coder, écris l’entrée, la sortie et deux cas limites. Trace une petite entrée à la main, puis seulement traduis cette démarche en JS.",
-        "Les cas de test sont publics et ciblés ; les réussir n’est pas équivalent à réussir tous les tests du checkpoint. Les vrais sujets liés au chapitre sont l’étape de transfert suivante.",
-        "En cas d’échec, identifie la brique en cause : callback, copie, borne, compteur ou cas d’arrêt. Reviens à ce petit exercice plutôt que de modifier le programme au hasard."
+        "Proxy enveloppe un objet pour intercepter des opérations avec des traps. get reçoit target, key et receiver ; key peut être une string ou un symbole.",
+        "Reflect.get(target,key,receiver) délègue une lecture en préservant le receveur, notamment pour les getters. Lire proxy[key] depuis son propre get recréerait une récursion infinie.",
+        "Un proxy ne copie pas sa cible. Un accès inversé par valeur exige une politique quand plusieurs clés ont la même valeur ; le vrai sujet doit préciser laquelle.",
+        "Les transformations récursives doivent distinguer tableaux, objets et primitives. Les indices d’un tableau ne sont pas des clés métier à renommer.",
+        "Deux clés transformées peuvent entrer en conflit. Dans cet exercice la dernière clé dans Object.entries gagne ; ne suppose jamais cette politique sur un autre sujet."
       ],
       "checkpoint": [
-        "pipeline",
-        "election-mix",
-        "object-lab",
-        "character-maker",
-        "flat-object"
+        "flatten-object",
+        "swappable-object",
+        "transform-keys",
+        "trap-object"
       ],
       "lessons": [
         {
-          "id": "js-learn-sum-multiples",
-          "title": "Combiner condition et somme",
-          "target": "sumMultiples",
-          "minutes": 8,
-          "task": "limit est positif ou nul, divisor > 0. Somme les entiers de 0 à limit inclus qui sont multiples de divisor.",
-          "bridge": "La démarche est celle d’une boucle Go avec un if ; seule la syntaxe JS change.",
+          "id": "js-learn-proxy-get",
+          "title": "Intercepter avec une règle précise",
+          "target": "readProxy",
+          "task": "Crée un Proxy sur obj : les propriétés propres existantes restent lisibles ; une propriété string absente donne \"absent\". Renvoie les lectures des clés du tableau keys.",
+          "bridge": "Un wrapper permet d’observer le get du proxy avec des cas publics.",
           "explanation": [
-            "La borne est inclusive.",
-            "Le modulo sélectionne les valeurs.",
-            "Le résultat est une somme numérique, pas le tableau des valeurs retenues."
+            "La trap get teste la présence propre.",
+            "Une lecture existante est déléguée à Reflect.get.",
+            "Les symboles doivent être délégués, pas transformés arbitrairement."
           ],
-          "starter": "function sumMultiples(limit, divisor) {\n  // Écris ton code ici.\n}\n",
-          "hints": [
-            "Commence la somme à zéro.",
-            "Parcours les entiers jusqu’à limit inclus."
-          ],
-          "solution": "function sumMultiples(limit, divisor) {\n  let total = 0;\n  for (let n = 0; n <= limit; n++) if (n % divisor === 0) total += n;\n  return total;\n}",
-          "walkthrough": [
-            "Commence la somme à zéro.",
-            "Parcours les entiers jusqu’à limit inclus.",
-            "Ajoute seulement ceux dont le reste est nul."
-          ],
-          "tests": [
-            {
-              "label": "Cas 1",
-              "args": [10, 3],
-              "expected": 18,
-              "calls": []
-            },
-            {
-              "label": "Cas 2",
-              "args": [0, 5],
-              "expected": 0,
-              "calls": []
-            },
-            {
-              "label": "Cas 3",
-              "args": [4, 5],
-              "expected": 0,
-              "calls": []
-            }
-          ]
-        },
-        {
-          "id": "js-learn-transform-closure",
-          "title": "Retourner un traitement configurable",
-          "target": "makeValueMapper",
-          "minutes": 8,
-          "task": "Renvoie une fonction qui prend un objet et retourne un nouvel objet où chaque valeur a été passée à transform, avec les mêmes clés.",
-          "bridge": "On combine une closure qui mémorise un callback et un parcours de map/objet.",
-          "explanation": [
-            "Le callback appartient au premier appel.",
-            "L’objet appartient à l’appel de la fonction retournée.",
-            "Le résultat doit être recréé pour chaque appel et conserver les clés."
-          ],
-          "starter": "function makeValueMapper(transform) {\n  // Écris ton code ici.\n}\n",
-          "hints": [
-            "La fonction extérieure retourne une fonction qui reçoit obj.",
-            "Cette fonction intérieure crée un objet result neuf."
-          ],
-          "solution": "function makeValueMapper(transform) {\n  return (obj) => {\n    const result = {};\n    for (const [key, value] of Object.entries(obj)) result[key] = transform(value);\n    return result;\n  };\n}",
-          "walkthrough": [
-            "La fonction extérieure retourne une fonction qui reçoit obj.",
-            "Cette fonction intérieure crée un objet result neuf.",
-            "Pour chaque entrée, applique transform à value en conservant key."
-          ],
+          "starter": "function readProxy(obj, keys) {\n  return [];\n}",
+          "solution": "function readProxy(obj, keys) {\n  const proxy = new Proxy(obj, {\n    get(target, key, receiver) {\n      if (typeof key === \"string\" && !Object.hasOwn(target, key))\n        return \"absent\";\n      return Reflect.get(target, key, receiver);\n    },\n  });\n  return keys.map((key) => proxy[key]);\n}",
           "tests": [
             {
               "label": "Cas 1",
               "args": [
                 {
-                  "$fn": "double"
+                  "a": 0
+                },
+                ["a", "b", "toString"]
+              ],
+              "expected": [0, "absent", "absent"],
+              "calls": []
+            },
+            {
+              "label": "Cas 2",
+              "args": [{}, []],
+              "expected": [],
+              "calls": []
+            }
+          ],
+          "hints": [
+            "Utilise Object.hasOwn au lieu d’un test de valeur vraie.",
+            "Délègue la lecture existante à Reflect.get."
+          ],
+          "walkthrough": [
+            "Zéro reste une valeur existante.",
+            "La trap applique une politique claire aux clés absentes.",
+            "Le wrapper lit chaque clé à travers le proxy."
+          ],
+          "minutes": 10
+        },
+        {
+          "id": "js-learn-transform-keys-deep",
+          "title": "Transformer un arbre de clés",
+          "target": "upperKeys",
+          "task": "Pour un arbre JSON ASCII, crée une copie en mettant les clés des objets en majuscules, à tous les niveaux. Les tableaux gardent leur ordre ; les primitives et null restent inchangés.",
+          "bridge": "La récursion réutilise le même contrat sur chaque enfant.",
+          "explanation": [
+            "Teste null et les primitives avant les objets.",
+            "Un tableau transforme ses valeurs avec map.",
+            "Pour un objet, transforme chaque couple clé/valeur avec Object.entries puis Object.fromEntries."
+          ],
+          "starter": "function upperKeys(value) {\n  return value;\n}",
+          "solution": "function upperKeys(value) {\n  if (value === null || typeof value !== \"object\") return value;\n  if (Array.isArray(value)) return value.map(upperKeys);\n  return Object.fromEntries(\n    Object.entries(value).map(([key, item]) => [\n      key.toUpperCase(),\n      upperKeys(item),\n    ]),\n  );\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [
+                {
+                  "a": [
+                    {
+                      "b": 2
+                    }
+                  ],
+                  "c": null
                 }
               ],
               "expected": {
-                "a": 4,
-                "b": 6
-              },
-              "calls": [
-                [
+                "A": [
                   {
-                    "a": 2,
-                    "b": 3
+                    "B": 2
                   }
-                ]
-              ]
+                ],
+                "C": null
+              },
+              "calls": []
             },
             {
               "label": "Cas 2",
               "args": [
+                [
+                  1,
+                  {
+                    "name": "Ada"
+                  }
+                ]
+              ],
+              "expected": [
+                1,
                 {
-                  "$fn": "increment"
+                  "NAME": "Ada"
                 }
               ],
-              "expected": {},
-              "calls": [[{}]]
+              "calls": []
             }
-          ]
+          ],
+          "hints": [
+            "Laisse les indices des tableaux tranquilles.",
+            "La clé et la valeur d’un objet subissent deux transformations différentes."
+          ],
+          "walkthrough": [
+            "Les gardes fournissent les cas de base.",
+            "Chaque conteneur produit une nouvelle allocation.",
+            "Le parcours atteint les objets même dans les tableaux."
+          ],
+          "minutes": 10
         }
-      ]
+      ],
+      "officialLevels": [7]
     }
   ],
   "references": [
@@ -1580,7 +1632,8 @@
       "url": "https://go.dev/tour/moretypes/7"
     }
   ],
-  "storageKey": "z01-js-micro-path-v2",
-  "legacyStorageKey": "z01-js-micro-path-v1",
-  "description": "30 étapes ciblées pour traduire tes acquis Go en JavaScript, puis assembler les notions utiles aux sujets N1 à N4. Les variantes et approfondissements se travaillent ensuite dans le catalogue."
+  "storageKey": "z01-js-micro-path-v3",
+  "legacyStorageKey": "z01-js-micro-path-v2",
+  "description": "30 exercices des bases Go → JavaScript aux promesses, structures profondes et Proxy des niveaux N1 à N7. Chaque étape prépare une notion ; les sujets complets restent à pratiquer.",
+  "legacyStorageKeys": ["z01-js-micro-path-v2", "z01-js-micro-path-v1"]
 }

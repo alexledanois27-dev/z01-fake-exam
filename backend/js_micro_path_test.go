@@ -74,6 +74,8 @@ func TestMicroHarnessDetectsMutationMissingReturnAndCurryingMistakes(t *testing.
 		{"js-learn-append-copy", `function appendCopy(arr,value){ arr.push(value); return arr; }`, "arguments ont été modifiés"},
 		{"js-learn-return", `function doubleValue(n){ console.log(n*2); }`, "undefined"},
 		{"js-learn-return-function", `function makeAdder(base){ return base; }`, "renvoyer une fonction"},
+		{"js-learn-settled", `async function settledValues(){throw Error("échec async");}`, "échec async"},
+		{"js-learn-timed-winner", `async function timedWinner(){return Promise.resolve("incorrect");}`, "incorrect"},
 	} {
 		t.Run(tc.id, func(t *testing.T) {
 			lesson, err := findMicroLesson(tc.id)

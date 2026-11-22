@@ -208,26 +208,28 @@ const _z01Student = (() => {
 return typeof ` + lesson.Target + ` === "function" ? ` + lesson.Target + ` : null;
 })();
 const _z01Tests = ` + string(tests) + `;
-const _z01Checks = _z01Tests.map(test => {
+(async () => {
+const _z01Checks = await Promise.all(_z01Tests.map(async test => {
  const expected = _z01Revive(test.expected);
  const args = _z01Revive(test.args);
  const calls = _z01Revive(test.calls || []);
  const before = _z01Copy([args,calls]);
  try {
   if (!_z01Student) throw Error("La fonction ` + lesson.Target + ` est absente. Garde son nom et sa signature.");
-  let actual = _z01Student(...args);
+  let actual = await _z01Student(...args);
   for (const nextArgs of calls) {
    if (typeof actual!=="function") throw Error("Cet appel devait renvoyer une fonction pour l’appel suivant.");
-   actual=actual(...nextArgs);
+   actual=await actual(...nextArgs);
   }
   const unchanged = _z01Equal([args,calls],before);
   return {label:test.label,expected:_z01Format(expected),actual:_z01Format(actual),passed:unchanged && _z01Equal(actual,expected),error:unchanged ? "" : "Les arguments ont été modifiés : crée une copie avant de les transformer."};
  } catch(error) {
   return {label:test.label,expected:_z01Format(expected),actual:"aucun résultat",passed:false,error:String(error.message || error).slice(0,800)};
  }
-});
+}));
 const _z01Success = _z01Checks.every(check=>check.passed);
 process.stdout.write("\n__Z01_MICRO_RESULT__"+JSON.stringify({success:_z01Success,output:_z01Success ? "Tous les cas de ce petit exercice sont réussis." : "Compare le résultat et les cas qui échouent, puis reprends l’explication.",checks:_z01Checks}));
+})();
 `
 }
 

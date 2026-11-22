@@ -1,8 +1,8 @@
 {
-  "version": 1,
+  "version": 2,
   "track": "go",
   "title": "Go : consolider puis assembler",
-  "description": "Des petites fonctions pour consolider les contrats, les boucles, les chaînes, les slices et les méthodes utiles aux examens.",
+  "description": "30 exercices des contrats et chaînes aux piles, sous-séquences, bases, masques et machines à états. Tous les sujets du catalogue disposent d’un pont de préparation.",
   "audience": "PARCOURS PAS À PAS · PROTOTYPE",
   "instructions": "Écris seulement les fonctions demandées, sans package, import ni main. Le moteur fournit fmt, strings, strconv et sort. Ces facilités ne préjugent pas des fonctions autorisées dans les vrais sujets.",
   "modules": [
@@ -18,7 +18,18 @@
         "Écris seulement la fonction demandée, sans package ni main : ce format appartient à ce parcours, les vrais sujets ont leurs propres fichiers.",
         "Lis les cas vides et les bornes : une solution correcte pour un exemple peut échouer sur zéro ou une chaîne vide."
       ],
-      "checkpoint": ["printif", "rectperimeter"],
+      "checkpoint": [
+        "checknumber",
+        "fishandchips",
+        "only1",
+        "onlya",
+        "onlyb",
+        "onlyf",
+        "onlyz",
+        "printif",
+        "printifnot",
+        "rectperimeter"
+      ],
       "lessons": [
         {
           "id": "go-learn-return",
@@ -243,7 +254,8 @@
             "Le bool exprime la validité indépendamment du quotient."
           ]
         }
-      ]
+      ],
+      "officialLevels": []
     },
     {
       "id": "loops",
@@ -257,7 +269,13 @@
         "Une condition <= inclut la borne ; < l’exclut. Vérifie n=0 et n=1 à la main.",
         "Évite de mélanger progression de boucle et modification d’une autre variable sans les nommer clairement."
       ],
-      "checkpoint": ["digitlen", "gcd", "fromto"],
+      "checkpoint": [
+        "digitlen",
+        "fifthandskip",
+        "fromto",
+        "printrevcomb",
+        "thirdtimeisacharm"
+      ],
       "lessons": [
         {
           "id": "go-learn-sum",
@@ -433,44 +451,51 @@
           ]
         },
         {
-          "id": "go-learn-count-evens",
-          "title": "Distinguer compter et additionner",
-          "target": "EvenCount",
-          "minutes": 8,
-          "task": "Compte les entiers pairs de values, zéro compris.",
-          "bridge": "Le compteur ajoute 1 par valeur retenue, pas la valeur elle-même.",
+          "id": "go-learn-jump",
+          "title": "Prouver une portée accessible",
+          "target": "CanReach",
+          "task": "Chaque entier non négatif est la distance maximale de saut depuis cet indice. Renvoie si on atteint le dernier indice ; une slice vide vaut false.",
+          "bridge": "Un invariant glouton suit le point le plus loin atteignable.",
           "explanation": [
-            "Un entier pair satisfait n%2==0.",
-            "Les entiers négatifs pairs satisfont aussi cette condition.",
-            "La slice vide donne naturellement un compteur nul."
+            "farthest commence à zéro.",
+            "Un indice supérieur à farthest est inaccessible.",
+            "Depuis chaque position accessible, augmente farthest avec i+values[i]. Les données restent petites."
           ],
-          "starter": "func EvenCount(values []int) int {\n    return 0\n}",
-          "solution": "func EvenCount(values []int) int {\n\tcount := 0\n\tfor _, n := range values {\n\t\tif n%2 == 0 {\n\t\t\tcount++\n\t\t}\n\t}\n\treturn count\n}",
+          "starter": "func CanReach(values []int) bool {\n return false\n}",
+          "solution": "func CanReach(values []int) bool {\n\tif len(values) == 0 {\n\t\treturn false\n\t}\n\tfarthest := 0\n\tfor i, step := range values {\n\t\tif i > farthest {\n\t\t\treturn false\n\t\t}\n\t\tif i+step > farthest {\n\t\t\tfarthest = i + step\n\t\t}\n\t\tif farthest >= len(values)-1 {\n\t\t\treturn true\n\t\t}\n\t}\n\treturn false\n}",
           "tests": [
             {
               "label": "Cas 1",
               "args": [],
-              "invoke": "EvenCount([]int{-2,0,3,4})",
-              "expectedText": "3"
+              "invoke": "CanReach([]int{2,0,1})",
+              "expectedText": "true"
             },
             {
               "label": "Cas 2",
               "args": [],
-              "invoke": "EvenCount([]int{})",
-              "expectedText": "0"
+              "invoke": "CanReach([]int{1,0,1})",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "CanReach([]int{})",
+              "expectedText": "false"
             }
           ],
           "hints": [
-            "Parcours les valeurs avec range.",
-            "Quand le modulo est nul, fais count++."
+            "Ne visite jamais un indice inaccessible.",
+            "Le maximum conserve les meilleures possibilités déjà vues."
           ],
           "walkthrough": [
-            "Le test de parité ne dépend pas du signe.",
-            "Compter est différent de sommer.",
-            "Le retour se situe après tout le parcours."
-          ]
+            "L’invariant résume tous les chemins accessibles.",
+            "Une portée suffisante autorise un succès anticipé.",
+            "Ce résumé évite d’énumérer chaque séquence de sauts."
+          ],
+          "minutes": 12
         }
-      ]
+      ],
+      "officialLevels": []
     },
     {
       "id": "strings",
@@ -484,7 +509,31 @@
         "[]rune(s) facilite les opérations sur les points de code, mais ne découpe pas les graphèmes composés visibles.",
         "Dans ce parcours strings est disponible. Sur le vrai sujet, vérifie les fonctions autorisées avant de réutiliser une méthode."
       ],
-      "checkpoint": ["countalpha", "lastword", "repeatalpha"],
+      "checkpoint": [
+        "cameltosnakecase",
+        "countalpha",
+        "countcharacter",
+        "findpairs",
+        "firstword",
+        "hashcode",
+        "hiddenp",
+        "iscapitalized",
+        "itoa",
+        "itoabase",
+        "lastword",
+        "longestword",
+        "notdecimal",
+        "piglatin",
+        "printmemory",
+        "repeatalpha",
+        "retainfirsthalf",
+        "reversestrcap",
+        "revwstr",
+        "rostring",
+        "wdmatch",
+        "wordanatomy",
+        "wordflip"
+      ],
       "lessons": [
         {
           "id": "go-learn-runes",
@@ -682,7 +731,8 @@
             "Les autres runes sont copiées telles quelles."
           ]
         }
-      ]
+      ],
+      "officialLevels": []
     },
     {
       "id": "slices",
@@ -696,7 +746,15 @@
         "Pour une copie indépendante d’une slice d’int, crée une nouvelle slice et copie ses éléments.",
         "La copie reste superficielle pour des slices de slices : chaque ligne doit alors être copiée séparément."
       ],
-      "checkpoint": ["concatslice", "chunk", "slice"],
+      "checkpoint": [
+        "chunk",
+        "concatalternate",
+        "concatslice",
+        "grouping",
+        "revconcatalternate",
+        "saveandmiss",
+        "slice"
+      ],
       "lessons": [
         {
           "id": "go-learn-copy",
@@ -894,7 +952,8 @@
             "La nouvelle allocation conserve l’entrée."
           ]
         }
-      ]
+      ],
+      "officialLevels": []
     },
     {
       "id": "maps",
@@ -908,7 +967,14 @@
         "L’ordre d’itération d’une map n’est pas garanti. Ne l’utilise pas pour produire un ordre attendu.",
         "Un ensemble peut être représenté par map[rune]bool ; une table de fréquence par map[rune]int."
       ],
-      "checkpoint": ["inter", "union", "countrepeats"],
+      "checkpoint": [
+        "brackets",
+        "countrepeats",
+        "inter",
+        "union",
+        "weareunique",
+        "zipstring"
+      ],
       "lessons": [
         {
           "id": "go-learn-frequency",
@@ -1028,108 +1094,115 @@
           ]
         },
         {
-          "id": "go-learn-duplicate",
-          "title": "Arrêter à la première répétition",
-          "target": "HasDuplicate",
-          "minutes": 8,
-          "task": "Renvoie true si values contient une valeur au moins deux fois.",
-          "bridge": "Un ensemble répond à la question « déjà rencontré ? ».",
+          "id": "go-learn-subsequence",
+          "title": "Faire avancer deux pointeurs",
+          "target": "Subsequence",
+          "task": "Renvoie si toutes les runes de wanted apparaissent dans text dans le même ordre, pas forcément côte à côte.",
+          "bridge": "Le pointeur du motif n’avance que sur une correspondance.",
           "explanation": [
-            "Initialise une map[int]bool.",
-            "Teste la présence avant de marquer la valeur.",
-            "La première répétition permet de terminer immédiatement."
+            "Convertis wanted en runes pour disposer d’indices simples.",
+            "Parcours text une seule fois avec range.",
+            "Le motif vide est déjà trouvé ; protège i<len(pattern) avant la lecture."
           ],
-          "starter": "func HasDuplicate(values []int) bool {\n    return false\n}",
-          "solution": "func HasDuplicate(values []int) bool {\n\tseen := map[int]bool{}\n\tfor _, n := range values {\n\t\tif seen[n] {\n\t\t\treturn true\n\t\t}\n\t\tseen[n] = true\n\t}\n\treturn false\n}",
+          "starter": "func Subsequence(wanted,text string) bool {\n return false\n}",
+          "solution": "func Subsequence(wanted, text string) bool {\n\tp := []rune(wanted)\n\ti := 0\n\tfor _, r := range text {\n\t\tif i < len(p) && r == p[i] {\n\t\t\ti++\n\t\t}\n\t}\n\treturn i == len(p)\n}",
           "tests": [
             {
               "label": "Cas 1",
               "args": [],
-              "invoke": "HasDuplicate([]int{1,2,1})",
+              "invoke": "Subsequence(\"abc\",\"a--b-c\")",
               "expectedText": "true"
             },
             {
               "label": "Cas 2",
               "args": [],
-              "invoke": "HasDuplicate([]int{1,2,3})",
+              "invoke": "Subsequence(\"acb\",\"abc\")",
               "expectedText": "false"
             },
             {
               "label": "Cas 3",
               "args": [],
-              "invoke": "HasDuplicate([]int{})",
-              "expectedText": "false"
+              "invoke": "Subsequence(\"\",\"abc\")",
+              "expectedText": "true"
             }
           ],
           "hints": [
-            "Vérifie seen[n] avant l’affectation.",
-            "Une lecture absente vaut false."
+            "Seul i suit le motif.",
+            "Le résultat dépend de i==len(pattern)."
           ],
           "walkthrough": [
-            "L’ordre test puis marquage évite de se détecter soi-même.",
-            "La map mémorise les valeurs déjà passées.",
-            "Sans répétition, le retour final est false."
-          ]
+            "Les caractères non correspondants sont ignorés.",
+            "L’ordre du texte est préservé.",
+            "Un seul passage évite de reprendre une recherche complète par caractère."
+          ],
+          "minutes": 12
         },
         {
-          "id": "go-learn-anagram",
-          "title": "Comparer deux fréquences",
-          "target": "Anagram",
-          "minutes": 8,
-          "task": "Renvoie si a et b contiennent les mêmes runes avec les mêmes fréquences, sans ignorer espaces ni casse.",
-          "bridge": "Deux ensembles identiques ne suffisent pas : les quantités comptent.",
+          "id": "go-learn-rle",
+          "title": "Compresser des groupes consécutifs",
+          "target": "RLE",
+          "task": "Pour une chaîne ASCII, écris chaque caractère suivi de la taille de son groupe consécutif : aaabb donne a3b2.",
+          "bridge": "Une fréquence globale ne préserve pas les groupes.",
           "explanation": [
-            "Incrémente un compteur par rune de a.",
-            "Décrémente pour chaque rune de b.",
-            "Tous les compteurs doivent être nuls à la fin."
+            "L’indice i commence le groupe.",
+            "Avance j tant que s[j]==s[i].",
+            "Ajoute le caractère et strconv.Itoa(j-i), puis reprends à j."
           ],
-          "starter": "func Anagram(a,b string) bool {\n    return false\n}",
-          "solution": "func Anagram(a, b string) bool {\n\tcounts := map[rune]int{}\n\tfor _, r := range a {\n\t\tcounts[r]++\n\t}\n\tfor _, r := range b {\n\t\tcounts[r]--\n\t}\n\tfor _, count := range counts {\n\t\tif count != 0 {\n\t\t\treturn false\n\t\t}\n\t}\n\treturn true\n}",
+          "starter": "func RLE(s string) string {\n return \"\"\n}",
+          "solution": "func RLE(s string) string {\n\tout := \"\"\n\tfor i := 0; i < len(s); {\n\t\tj := i + 1\n\t\tfor j < len(s) && s[j] == s[i] {\n\t\t\tj++\n\t\t}\n\t\tout += string(s[i]) + strconv.Itoa(j-i)\n\t\ti = j\n\t}\n\treturn out\n}",
           "tests": [
             {
               "label": "Cas 1",
               "args": [],
-              "invoke": "Anagram(\"été\",\"téé\")",
-              "expectedText": "true"
+              "invoke": "RLE(\"aaabbcaa\")",
+              "expectedText": "a3b2c1a2"
             },
             {
               "label": "Cas 2",
               "args": [],
-              "invoke": "Anagram(\"aab\",\"abb\")",
-              "expectedText": "false"
-            },
-            {
-              "label": "Cas 3",
-              "args": [],
-              "invoke": "Anagram(\"Go\",\"go\")",
-              "expectedText": "false"
+              "invoke": "RLE(\"\")",
+              "expectedText": ""
             }
           ],
           "hints": [
-            "Utilise map[rune]int, pas map[rune]bool.",
-            "Une valeur non nulle suffit à conclure false."
+            "Le compteur appartient à un groupe, pas à une map.",
+            "Le prochain groupe commence à j."
           ],
           "walkthrough": [
-            "Les incréments et décréments compensent les occurrences communes.",
-            "Une rune absente d’un côté laisse un écart.",
-            "La comparaison reste sensible à la casse et aux espaces."
-          ]
+            "Chaque boucle interne consomme un groupe.",
+            "La différence d’indices donne sa taille.",
+            "Les groupes séparés d’un même caractère restent distincts."
+          ],
+          "minutes": 12
         }
-      ]
+      ],
+      "officialLevels": []
     },
     {
       "id": "algorithms",
-      "title": "Composer un algorithme",
-      "goal": "Passer d’une petite brique à une démarche complète.",
+      "title": "Méthodes avancées : pile, bases, bits et interpréteur",
+      "goal": "Assembler les acquis dans des modèles plus avancés, puis lire les contrats des sujets associés.",
       "go": "if n <= 1 { return ... }",
-      "example": "// Cas de base, puis problème plus petit.",
+      "example": "stack := []int{}\nstack = append(stack, 4)\ntop := stack[len(stack)-1]\nstack = stack[:len(stack)-1]\n_ = top",
       "notes": [
-        "Avant le code, écris le domaine des entrées et le résultat attendu.",
-        "Un test de primalité peut s’arrêter quand d dépasse n/d pour éviter d*d et ses débordements.",
-        "La récursion doit avoir un cas de base et un argument qui s’en approche.",
-        "Les vrais sujets peuvent interdire des bibliothèques ou imposer un affichage exact : les ponts ci-dessous ne remplacent jamais la consigne."
+        "Une pile conserve des valeurs en attente : append empile et le dernier élément se dépile. Le contrôle de longueur est indispensable si le contrat ne garantit pas une expression valide.",
+        "Les conversions de base extraient les chiffres avec modulo puis division ; les masques de bits utilisent décalage et OU pour mémoriser des options sans doubler les répétitions.",
+        "Une machine à états possède plusieurs indices : compteur de programme et pointeur mémoire ont des rôles distincts. Associer les crochets avant l’exécution prépare les sauts, même imbriqués.",
+        "Un algorithme réduit doit annoncer ses préconditions : expression RPN valide, programme terminant, taille de mémoire, domaine numérique. Les vrais sujets ajoutent validations, sorties et contraintes d’import.",
+        "Les ponts couvrent les sujets du catalogue ; ils indiquent des notions communes, pas une solution complète pour chacun. Les fiches spécifiques restent nécessaires pour les variantes."
       ],
-      "checkpoint": ["addprimesum", "findprevprime", "fprime"],
+      "checkpoint": [
+        "addprimesum",
+        "brainfuck",
+        "canjump",
+        "findprevprime",
+        "fprime",
+        "gcd",
+        "options",
+        "passwordentropy",
+        "romannumbers",
+        "rpncalc"
+      ],
       "lessons": [
         {
           "id": "go-learn-prime",
@@ -1182,170 +1255,185 @@
           ]
         },
         {
-          "id": "go-learn-factorial",
-          "title": "Récursion avec arrêt",
-          "target": "Factorial",
-          "minutes": 8,
-          "task": "Pour 0<=n<=12, renvoie n! par récursion.",
-          "bridge": "Le produit vide 0! vaut 1.",
+          "id": "go-learn-base-conversion",
+          "title": "Décomposer dans une base",
+          "target": "Base",
+          "task": "Pour n>=0 et 2<=base<=16, renvoie son écriture avec 0123456789abcdef.",
+          "bridge": "Les restes donnent les chiffres du dernier au premier.",
           "explanation": [
-            "n<=1 fournit le cas de base.",
-            "Le problème suivant est Factorial(n-1).",
-            "Chaque appel multiplie son n par le résultat plus petit."
+            "Zéro nécessite explicitement \"0\".",
+            "n%base choisit un symbole dans digits.",
+            "Préfixer ce symbole inverse l’ordre d’extraction."
           ],
-          "starter": "func Factorial(n int) int {\n    return 0\n}",
-          "solution": "func Factorial(n int) int {\n\tif n <= 1 {\n\t\treturn 1\n\t}\n\treturn n * Factorial(n-1)\n}",
+          "starter": "func Base(n,base int) string {\n return \"\"\n}",
+          "solution": "func Base(n, base int) string {\n\tif n == 0 {\n\t\treturn \"0\"\n\t}\n\tdigits := \"0123456789abcdef\"\n\tout := \"\"\n\tfor n > 0 {\n\t\tout = string(digits[n%base]) + out\n\t\tn /= base\n\t}\n\treturn out\n}",
           "tests": [
             {
               "label": "Cas 1",
               "args": [],
-              "invoke": "Factorial(0)",
-              "expectedText": "1"
+              "invoke": "Base(31,16)",
+              "expectedText": "1f"
             },
             {
               "label": "Cas 2",
               "args": [],
-              "invoke": "Factorial(5)",
-              "expectedText": "120"
-            }
-          ],
-          "hints": [
-            "Traite n<=1 sans nouvel appel.",
-            "Multiplie n par Factorial(n-1)."
-          ],
-          "walkthrough": [
-            "Le domaine borne la croissance et évite le débordement sur les architectures courantes.",
-            "n-1 rapproche du cas de base.",
-            "Les multiplications se terminent à la remontée."
-          ]
-        },
-        {
-          "id": "go-learn-prime-sum",
-          "title": "Assembler filtre et somme",
-          "target": "PrimeSum",
-          "minutes": 8,
-          "task": "Pour 0<=n<=1000, renvoie la somme des nombres premiers <=n.",
-          "bridge": "On sépare décider si un nombre est premier et accumuler.",
-          "explanation": [
-            "La boucle extérieure choisit les candidats.",
-            "La boucle intérieure teste les diviseurs.",
-            "Ajoute seulement les candidats dont aucun diviseur n’a été trouvé."
-          ],
-          "starter": "func PrimeSum(n int) int {\n    return 0\n}",
-          "solution": "func PrimeSum(n int) int {\n\ttotal := 0\n\tfor k := 2; k <= n; k++ {\n\t\tprime := true\n\t\tfor d := 2; d <= k/d; d++ {\n\t\t\tif k%d == 0 {\n\t\t\t\tprime = false\n\t\t\t\tbreak\n\t\t\t}\n\t\t}\n\t\tif prime {\n\t\t\ttotal += k\n\t\t}\n\t}\n\treturn total\n}",
-          "tests": [
+              "invoke": "Base(10,2)",
+              "expectedText": "1010"
+            },
             {
-              "label": "Cas 1",
+              "label": "Cas 3",
               "args": [],
-              "invoke": "PrimeSum(1)",
+              "invoke": "Base(0,8)",
               "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "La division et le modulo utilisent base, pas 10.",
+            "Ajoute chaque chiffre au début du résultat."
+          ],
+          "walkthrough": [
+            "La précondition protège l’index du symbole.",
+            "La division retire le chiffre courant.",
+            "L’ordre des restes explique la reconstruction à rebours."
+          ],
+          "minutes": 12
+        },
+        {
+          "id": "go-learn-rpn",
+          "title": "Évaluer avec une pile",
+          "target": "RPN",
+          "task": "Évalue une expression postfixée valide, séparée par espaces, avec petits entiers et opérateurs +,-,*. Un seul résultat reste à la fin.",
+          "bridge": "Une pile matérialise les sous-résultats en attente.",
+          "explanation": [
+            "Un entier est empilé.",
+            "Un opérateur retire d’abord b puis a.",
+            "Calcule a op b, pas b op a, puis empile ce résultat."
+          ],
+          "starter": "func RPN(s string) int {\n return 0\n}",
+          "solution": "func RPN(s string) int {\n\tstack := []int{}\n\tfor _, token := range strings.Fields(s) {\n\t\tn, err := strconv.Atoi(token)\n\t\tif err == nil {\n\t\t\tstack = append(stack, n)\n\t\t\tcontinue\n\t\t}\n\t\tb, a := stack[len(stack)-1], stack[len(stack)-2]\n\t\tstack = stack[:len(stack)-2]\n\t\tvar result int\n\t\tswitch token {\n\t\tcase \"+\":\n\t\t\tresult = a + b\n\t\tcase \"-\":\n\t\t\tresult = a - b\n\t\tcase \"*\":\n\t\t\tresult = a * b\n\t\t}\n\t\tstack = append(stack, result)\n\t}\n\treturn stack[0]\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "RPN(\"2 3 + 4 *\")",
+              "expectedText": "20"
             },
             {
               "label": "Cas 2",
               "args": [],
-              "invoke": "PrimeSum(10)",
-              "expectedText": "17"
+              "invoke": "RPN(\"8 3 -\")",
+              "expectedText": "5"
             },
             {
               "label": "Cas 3",
               "args": [],
-              "invoke": "PrimeSum(2)",
+              "invoke": "RPN(\"-2 3 *\")",
+              "expectedText": "-6"
+            }
+          ],
+          "hints": [
+            "Atoi distingue les nombres négatifs du symbole -.",
+            "L’ordre de dépilement est l’inverse de celui des opérandes."
+          ],
+          "walkthrough": [
+            "Le contrat garantit les arités et le résultat unique.",
+            "Chaque opérateur réduit deux valeurs en une.",
+            "Une version générale devrait signaler les expressions invalides au lieu d’indexer sans garde."
+          ],
+          "minutes": 12
+        },
+        {
+          "id": "go-learn-bit-mask",
+          "title": "Construire un masque de bits",
+          "target": "OptionMask",
+          "task": "Pour une chaîne contenant uniquement a..h, renvoie un uint dont le bit 0 correspond à a, le bit 1 à b, etc. Les répétitions ne changent rien.",
+          "bridge": "Une union de drapeaux s’exprime avec OU binaire.",
+          "explanation": [
+            "r-'a' donne la position entre 0 et 7.",
+            "1<<position construit un bit isolé.",
+            "mask |= bit active sans désactiver les autres bits."
+          ],
+          "starter": "func OptionMask(s string) uint {\n return 0\n}",
+          "solution": "func OptionMask(s string) uint {\n\tvar mask uint\n\tfor _, r := range s {\n\t\tmask |= uint(1) << uint(r-'a')\n\t}\n\treturn mask\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "OptionMask(\"aca\")",
+              "expectedText": "5"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "OptionMask(\"h\")",
+              "expectedText": "128"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "OptionMask(\"\")",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Utilise |=, pas une addition.",
+            "Convertis le bit de départ en uint."
+          ],
+          "walkthrough": [
+            "Le décalage repère une option.",
+            "Le OU est idempotent, donc un doublon ne compte pas deux fois.",
+            "Le domaine a..h garde les décalages bornés."
+          ],
+          "minutes": 12
+        },
+        {
+          "id": "go-learn-tape",
+          "title": "Simuler une machine à états",
+          "target": "Tape",
+          "task": "Interprète un programme valide et terminant utilisant +,-,>,<,[,] sur 8 cellules byte initialisées à zéro. Le pointeur reste dans [0,8). Renvoie la cellule courante.",
+          "bridge": "Le programme a son propre indice : une boucle de l’interpréteur suit des sauts du programme interprété.",
+          "explanation": [
+            "Une pile associe les crochets imbriqués avant l’exécution.",
+            "À [ sur zéro, saute au ] associé ; à ] sur non-zéro, repars au [ associé.",
+            "Le pointeur de mémoire et le compteur de programme sont deux états différents."
+          ],
+          "starter": "func Tape(program string) int {\n return 0\n}",
+          "solution": "func Tape(program string) int {\n\tpairs := map[int]int{}\n\tstack := []int{}\n\tfor i := 0; i < len(program); i++ {\n\t\tif program[i] == '[' {\n\t\t\tstack = append(stack, i)\n\t\t}\n\t\tif program[i] == ']' {\n\t\t\topen := stack[len(stack)-1]\n\t\t\tstack = stack[:len(stack)-1]\n\t\t\tpairs[open] = i\n\t\t\tpairs[i] = open\n\t\t}\n\t}\n\tcells := [8]byte{}\n\tptr := 0\n\tfor pc := 0; pc < len(program); pc++ {\n\t\tswitch program[pc] {\n\t\tcase '+':\n\t\t\tcells[ptr]++\n\t\tcase '-':\n\t\t\tcells[ptr]--\n\t\tcase '>':\n\t\t\tptr++\n\t\tcase '<':\n\t\t\tptr--\n\t\tcase '[':\n\t\t\tif cells[ptr] == 0 {\n\t\t\t\tpc = pairs[pc]\n\t\t\t}\n\t\tcase ']':\n\t\t\tif cells[ptr] != 0 {\n\t\t\t\tpc = pairs[pc]\n\t\t\t}\n\t\t}\n\t}\n\treturn int(cells[ptr])\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "Tape(\"++[>+++<-]>\")",
+              "expectedText": "6"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "Tape(\"[+]++\")",
               "expectedText": "2"
-            }
-          ],
-          "hints": [
-            "Réinitialise prime pour chaque candidat.",
-            "Ajoute k après la boucle des diviseurs."
-          ],
-          "walkthrough": [
-            "Chaque candidat est testé indépendamment.",
-            "break quitte uniquement la boucle intérieure.",
-            "total cumule seulement les candidats acceptés."
-          ]
-        },
-        {
-          "id": "go-learn-binary-search",
-          "title": "Réduire une recherche de moitié",
-          "target": "BinaryContains",
-          "minutes": 8,
-          "task": "Pour une slice triée croissante, renvoie si target est présent.",
-          "bridge": "Les bornes décrivent un intervalle de recherche qui se réduit.",
-          "explanation": [
-            "low commence à 0 et high à len(values)-1.",
-            "mid:=low+(high-low)/2 évite d’additionner directement les deux bornes.",
-            "Écarte mid après une comparaison qui ne trouve pas target."
-          ],
-          "starter": "func BinaryContains(values []int,target int) bool {\n    return false\n}",
-          "solution": "func BinaryContains(values []int, target int) bool {\n\tlow, high := 0, len(values)-1\n\tfor low <= high {\n\t\tmid := low + (high-low)/2\n\t\tif values[mid] == target {\n\t\t\treturn true\n\t\t}\n\t\tif values[mid] < target {\n\t\t\tlow = mid + 1\n\t\t} else {\n\t\t\thigh = mid - 1\n\t\t}\n\t}\n\treturn false\n}",
-          "tests": [
-            {
-              "label": "Cas 1",
-              "args": [],
-              "invoke": "BinaryContains([]int{1,3,5,7},5)",
-              "expectedText": "true"
-            },
-            {
-              "label": "Cas 2",
-              "args": [],
-              "invoke": "BinaryContains([]int{1,3,5,7},4)",
-              "expectedText": "false"
             },
             {
               "label": "Cas 3",
               "args": [],
-              "invoke": "BinaryContains([]int{},1)",
-              "expectedText": "false"
+              "invoke": "Tape(\"-\")",
+              "expectedText": "255"
             }
           ],
           "hints": [
-            "La boucle est low<=high.",
-            "Utilise mid+1 ou mid-1 pour progresser."
+            "Construis les deux directions dans pairs.",
+            "Le for ajoute déjà 1 après le changement de pc."
           ],
           "walkthrough": [
-            "Le tri est une précondition essentielle.",
-            "Chaque comparaison supprime une moitié de l’intervalle.",
-            "Le vide commence avec high=-1 et ne lit aucun élément."
-          ]
-        },
-        {
-          "id": "go-learn-sorted-copy",
-          "title": "Trier une copie",
-          "target": "SortedCopy",
-          "minutes": 8,
-          "task": "Renvoie une copie triée croissante sans modifier values. sort.Ints est disponible ici.",
-          "bridge": "Le tri standard modifie sa slice : copie avant son appel.",
-          "explanation": [
-            "Construis une slice indépendante.",
-            "sort.Ints(out) trie en place et ne renvoie pas la slice.",
-            "Renvoie out après cet appel."
+            "La première passe vérifie la structure par les paires fournies valides.",
+            "La seconde sépare transitions de mémoire et sauts de contrôle.",
+            "byte reboucle modulo 256 ; le délai du runner protège contre une boucle qui ne termine pas."
           ],
-          "starter": "func SortedCopy(values []int) []int {\n    return []int{}\n}",
-          "solution": "func SortedCopy(values []int) []int { out := append([]int{}, values...); sort.Ints(out); return out }",
-          "tests": [
-            {
-              "label": "Cas 1",
-              "args": [],
-              "invoke": "SortedCopy([]int{3,-1,3,2})",
-              "expectedText": "[-1 2 3 3]"
-            },
-            {
-              "label": "Cas 2",
-              "args": [],
-              "invoke": "SortedCopy([]int{})",
-              "expectedText": "[]"
-            }
-          ],
-          "hints": [
-            "La copie précède sort.Ints.",
-            "Le retour vient après le tri."
-          ],
-          "walkthrough": [
-            "Les doublons sont conservés.",
-            "Le tri travaille seulement sur la copie.",
-            "Dans un vrai sujet, vérifie si sort est autorisé."
-          ]
+          "minutes": 12
         }
-      ]
+      ],
+      "officialLevels": []
     }
-  ]
+  ],
+  "storageKey": "z01-go-micro-path-v2",
+  "legacyStorageKey": "z01-go-micro-path-v1"
 }

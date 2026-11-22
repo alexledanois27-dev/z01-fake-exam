@@ -38,7 +38,7 @@ test("Go to JS curriculum gives thirty small explained exercises and covers all 
     }
   }
   const target = require("../../catalog-snapshots/js.json")
-    .exercises.filter((e) => e.level >= 1 && e.level <= 4)
+    .exercises.filter((e) => e.level >= 1 && e.level <= 7)
     .map((e) => e.id);
   assert.deepEqual([...ids].sort(), target.sort());
 });
@@ -124,6 +124,17 @@ test("all language curricula have precise steps and valid catalogue bridges", ()
     );
     const lessons = plan.modules.flatMap((m) => m.lessons);
     assert.equal(lessons.length, 30);
+    assert.deepEqual(
+      new Set(plan.modules.flatMap((module) => module.checkpoint)),
+      catalogue,
+    );
+    if (track === "js")
+      assert.deepEqual(
+        [
+          ...new Set(plan.modules.flatMap((module) => module.officialLevels)),
+        ].sort(),
+        [1, 2, 3, 4, 5, 6, 7],
+      );
     for (const module of plan.modules) {
       assert.ok(module.notes.length >= 4);
       for (const id of module.checkpoint)
@@ -141,7 +152,7 @@ test("all language curricula have precise steps and valid catalogue bridges", ()
   }
 });
 
-test("shortened JS path imports retained steps while keeping the old 63-step backup untouched", () => {
+test("revised JS path imports retained steps while keeping the previous backup untouched", () => {
   const id = lessons[0].id;
   const original = JSON.stringify({
     version: 1,
@@ -151,7 +162,7 @@ test("shortened JS path imports retained steps while keeping the old 63-step bac
       "js-learn-const": { draft: "archived answer", completed: true },
     },
   });
-  const memory = new Map([["z01-js-micro-path-v1", original]]);
+  const memory = new Map([[plan.legacyStorageKey, original]]);
   const getStorage = () => ({
     getItem: (key) => memory.get(key) ?? null,
     setItem: (key, value) => memory.set(key, value),
@@ -168,8 +179,35 @@ test("shortened JS path imports retained steps while keeping the old 63-step bac
   assert.equal(store.summary().total, 30);
   assert.equal(store.selected(), id);
   store.select(id);
-  assert.equal(memory.get("z01-js-micro-path-v1"), original);
+  assert.equal(memory.get(plan.legacyStorageKey), original);
   store.clear();
+  assert.equal(create(options).summary().completed, 0);
+  assert.equal(memory.get(plan.legacyStorageKey), original);
+});
+
+test("JS migration can skip a missing version but an explicit reset remains authoritative", () => {
+  const id = lessons[0].id;
+  const original = JSON.stringify({
+    version: 1,
+    selected: id,
+    items: { [id]: { draft: "v1 draft", completed: true, lastPassed: true } },
+  });
+  const memory = new Map([["z01-js-micro-path-v1", original]]);
+  const getStorage = () => ({
+    getItem: (key) => memory.get(key) ?? null,
+    setItem: (key, value) => memory.set(key, value),
+  });
+  const options = {
+    plan,
+    key: plan.storageKey,
+    legacyKeys: plan.legacyStorageKeys,
+    getStorage,
+  };
+  assert.equal(create(options).state(id).draft, "v1 draft");
+  memory.set(
+    "z01-js-micro-path-v2",
+    JSON.stringify({ version: 1, selected: id, items: {} }),
+  );
   assert.equal(create(options).summary().completed, 0);
   assert.equal(memory.get("z01-js-micro-path-v1"), original);
 });

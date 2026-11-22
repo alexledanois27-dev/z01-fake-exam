@@ -46,6 +46,27 @@ lance le code quand elle est disponible. Ce téléchargement possède son propre
 délai de dix minutes et ne compte pas comme un échec de l’exercice. Un problème
 de préparation apparaît comme **Correction indisponible**.
 
+### Lancer depuis les applications Ubuntu
+
+Un raccourci **Z01 Fake Exam** peut ouvrir le site sans saisir `make`. Une seule
+installation depuis le dossier du projet :
+
+```sh
+python3 scripts/install-launcher.py
+```
+
+Ensuite, chercher **Z01 Fake Exam** dans les applications Ubuntu et l’épingler
+aux favoris. Le lanceur démarre le même serveur Go, attend qu’il soit prêt puis
+ouvre le navigateur sur `http://127.0.0.1:8092`. Le terminal reste ouvert pour les
+messages ; `Ctrl+C` ou sa fermeture arrête l’instance lancée. Si le site est déjà
+ouvert, il ouvre simplement le navigateur. Un port occupé par un autre service
+est signalé sans arrêter ce service ni changer automatiquement de port.
+
+Le lanceur nécessite Python 3, Go et `xdg-open` ; Docker reste nécessaire pour
+corriger. Il ne déploie rien, ne démarre pas Docker avec sudo et ne s’installe
+pas au démarrage de la session. Après déplacement du dossier, réinstaller le
+raccourci. Voir [le guide du lanceur](docs/lanceur-local.md).
+
 ## Parcours disponibles
 
 | Mode | Fonctionnement |
@@ -80,16 +101,19 @@ sans solution complète du sujet. Voir [le guide des fiches](learning-content/RE
 
 L’onglet **Apprendre**, à côté d’Entraînement, Examen et Fiches, affiche une vraie
 page de cours pour le langage sélectionné : **30 exercices dans chacun des quatre langages** (120 au total).
-Le parcours Go consolide les acquis ; Rust et Java expliquent les différences
-avec Go : possession et emprunts, types, méthodes, classes et collections.
+Le contenu va des bases aux notions avancées : piles et interpréteurs en Go,
+promesses et Proxy en JS, traits et structures partagées en Rust, patrons de
+construction et programmation dynamique en Java. Les comparaisons avec Go
+restent présentes pour les trois autres langages.
 Chaque petite étape comporte explications, squelette modifiable, tests publics
 exécutés dans Docker, indices et corrigé commenté. Les brouillons et la progression
 sont séparés par langage, avec reprise des étapes JS conservées et sauvegarde intacte de l’ancien parcours.
-Les ponts renvoient ensuite aux vrais sujets du catalogue.
+Les ponts renvoient ensuite aux 175 sujets du catalogue. Les niveaux JS N1 à N7
+sont représentés ; les autres copies locales ne fournissent pas de niveau officiel.
 
 Ces parcours locaux sont pédagogiques, distincts des énoncés officiels et des scores
-d’examen. Le premier contenu Go/Rust/Java pose les prérequis ; il ne couvre pas
-encore tous les sujets avancés. Aucun parcours ne garantit une note ou un délai.
+d’examen. Ces 30 étapes préparent des notions communes ; elles ne remplacent pas la pratique
+des sujets complets ni leurs cas particuliers. Aucun parcours ne garantit une note ou un délai.
 Voir [le guide des parcours](docs/parcours-apprendre.md).
 
 ### Historique et bilan d’apprentissage

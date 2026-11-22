@@ -20,17 +20,23 @@ En examen strict actif, l’accès reste verrouillé comme les autres onglets.
 
 | Langage | Étapes | Chapitres | Objectif du premier parcours |
 | --- | --- | --- | --- |
-| Go | 30 | 6 | Contrats, bornes, boucles, UTF-8, copies, ensembles, algorithmes. |
-| JavaScript | 30 | 12 | Transition depuis Go et briques des sujets N1 à N4. |
-| Rust | 30 | 6 | Expressions, possession, emprunts, UTF-8, Option/Result, collections, enum. |
-| Java | 30 | 6 | Méthodes, String, tableaux, collections, objets, validation et exceptions. |
+| Go | 30 | 6 | Contrats, UTF-8, copies, sous-séquences, RLE, bases, bits, pile RPN et machine à états. |
+| JavaScript | 30 | 12 | N1 à N7 : syntaxe, collections, closures, grilles, promesses, structures profondes et Proxy. |
+| Rust | 30 | 6 | Emprunts, Result, génériques, FIFO, tri par étapes, Display, Box, Rc/RefCell et Drop. |
+| Java | 30 | 6 | Méthodes, regex, fenêtres, tas, Builder/Factory/Singleton, listes, abstraction, matrices et dates UTC. |
 
 Les nouvelles étapes sont des exercices locaux rédigés pour l’apprentissage ;
 elles ne proviennent pas de l’API officielle. Les ponts ouvrent les vrais sujets
-du catalogue. Les parcours Go/Rust/Java constituent une première série de
-prérequis, pas une couverture exhaustive du checkpoint. Les sujets avancés
-restent à travailler avec les fiches et leurs consignes. Aucun délai ni score
-n’est garanti.
+du catalogue : les 175 sujets possèdent un pont de préparation. Une association
+indique des notions utiles, pas une solution complète ni une maîtrise démontrée.
+Les petits exercices ne couvrent pas tous les cas particuliers de ces sujets.
+Les fiches et la pratique complète restent nécessaires, notamment pour les
+variantes de matrices, de structures et de règles métier.
+
+Les niveaux officiels JS N1 à N7 sont représentés dans les chapitres et leurs
+liens. Les snapshots Go, Rust et Java n’indiquent pas de niveau officiel : leur
+progression est pédagogique par compétences, sans inventer une classification.
+Voir [la carte des associations](couverture-parcours.md).
 
 ## Contrat des moteurs
 
@@ -41,7 +47,9 @@ exécution utilisent le même Docker durci que les autres soumissions, avec limi
 de ressources, réseau désactivé et fichiers temporaires nettoyés. La préparation
 d’une image conserve le contrat HTTP 202 ; une indisponibilité n’ajoute pas d’échec.
 
-- JS : appels Node et comparaison profonde ; mutation des arguments contrôlée.
+- JS : appels Node synchrones ou asynchrones attendus avec await ; rejets rendus
+  comme des échecs de test. Comparaison profonde et mutation des arguments contrôlée.
+  Les timers des exercices de course doivent être nettoyés par le code.
 - Go : fonctions sans package/main ; enveloppe `package main` fournie. Les paquets
   fmt, strings, strconv et sort sont disponibles dans ces leçons seulement.
 - Rust : fonctions/types sans main ; compilation edition 2024. Les valeurs sont
@@ -64,18 +72,20 @@ possède un identifiant stable, un squelette, une solution, des indices, un
 raisonnement détaillé et au moins deux cas publics. Les expressions `invoke`
 sont du code de test maintenu côté dépôt, pas du contenu importé d’une API.
 
-Stockage : `z01-{go,rust,java}-micro-path-v1` et `z01-js-micro-path-v2`.
-Les réussites d’entraînement et les sessions d’examen utilisent d’autres clés.
-Au premier usage sans v2, les données des étapes JS conservées sont lues depuis
-`z01-js-micro-path-v1`. Cette ancienne sauvegarde des 63 étapes reste intacte,
-y compris les brouillons retirés du parcours. La sélection revient à la première
-étape si l’étape précédente a disparu. Réinitialiser v2 ne réimporte pas v1.
+Stockage courant : `z01-{go,rust,java}-micro-path-v2` et `z01-js-micro-path-v3`.
+Les clés précédentes restent intactes. Seuls les identifiants d’étapes conservées
+sont repris : brouillon, aides et résultat. Un ancien exercice remplacé ne donne
+pas automatiquement une réussite sur son successeur.
+
+Pour JS, v3 peut importer v2, ou directement v1 si v2 n’existe pas. Une sauvegarde
+v2 vide issue d’une réinitialisation reste prioritaire sur v1. Réinitialiser la
+version courante ne ressuscite pas ensuite une ancienne progression.
 La réinitialisation vise uniquement le parcours du langage courant. Ce stockage
 reste local au navigateur et au port, sans compte ni synchronisation.
 
 Validation normale : `make check`. Les tests compilent les corrections maintenues
 avec les outils de l’hôte lorsqu’ils existent ; aucun code utilisateur n’y passe.
-Pour valider les 90 corrections compilées dans les vraies images, les précharger
+Pour valider les 120 corrections, y compris le JavaScript asynchrone, dans les vraies images, les précharger
 puis lancer depuis la racine, avec un TMPDIR visible du daemon Docker :
 
 ```sh

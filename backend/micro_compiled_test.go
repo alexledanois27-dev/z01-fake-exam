@@ -99,7 +99,7 @@ func TestMicroDockerOtherCurricula(t *testing.T) {
 		t.Skip("explicit local Docker integration")
 	}
 	useMicroRoot(t)
-	for _, track := range []string{"go", "rust", "java"} {
+	for _, track := range []string{"go", "js", "rust", "java"} {
 		curriculum, err := readTrackCurriculum(track)
 		if err != nil {
 			t.Fatal(err)

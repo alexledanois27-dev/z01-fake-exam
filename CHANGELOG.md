@@ -1,5 +1,16 @@
 # Historique fonctionnel
 
+## 22 novembre 2026 — lanceur Ubuntu et progression avancée
+
+- Raccourci utilisateur Z01 Fake Exam : démarrage, attente, navigateur et arrêt propre.
+- 30 exercices par langage conservés, avec rééquilibrage vers les notions avancées.
+- JS N1 à N7 : promesses, échéance, relance, copie/gel profond et Proxy.
+- Go : sous-séquences, compression, bases, masques, pile RPN et interpréteur.
+- Rust : génériques, trait Display, Box, Rc/RefCell, Drop et propagation d’erreurs.
+- Java : fenêtres, tas, patrons de construction, listes, abstraction, matrices et UTC.
+- 175 ponts vers les sujets ; aucune classification officielle inventée pour Go/Rust/Java.
+- Migrations des étapes conservées sans écraser les anciennes sauvegardes.
+
 ## 19 novembre 2026 — parcours harmonisés à 30 étapes
 
 - 30 petits exercices par langage : 120 étapes au total.

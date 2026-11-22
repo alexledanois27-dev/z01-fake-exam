@@ -1562,7 +1562,7 @@ require("node:test")(
       );
       click(w, "#micro-verify");
       await tick();
-      let state = JSON.parse(w.localStorage.getItem("z01-js-micro-path-v2"));
+      let state = JSON.parse(w.localStorage.getItem("z01-js-micro-path-v3"));
       assert.equal(state.items["js-learn-return"].assisted, true);
       const reset = [
         ...el(w, "js-sprint-dialog").querySelectorAll("button"),
@@ -1604,7 +1604,7 @@ require("node:test")(
       click(w, "#micro-verify");
       await tick();
       assert.match(el(w, "micro-result").textContent, /Aucun échec/);
-      const state = JSON.parse(w.localStorage.getItem("z01-js-micro-path-v2"));
+      const state = JSON.parse(w.localStorage.getItem("z01-js-micro-path-v3"));
       assert.equal(state.items["js-learn-return"].attempts, 0);
       assert.equal(state.items["js-learn-return"].completed, false);
       assert.equal(el(w, "micro-next").disabled, true);
@@ -1628,6 +1628,7 @@ require("node:test")(
     click(w, "#track-js");
     try {
       click(w, "#mode-path");
+      click(w, '[data-micro-chapter="numbers"]');
       click(w, '[data-sprint-exercise="factorial"][data-assisted="false"]');
       assert.equal(el(w, "js-sprint-dialog"), null);
       assert.ok(w.document.querySelector(".sprint-autonomous"));
@@ -1670,6 +1671,7 @@ require("node:test")(
     click(w, "#track-js");
     try {
       click(w, "#mode-path");
+      click(w, '[data-micro-chapter="numbers"]');
       const row = w.document.querySelector(
         '.sprint-exercise[data-exercise="factorial"]',
       );
@@ -1765,11 +1767,55 @@ require("node:test")(
       );
       assert.equal(el(w, "micro-next").disabled, true);
       assert.equal(
-        JSON.parse(w.localStorage.getItem("z01-go-micro-path-v1")).items[
+        JSON.parse(w.localStorage.getItem("z01-go-micro-path-v2")).items[
           "go-learn-return"
         ].attempts,
         0,
       );
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "Apprendre exposes N5 async exercises and a working N7 checkpoint bridge",
+  async () => {
+    const catalogs = Object.fromEntries(
+      ["go", "js", "rust", "java"].map((track) => [
+        track,
+        require(`../catalog-snapshots/${track}.json`).exercises,
+      ]),
+    );
+    const env = await boot({}, false, catalogs);
+    const w = env.w;
+    try {
+      click(w, "#track-js");
+      click(w, "#mode-path");
+      click(w, '[data-micro-chapter="sorting"]');
+      assert.match(
+        w.document.querySelector(".micro-chapter-intro").textContent,
+        /N5/,
+      );
+      click(w, "#micro-verify");
+      await tick();
+      assert.equal(env.requests.at(-1).exerciseId, "js-learn-timed-winner");
+      click(w, '[data-micro-chapter="transfer"]');
+      assert.match(
+        w.document.querySelector(".micro-chapter-intro").textContent,
+        /N7/,
+      );
+      const target = catalogs.js.find((ex) => ex.id === "trap-object");
+      const row = [...w.document.querySelectorAll(".sprint-exercise")].find(
+        (row) => row.textContent.includes(target.title),
+      );
+      assert.ok(row);
+      const button = row.querySelector("button");
+      assert.equal(button.disabled, false);
+      button.click();
+      assert.equal(el(w, "mode-exam").checked, true);
+      assert.equal(el(w, "app").classList.contains("path-mode"), false);
+      assert.equal(el(w, "exam-title").textContent, target.title);
     } finally {
       env.dom.window.close();
     }

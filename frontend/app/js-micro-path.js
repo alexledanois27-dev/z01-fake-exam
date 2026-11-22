@@ -5,6 +5,7 @@ const microStores = Object.fromEntries(
       plan,
       key: plan.storageKey || `z01-${track}-micro-path-v1`,
       legacyKey: plan.legacyStorageKey,
+      legacyKeys: plan.legacyStorageKeys,
     }),
   ]),
 );
@@ -345,6 +346,14 @@ function renderMicroPath() {
   introduction.append(
     sprintNode("summary", "Comprendre ce chapitre avant de coder"),
     sprintNode("p", chapter.goal),
+    sprintNode(
+      "p",
+      chapter.officialLevels?.length
+        ? "Niveaux officiels associés : " +
+            chapter.officialLevels.map((level) => "N" + level).join(", ")
+        : "Progression pédagogique par compétences ; aucun niveau officiel fourni dans ce catalogue.",
+      "sprint-caption",
+    ),
   );
   const compare = sprintNode("div", undefined, "micro-language-pair");
   compare.append(
@@ -526,7 +535,11 @@ function renderMicroPath() {
   );
   for (const id of chapter.checkpoint)
     bridge.append(
-      currentTrack === "js" ? sprintExerciseRow(id) : microCatalogRow(id),
+      currentTrack === "js" &&
+        jsSprintPlan.levels[id] &&
+        jsSprintPlan.levels[id] <= 4
+        ? sprintExerciseRow(id)
+        : microCatalogRow(id),
     );
   if (chapter === microPlan.modules.at(-1))
     bridge.append(
