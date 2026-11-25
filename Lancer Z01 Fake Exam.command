@@ -7,4 +7,4 @@ if ! command -v python3 >/dev/null 2>&1; then
   read -r -p 'Entree pour fermer...' _reply
   exit 1
 fi
-exec python3 "$PROJECT_DIR/scripts/launcher_gui.py"
+exec python3 "$PROJECT_DIR/scripts/launch.py"

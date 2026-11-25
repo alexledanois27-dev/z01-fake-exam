@@ -1,110 +1,86 @@
-# Lanceur graphique local
+# Lanceur local : Linux, Windows et macOS
 
-Le lanceur affiche une fenêtre dans le style du Fake Exam, sans terminal à garder
-ouvert. Il démarre le serveur, indique quand il est prêt et propose **Ouvrir Fake
-Exam**, **Arrêter le serveur** et **Quitter le lanceur**. Les détails du démarrage
-restent consultables dans un panneau replié.
+## Prérequis
 
-## Prérequis et installation
+Le lanceur démarre le code du dépôt : ce n’est pas un exécutable autonome qui
+embarque les dépendances. Il faut Python 3 et Go. Docker doit être accessible
+pour corriger ; Docker Desktop doit utiliser des conteneurs Linux sur Windows
+et macOS. Les cours restent lisibles si Docker est arrêté.
 
-Python 3 et Go restent nécessaires. Docker doit être démarré pour corriger, avec
-des conteneurs Linux sur Windows/macOS. Aucun module Python supplémentaire ni
-Tkinter n’est nécessaire. Les fichiers du dépôt doivent rester ensemble.
+Le lanceur utilise le même `backend/cmd/dev` que `make start`, avec écoute sur
+**127.0.0.1:8092**. Il attend `/api/version` avant d’ouvrir le navigateur.
 
-Créer ou actualiser le raccourci une fois :
+## Démarrage par système
+
+| Système | Double-clic ou raccourci |
+| --- | --- |
+| Ubuntu/Linux | **Z01 Fake Exam** dans les applications après installation. |
+| Windows | **Lancer Z01 Fake Exam.cmd** à la racine du dépôt. |
+| macOS | **Lancer Z01 Fake Exam.command** à la racine du dépôt. |
+
+Les deux fichiers racine doivent rester avec le dossier `scripts` du projet.
+Sur Windows, le fichier cherche `py -3`, puis `python`. Sur macOS, il cherche
+`python3`. Go est cherché dans PATH, puis dans ses emplacements usuels, ou via
+`GO_BIN` explicite.
+
+## Créer un raccourci une seule fois
+
+Linux et macOS :
 
 ```sh
-# Linux et macOS
 python3 scripts/install-launcher.py
 ```
 
+Windows :
+
 ```text
-# Windows
 py -3 scripts/install-launcher.py
 ```
 
-| Système | Raccourci créé |
-| --- | --- |
-| Linux | Z01 Fake Exam dans les applications, sans terminal (`Terminal=false`). |
-| Windows | Z01 Fake Exam.vbs sur le Bureau, lancement masqué via Windows Script Host. |
-| macOS | Z01 Fake Exam.app sur le Bureau, application Finder sans Terminal. |
+L’installateur crée le raccourci adapté au système courant :
 
-`--destination "dossier"` choisit le dossier du raccourci Windows/macOS. Windows
-prend en compte un dossier OneDrive/Desktop existant. Après déplacement du projet
-ou de Python, relancer l’installateur. Sous KDE, la copie du raccourci épinglé
-dans `plasma_icons` est également actualisée lorsqu’elle pointe vers ce projet. Les anciens raccourcis `.cmd`/`.command`
-créés sur le Bureau peuvent être supprimés manuellement ; ils ne sont pas effacés.
+- Linux : `$XDG_DATA_HOME/applications/z01-fake-exam.desktop`, ou
+  `~/.local/share/applications/z01-fake-exam.desktop` par défaut.
+- Windows : `Z01 Fake Exam.cmd` dans le dossier Desktop, en tenant compte d’un
+  dossier OneDrive/Desktop existant.
+- macOS : `Z01 Fake Exam.command` sur le Bureau, avec permission d’exécution.
 
-À la racine, **Lancer Z01 Fake Exam.vbs** ouvre directement le lanceur Windows,
-avec `pyw -3`, puis `pythonw` si nécessaire. Le `.cmd` racine redirige vers lui.
-Sur macOS, le `.command` racine reste une alternative qui ouvre Terminal ; utiliser
-l’application `.app` installée pour un lancement sans console.
+Pour un Bureau redirigé ou un autre emplacement sur Windows/macOS, ajouter
+`--destination "chemin du dossier"`. Après déplacement du projet ou de Python,
+relancer l’installation. Supprimer le raccourci désinstalle seulement celui-ci.
 
-Chrome, Chromium ou Edge sont utilisés en mode fenêtre d’application lorsqu’ils
-sont trouvés. À défaut, l’interface s’ouvre dans le navigateur habituel, dans un
-onglet. Aucune installation de navigateur n’est effectuée. Le comportement de
-la fenêtre dépend donc du navigateur disponible.
+Sous KDE, l’installateur actualise aussi la copie épinglée dans `plasma_icons`
+si elle correspond à ce projet, y compris pour revenir de l’ancien lanceur
+graphique au raccourci simple.
 
-## Démarrage, arrêt et journaux
+## Arrêt, port et instance existante
 
-Le lanceur démarre `scripts/launch.py`, qui supervise le même `backend/cmd/dev`
-que `make start`. Le site écoute sur **127.0.0.1:8092** par défaut ; le lanceur
-attend `/api/version`. Sa propre interface utilise un port local aléatoire distinct.
-La progression du site reste attachée à son port habituel, pas à celui du lanceur.
-Variables conservées : `PORT`, `GO_BIN`, `TMPDIR`.
+Garder le terminal ouvert et utiliser **Ctrl+C** pour arrêter l’instance créée.
+Les processus du serveur sont regroupés ; sur Windows, le lanceur tente un
+CTRL_BREAK de son groupe, puis supprime uniquement son arbre de processus si
+l’arrêt n’aboutit pas. Il n’arrête jamais tous les processus Go de la machine.
 
-Le journal courant est `.local-runner/launcher.log`, ignoré par Git. Seuls ses
-16 derniers ko sont affichés, comme texte, jamais comme HTML. Il est remplacé au
-prochain démarrage du serveur depuis ce lanceur.
+Si une instance Z01 Fake Exam tourne déjà sur le port choisi, le lanceur ouvre
+simplement le navigateur, sans prendre possession de cette instance. Un autre
+service sur le port est signalé sans kill ni changement silencieux de port.
 
-- **Arrêter le serveur** arrête uniquement le processus créé par ce lanceur et
-  ses descendants. Le bouton est désactivé pour une instance déjà existante.
-- **Quitter le lanceur** demande cet arrêt puis ferme le service du lanceur.
-  L’interface indique ensuite qu’on peut fermer sa fenêtre.
-- Fermer seulement la fenêtre/son onglet **laisse le serveur et le lanceur actifs**.
-  Conserver la fenêtre et utiliser Quitter pour terminer proprement.
-- Un port occupé par un autre service est signalé, sans le tuer ni changer
-  silencieusement le port du site.
+La progression dépend de l’origine du navigateur, donc les données de 8096 ne
+sont pas celles de 8092. Variables facultatives : `PORT`, `GO_BIN`, `TMPDIR`,
+`Z01_NO_BROWSER=1`. Le point d’entrée Go conserve ses réglages temporaires locaux.
+Le lanceur ne fait pas de sudo, d’installation de dépendances, d’autostart ni de
+déploiement. Il ne modifie pas le catalogue : le chargement API/les copies de
+secours gardent leur fonctionnement habituel.
 
-Pour diagnostiquer depuis un terminal, le mode précédent reste disponible :
-`python3 scripts/launch.py` (ou `py -3 scripts/launch.py`), arrêt avec Ctrl+C.
-Le lanceur ne fait ni sudo, ni installation de dépendances, ni autostart, ni déploiement.
+## Validation et limites
 
-## Vérification des mises à jour
+`make check` vérifie les tests du lanceur : instance existante, port occupé,
+nettoyage, installation, échappements, navigateur macOS/Windows et groupe Windows.
+Les branches Windows/macOS sont simulées depuis Linux ; le backend est également
+compilé pour Windows amd64 et macOS arm64. Le cycle réel démarrage/deuxième
+ouverture/arrêt et les corrections Docker sont vérifiés sur Linux.
 
-Au démarrage puis avec **Vérifier**, le lanceur compare le commit Git local à
-`main` sur `alexledanois27-dev/z01-fake-exam` via l’API publique GitHub. La requête
-communique le SHA du commit local, sans jeton GitHub, sans code, sans brouillons
-ni journaux. L’adresse du dépôt est fixe : le lanceur ne se fie pas à un remote
-configuré vers une autre destination.
-
-Il distingue une mise à jour disponible, une version à jour, une branche locale
-en avance et des historiques divergents. Les fichiers modifiés sont signalés.
-Une coupure réseau, une limite GitHub, Git absent, un téléchargement ZIP sans
-historique ou un commit local encore inconnu de GitHub rendent la vérification
-indisponible, sans empêcher de travailler.
-
-**Aucun téléchargement ou remplacement automatique du code.** Le lien ouvre les
-commits de `main` sur GitHub. Pour mettre à jour un clone propre placé sur `main`,
-quitter d’abord le lanceur, puis exécuter `git pull --ff-only` dans le projet et
-relancer. Conserver ou commiter les modifications locales avant toute opération ;
-ne pas appliquer cette procédure aveuglément à une branche de développement ou
-à un historique divergent. Les archives ZIP sont à retélécharger manuellement.
-
-## Sécurité locale et validation
-
-L’interface de contrôle écoute exclusivement sur 127.0.0.1. Un secret aléatoire
-par lancement, placé dans le fragment de son URL, est exigé pour les états et
-les actions. Le fragment n’est pas envoyé aux liens GitHub (`noreferrer`). Les
-requêtes provenant d’une autre origine et les noms d’hôte étrangers sont rejetés.
-Aucune commande, aucun chemin ni aucune URL à exécuter ne vient des requêtes.
-CSP restrictive, absence de CORS et d’intégration en iframe, réponses sans cache.
-Un logiciel malveillant déjà installé sur la machine reste hors de ce périmètre.
-
-`make check` vérifie le cycle du lanceur, les raccourcis, les contrôles HTTP réels,
-la comparaison de versions, l’absence d’écrasement de fichiers et l’affichage des
-journaux en texte. Le cycle démarrer/arrêter/redémarrer est vérifié sur Linux.
-Les raccourcis Windows/macOS sont testés par simulation : **aucun essai natif
-Windows ou macOS n’est réalisé dans cet environnement**. Les restrictions locales
-Windows Script Host, les permissions macOS et les partages Docker Desktop restent
-à valider sur ces systèmes.
+**Aucun essai natif Windows ou macOS n’a été effectué dans cet environnement.**
+Les permissions du bureau, les associations de fichiers et les partages de
+fichiers Docker Desktop sont à valider sur la machine cible. Pour macOS, le
+fichier `.command` exige son bit exécutable ; l’installateur le définit, y compris
+lorsqu’une archive téléchargée n’a pas conservé les permissions Git.

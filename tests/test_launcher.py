@@ -59,23 +59,23 @@ class LauncherTests(unittest.TestCase):
             installer.main()
             path = Path(directory) / 'applications/z01-fake-exam.desktop'
             content = path.read_text()
-            self.assertIn('Terminal=false', content)
-            self.assertIn('scripts/launcher_gui.py', content)
+            self.assertIn('Terminal=true', content)
+            self.assertIn('scripts/launch.py', content)
             self.assertNotIn('sudo', content)
             self.assertEqual(path.stat().st_mode & 0o777, 0o755)
             if launcher.shutil.which('desktop-file-validate'):
                 subprocess.run(['desktop-file-validate', str(path)], check=True)
 
-    def test_plasma_pinned_copy_is_updated_with_application_shortcut(self):
+    def test_plasma_pinned_copy_returns_to_simple_shortcut(self):
         with tempfile.TemporaryDirectory(prefix='z01 kde ') as directory, patch.dict(os.environ, {'XDG_DATA_HOME': directory}):
             cached = Path(directory) / 'plasma_icons/z01-fake-exam.desktop'
             cached.parent.mkdir()
-            cached.write_text('Name=Z01 Fake Exam\nExec="' + str(installer.ROOT / 'scripts/launch.py') + '"\nTerminal=true\n')
+            cached.write_text('Name=Z01 Fake Exam\nExec="' + str(installer.ROOT / 'scripts/launcher_gui.py') + '"\nTerminal=false\n')
             installer.main()
             content = cached.read_text()
-            self.assertIn('launcher_gui.py', content)
-            self.assertIn('Terminal=false', content)
-            self.assertNotIn('Terminal=true', content)
+            self.assertIn('scripts/launch.py', content)
+            self.assertIn('Terminal=true', content)
+            self.assertNotIn('launcher_gui.py', content)
             self.assertEqual(content, (Path(directory) / 'applications/z01-fake-exam.desktop').read_text())
 
     def test_plasma_copy_for_another_checkout_is_not_overwritten(self):
@@ -124,25 +124,19 @@ class PortableLauncherTests(unittest.TestCase):
             self.assertNotIn('/IM', run.call_args.args[0])
 
     def test_mac_and_windows_shortcuts_use_quoted_python_and_script(self):
-        import plistlib
-        for platform, suffix in [('darwin', '.app'), ('win32', '.vbs')]:
+        for platform, suffix in [('darwin', '.command'), ('win32', '.cmd')]:
             with self.subTest(platform=platform), tempfile.TemporaryDirectory(prefix='z01 shortcut ') as directory, patch.object(installer.sys, 'platform', platform):
                 target = installer.main(directory)
+                content = target.read_text()
                 self.assertEqual(target.suffix, suffix)
-                if platform == 'darwin':
-                    executable = target / 'Contents/MacOS/launcher'
-                    content = executable.read_text()
-                    self.assertEqual(executable.stat().st_mode & 0o777, 0o755)
-                    subprocess.run(['bash', '-n', str(executable)], check=True)
-                    with (target / 'Contents/Info.plist').open('rb') as info:
-                        self.assertEqual(plistlib.load(info)['CFBundleExecutable'], 'launcher')
-                else:
-                    content = target.read_text(encoding='utf-16')
-                    self.assertIn('0, False', content)
-                    self.assertIn('WScript.Shell', content)
-                self.assertIn(str(installer.ROOT / 'scripts/launcher_gui.py'), content)
+                self.assertIn(str(installer.ROOT / 'scripts/launch.py'), content)
                 self.assertIn(installer.sys.executable, content)
                 self.assertNotIn('sudo', content)
+                if platform == 'darwin':
+                    self.assertEqual(target.stat().st_mode & 0o777, 0o755)
+                    subprocess.run(['bash', '-n', str(target)], check=True)
+                else:
+                    self.assertIn('if errorlevel 1 pause', content)
 
     def test_windows_paths_escape_percent_and_reject_line_breaks(self):
         self.assertEqual(installer.batch_quote('C:\\A B\\100%\\python.exe'), '"C:\\A B\\100%%\\python.exe"')

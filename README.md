@@ -55,20 +55,16 @@ dossier complet du projet :
 | Système | Démarrage |
 | --- | --- |
 | Ubuntu/Linux | Raccourci **Z01 Fake Exam** dans les applications après `python3 scripts/install-launcher.py`. |
-| Windows | Double-cliquer **Lancer Z01 Fake Exam.vbs** (ou le `.cmd`). |
-| macOS | Ouvrir **Z01 Fake Exam.app** après installation du raccourci. |
+| Windows | Double-cliquer **Lancer Z01 Fake Exam.cmd**. |
+| macOS | Double-cliquer **Lancer Z01 Fake Exam.command**. |
 
 L’installateur crée aussi un raccourci sur le Bureau Windows/macOS :
 `py -3 scripts/install-launcher.py` sur Windows, ou
 `python3 scripts/install-launcher.py` sur macOS. `--destination` permet de choisir
 un autre dossier de raccourcis sur ces deux systèmes.
 
-Le lanceur affiche une fenêtre aux couleurs du site, démarre le serveur puis permet
-d’ouvrir `http://127.0.0.1:8092`. Utiliser **Quitter le lanceur** pour arrêter
-l’instance créée. Fermer seulement la fenêtre laisse le serveur actif.
-Il vérifie aussi les nouveautés de `main` sur GitHub, sans installer ni remplacer
-de fichiers automatiquement. Chrome/Edge ouvrent une fenêtre d’application ; les
-autres navigateurs peuvent afficher un onglet.
+Le lanceur attend que le serveur soit prêt puis ouvre `http://127.0.0.1:8092`.
+Garder le terminal ouvert ; utiliser `Ctrl+C` pour arrêter l’instance créée.
 Une instance déjà ouverte est réutilisée. Un autre service sur le port est signalé
 sans être arrêté. Le lanceur ne fait ni installation de dépendances, ni autostart,
 ni déploiement. Voir [les détails et limites de validation](docs/lanceur-local.md).

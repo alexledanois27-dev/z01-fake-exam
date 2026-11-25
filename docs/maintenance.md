@@ -432,15 +432,3 @@ Les tests couvrent les branches Windows/macOS par simulation sur Linux et la
 compilation Go pour Windows amd64/macOS arm64. Ce n’est pas un essai natif sur
 ces deux systèmes ; leurs particularités Docker Desktop et bureau restent à
 valider sur les machines cibles. Voir [le guide](lanceur-local.md).
-
-## Fenêtre du lanceur
-
-`scripts/launcher_gui.py` supervise le mode terminal existant et sert uniquement
-les trois fichiers de `scripts/launcher-ui/` sur un port loopback aléatoire.
-Les commandes HTTP ont des destinations fixes et exigent un secret par instance.
-Le contrôleur ne revendique jamais un serveur préexistant. Les raccourcis sont
-générés par `scripts/install-launcher.py`. La comparaison GitHub est en lecture
-seule, sans pull ni installation. Voir [le guide du lanceur](lanceur-local.md).
-
-Les fichiers du lanceur ne passent pas par le bundle frontend du site. Les tests
-Python du lanceur et les tests JS de son interface sont inclus dans `make check`.

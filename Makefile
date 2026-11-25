@@ -14,5 +14,5 @@ test:
 	go -C backend test ./...
 
 check: test
-	python3 -m unittest discover -s tests -p 'test_launcher*.py'
+	python3 -m unittest discover -s tests -p 'test_launcher.py'
 	go -C backend vet ./...

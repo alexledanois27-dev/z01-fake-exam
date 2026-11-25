@@ -1,12 +1,11 @@
 # Historique fonctionnel
 
-## 22 novembre 2026 — lanceur graphique et versions
+## 25 novembre 2026 — raccourcis simples
 
-- Fenêtre locale dans le style du site, démarrage, ouverture, arrêt et journal repliable.
-- Raccourcis sans console Linux, Windows (.vbs) et macOS (.app).
-- Vérification GitHub en lecture seule : à jour, mise à jour, avance et divergence.
-- Aucun remplacement automatique ; les modifications locales sont signalées.
-- Service de contrôle limité à la boucle locale, secret par lancement et contrôle d’origine.
+- Conservation des parcours Apprendre et des groupes officiels Rust/Java.
+- Retour aux raccourcis Linux .desktop, Windows .cmd et macOS .command.
+- Retrait de la fenêtre de lancement et de la vérification GitHub des mises à jour.
+- Actualisation de la copie KDE épinglée lors de la réinstallation du raccourci.
 
 ## 22 novembre 2026 — groupes officiels et lanceurs multiplateformes
 
