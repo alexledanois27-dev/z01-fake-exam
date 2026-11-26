@@ -1298,26 +1298,35 @@ require("node:test")(
         click(w, "#mode-exam");
         click(w, "#track-" + track);
         click(w, '#level-filters [data-filter="5"]');
-        assert.equal(el(w, "exercise-level").textContent, "Niveau 5", track);
+        assert.match(el(w, "exercise-level").textContent, /Niveau 5$/, track);
         draft(w, "TRAINING ONLY");
         click(w, "#mode-true-exam");
         click(w, 'input[name="exam-kind"][value="strict"]');
         click(w, "#exam-start");
-        assert.equal(el(w, "exercise-level").textContent, "Niveau 1", track);
+        assert.match(el(w, "exercise-level").textContent, /Niveau 1$/, track);
         assert.equal(el(w, "code-editor").value, "", track);
         assertNoFuture(w);
         const sessions = JSON.parse(
           w.localStorage.getItem("personal-exam-sessions-v2"),
         ).sessions;
-        const session = sessions[JSON.stringify([track, "strict"])];
+        const session =
+          sessions[
+            JSON.stringify(
+              track === "java"
+                ? [track, "strict", "checkpoint-01-java"]
+                : [track, "strict"],
+            )
+          ];
         assert.equal(session.index, 0, track);
-        assert.equal(session.series.length, track === "js" ? 7 : 10, track);
+        assert.equal(
+          session.series.length,
+          track === "js" ? 7 : track === "java" ? 5 : 10,
+          track,
+        );
         if (track !== "go") {
           const levels = session.series.map((id) => {
             const exercise = catalogs[track].find((ex) => ex.id === id);
-            return (
-              exercise.level || (catalogs[track].indexOf(exercise) % 10) + 1
-            );
+            return exercise.level;
           });
           assert.deepEqual(
             levels,
@@ -1328,9 +1337,9 @@ require("node:test")(
         // A reload resumes the actual exam, never the training selection.
         const restored = await boot(env.snapshot(), false, catalogs);
         try {
-          assert.equal(
+          assert.match(
             el(restored.w, "exercise-level").textContent,
-            "Niveau 1",
+            /Niveau 1$/,
             track,
           );
         } finally {
@@ -1453,6 +1462,525 @@ require("node:test")(
       ).items;
       assert.equal(items.length, 1);
       assert.equal(items[0].success, null);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "step-by-step Go to JS path grades small exercises without altering the main editor or exam progress",
+  async () => {
+    const env = await boot();
+    const w = env.w;
+    click(w, "#track-js");
+    const original = w.fetch;
+    let submitted;
+    w.fetch = async (url, opts) => {
+      if (url !== "/api/run") return original(url, opts);
+      submitted = JSON.parse(opts.body);
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          success: true,
+          output: "OK",
+          checks: [
+            {
+              label: '<img src=x onerror="alert(1)">',
+              expected: "8",
+              actual: "8",
+              passed: true,
+            },
+          ],
+        }),
+      };
+    };
+    try {
+      draft(w, "KEEP GO DRAFT");
+      click(w, "#mode-path");
+      assert.equal(w.document.querySelectorAll(".micro-chapter").length, 12);
+      assert.equal(w.document.querySelectorAll(".micro-lesson").length, 3);
+      assert.match(
+        w.document.querySelector(".micro-hero").textContent,
+        /0\/30/,
+      );
+      assert.equal(el(w, "code-editor").value, "KEEP GO DRAFT");
+      assert.equal(el(w, "micro-next").disabled, true);
+      el(w, "micro-code").value = "function doubleValue(n) { return n * 2; }";
+      el(w, "micro-code").dispatchEvent(
+        new w.Event("input", { bubbles: true }),
+      );
+      click(w, "#micro-verify");
+      await tick();
+      assert.equal(submitted.mode, "lesson");
+      assert.equal(submitted.exerciseId, "js-learn-return");
+      assert.equal(el(w, "micro-next").disabled, false);
+      assert.equal(el(w, "micro-result").querySelector("img"), null);
+      assert.match(el(w, "micro-result").textContent, /img src=x/);
+      assert.match(el(w, "progress-label").textContent, /0 \/ 0/);
+      assert.equal(el(w, "code-editor").value, "KEEP GO DRAFT");
+      click(w, "#micro-next");
+      assert.match(
+        w.document.querySelector(".micro-title").textContent,
+        /variable/,
+      );
+      assert.equal(el(w, "micro-next").disabled, true);
+      const saved = env.snapshot();
+      const restored = await boot(saved);
+      try {
+        click(restored.w, "#mode-path");
+        assert.match(
+          restored.w.document.querySelector(".micro-title").textContent,
+          /variable/,
+        );
+        assert.match(
+          restored.w.document.querySelector(".micro-hero").textContent,
+          /1\/30/,
+        );
+      } finally {
+        restored.dom.window.close();
+      }
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "micro hints, explained answers and reset preserve existing training progress",
+  async () => {
+    const env = await boot();
+    const w = env.w;
+    click(w, "#track-js");
+    try {
+      draft(w, "correct GO");
+      env.advance(15000);
+      click(w, "#run-btn");
+      await tick();
+      draft(w, "DO NOT REPLACE");
+      click(w, "#mode-path");
+      const solution = w.document.querySelector(".micro-solution");
+      assert.equal(solution.open, false);
+      solution.querySelector("summary").click();
+      await tick();
+      assert.equal(solution.open, true);
+      el(w, "micro-code").value = "correct CODE";
+      el(w, "micro-code").dispatchEvent(
+        new w.Event("input", { bubbles: true }),
+      );
+      click(w, "#micro-verify");
+      await tick();
+      let state = JSON.parse(w.localStorage.getItem("z01-js-micro-path-v3"));
+      assert.equal(state.items["js-learn-return"].assisted, true);
+      const reset = [
+        ...el(w, "js-sprint-dialog").querySelectorAll("button"),
+      ].find((b) => b.textContent === "Réinitialiser seulement ce parcours");
+      reset.click();
+      reset.click();
+      assert.match(
+        w.document.querySelector(".micro-hero").textContent,
+        /0\/30/,
+      );
+      assert.equal(el(w, "code-editor").value, "DO NOT REPLACE");
+      assert.match(el(w, "progress-label").textContent, /0 \/ 0/);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "micro infrastructure errors do not count as attempts or passed steps",
+  async () => {
+    const env = await boot();
+    const w = env.w;
+    click(w, "#track-js");
+    const original = w.fetch;
+    w.fetch = async (url, opts) =>
+      url === "/api/run"
+        ? {
+            ok: false,
+            status: 503,
+            json: async () => ({
+              success: false,
+              output: "Docker indisponible",
+            }),
+          }
+        : original(url, opts);
+    try {
+      click(w, "#mode-path");
+      click(w, "#micro-verify");
+      await tick();
+      assert.match(el(w, "micro-result").textContent, /Aucun échec/);
+      const state = JSON.parse(w.localStorage.getItem("z01-js-micro-path-v3"));
+      assert.equal(state.items["js-learn-return"].attempts, 0);
+      assert.equal(state.items["js-learn-return"].completed, false);
+      assert.equal(el(w, "micro-next").disabled, true);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "checkpoint bridge retains autonomous evidence and remains unavailable in exam mode",
+  async () => {
+    const catalogs = Object.fromEntries(
+      ["go", "js", "rust", "java"].map((track) => [
+        track,
+        require(`../catalog-snapshots/${track}.json`).exercises,
+      ]),
+    );
+    const env = await boot({}, false, catalogs);
+    const w = env.w;
+    click(w, "#track-js");
+    try {
+      click(w, "#mode-path");
+      click(w, '[data-micro-chapter="numbers"]');
+      click(w, '[data-sprint-exercise="factorial"][data-assisted="false"]');
+      assert.equal(el(w, "js-sprint-dialog"), null);
+      assert.ok(w.document.querySelector(".sprint-autonomous"));
+      draft(w, "correct CHECKPOINT");
+      env.advance(15000);
+      click(w, "#run-btn");
+      await tick();
+      const oldState = JSON.parse(
+        w.localStorage.getItem("z01-js-checkpoint-sprint-v1"),
+      );
+      assert.equal(oldState.attempts[0].assisted, false);
+      click(w, "#mode-path");
+      assert.equal(w.document.querySelector(".sprint-autonomous"), null);
+      click(w, "#mode-exam");
+      click(w, "#mode-true-exam");
+      click(w, 'input[name="exam-kind"][value="strict"]');
+      click(w, "#exam-start");
+      click(w, "#mode-path");
+      assert.equal(el(w, "js-sprint-dialog"), null);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "changed checkpoint catalog groups disable their teaching bridge",
+  async () => {
+    const catalogs = Object.fromEntries(
+      ["go", "js", "rust", "java"].map((track) => [
+        track,
+        require(`../catalog-snapshots/${track}.json`).exercises,
+      ]),
+    );
+    catalogs.js = catalogs.js.map((ex) =>
+      ex.id === "factorial" ? { ...ex, level: 6 } : ex,
+    );
+    const env = await boot({}, false, catalogs);
+    const w = env.w;
+    click(w, "#track-js");
+    try {
+      click(w, "#mode-path");
+      click(w, '[data-micro-chapter="numbers"]');
+      const row = w.document.querySelector(
+        '.sprint-exercise[data-exercise="factorial"]',
+      );
+      assert.match(row.textContent, /Groupe modifié/);
+      assert.equal(row.querySelector('[data-assisted="false"]').disabled, true);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "Apprendre is a full page with independent editable paths for all four languages",
+  async () => {
+    const catalogs = Object.fromEntries(
+      ["go", "js", "rust", "java"].map((track) => [
+        track,
+        require(`../catalog-snapshots/${track}.json`).exercises,
+      ]),
+    );
+    const env = await boot({}, false, catalogs);
+    const w = env.w;
+    try {
+      assert.equal(el(w, "js-sprint-open"), null);
+      click(w, "#mode-path");
+      assert.equal(w.document.querySelector("dialog#js-sprint-dialog"), null);
+      assert.equal(el(w, "learn-path-panel").hidden, false);
+      assert.ok(el(w, "app").classList.contains("path-mode"));
+      for (const [track, count, chapters] of [
+        ["go", 30, 6],
+        ["js", 30, 12],
+        ["rust", 30, 6],
+        ["java", 30, 6],
+      ]) {
+        click(w, `#track-${track}`);
+        assert.equal(el(w, "mode-path").checked, true);
+        assert.equal(
+          w.document.querySelectorAll(".micro-chapter").length,
+          chapters,
+        );
+        assert.match(
+          w.document.querySelector(".micro-hero").textContent,
+          new RegExp(`0/${count}`),
+        );
+        const code = el(w, "micro-code");
+        code.value = `DRAFT ${track}`;
+        code.dispatchEvent(new w.Event("input", { bubbles: true }));
+        click(w, "#micro-verify");
+        await tick();
+        assert.equal(env.requests.at(-1).exerciseId, `${track}-learn-return`);
+        assert.equal(env.requests.at(-1).code, `DRAFT ${track}`);
+        assert.equal(el(w, "micro-next").disabled, true);
+        click(w, "#mode-learning");
+        await tick();
+        assert.equal(el(w, "learn-path-panel").hidden, true);
+        assert.equal(el(w, "js-sprint-dialog"), null);
+        click(w, "#mode-path");
+        assert.equal(el(w, "micro-code").value, `DRAFT ${track}`);
+      }
+      click(w, "#track-rust");
+      assert.equal(el(w, "micro-code").value, "DRAFT rust");
+      click(w, "#mode-exam");
+      assert.equal(el(w, "learn-path-panel").hidden, true);
+      assert.equal(el(w, "mode-exam").checked, true);
+      assert.equal(el(w, "js-sprint-dialog"), null);
+      const restored = await boot(env.snapshot(), false, catalogs);
+      try {
+        click(restored.w, "#mode-path");
+        assert.equal(el(restored.w, "micro-code").value, "DRAFT rust");
+      } finally {
+        restored.dom.window.close();
+      }
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "changing learning language rejects a late result from the previous path",
+  async () => {
+    const env = await boot({}, true);
+    const w = env.w;
+    try {
+      click(w, "#mode-path");
+      click(w, "#micro-verify");
+      click(w, "#track-java");
+      env.release();
+      await tick();
+      assert.match(
+        w.document.querySelector(".micro-hero").textContent,
+        /0\/30/,
+      );
+      assert.equal(el(w, "micro-next").disabled, true);
+      assert.equal(
+        JSON.parse(w.localStorage.getItem("z01-go-micro-path-v2")).items[
+          "go-learn-return"
+        ].attempts,
+        0,
+      );
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "Apprendre exposes N5 async exercises and a working N7 checkpoint bridge",
+  async () => {
+    const catalogs = Object.fromEntries(
+      ["go", "js", "rust", "java"].map((track) => [
+        track,
+        require(`../catalog-snapshots/${track}.json`).exercises,
+      ]),
+    );
+    const env = await boot({}, false, catalogs);
+    const w = env.w;
+    try {
+      click(w, "#track-js");
+      click(w, "#mode-path");
+      click(w, '[data-micro-chapter="sorting"]');
+      assert.match(
+        w.document.querySelector(".micro-chapter-intro").textContent,
+        /N5/,
+      );
+      click(w, "#micro-verify");
+      await tick();
+      assert.equal(env.requests.at(-1).exerciseId, "js-learn-timed-winner");
+      click(w, '[data-micro-chapter="transfer"]');
+      assert.match(
+        w.document.querySelector(".micro-chapter-intro").textContent,
+        /N7/,
+      );
+      const target = catalogs.js.find((ex) => ex.id === "trap-object");
+      const row = [...w.document.querySelectorAll(".sprint-exercise")].find(
+        (row) => row.textContent.includes(target.title),
+      );
+      assert.ok(row);
+      const button = row.querySelector("button");
+      assert.equal(button.disabled, false);
+      button.click();
+      assert.equal(el(w, "mode-exam").checked, true);
+      assert.equal(el(w, "app").classList.contains("path-mode"), false);
+      assert.equal(el(w, "exam-title").textContent, target.title);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "Rust/Java never fabricate missing levels from catalogue order",
+  async () => {
+    const catalogs = {
+      go: fixtures,
+      rust: [
+        { id: "rust-unknown", title: "Unknown", statement: "# X" },
+        { id: "rust-known", title: "Known", statement: "# Y", level: 2 },
+      ],
+      java: [
+        {
+          id: "java-unknown",
+          title: "Unknown",
+          statement: "# Z",
+          checkpoint: "checkpoint-01-java",
+        },
+      ],
+    };
+    const env = await boot({}, false, catalogs);
+    const w = env.w;
+    try {
+      click(w, "#track-rust");
+      assert.ok(w.document.querySelector('[data-filter="unclassified"]'));
+      assert.equal(w.document.querySelector('[data-filter="1"]'), null);
+      click(w, '[data-filter="unclassified"]');
+      assert.match(el(w, "exercise-level").textContent, /Sans niveau/);
+      assert.equal(w.document.querySelectorAll(".exercise-chip").length, 1);
+      click(w, "#track-java");
+      click(w, "#mode-true-exam");
+      assert.equal(el(w, "exam-start").disabled, true);
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "Java filters and new exams use one official checkpoint with independent resume",
+  async () => {
+    const catalogs = Object.fromEntries(
+      ["go", "js", "rust", "java"].map((track) => [
+        track,
+        require(`../catalog-snapshots/${track}.json`).exercises,
+      ]),
+    );
+    const env = await boot({}, false, catalogs);
+    const w = env.w;
+    const change = (id, value) => {
+      el(w, id).value = value;
+      el(w, id).dispatchEvent(new w.Event("change", { bubbles: true }));
+    };
+    try {
+      click(w, "#track-java");
+      change("java-checkpoint-filter", "checkpoint-02-java");
+      assert.equal(w.document.querySelectorAll(".exercise-chip").length, 15);
+      assert.equal(w.document.querySelector('[data-filter="6"]'), null);
+      assert.match(el(w, "exercise-level").textContent, /Checkpoint Java 2/);
+      click(w, "#mode-true-exam");
+      change("java-exam-checkpoint", "checkpoint-03-java");
+      click(w, "#exam-start");
+      let sessions = JSON.parse(
+        w.localStorage.getItem("personal-exam-sessions-v2"),
+      ).sessions;
+      const cp3 =
+        sessions[JSON.stringify(["java", "free", "checkpoint-03-java"])];
+      assert.equal(cp3.series.length, 5);
+      for (const [index, id] of cp3.series.entries()) {
+        const ex = catalogs.java.find((ex) => ex.id === id);
+        assert.equal(ex.checkpoint, "checkpoint-03-java");
+        assert.equal(ex.level, index + 1);
+      }
+      assert.equal(el(w, "java-exam-checkpoint").disabled, true);
+      draft(w, "CP3 DRAFT");
+      click(w, "#mode-exam");
+      click(w, "#mode-true-exam");
+      click(w, "#true-exam-restart");
+      change("java-exam-checkpoint", "checkpoint-02-java");
+      click(w, "#exam-start");
+      draft(w, "CP2 DRAFT");
+      sessions = JSON.parse(
+        w.localStorage.getItem("personal-exam-sessions-v2"),
+      ).sessions;
+      assert.equal(
+        sessions[JSON.stringify(["java", "free", "checkpoint-03-java"])].drafts[
+          cp3.series[0]
+        ],
+        "CP3 DRAFT",
+      );
+      const restored = await boot(env.snapshot(), false, catalogs);
+      try {
+        assert.equal(el(restored.w, "code-editor").value, "CP2 DRAFT");
+        assert.match(
+          el(restored.w, "exercise-level").textContent,
+          /Checkpoint Java 2 · Niveau 1/,
+        );
+      } finally {
+        restored.dom.window.close();
+      }
+    } finally {
+      env.dom.window.close();
+    }
+  },
+);
+
+require("node:test")(
+  "legacy Java exam drafts remain resumable without mixing new scoped series",
+  async () => {
+    const catalogs = Object.fromEntries(
+      ["go", "js", "rust", "java"].map((track) => [
+        track,
+        require(`../catalog-snapshots/${track}.json`).exercises,
+      ]),
+    );
+    const ids = ["java-goodbye-mars", "java-date-formatter"];
+    const legacy = {
+      id: "legacy-java",
+      track: "java",
+      kind: "free",
+      series: ids,
+      index: 0,
+      phase: "running",
+      startedAt: 1700000000000,
+      deadline: null,
+      drafts: { [ids[0]]: "LEGACY JAVA" },
+      results: {},
+      skipped: {},
+      finishedAt: null,
+      finishReason: null,
+    };
+    const env = await boot(
+      {
+        "personal-exam-sessions-v2": JSON.stringify({
+          version: 2,
+          sessions: { [JSON.stringify(["java", "free"])]: legacy },
+        }),
+      },
+      false,
+      catalogs,
+    );
+    const w = env.w;
+    try {
+      click(w, "#track-java");
+      click(w, "#mode-true-exam");
+      assert.equal(el(w, "exam-resume-legacy-java").hidden, false);
+      click(w, "#exam-resume-legacy-java");
+      assert.equal(el(w, "code-editor").value, "LEGACY JAVA");
+      assert.match(
+        el(w, "true-exam-status").textContent,
+        /classement historique/,
+      );
     } finally {
       env.dom.window.close();
     }

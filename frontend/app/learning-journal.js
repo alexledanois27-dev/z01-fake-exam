@@ -1,10 +1,14 @@
 let journalRequestSequence = 0;
 function journalAvailable() {
-  return !learningMode && (!trueExamMode || currentExam?.phase === "finished");
+  return (
+    !pathMode &&
+    !learningMode &&
+    (!trueExamMode || currentExam?.phase === "finished")
+  );
 }
 function syncJournalControls() {
   document.getElementById("exercise-history-btn").hidden =
-    learningMode || trueExamMode || !currentExercise;
+    pathMode || learningMode || trueExamMode || !currentExercise;
   document.getElementById("learning-report-btn").disabled = !journalAvailable();
 }
 function closeLearningJournal() {

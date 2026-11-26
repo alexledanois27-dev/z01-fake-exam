@@ -13,11 +13,12 @@ import (
 )
 
 type catalogSnapshot struct {
-	Version   int              `json:"version"`
-	Track     string           `json:"track"`
-	SavedAt   string           `json:"savedAt"`
-	Source    string           `json:"source"`
-	Exercises []RunnerExercise `json:"exercises"`
+	Version         int              `json:"version"`
+	Track           string           `json:"track"`
+	SavedAt         string           `json:"savedAt"`
+	LevelsUpdatedAt string           `json:"levelsUpdatedAt,omitempty"`
+	Source          string           `json:"source"`
+	Exercises       []RunnerExercise `json:"exercises"`
 }
 
 func snapshotImage(track string) string {
@@ -39,6 +40,11 @@ func validateCatalogSnapshot(s catalogSnapshot, track string) error {
 	}
 	if _, err := time.Parse(time.RFC3339, s.SavedAt); err != nil {
 		return fmt.Errorf("date du snapshot invalide")
+	}
+	if s.LevelsUpdatedAt != "" {
+		if _, err := time.Parse(time.RFC3339, s.LevelsUpdatedAt); err != nil {
+			return fmt.Errorf("date des groupes invalide")
+		}
 	}
 	seen := map[string]bool{}
 	for _, ex := range catalogExercises(s.Exercises) {

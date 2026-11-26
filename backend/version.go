@@ -30,7 +30,8 @@ func handleVersion(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "no-store")
 	json.NewEncoder(w).Encode(struct {
-		SHA   string `json:"sha"`
-		Dirty bool   `json:"dirty"`
-	}{sha, dirty})
+		Application string `json:"application"`
+		SHA         string `json:"sha"`
+		Dirty       bool   `json:"dirty"`
+	}{"z01-fake-exam", sha, dirty})
 }

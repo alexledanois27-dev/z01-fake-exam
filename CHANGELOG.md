@@ -1,5 +1,60 @@
 # Historique fonctionnel
 
+## 25 novembre 2026 — raccourcis simples
+
+- Conservation des parcours Apprendre et des groupes officiels Rust/Java.
+- Retour aux raccourcis Linux .desktop, Windows .cmd et macOS .command.
+- Retrait de la fenêtre de lancement et de la vérification GitHub des mises à jour.
+- Actualisation de la copie KDE épinglée lors de la réinstallation du raccourci.
+
+## 22 novembre 2026 — groupes officiels et lanceurs multiplateformes
+
+- Rust N1–N10 et Java N1–N5 depuis attrs.group ; suppression du classement par indice.
+- Checkpoint Java conservé dans le catalogue, le filtre et les nouvelles sessions.
+- Anciennes réussites et sessions Java historiques conservées.
+- Copies locales et références Apprendre actualisées avec les groupes officiels.
+- Lanceurs Windows .cmd et macOS .command, avec installateur de raccourci adapté.
+- Gestion du navigateur et de l’arrêt par système ; montages Docker compatibles avec les chemins de lecteur Windows.
+
+## 22 novembre 2026 — lanceur Ubuntu et progression avancée
+
+- Raccourci utilisateur Z01 Fake Exam : démarrage, attente, navigateur et arrêt propre.
+- 30 exercices par langage conservés, avec rééquilibrage vers les notions avancées.
+- JS N1 à N7 : promesses, échéance, relance, copie/gel profond et Proxy.
+- Go : sous-séquences, compression, bases, masques, pile RPN et interpréteur.
+- Rust : génériques, trait Display, Box, Rc/RefCell, Drop et propagation d’erreurs.
+- Java : fenêtres, tas, patrons de construction, listes, abstraction, matrices et UTC.
+- 175 ponts vers les sujets ; aucune classification officielle inventée pour Go/Rust/Java.
+- Migrations des étapes conservées sans écraser les anciennes sauvegardes.
+
+## 19 novembre 2026 — parcours harmonisés à 30 étapes
+
+- 30 petits exercices par langage : 120 étapes au total.
+- 12 étapes supplémentaires dans chacun des parcours Go, Rust et Java.
+- Sélection JS resserrée à 30 étapes réparties dans les 12 chapitres.
+- Migration des étapes JS conservées vers v2 sans modifier la sauvegarde v1.
+
+## 19 novembre 2026 — onglet Apprendre et parcours multilangages
+
+- Parcours JS déplacé dans une page principale Apprendre, adaptée au langage courant.
+- 54 nouvelles étapes expliquées : 18 en Go, 18 en Rust et 18 en Java.
+- Brouillons, indices et progression séparés par langage ; données JS conservées.
+- Tests pédagogiques Go/Rust/Java dans les images Docker isolées existantes.
+- Ponts vers le catalogue et protection contre les résultats tardifs après navigation.
+
+## 17 novembre 2026 — parcours Go vers JavaScript pas à pas
+
+- Refonte du prototype en 63 petits exercices et 12 chapitres, hors calendrier imposé.
+- Comparaisons Go/JS, notions détaillées, squelettes, indices et corrigés commentés.
+- Tests pédagogiques dans Docker avec attendu/obtenu et détection de mutation.
+- Brouillons par étape et progression distincte des scores du checkpoint.
+
+## 17 novembre 2026 — prototype du parcours JavaScript
+
+- Sept séances ciblant les 19 exercices N1–N4, avec diagnostic, méthodes et fiches.
+- Défis guidés ou sans aide, résultats locaux et confirmations espacées de 24 h.
+- Révision des derniers échecs, séparation des examens et guide d’évaluation.
+
 ## 4 novembre 2026 — préparation automatique des moulinettes
 
 - Téléchargement des images manquantes avec un délai distinct de la correction.

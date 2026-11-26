@@ -20,8 +20,41 @@ function getExerciseLevel(id) {
   return LEVEL_MAP[key] || null;
 }
 
+const JAVA_CHECKPOINTS = [
+  "checkpoint-01-java",
+  "checkpoint-02-java",
+  "checkpoint-03-java",
+];
+function javaCheckpointLabel(key) {
+  const index = JAVA_CHECKPOINTS.indexOf(key);
+  return index >= 0 ? `Checkpoint Java ${index + 1}` : "Checkpoint non fourni";
+}
+function restoreJavaCheckpoints(saved) {
+  javaTrainingCheckpoint = JAVA_CHECKPOINTS.includes(saved?.trainingCheckpoint)
+    ? saved.trainingCheckpoint
+    : "all";
+  javaExamCheckpoint = JAVA_CHECKPOINTS.includes(saved?.examCheckpoint)
+    ? saved.examCheckpoint
+    : JAVA_CHECKPOINTS[0];
+}
+function renderJavaCheckpointControls() {
+  const training = document.getElementById("java-checkpoint-filter");
+  const exam = document.getElementById("java-exam-checkpoint");
+  training.closest("label").hidden = currentTrack !== "java";
+  exam.closest("label").hidden = currentTrack !== "java";
+  training.value = javaTrainingCheckpoint;
+  exam.value = javaExamCheckpoint;
+  training.disabled = trueExamMode || examFocusLocked() || submissionRunning;
+  exam.disabled = !!currentExam || submissionRunning || examFocusLocked();
+}
+function getCatalogExercises() {
+  const source = getTrackExercises();
+  return currentTrack === "java" && javaTrainingCheckpoint !== "all"
+    ? source.filter((ex) => ex.checkpoint === javaTrainingCheckpoint)
+    : source;
+}
 function getFilteredExercises() {
-  let source = getTrackExercises();
+  let source = getCatalogExercises();
   if (currentLevelFilter === "unclassified")
     source = source.filter((ex) => !ex.level);
   else if (currentLevelFilter !== "all")
@@ -103,6 +136,6 @@ function updateExerciseHeader(ex) {
     editorTabLabelEl.textContent = ex.expectedFiles[0];
   examTitleEl.textContent = title;
   document.getElementById("exercise-level").textContent = ex.level
-    ? `Niveau ${ex.level}`
+    ? `${currentTrack === "java" ? javaCheckpointLabel(ex.checkpoint) + " · " : ""}Niveau ${ex.level}`
     : "Sans niveau";
 }

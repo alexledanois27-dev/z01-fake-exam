@@ -31,8 +31,16 @@ const revisionCatalog = {
   lessons: require("../learning-content/manifest.json").lessons,
   exerciseLinks: require("../learning-content/exercise-links.json"),
 };
+const jsSprintPlan = require("../frontend/learning/js-checkpoint-sprint.json");
+const microPaths = Object.fromEntries(
+  ["go", "js", "rust", "java"].map((track) => [
+    track,
+    require(`../learning-content/${track}-micro-path/curriculum.json`),
+  ]),
+);
 const outputs = {
-  "app.js": `/* ${banner} */\n(function () {\nconst trainingGuides = ${JSON.stringify(guides)};\nconst revisionCatalog = ${JSON.stringify(revisionCatalog)};\n${assemble(manifest.javascript)}\n})();\n`,
+  "app.js": `/* ${banner} */\n(function () {\nconst microPaths = ${JSON.stringify(microPaths)};
+const jsMicroPath = microPaths.js;\nconst jsSprintPlan = ${JSON.stringify(jsSprintPlan)};\nconst trainingGuides = ${JSON.stringify(guides)};\nconst revisionCatalog = ${JSON.stringify(revisionCatalog)};\n${assemble(manifest.javascript)}\n})();\n`,
   "style.css": `/* ${banner} */\n${assemble(manifest.styles)}`,
 };
 // Parse before writing, so invalid source cannot replace a working bundle.

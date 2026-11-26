@@ -24,7 +24,8 @@
     } catch {
       /* Keep working in memory. */
     }
-    const scope = (track, kind) => JSON.stringify([track, kind]);
+    const scope = (track, kind, checkpoint) =>
+      JSON.stringify(checkpoint ? [track, kind, checkpoint] : [track, kind]);
     function valid(s) {
       return (
         s &&
@@ -66,11 +67,11 @@
       }
     }
     return {
-      current(track, kind) {
-        const s = sessions[scope(track, kind)];
+      current(track, kind, checkpoint = null) {
+        const s = sessions[scope(track, kind, checkpoint)];
         return valid(s) ? s : null;
       },
-      start(track, kind, series) {
+      start(track, kind, series, checkpoint = null) {
         if (
           !["free", "strict"].includes(kind) ||
           !Array.isArray(series) ||
@@ -84,6 +85,7 @@
           id: uid(),
           track,
           kind,
+          ...(checkpoint ? { checkpoint } : {}),
           series: [...series],
           index: 0,
           phase: "running",
@@ -95,7 +97,7 @@
           finishedAt: null,
           finishReason: null,
         };
-        sessions[scope(track, kind)] = s;
+        sessions[scope(track, kind, checkpoint)] = s;
         flush();
         return s;
       },

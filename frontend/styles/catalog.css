@@ -287,3 +287,22 @@
   font-size: 9px;
   color: hsl(var(--accent-hue) calc(4.8% * var(--theme-chroma)) 49.02% / 1);
 }
+
+.checkpoint-selector {
+  display: grid;
+  gap: 8px;
+  padding: 12px 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.checkpoint-selector[hidden] {
+  display: none;
+}
+.checkpoint-selector select {
+  width: 100%;
+  padding: 10px;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}

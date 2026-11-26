@@ -43,6 +43,20 @@ func requireRootlessDocker() error {
 	return nil
 }
 
+// Split from the right so a native Windows drive colon stays in the host path.
+func splitWorkspaceMount(value string) (string, string, error) {
+	spec, ok := strings.CutSuffix(value, ":rw")
+	at := strings.LastIndex(spec, ":")
+	if !ok || at <= 0 {
+		return "", "", fmt.Errorf("montage Docker invalide")
+	}
+	source, target := spec[:at], spec[at+1:]
+	if !filepath.IsAbs(source) || strings.ContainsAny(source, ",\n\r") {
+		return "", "", fmt.Errorf("montage Docker invalide")
+	}
+	return source, target, nil
+}
+
 // Keep the official images immutable and copy each read-only input into bounded tmpfs.
 // No student process can write into a host bind mount or the image overlay.
 func hardenDockerArgs(args []string) ([]string, error) {
@@ -66,11 +80,11 @@ func hardenDockerArgs(args []string) ([]string, error) {
 			i++
 			switch flag {
 			case "-v", "--volume":
-				parts := strings.Split(value, ":")
-				if len(parts) != 3 || parts[2] != "rw" || !filepath.IsAbs(parts[0]) || strings.ContainsAny(parts[0], ",\n\r") {
-					return nil, fmt.Errorf("montage Docker invalide")
+				source, target, err := splitWorkspaceMount(value)
+				if err != nil {
+					return nil, err
 				}
-				mounts = append(mounts, [2]string{parts[0], parts[1]})
+				mounts = append(mounts, [2]string{source, target})
 			case "--entrypoint":
 				entry = value
 			case "-w", "--workdir":

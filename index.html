@@ -92,6 +92,14 @@
               id="mode-learning"
             /><span>Fiches</span></label
           >
+          <label class="mode-option"
+            ><input
+              type="radio"
+              name="app-mode"
+              value="path"
+              id="mode-path"
+            /><span>Apprendre</span></label
+          >
         </div>
         <details class="accent-menu" id="accent-menu">
           <summary
@@ -213,6 +221,18 @@
               aria-label="Rechercher un exercice"
             /><kbd>Ctrl K</kbd></label
           >
+          <label class="checkpoint-selector" hidden
+            >Checkpoint Java
+            <select
+              id="java-checkpoint-filter"
+              aria-label="Checkpoint Java en entraînement"
+            >
+              <option value="all">Tous les checkpoints</option>
+              <option value="checkpoint-01-java">Checkpoint 1</option>
+              <option value="checkpoint-02-java">Checkpoint 2</option>
+              <option value="checkpoint-03-java">Checkpoint 3</option>
+            </select>
+          </label>
           <div class="filters">
             <span class="eyebrow">DIFFICULTÉ</span>
             <div id="level-filters" class="chips"></div>
@@ -325,6 +345,17 @@
               Une nouvelle série, un éditeur vierge. Les prochains exercices
               restent masqués.
             </p>
+            <label class="checkpoint-selector" hidden
+              >Checkpoint Java à préparer
+              <select
+                id="java-exam-checkpoint"
+                aria-label="Checkpoint Java de la nouvelle session"
+              >
+                <option value="checkpoint-01-java">Checkpoint 1</option>
+                <option value="checkpoint-02-java">Checkpoint 2</option>
+                <option value="checkpoint-03-java">Checkpoint 3</option>
+              </select>
+            </label>
             <div
               class="exam-choices"
               role="radiogroup"
@@ -360,6 +391,14 @@
               avant la fin. Les brouillons et les réussites d’entraînement ne
               sont jamais repris.
             </p>
+            <button
+              id="exam-resume-legacy-java"
+              class="button button-subtle"
+              type="button"
+              hidden
+            >
+              Reprendre l’ancienne session Java (classement historique)
+            </button>
             <div class="exam-start-actions">
               <button
                 id="exam-start"
@@ -404,6 +443,14 @@
                 retiré.
               </figcaption>
             </figure>
+            <button
+              id="exam-resume-legacy-java"
+              class="button button-subtle"
+              type="button"
+              hidden
+            >
+              Reprendre l’ancienne session Java (classement historique)
+            </button>
             <div class="exam-start-actions">
               <button
                 id="exam-learning-report-btn"
@@ -633,6 +680,11 @@ Les résultats de tes tests apparaîtront ici.
               </div>
             </section>
           </div>
+          <section
+            id="learn-path-panel"
+            aria-label="Parcours pas à pas"
+            hidden
+          ></section>
           <section
             id="learning-panel"
             class="learning-panel"

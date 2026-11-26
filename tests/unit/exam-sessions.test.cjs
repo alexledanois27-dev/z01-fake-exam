@@ -82,3 +82,26 @@ test("final report only names revealed exercises; finished records stay immutabl
   repo.draft(s, "a", "changed");
   assert.equal(repo.draft(s, "a"), "correct");
 });
+
+test("Java checkpoint scopes isolate new drafts while keeping legacy sessions intact", () => {
+  const f = fixture(),
+    repo = create(f.options);
+  const legacy = repo.start("java", "free", ["old-one"]);
+  repo.draft(legacy, "old-one", "LEGACY");
+  const first = repo.start("java", "free", ["one"], "checkpoint-01-java");
+  repo.draft(first, "one", "CP1");
+  const second = repo.start("java", "free", ["two"], "checkpoint-02-java");
+  repo.draft(second, "two", "CP2");
+  const restored = create(f.options);
+  assert.equal(restored.current("java", "free").id, legacy.id);
+  assert.equal(
+    restored.current("java", "free", "checkpoint-01-java").drafts.one,
+    "CP1",
+  );
+  assert.equal(
+    restored.current("java", "free", "checkpoint-02-java").drafts.two,
+    "CP2",
+  );
+  assert.equal(restored.current("java", "free", "checkpoint-03-java"), null);
+  assert.equal(second.track, "java");
+});

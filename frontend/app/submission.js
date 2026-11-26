@@ -82,6 +82,7 @@ async function requestCorrection(payload, onPreparing, expired = () => false) {
 }
 
 function runCode(options = {}) {
+  if (pathMode) return Promise.resolve(false);
   if (submissionRunning) return pendingRun || Promise.resolve(false);
   const finalSubmission = options.finalSubmission === true;
   const example = options.example === true;
@@ -116,6 +117,7 @@ function runCode(options = {}) {
     scope: editorIdentity?.scope,
     session,
   };
+  const sprintAttempt = captureSprintAttempt();
   const previouslyPassed = session
     ? examRepo.passed(session, submitted.id)
     : !!personalStore.result(submitted.track, submitted.id)?.success;
@@ -153,6 +155,7 @@ function runCode(options = {}) {
       );
       const out = String(data.output || "");
       if (!example) {
+        recordSprintCorrection(submitted, sprintAttempt, data.success);
         attemptJournal.add({
           track: submitted.track,
           exercise: submitted.id,

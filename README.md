@@ -46,6 +46,29 @@ lance le code quand elle est disponible. Ce téléchargement possède son propre
 délai de dix minutes et ne compte pas comme un échec de l’exercice. Un problème
 de préparation apparaît comme **Correction indisponible**.
 
+### Lancer sans Make sur Linux, Windows ou macOS
+
+Python 3, Go et Docker doivent être installés. Docker Desktop doit utiliser des
+conteneurs Linux sur Windows/macOS. Les fichiers suivants se lancent depuis le
+dossier complet du projet :
+
+| Système | Démarrage |
+| --- | --- |
+| Ubuntu/Linux | Raccourci **Z01 Fake Exam** dans les applications après `python3 scripts/install-launcher.py`. |
+| Windows | Double-cliquer **Lancer Z01 Fake Exam.cmd**. |
+| macOS | Double-cliquer **Lancer Z01 Fake Exam.command**. |
+
+L’installateur crée aussi un raccourci sur le Bureau Windows/macOS :
+`py -3 scripts/install-launcher.py` sur Windows, ou
+`python3 scripts/install-launcher.py` sur macOS. `--destination` permet de choisir
+un autre dossier de raccourcis sur ces deux systèmes.
+
+Le lanceur attend que le serveur soit prêt puis ouvre `http://127.0.0.1:8092`.
+Garder le terminal ouvert ; utiliser `Ctrl+C` pour arrêter l’instance créée.
+Une instance déjà ouverte est réutilisée. Un autre service sur le port est signalé
+sans être arrêté. Le lanceur ne fait ni installation de dépendances, ni autostart,
+ni déploiement. Voir [les détails et limites de validation](docs/lanceur-local.md).
+
 ## Parcours disponibles
 
 | Mode | Fonctionnement |
@@ -53,6 +76,7 @@ de préparation apparaît comme **Correction indisponible**.
 | Entraînement | Choix du langage, niveau et exercice ; aides progressives ; réussites conservées ; pas de chronomètre. |
 | Examen libre | Série future masquée, sans timer ; possibilité de passer un exercice. |
 | Examen réel | 3 heures, aucun saut, passage automatique après réussite ; bilan au rendu ou à l’expiration. |
+| Apprendre | Parcours progressif en pleine page, petits exercices et corrigés par langage. |
 | Fiches | Révisions Markdown, avec espace de lecture élargi. |
 
 En examen réel, les onglets internes sont masqués et verrouillés jusqu’au rendu.
@@ -60,8 +84,10 @@ Le plein écran est demandé ; une sortie de plein écran ou un changement d’o
 impose un écran de reprise, sans arrêter le temps. Le navigateur conserve ses
 commandes système : cela ne constitue pas une protection anti-triche.
 
-Les niveaux JavaScript correspondent aux groupes d’examen de l’API (N1 à N7),
-également conservés dans les copies locales.
+Les niveaux JS (N1 à N7) et Rust (N1 à N10) viennent de `attrs.group` dans l’API.
+Java possède trois checkpoints distincts, chacun avec N1 à N5. Choisir son
+checkpoint en entraînement ou avant une nouvelle session ; une session Java
+ne mélange plus leurs groupes. Ces métadonnées sont aussi conservées hors ligne.
 
 ### Réviser pendant l’entraînement
 
@@ -74,6 +100,25 @@ l’exercice restent réservés à leur vue respective.
 Ces références complètent les aides progressives et sont masquées en examen.
 Les nouvelles fiches contiennent syntaxe, exemples autonomes, pièges et checklist,
 sans solution complète du sujet. Voir [le guide des fiches](learning-content/README.md).
+
+### Apprendre pas à pas
+
+L’onglet **Apprendre**, à côté d’Entraînement, Examen et Fiches, affiche une vraie
+page de cours pour le langage sélectionné : **30 exercices dans chacun des quatre langages** (120 au total).
+Le contenu va des bases aux notions avancées : piles et interpréteurs en Go,
+promesses et Proxy en JS, traits et structures partagées en Rust, patrons de
+construction et programmation dynamique en Java. Les comparaisons avec Go
+restent présentes pour les trois autres langages.
+Chaque petite étape comporte explications, squelette modifiable, tests publics
+exécutés dans Docker, indices et corrigé commenté. Les brouillons et la progression
+sont séparés par langage, avec reprise des étapes JS conservées et sauvegarde intacte de l’ancien parcours.
+Les ponts renvoient ensuite aux 175 sujets du catalogue, avec leurs groupes
+officiels JS/Rust/Java. Les groupes Java restent associés à leur checkpoint.
+
+Ces parcours locaux sont pédagogiques, distincts des énoncés officiels et des scores
+d’examen. Ces 30 étapes préparent des notions communes ; elles ne remplacent pas la pratique
+des sujets complets ni leurs cas particuliers. Aucun parcours ne garantit une note ou un délai.
+Voir [le guide des parcours](docs/parcours-apprendre.md).
 
 ### Historique et bilan d’apprentissage
 

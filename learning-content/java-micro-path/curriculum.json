@@ -1,0 +1,1421 @@
+{
+  "version": 2,
+  "track": "java",
+  "title": "Go → Java, des méthodes aux objets",
+  "description": "30 exercices de transition depuis Go : méthodes, collections, fenêtres, tas, patrons de construction, listes, programmation dynamique et calendrier UTC.",
+  "audience": "PARCOURS PAS À PAS · PROTOTYPE",
+  "instructions": "Écris seulement les méthodes static et les types imbriqués demandés. Le moteur fournit la classe Lesson et son main. Utilise les noms complets java.util si nécessaire ; aucun package ni import à ajouter. Les entrées ne sont pas null sauf indication contraire.",
+  "modules": [
+    {
+      "id": "methods",
+      "title": "De la fonction Go à la méthode Java",
+      "goal": "Comprendre static, les types et le retour.",
+      "go": "func double(n int) int { return n*2 }",
+      "example": "static int doubleValue(int n) {\n    return n * 2;\n}",
+      "notes": [
+        "Une méthode Java vit dans une classe. Dans ces petits exercices, le moteur fournit la classe Lesson : tu écris seulement les méthodes demandées.",
+        "static signifie que la méthode appartient à la classe et ne nécessite pas de créer une instance avec new.",
+        "Le type de retour précède le nom. Les paramètres s’écrivent type puis nom, contrairement à Go.",
+        "Les instructions se terminent par ;. System.out.println affiche une valeur mais ne remplace pas return."
+      ],
+      "checkpoint": [
+        "java-area-calculator",
+        "java-digitcount",
+        "java-goodbye-mars",
+        "java-multiplication-table",
+        "java-system-logger",
+        "java-unit-converter",
+        "java-universal-greeting"
+      ],
+      "lessons": [
+        {
+          "id": "java-learn-return",
+          "title": "Renvoyer depuis une méthode",
+          "target": "doubleValue",
+          "minutes": 8,
+          "task": "Renvoie le double de n, pour de petits int.",
+          "bridge": "int doubleValue(int n) remplace func doubleValue(n int) int.",
+          "explanation": [
+            "Le type de retour est int.",
+            "return doit fournir une expression de ce type.",
+            "Le moteur appelle la méthode static sans instance."
+          ],
+          "starter": "static int doubleValue(int n) {\n    return 0;\n}",
+          "solution": "static int doubleValue(int n) {\n    return n*2;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "doubleValue(4)",
+              "expectedText": "8"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "doubleValue(-3)",
+              "expectedText": "-6"
+            }
+          ],
+          "hints": [
+            "Multiplie n par 2.",
+            "Termine return par un point-virgule."
+          ],
+          "walkthrough": [
+            "La signature reste identique.",
+            "Le calcul produit un int.",
+            "La valeur repart vers le test sans affichage."
+          ]
+        },
+        {
+          "id": "java-learn-division",
+          "title": "Comprendre la division entière",
+          "target": "half",
+          "minutes": 8,
+          "task": "Renvoie n/2 avec troncature vers zéro, pour un int.",
+          "bridge": "Comme entre deux int en Go, la division entière perd la partie fractionnaire.",
+          "explanation": [
+            "7/2 donne 3 avec des int.",
+            "-7/2 donne -3, pas -4.",
+            "Le retour doit rester int, sans conversion en double."
+          ],
+          "starter": "static int half(int n) {\n    return 0;\n}",
+          "solution": "static int half(int n) {\n    return n/2;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "half(7)",
+              "expectedText": "3"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "half(-7)",
+              "expectedText": "-3"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "half(0)",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Divise directement n par l’entier 2.",
+            "2.0 changerait le type du calcul."
+          ],
+          "walkthrough": [
+            "Les deux opérandes sont entiers.",
+            "Le résultat tronque vers zéro.",
+            "Aucun arrondi supplémentaire n’est demandé."
+          ]
+        },
+        {
+          "id": "java-learn-sum",
+          "title": "Écrire une boucle Java",
+          "target": "sumTo",
+          "minutes": 8,
+          "task": "Pour 0<=n<=1000, renvoie la somme de 1 à n.",
+          "bridge": "Le for Go devient for(initialisation;condition;mise à jour).",
+          "explanation": [
+            "Déclare int total=0 avant la boucle.",
+            "La condition i<=n inclut n.",
+            "return se situe après la fermeture de la boucle."
+          ],
+          "starter": "static int sumTo(int n) {\n    return 0;\n}",
+          "solution": "static int sumTo(int n) {\n    int total=0;\n    for(int i=1;i<=n;i++) {\n        total+=i;\n    }\n    return total;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "sumTo(0)",
+              "expectedText": "0"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "sumTo(5)",
+              "expectedText": "15"
+            }
+          ],
+          "hints": [
+            "Utilise for(int i=1;i<=n;i++).",
+            "Ajoute i à total à chaque tour."
+          ],
+          "walkthrough": [
+            "Le cas zéro garde total nul.",
+            "La variable i reste locale à la boucle.",
+            "Le résultat n’est renvoyé qu’après l’accumulation."
+          ]
+        },
+        {
+          "id": "java-learn-clamp",
+          "title": "Traduire trois branches",
+          "target": "clamp",
+          "minutes": 8,
+          "task": "Ramène n dans [low,high], avec low<=high.",
+          "bridge": "Les conditions se traduisent directement depuis Go ; Java exige les parenthèses du if.",
+          "explanation": [
+            "n<low donne low.",
+            "n>high donne high.",
+            "Sinon n est déjà dans l’intervalle fermé."
+          ],
+          "starter": "static int clamp(int n,int low,int high) {\n    return n;\n}",
+          "solution": "static int clamp(int n,int low,int high) {\n    if(n<low)return low;\n    if(n>high)return high;\n    return n;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "clamp(-2,0,10)",
+              "expectedText": "0"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "clamp(20,0,10)",
+              "expectedText": "10"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "clamp(5,0,10)",
+              "expectedText": "5"
+            },
+            {
+              "label": "Cas 4",
+              "args": [],
+              "invoke": "clamp(0,0,10)",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Traite les dépassements avec deux if.",
+            "Le dernier retour renvoie n."
+          ],
+          "walkthrough": [
+            "Les gardes traitent des cas exclusifs.",
+            "Les bornes sont incluses.",
+            "Chaque branche retourne un int."
+          ]
+        },
+        {
+          "id": "java-learn-multiple",
+          "title": "Court-circuiter une opération interdite",
+          "target": "isMultiple",
+          "minutes": 8,
+          "task": "Renvoie si n est multiple de d ; renvoie false pour d==0.",
+          "bridge": "Comme en Go, && évite d’évaluer la droite lorsque la gauche est fausse.",
+          "explanation": [
+            "Le reste n%d vaut zéro pour un multiple.",
+            "Le modulo par zéro est interdit.",
+            "Place d!=0 avant le modulo dans l’expression."
+          ],
+          "starter": "static boolean isMultiple(int n,int d) {\n    return false;\n}",
+          "solution": "static boolean isMultiple(int n,int d) {\n    return d!=0 && n%d==0;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "isMultiple(12,3)",
+              "expectedText": "true"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "isMultiple(7,2)",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "isMultiple(1,0)",
+              "expectedText": "false"
+            }
+          ],
+          "hints": ["Commence par d!=0.", "Relie au test du reste avec &&."],
+          "walkthrough": [
+            "Le court-circuit protège la division.",
+            "La comparaison produit déjà boolean.",
+            "Le retour n’a pas besoin de if supplémentaire."
+          ]
+        }
+      ],
+      "officialLevels": [1, 2, 3],
+      "checkpointGroups": {
+        "checkpoint-01-java": [1, 2, 3],
+        "checkpoint-02-java": [2]
+      }
+    },
+    {
+      "id": "strings",
+      "title": "String : égalité et indices",
+      "goal": "Ne pas confondre référence, contenu et caractère.",
+      "go": "a == b // compare le texte des strings",
+      "example": "a.equals(b) // compare le contenu",
+      "notes": [
+        "String est un objet immuable. En Java == compare les références des objets ; equals compare le contenu d’une String.",
+        "s.length() compte les unités UTF-16, comme JavaScript, pas les octets UTF-8 de len(s) en Go. Un caractère hors du plan de base peut occuper deux unités.",
+        "charAt(i) lit une unité char et exige 0<=i<s.length(). La chaîne vide nécessite une garde.",
+        "La concaténation produit une nouvelle String ; StringBuilder est utile pour construire du texte dans une boucle."
+      ],
+      "checkpoint": [
+        "java-almost-palindrome",
+        "java-breakdown-url",
+        "java-config-protector",
+        "java-count-char",
+        "java-html-validator",
+        "java-longest-common-prefix",
+        "java-strlen"
+      ],
+      "lessons": [
+        {
+          "id": "java-learn-equals",
+          "title": "Comparer le contenu",
+          "target": "sameText",
+          "minutes": 8,
+          "task": "Renvoie si a et b contiennent le même texte. Les arguments ne sont pas null.",
+          "bridge": "L’égalité des strings Go correspond à equals en Java.",
+          "explanation": [
+            "Deux objets distincts peuvent contenir le même texte.",
+            "== peut sembler marcher sur des littéraux à cause de leur partage.",
+            "Le contrat non-null autorise a.equals(b)."
+          ],
+          "starter": "static boolean sameText(String a,String b) {\n    return false;\n}",
+          "solution": "static boolean sameText(String a,String b) {\n    return a.equals(b);\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "sameText(new String(\"go\"),new String(\"go\"))",
+              "expectedText": "true"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "sameText(\"Go\",\"go\")",
+              "expectedText": "false"
+            }
+          ],
+          "hints": [
+            "Appelle a.equals(b).",
+            "Ne te fie pas à == sur deux littéraux."
+          ],
+          "walkthrough": [
+            "Le test crée des références distinctes.",
+            "equals examine le contenu.",
+            "La comparaison respecte les majuscules."
+          ]
+        },
+        {
+          "id": "java-learn-first",
+          "title": "Protéger une indexation",
+          "target": "firstOr",
+          "minutes": 8,
+          "task": "Renvoie la première unité char, ou fallback si s est vide. s non-null.",
+          "bridge": "Le contrôle de longueur joue le même rôle qu’avant s[0] en Go.",
+          "explanation": [
+            "isEmpty() teste la chaîne vide.",
+            "charAt(0) exige au moins une unité.",
+            "Le résultat char s’écrit avec des apostrophes."
+          ],
+          "starter": "static char firstOr(String s,char fallback) {\n    return fallback;\n}",
+          "solution": "static char firstOr(String s,char fallback) {\n    if(s.isEmpty())return fallback;\n    return s.charAt(0);\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "firstOr(\"Java\",'?')",
+              "expectedText": "J"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "firstOr(\"\",'?')",
+              "expectedText": "?"
+            }
+          ],
+          "hints": [
+            "Traite isEmpty() avant charAt.",
+            "Lis charAt(0) dans le cas non vide."
+          ],
+          "walkthrough": [
+            "La garde évite une exception.",
+            "Le contrat porte sur une unité UTF-16.",
+            "Un emoji peut avoir deux char : ce n’est pas un découpage en graphèmes."
+          ]
+        },
+        {
+          "id": "java-learn-regex",
+          "title": "Extraire des groupes sans découpage fragile",
+          "target": "urlHost",
+          "task": "Pour une URL simple http ou https suivie de ://, d’un hôte [a-zA-Z0-9.-]+ et éventuellement /chemin, renvoie l’hôte ; sinon \"invalide\". Pas de port ni paramètres dans ce contrat.",
+          "bridge": "Les groupes de capture d’une regex donnent des morceaux validés par le même motif.",
+          "explanation": [
+            "Pattern.compile construit le motif.",
+            "matches exige que l’entrée entière corresponde.",
+            "Le groupe 1 capture l’hôte ; (?:...) groupe sans capture."
+          ],
+          "starter": "static String urlHost(String text){return \"invalide\";}",
+          "solution": "static String urlHost(String text) {\n    java.util.regex.Matcher match=java.util.regex.Pattern.compile(\"https?://([a-zA-Z0-9.-]+)(?:/[^ ]*)?\").matcher(text);\n    return match.matches()?match.group(1):\"invalide\";\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "urlHost(\"https://example.org/a\")",
+              "expectedText": "example.org"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "urlHost(\"http://local.test\")",
+              "expectedText": "local.test"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "urlHost(\"ftp://example.org\")",
+              "expectedText": "invalide"
+            }
+          ],
+          "hints": [
+            "L’hôte doit être dans une paire de parenthèses capturantes.",
+            "N’appelle group(1) qu’après un matches réussi."
+          ],
+          "walkthrough": [
+            "Le motif réalise une validation volontairement limitée.",
+            "Le groupe extrait la partie utile sans indices calculés à la main.",
+            "Une vraie URL générale doit être confiée à un parseur adapté, pas à ce motif pédagogique."
+          ],
+          "minutes": 12
+        },
+        {
+          "id": "java-learn-reverse-ascii",
+          "title": "Construire un texte en boucle",
+          "target": "reverseAscii",
+          "minutes": 8,
+          "task": "Pour une String ASCII non-null, renvoie le texte inversé.",
+          "bridge": "StringBuilder joue le rôle d’un tampon mutable plutôt que d’une chaîne modifiée.",
+          "explanation": [
+            "String est immuable.",
+            "Parcours i de length()-1 jusqu’à zéro inclus.",
+            "append ajoute chaque char au builder ; toString produit le résultat."
+          ],
+          "starter": "static String reverseAscii(String s) {\n    return \"\";\n}",
+          "solution": "static String reverseAscii(String s) {\n    StringBuilder out=new StringBuilder();\n    for(int i=s.length()-1;i>=0;i--) {\n        out.append(s.charAt(i));\n    }\n    return out.toString();\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "reverseAscii(\"Go!\")",
+              "expectedText": "!oG"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "reverseAscii(\"\")",
+              "expectedText": ""
+            }
+          ],
+          "hints": [
+            "Déclare un StringBuilder avant la boucle.",
+            "Le dernier indice est s.length()-1."
+          ],
+          "walkthrough": [
+            "La précondition ASCII évite le problème des paires UTF-16.",
+            "La boucle vide commence à -1 et ne lit rien.",
+            "Le builder assemble la sortie sans modifier s."
+          ]
+        },
+        {
+          "id": "java-learn-last-word",
+          "title": "Nettoyer puis découper",
+          "target": "lastWord",
+          "minutes": 8,
+          "task": "Pour une String ASCII non-null, renvoie le dernier mot séparé par blancs ASCII, ou \"\".",
+          "bridge": "Il faut distinguer une chaîne sans mot du dernier élément d’un découpage.",
+          "explanation": [
+            "trim() retire les blancs ASCII de bord définis par cette méthode.",
+            "Traite la chaîne nettoyée vide avant split.",
+            "split(\"\\s+\") regroupe les séparateurs blancs ASCII."
+          ],
+          "starter": "static String lastWord(String s) {\n    return \"\";\n}",
+          "solution": "static String lastWord(String s) {\n    String clean=s.trim();\n    if(clean.isEmpty())return \"\";\n    String[] words=clean.split(\"\\\\s+\");\n    return words[words.length-1];\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "lastWord(\"  hello   Java  \")",
+              "expectedText": "Java"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "lastWord(\"   \")",
+              "expectedText": ""
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "lastWord(\"Go\")",
+              "expectedText": "Go"
+            },
+            {
+              "label": "Tabulation entre deux mots",
+              "args": [],
+              "invoke": "lastWord(\"Go\\tJava\")",
+              "expectedText": "Java"
+            }
+          ],
+          "hints": [
+            "Commence par une String clean=s.trim().",
+            "Le dernier indice vaut words.length-1."
+          ],
+          "walkthrough": [
+            "Le contrat est volontairement ASCII.",
+            "La garde évite d’interpréter une chaîne vide comme un mot.",
+            "Le regroupement + évite les séparateurs répétés."
+          ]
+        }
+      ],
+      "officialLevels": [2, 3, 4, 5],
+      "checkpointGroups": {
+        "checkpoint-01-java": [3, 5],
+        "checkpoint-03-java": [2, 4]
+      }
+    },
+    {
+      "id": "arrays",
+      "title": "Tableaux et copies",
+      "goal": "Transformer une copie et traiter les bornes.",
+      "go": "out := append([]int{}, values...)",
+      "example": "int[] out = values.clone();",
+      "notes": [
+        "Un int[] a une longueur fixe accessible par .length, sans parenthèses.",
+        "Affecter int[] b=a partage le même objet : les éléments ne sont pas copiés.",
+        "clone() copie un tableau d’int. Pour un tableau de tableaux, cette copie ne duplique pas chaque sous-tableau.",
+        "Les entrées de ces exercices ne sont pas null. Le tableau vide reste un cas distinct, avec length==0."
+      ],
+      "checkpoint": [
+        "java-harmonious-fusion",
+        "java-reverse-array",
+        "java-rotate-array",
+        "java-sort-array"
+      ],
+      "lessons": [
+        {
+          "id": "java-learn-copy",
+          "title": "Modifier une copie",
+          "target": "replaceFirst",
+          "minutes": 8,
+          "task": "Renvoie une copie dont le premier élément devient x, ou une copie vide. Ne modifie pas values.",
+          "bridge": "La référence Java se partage plus directement encore qu’une vue de slice Go.",
+          "explanation": [
+            "clone() crée le nouveau tableau.",
+            "Vérifie out.length>0 avant out[0].",
+            "Renvoie out, pas values."
+          ],
+          "starter": "static int[] replaceFirst(int[] values,int x) {\n    return new int[0];\n}",
+          "solution": "static int[] replaceFirst(int[] values,int x) {\n    int[] out=values.clone();\n    if(out.length>0)out[0]=x;\n    return out;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(replaceFirst(new int[]{1,2},9))",
+              "expectedText": "[9, 2]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(replaceFirst(new int[]{},9))",
+              "expectedText": "[]"
+            }
+          ],
+          "hints": [
+            "Crée out avec values.clone().",
+            "Écris seulement dans out."
+          ],
+          "walkthrough": [
+            "Les deux tableaux deviennent indépendants.",
+            "La garde protège le vide.",
+            "Arrays.toString dans le test affiche les éléments du retour."
+          ]
+        },
+        {
+          "id": "java-learn-reverse",
+          "title": "Relier deux indices",
+          "target": "reverse",
+          "minutes": 8,
+          "task": "Renvoie un nouveau tableau dont l’ordre est inversé.",
+          "bridge": "La position i de la sortie lit length-1-i dans l’entrée.",
+          "explanation": [
+            "Alloue un tableau de même longueur.",
+            "Parcours les indices de sortie.",
+            "Lis l’élément symétrique sans écrire dans values."
+          ],
+          "starter": "static int[] reverse(int[] values) {\n    return new int[0];\n}",
+          "solution": "static int[] reverse(int[] values) {\n    int[] out=new int[values.length];\n    for(int i=0;i<out.length;i++)out[i]=values[values.length-1-i];\n    return out;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(reverse(new int[]{1,2,3}))",
+              "expectedText": "[3, 2, 1]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(reverse(new int[]{}))",
+              "expectedText": "[]"
+            }
+          ],
+          "hints": [
+            "La dernière position est length-1.",
+            "Soustrais i pour reculer dans l’entrée."
+          ],
+          "walkthrough": [
+            "Chaque position de sortie reçoit une valeur.",
+            "Le tableau vide n’exécute aucune lecture.",
+            "La source reste intacte."
+          ]
+        },
+        {
+          "id": "java-learn-minimum",
+          "title": "Éviter une mauvaise sentinelle",
+          "target": "minimumOr",
+          "minutes": 8,
+          "task": "Renvoie le minimum, ou fallback pour un tableau vide.",
+          "bridge": "Initialiser à zéro échoue quand tous les éléments sont positifs.",
+          "explanation": [
+            "La garde traite le tableau vide.",
+            "Le premier élément est un minimum provisoire valide.",
+            "Chaque élément plus petit remplace ce minimum."
+          ],
+          "starter": "static int minimumOr(int[] values,int fallback) {\n    return fallback;\n}",
+          "solution": "static int minimumOr(int[] values,int fallback) {\n    if(values.length==0)return fallback;\n    int min=values[0];\n    for(int n:values) {\n        if(n<min)min=n;\n    }\n    return min;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "minimumOr(new int[]{5,2,9},0)",
+              "expectedText": "2"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "minimumOr(new int[]{-1,-4},0)",
+              "expectedText": "-4"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "minimumOr(new int[]{},7)",
+              "expectedText": "7"
+            }
+          ],
+          "hints": [
+            "Traite length==0 avant values[0].",
+            "Initialise min avec values[0], pas zéro."
+          ],
+          "walkthrough": [
+            "La sentinelle vient des données.",
+            "La boucle for-each lit chaque int.",
+            "Le secours n’est utilisé qu’en absence de données."
+          ]
+        },
+        {
+          "id": "java-learn-rotate",
+          "title": "Faire reboucler un indice",
+          "target": "rotateLeft",
+          "minutes": 8,
+          "task": "Pour k>=0, renvoie un nouveau tableau tourné de k positions vers la gauche.",
+          "bridge": "L’indice source est (i+k)%n, comme pour une slice Go.",
+          "explanation": [
+            "Un tableau vide interdit le modulo par sa longueur zéro.",
+            "Réduis k avec k%=n.",
+            "Lis la source pour remplir une nouvelle allocation."
+          ],
+          "starter": "static int[] rotateLeft(int[] values,int k) {\n    return new int[0];\n}",
+          "solution": "static int[] rotateLeft(int[] values,int k) {\n    int n=values.length;\n    int[] out=new int[n];\n    if(n==0)return out;\n    k%=n;\n    for(int i=0;i<n;i++)out[i]=values[(i+k)%n];\n    return out;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(rotateLeft(new int[]{1,2,3},1))",
+              "expectedText": "[2, 3, 1]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(rotateLeft(new int[]{1,2,3},4))",
+              "expectedText": "[2, 3, 1]"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(rotateLeft(new int[]{},1))",
+              "expectedText": "[]"
+            }
+          ],
+          "hints": [
+            "Place la garde n==0 avant k%=n.",
+            "Chaque out[i] lit une position rebouclée."
+          ],
+          "walkthrough": [
+            "La garde traite la collection vide.",
+            "Le modulo conserve une rotation équivalente.",
+            "Les données sources restent intactes."
+          ]
+        },
+        {
+          "id": "java-learn-concat",
+          "title": "Allouer la bonne taille",
+          "target": "concat",
+          "minutes": 8,
+          "task": "Renvoie les éléments de a puis ceux de b dans un nouveau tableau.",
+          "bridge": "Contrairement à append Go, un tableau Java exige sa taille dès l’allocation.",
+          "explanation": [
+            "La longueur résultat est a.length+b.length.",
+            "Les éléments de a occupent les premiers indices.",
+            "L’élément b[i] se place à a.length+i."
+          ],
+          "starter": "static int[] concat(int[] a,int[] b) {\n    return new int[0];\n}",
+          "solution": "static int[] concat(int[] a,int[] b) {\n    int[] out=new int[a.length+b.length];\n    for(int i=0;i<a.length;i++)out[i]=a[i];\n    for(int i=0;i<b.length;i++)out[a.length+i]=b[i];\n    return out;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(concat(new int[]{1,2},new int[]{3}))",
+              "expectedText": "[1, 2, 3]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "java.util.Arrays.toString(concat(new int[]{},new int[]{4}))",
+              "expectedText": "[4]"
+            }
+          ],
+          "hints": [
+            "Alloue une seule fois la somme des longueurs.",
+            "Décale les indices de b par a.length."
+          ],
+          "walkthrough": [
+            "La sortie ne partage pas ses éléments primitifs avec les entrées.",
+            "Le décalage commence juste après a.",
+            "Les boucles gèrent naturellement les tableaux vides."
+          ]
+        }
+      ],
+      "officialLevels": [4],
+      "checkpointGroups": {
+        "checkpoint-01-java": [4],
+        "checkpoint-02-java": [4]
+      }
+    },
+    {
+      "id": "collections",
+      "title": "Listes, ensembles et fréquences",
+      "goal": "Choisir une collection selon la question posée.",
+      "go": "map[string]int{}",
+      "example": "new java.util.HashMap<String,Integer>()",
+      "notes": [
+        "ArrayList<Integer> grandit dynamiquement ; int[] a une taille fixe. Les génériques utilisent Integer et non le primitif int.",
+        "Java convertit souvent int et Integer automatiquement : c’est l’autoboxing. Attention aux Integer null qu’on ne peut pas déballer en int.",
+        "HashSet décide si un élément est déjà présent. HashMap associe une clé à une valeur, sans promettre d’ordre de parcours.",
+        "Utilise getOrDefault pour traiter une clé absente sans confondre absence et valeur null."
+      ],
+      "checkpoint": [
+        "java-distinct-substring-length",
+        "java-first-unique",
+        "java-check-anagram",
+        "java-steady-sequence",
+        "java-top-frequents"
+      ],
+      "lessons": [
+        {
+          "id": "java-learn-positive",
+          "title": "Construire une liste dynamique",
+          "target": "positive",
+          "minutes": 8,
+          "task": "Renvoie une ArrayList des entiers strictement positifs, en conservant l’ordre.",
+          "bridge": "add joue le rôle de l’ajout Go à la collection résultat.",
+          "explanation": [
+            "La déclaration utilise ArrayList<Integer>.",
+            "new construit une liste vide.",
+            "Chaque n>0 est ajouté avec out.add(n)."
+          ],
+          "starter": "static java.util.ArrayList<Integer> positive(int[] values) {\n    return new java.util.ArrayList<>();\n}",
+          "solution": "static java.util.ArrayList<Integer> positive(int[] values) {\n    java.util.ArrayList<Integer> out=new java.util.ArrayList<>();\n    for(int n:values)if(n>0)out.add(n);\n    return out;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "positive(new int[]{-1,0,3,2})",
+              "expectedText": "[3, 2]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "positive(new int[]{})",
+              "expectedText": "[]"
+            }
+          ],
+          "hints": [
+            "Crée la liste avant la boucle.",
+            "Garde n>0 et utilise add."
+          ],
+          "walkthrough": [
+            "La liste gère sa capacité.",
+            "L’autoboxing transforme chaque int ajouté.",
+            "L’ordre suit le tableau source."
+          ]
+        },
+        {
+          "id": "java-learn-window",
+          "title": "Maintenir une fenêtre sans doublon",
+          "target": "longestUnique",
+          "task": "Pour une String ASCII, renvoie la longueur de la plus longue sous-chaîne sans char répété.",
+          "bridge": "Deux bornes décrivent une fenêtre, contrairement à une sous-séquence qui peut sauter des caractères.",
+          "explanation": [
+            "La Map mémorise le dernier indice de chaque char.",
+            "Si un doublon est dans la fenêtre, avance left après cet ancien indice.",
+            "left ne recule jamais : utilise Math.max(left,last+1)."
+          ],
+          "starter": "static int longestUnique(String s){return 0;}",
+          "solution": "static int longestUnique(String s) {\n    java.util.HashMap<Character,Integer> last=new java.util.HashMap<>();\n    int left=0,best=0;\n    for(int right=0;right<s.length();right++) {\n        char ch=s.charAt(right);\n        if(last.containsKey(ch))left=Math.max(left,last.get(ch)+1);\n        last.put(ch,right);\n        best=Math.max(best,right-left+1);\n    }\n    return best;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "longestUnique(\"abba\")",
+              "expectedText": "2"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "longestUnique(\"abcabcbb\")",
+              "expectedText": "3"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "longestUnique(\"\")",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Le cas abba révèle une borne gauche qui recule à tort.",
+            "La longueur vaut right-left+1."
+          ],
+          "walkthrough": [
+            "Chaque indice est visité une fois.",
+            "Les anciennes positions hors fenêtre n’invalident pas celle-ci.",
+            "La mémoire des dernières positions remplace une recherche répétée."
+          ],
+          "minutes": 12
+        },
+        {
+          "id": "java-learn-frequency",
+          "title": "Compter avec une Map",
+          "target": "frequency",
+          "minutes": 8,
+          "task": "Compte les String exactement égales à wanted dans words ; aucun élément null.",
+          "bridge": "La clé absente vaut zéro en Go, mais Java demande ici un défaut explicite.",
+          "explanation": [
+            "HashMap<String,Integer> stocke un compteur par mot.",
+            "getOrDefault(word,0) lit un compteur ou zéro.",
+            "put remplace le compteur par sa nouvelle valeur."
+          ],
+          "starter": "static int frequency(String[] words,String wanted) {\n    return 0;\n}",
+          "solution": "static int frequency(String[] words,String wanted) {\n    java.util.HashMap<String,Integer> counts=new java.util.HashMap<>();\n    for(String word:words)counts.put(word,counts.getOrDefault(word,0)+1);\n    return counts.getOrDefault(wanted,0);\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "frequency(new String[]{\"go\",\"java\",\"go\"},\"go\")",
+              "expectedText": "2"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "frequency(new String[]{\"Java\"},\"java\")",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Lis l’ancien compteur avec getOrDefault.",
+            "Enregistre ancien+1 avec put."
+          ],
+          "walkthrough": [
+            "L’absence est gérée à l’incrément et au retour.",
+            "Les clés String sont comparées par contenu par la Map.",
+            "La casse reste significative."
+          ]
+        },
+        {
+          "id": "java-learn-heap",
+          "title": "Trier une priorité par plusieurs critères",
+          "target": "topValues",
+          "task": "Renvoie jusqu’à k valeurs distinctes de values, triées par fréquence décroissante puis valeur croissante. k>=0.",
+          "bridge": "Une PriorityQueue utilise un Comparator pour décider quelle valeur sortir d’abord.",
+          "explanation": [
+            "Une HashMap compte les occurrences.",
+            "Le Comparator compare d’abord les compteurs en ordre décroissant.",
+            "En cas d’égalité, Integer.compare(a,b) départage sans soustraction risquée."
+          ],
+          "starter": "static java.util.List<Integer> topValues(int[] values,int k){return new java.util.ArrayList<>();}",
+          "solution": "static java.util.List<Integer> topValues(int[] values,int k) {\n    java.util.HashMap<Integer,Integer> counts=new java.util.HashMap<>();\n    for(int n:values)counts.put(n,counts.getOrDefault(n,0)+1);\n    java.util.PriorityQueue<Integer> queue=new java.util.PriorityQueue<>((a,b)-> {\n        int order=Integer.compare(counts.get(b),counts.get(a));return order!=0?order:Integer.compare(a,b);\n    }\n    );\n    queue.addAll(counts.keySet());\n    java.util.List<Integer> out=new java.util.ArrayList<>();\n    while(out.size()<k&&!queue.isEmpty())out.add(queue.remove());\n    return out;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "topValues(new int[]{3,3,2,2,1},2)",
+              "expectedText": "[2, 3]"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "topValues(new int[]{1,1},5)",
+              "expectedText": "[1]"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "topValues(new int[]{1},0)",
+              "expectedText": "[]"
+            }
+          ],
+          "hints": [
+            "Compte avant de construire la file de priorité.",
+            "Ne modifie pas counts après construction du Comparator."
+          ],
+          "walkthrough": [
+            "Les comptes restent stables pendant le tri.",
+            "Le second critère rend les égalités déterministes.",
+            "La garde de file vide protège k supérieur au nombre de valeurs distinctes."
+          ],
+          "minutes": 12
+        },
+        {
+          "id": "java-learn-first-unique",
+          "title": "Séparer compter et choisir",
+          "target": "firstUnique",
+          "minutes": 8,
+          "task": "Renvoie le premier char de s apparaissant une seule fois, ou ? ; s est ASCII non-null.",
+          "bridge": "Une première passe calcule les fréquences ; une seconde respecte l’ordre du texte.",
+          "explanation": [
+            "Une Map<Character,Integer> stocke les compteurs.",
+            "getOrDefault(ch,0)+1 calcule le compteur suivant.",
+            "Le choix final doit parcourir s, pas la HashMap dont l’ordre n’est pas garanti."
+          ],
+          "starter": "static char firstUnique(String s) {\n    return '?';\n}",
+          "solution": "static char firstUnique(String s) {\n    java.util.HashMap<Character,Integer> counts=new java.util.HashMap<>();\n    for(int i=0;i<s.length();i++) {\n        char ch=s.charAt(i);\n        counts.put(ch,counts.getOrDefault(ch,0)+1);\n    }\n    for(int i=0;i<s.length();i++) {\n        char ch=s.charAt(i);\n        if(counts.get(ch)==1)return ch;\n    }\n    return '?';\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "firstUnique(\"aabcb\")",
+              "expectedText": "c"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "firstUnique(\"aabb\")",
+              "expectedText": "?"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "firstUnique(\"zab\")",
+              "expectedText": "z"
+            }
+          ],
+          "hints": [
+            "Ne choisis pas pendant la première passe : une répétition peut arriver plus tard.",
+            "Après les comptes, cherche le premier compteur égal à 1."
+          ],
+          "walkthrough": [
+            "Les deux passes répondent à deux questions différentes.",
+            "L’ordre est fourni par la String.",
+            "Le secours couvre les chaînes sans char unique."
+          ]
+        }
+      ],
+      "officialLevels": [4, 5],
+      "checkpointGroups": {
+        "checkpoint-02-java": [4, 5],
+        "checkpoint-03-java": [4]
+      }
+    },
+    {
+      "id": "objects",
+      "title": "Objets, constructeurs et encapsulation",
+      "goal": "Passer des structures Go aux instances Java.",
+      "go": "type Counter struct { value int }",
+      "example": "static class Counter {\n    private int value;\n    Counter(int start) { value = start; }\n}",
+      "notes": [
+        "Une classe décrit des champs et méthodes. new Counter(3) crée une instance dont le constructeur initialise les champs.",
+        "Le constructeur porte le nom de la classe et ne déclare aucun type de retour.",
+        "Un champ private doit être manipulé via le code de sa classe : cela permet de protéger un invariant.",
+        "Le static class ci-dessus est une classe imbriquée dans Lesson, l’enveloppe du parcours. Dans un vrai projet, Counter peut être une classe de fichier distinct."
+      ],
+      "checkpoint": [
+        "java-builder-blueprint",
+        "java-circular-linked-list",
+        "java-double-linked-list",
+        "java-factorial-master",
+        "java-factory-blueprint",
+        "java-flexisort",
+        "java-single-linked-list",
+        "java-singleton-blueprint",
+        "java-todo-list"
+      ],
+      "lessons": [
+        {
+          "id": "java-learn-constructor",
+          "title": "Initialiser un objet",
+          "target": "initial",
+          "minutes": 8,
+          "task": "Déclare Counter avec un champ int value et un constructeur Counter(int start). initial(start) crée un objet puis renvoie son champ.",
+          "bridge": "Une instance regroupe un état, comme une struct Go.",
+          "explanation": [
+            "Le constructeur s’appelle Counter.",
+            "this.value distingue le champ d’un éventuel paramètre value.",
+            "new appelle le constructeur et produit la référence."
+          ],
+          "starter": "static class Counter {\n    int value;\n    Counter(int start) { }\n}\nstatic int initial(int start) {\n    return 0;\n}",
+          "solution": "static class Counter {\n    int value;\n    Counter(int start) {\n        this.value=start;\n    }\n}\nstatic int initial(int start) {\n    Counter counter=new Counter(start);\n    return counter.value;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "initial(4)",
+              "expectedText": "4"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "initial(-2)",
+              "expectedText": "-2"
+            }
+          ],
+          "hints": [
+            "Affecte start au champ du constructeur.",
+            "Dans initial, crée new Counter(start)."
+          ],
+          "walkthrough": [
+            "Le constructeur fixe l’état initial.",
+            "La variable counter contient une référence à l’instance.",
+            "Le champ relu correspond à cette instance."
+          ]
+        },
+        {
+          "id": "java-learn-builder",
+          "title": "Construire par étapes avec un Builder",
+          "target": "buildName",
+          "task": "Déclare User avec champ final name et méthode name(). Déclare UserBuilder avec name(String) qui renvoie this et build() qui crée User. buildName(s) doit construire puis lire le nom.",
+          "bridge": "Le Builder est un objet mutable de préparation ; le produit final peut être immuable.",
+          "explanation": [
+            "Le type retourné par name(String) est UserBuilder pour permettre le chaînage.",
+            "build() crée une nouvelle instance User.",
+            "Le constructeur User reçoit le nom, sans dépendre du builder ensuite."
+          ],
+          "starter": "static class User {private final String name;User(String name){this.name=name;}String name(){return name;}}\nstatic class UserBuilder {private String name=\"\";UserBuilder name(String value){return this;}User build(){return new User(name);}}\nstatic String buildName(String s){return \"\";}",
+          "solution": "static class User {\n    private final String name;\n    User(String name) {\n        this.name=name;\n    }\n    String name() {\n        return name;\n    }\n}\nstatic class UserBuilder {\n    private String name=\"\";\n    UserBuilder name(String value) {\n        name=value;\n        return this;\n    }\n    User build() {\n        return new User(name);\n    }\n}\nstatic String buildName(String s) {\n    return new UserBuilder().name(s).build().name();\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "buildName(\"Ada\")",
+              "expectedText": "Ada"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "buildName(\"\")",
+              "expectedText": ""
+            }
+          ],
+          "hints": [
+            "Le setter du builder stocke value avant return this.",
+            "Le wrapper enchaîne name(s).build().name()."
+          ],
+          "walkthrough": [
+            "Le builder mémorise les choix.",
+            "Le produit reçoit son état lors de la construction.",
+            "Le retour this n’est pas le produit final."
+          ],
+          "minutes": 12
+        },
+        {
+          "id": "java-learn-factory",
+          "title": "Programmer contre une interface",
+          "target": "factoryValue",
+          "task": "Déclare interface Operation {int apply(int n);}. Crée deux classes DoubleOp et SquareOp. makeOp(boolean square) renvoie l’une des implémentations. factoryValue(square,n) appelle apply. Petits int.",
+          "bridge": "L’interface ressemble à un contrat Go ; la factory choisit une implémentation concrète.",
+          "explanation": [
+            "Les méthodes d’implémentation d’une interface sont public.",
+            "Le retour de la factory est Operation, pas un type concret.",
+            "L’appelant utilise apply sans vérifier la classe choisie."
+          ],
+          "starter": "interface Operation{int apply(int n);}\nstatic class DoubleOp implements Operation{public int apply(int n){return 0;}}\nstatic class SquareOp implements Operation{public int apply(int n){return 0;}}\nstatic Operation makeOp(boolean square){return new DoubleOp();}\nstatic int factoryValue(boolean square,int n){return 0;}",
+          "solution": "interface Operation {\n    int apply(int n);\n}\nstatic class DoubleOp implements Operation {\n    public int apply(int n) {\n        return n*2;\n    }\n}\nstatic class SquareOp implements Operation {\n    public int apply(int n) {\n        return n*n;\n    }\n}\nstatic Operation makeOp(boolean square) {\n    return square?new SquareOp():new DoubleOp();\n}\nstatic int factoryValue(boolean square,int n) {\n    return makeOp(square).apply(n);\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "factoryValue(false,3)",
+              "expectedText": "6"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "factoryValue(true,3)",
+              "expectedText": "9"
+            }
+          ],
+          "hints": [
+            "Choisis la classe dans makeOp uniquement.",
+            "factoryValue délègue à makeOp(square).apply(n)."
+          ],
+          "walkthrough": [
+            "Les classes satisfont le même contrat.",
+            "La factory encapsule le choix de construction.",
+            "Le polymorphisme évite de recopier le branchement dans chaque appelant."
+          ],
+          "minutes": 12
+        },
+        {
+          "id": "java-learn-linked-list",
+          "title": "Relier des nœuds et parcourir",
+          "target": "linkedSum",
+          "task": "Déclare Node avec int value et Node next. linkedSum(values) construit une liste dans le même ordre puis renvoie la somme par parcours de la liste. Petits int.",
+          "bridge": "Une référence Node joue le rôle d’un pointeur de chaînage en Go.",
+          "explanation": [
+            "Construire à rebours avec un ajout en tête conserve l’ordre final du tableau.",
+            "La liste vide est représentée par null.",
+            "Le parcours avance current=current.next jusqu’à null."
+          ],
+          "starter": "static class Node{int value;Node next;Node(int value,Node next){this.value=value;this.next=next;}}\nstatic int linkedSum(int[] values){return 0;}",
+          "solution": "static class Node {\n    int value;\n    Node next;\n    Node(int value,Node next) {\n        this.value=value;\n        this.next=next;\n    }\n}\nstatic int linkedSum(int[] values) {\n    Node head=null;\n    for(int i=values.length-1;i>=0;i--)head=new Node(values[i],head);\n    int total=0;\n    for(Node current=head;current!=null;current=current.next)total+=current.value;\n    return total;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "linkedSum(new int[]{1,-2,4})",
+              "expectedText": "3"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "linkedSum(new int[]{})",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Le nouveau nœud référence l’ancienne tête.",
+            "Le test current!=null précède toute lecture de champ."
+          ],
+          "walkthrough": [
+            "L’allocation construit les liens.",
+            "Le parcours suit les références plutôt que les indices du tableau.",
+            "Une liste circulaire demanderait un autre critère d’arrêt."
+          ],
+          "minutes": 12
+        },
+        {
+          "id": "java-learn-singleton",
+          "title": "Limiter la construction à une instance",
+          "target": "sameInstance",
+          "task": "Déclare Config avec constructeur privé et static final Config INSTANCE. Une méthode static instance() le renvoie. sameInstance() compare deux appels avec ==.",
+          "bridge": "Ici == est volontaire : on veut la même identité d’objet, pas un contenu égal.",
+          "explanation": [
+            "Un constructeur private interdit new depuis une classe ordinaire extérieure.",
+            "Le champ static est partagé par la classe.",
+            "final empêche de remplacer la référence singleton."
+          ],
+          "starter": "static class Config{private Config(){}static Config instance(){return new Config();}}\nstatic boolean sameInstance(){return false;}",
+          "solution": "static class Config {\n    private static final Config INSTANCE=new Config();\n    private Config() {\n    }\n    static Config instance() {\n        return INSTANCE;\n    }\n}\nstatic boolean sameInstance() {\n    return Config.instance()==Config.instance();\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "sameInstance()",
+              "expectedText": "true"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "Config.instance()==Config.instance()",
+              "expectedText": "true"
+            }
+          ],
+          "hints": [
+            "L’allocation ne doit apparaître que dans l’initialisation du champ.",
+            "instance() renvoie ce champ, sans new."
+          ],
+          "walkthrough": [
+            "L’initialisation de classe fournit l’instance unique de ce modèle simple.",
+            "Les appels obtiennent la même référence.",
+            "Ce choix ne doit pas remplacer automatiquement toutes les constructions d’objet d’un projet."
+          ],
+          "minutes": 12
+        }
+      ],
+      "officialLevels": [1, 2, 3],
+      "checkpointGroups": {
+        "checkpoint-02-java": [1, 2, 3],
+        "checkpoint-03-java": [3]
+      }
+    },
+    {
+      "id": "algorithms",
+      "title": "Abstraction, matrices et calendrier",
+      "goal": "Assembler les acquis dans des modèles plus avancés, puis lire les contrats des sujets associés.",
+      "go": "n, err := strconv.Atoi(text)",
+      "example": "// Un état local résume les carrés déjà calculés.\nint side = 1 + Math.min(up, Math.min(left, diagonal));\n// Une date exige aussi une unité et un fuseau explicites.",
+      "notes": [
+        "Une classe abstraite peut exprimer un contrat partagé et du code commun. Une classe concrète l’étend ; la résolution d’une méthode dépend de l’instance réelle.",
+        "La programmation dynamique mémorise une réponse locale pour la réutiliser. Avant de coder, définis exactement ce que dp[r][c] représente et dans quel ordre ses dépendances sont calculées.",
+        "Une matrice impose des bornes de lignes et de colonnes distinctes. Les sujets de spirale, carré maximal ou Sudoku n’utilisent pas le même invariant même s’ils partagent la grille.",
+        "Instant représente un point du temps ; LocalDate un jour de calendrier. Une conversion doit annoncer secondes ou millisecondes et choisir un fuseau, ici UTC.",
+        "Les exercices de dates, durées et périodes peuvent demander des validations supplémentaires ; les ponts de ce chapitre n’en remplacent pas les consignes."
+      ],
+      "checkpoint": [
+        "java-age-finder",
+        "java-is-armstrong",
+        "java-average-calc",
+        "java-date-formatter",
+        "java-day-of-week",
+        "java-factorial",
+        "java-maximal-square",
+        "java-monthly-period",
+        "java-next-prime",
+        "java-perfect-number",
+        "java-spiral-matrix",
+        "java-time-tracker",
+        "java-valid-sudoku"
+      ],
+      "lessons": [
+        {
+          "id": "java-learn-parse",
+          "title": "Gérer une conversion invalide",
+          "target": "parseOr",
+          "minutes": 8,
+          "task": "Convertis text en int, ou renvoie fallback si Integer.parseInt échoue. text non-null.",
+          "bridge": "L’exception NumberFormatException remplace ici le err de Go.",
+          "explanation": [
+            "Integer.parseInt analyse un entier signé décimal.",
+            "Un texte invalide ou hors plage déclenche NumberFormatException.",
+            "catch contient la stratégie de secours choisie."
+          ],
+          "starter": "static int parseOr(String text,int fallback) {\n    return fallback;\n}",
+          "solution": "static int parseOr(String text,int fallback) {\n    try {\n        return Integer.parseInt(text);\n    }\n    catch(NumberFormatException e) {\n        return fallback;\n    }\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "parseOr(\"42\",0)",
+              "expectedText": "42"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "parseOr(\"oops\",7)",
+              "expectedText": "7"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "parseOr(\"2147483648\",-1)",
+              "expectedText": "-1"
+            }
+          ],
+          "hints": [
+            "Place parseInt dans try.",
+            "Capture NumberFormatException et renvoie fallback."
+          ],
+          "walkthrough": [
+            "Le succès renvoie le nombre.",
+            "L’erreur ne termine pas toute l’exécution.",
+            "Les débordements sont aussi des conversions invalides."
+          ]
+        },
+        {
+          "id": "java-learn-prime",
+          "title": "Tester un diviseur",
+          "target": "isPrime",
+          "minutes": 8,
+          "task": "Pour n>=0, renvoie si n est premier.",
+          "bridge": "La logique de primalité est indépendante du langage.",
+          "explanation": [
+            "n<2 est exclu.",
+            "Teste d tant que d<=n/d.",
+            "Un seul diviseur suffit à répondre false."
+          ],
+          "starter": "static boolean isPrime(int n) {\n    return false;\n}",
+          "solution": "static boolean isPrime(int n) {\n    if(n<2)return false;\n    for(int d=2;d<=n/d;d++) {\n        if(n%d==0)return false;\n    }\n    return true;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "isPrime(1)",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "isPrime(49)",
+              "expectedText": "false"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "isPrime(97)",
+              "expectedText": "true"
+            }
+          ],
+          "hints": ["Commence à d=2.", "Utilise la division pour éviter d*d."],
+          "walkthrough": [
+            "La garde protège les petits nombres.",
+            "Les facteurs viennent par paires.",
+            "Le retour true suit la boucle complète."
+          ]
+        },
+        {
+          "id": "java-learn-abstract",
+          "title": "Partager un contrat avec une classe abstraite",
+          "target": "abstractSum",
+          "task": "Déclare abstract class Accumulator avec abstract int sum(int[]). Implémente LoopSum extends Accumulator. abstractSum(values) crée un LoopSum mais le stocke dans une variable Accumulator et appelle sum.",
+          "bridge": "Une classe abstraite fournit un type commun sans pouvoir être instanciée directement.",
+          "explanation": [
+            "La méthode abstraite n’a pas de corps.",
+            "La classe concrète doit l’implémenter avec une visibilité compatible.",
+            "La variable du parent appelle la méthode de l’instance réelle."
+          ],
+          "starter": "static abstract class Accumulator{abstract int sum(int[] values);}\nstatic class LoopSum extends Accumulator{int sum(int[] values){return 0;}}\nstatic int abstractSum(int[] values){return 0;}",
+          "solution": "static abstract class Accumulator {\n    abstract int sum(int[] values);\n}\nstatic class LoopSum extends Accumulator {\n    @Override int sum(int[] values) {\n        int total=0;\n        for(int n:values)total+=n;\n        return total;\n    }\n}\nstatic int abstractSum(int[] values) {\n    Accumulator operation=new LoopSum();\n    return operation.sum(values);\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "abstractSum(new int[]{2,3})",
+              "expectedText": "5"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "abstractSum(new int[]{})",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Crée new LoopSum(), jamais new Accumulator().",
+            "@Override aide le compilateur à vérifier la redéfinition."
+          ],
+          "walkthrough": [
+            "La classe abstraite exprime le contrat.",
+            "La classe concrète choisit l’algorithme.",
+            "La résolution de méthode dépend de l’objet réel."
+          ],
+          "minutes": 12
+        },
+        {
+          "id": "java-learn-square",
+          "title": "Construire une programmation dynamique",
+          "target": "maxSquare",
+          "task": "Pour une matrice rectangulaire de 0 et 1 non-null, renvoie l’aire du plus grand carré de 1. Zéro ligne ou colonne donne 0.",
+          "bridge": "dp[r][c] mémorise une réponse locale réutilisable, pas tous les carrés possibles.",
+          "explanation": [
+            "Si la cellule vaut 0, aucun carré de 1 ne s’y termine.",
+            "Sinon la taille vaut 1+min(haut,gauche,diagonale).",
+            "Une ligne et une colonne de zéros supplémentaires suppriment les cas de bord."
+          ],
+          "starter": "static int maxSquare(int[][] grid){return 0;}",
+          "solution": "static int maxSquare(int[][] grid) {\n    if(grid.length==0)return 0;\n    int rows=grid.length,cols=grid[0].length,best=0;\n    int[][] dp=new int[rows+1][cols+1];\n    for(int r=1;r<=rows;r++)for(int c=1;c<=cols;c++) {\n        if(grid[r-1][c-1]==1) {\n            dp[r][c]=1+Math.min(dp[r-1][c],Math.min(dp[r][c-1],dp[r-1][c-1]));\n            best=Math.max(best,dp[r][c]);\n        }\n    }\n    return best*best;\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "maxSquare(new int[][]{{1,1,0},{1,1,1}})",
+              "expectedText": "4"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "maxSquare(new int[][]{{0}})",
+              "expectedText": "0"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "maxSquare(new int[][]{})",
+              "expectedText": "0"
+            }
+          ],
+          "hints": [
+            "Le minimum des trois voisins borne le côté possible.",
+            "La réponse demandée est une aire : best*best."
+          ],
+          "walkthrough": [
+            "Les indices dp sont décalés de 1.",
+            "Le calcul réutilise seulement des états déjà connus.",
+            "La programmation dynamique évite une vérification complète pour chaque carré candidat."
+          ],
+          "minutes": 12
+        },
+        {
+          "id": "java-learn-date",
+          "title": "Distinguer instant et calendrier UTC",
+          "target": "utcDate",
+          "task": "Convertis epochSeconds (petites valeurs positives ou négatives) en date ISO UTC yyyy-MM-dd.",
+          "bridge": "Un timestamp représente un instant ; la date dépend du fuseau appliqué.",
+          "explanation": [
+            "Instant.ofEpochSecond attend des secondes, pas des millisecondes.",
+            "atZone(ZoneOffset.UTC) choisit explicitement le fuseau.",
+            "toLocalDate().toString() produit la date ISO."
+          ],
+          "starter": "static String utcDate(long epochSeconds){return \"\";}",
+          "solution": "static String utcDate(long epochSeconds) {\n    return java.time.Instant.ofEpochSecond(epochSeconds).atZone(java.time.ZoneOffset.UTC).toLocalDate().toString();\n}",
+          "tests": [
+            {
+              "label": "Cas 1",
+              "args": [],
+              "invoke": "utcDate(0L)",
+              "expectedText": "1970-01-01"
+            },
+            {
+              "label": "Cas 2",
+              "args": [],
+              "invoke": "utcDate(-1L)",
+              "expectedText": "1969-12-31"
+            },
+            {
+              "label": "Cas 3",
+              "args": [],
+              "invoke": "utcDate(86400L)",
+              "expectedText": "1970-01-02"
+            }
+          ],
+          "hints": [
+            "Évite le fuseau système par défaut.",
+            "Le -1 représente une seconde avant l’époque."
+          ],
+          "walkthrough": [
+            "La conversion conserve l’unité du contrat.",
+            "UTC rend les tests indépendants de la machine.",
+            "Une durée et une période calendaire ne sont pas interchangeables dans les sujets de dates."
+          ],
+          "minutes": 12
+        }
+      ],
+      "officialLevels": [1, 2, 5],
+      "checkpointGroups": {
+        "checkpoint-01-java": [2, 5],
+        "checkpoint-02-java": [1, 5],
+        "checkpoint-03-java": [1, 5]
+      }
+    }
+  ],
+  "storageKey": "z01-java-micro-path-v2",
+  "legacyStorageKey": "z01-java-micro-path-v1"
+}

@@ -33,6 +33,12 @@ sont pas des appels de fonction ou des commandes shell.
 - `mode` absent ou `tests` : correction complète.
 - `mode: preview` : programme autonome ou programme d’appel extrait de la consigne,
   avec les arguments littéraux ; aucune validation de progression côté interface.
+- `mode: lesson` : petite leçon locale Go, JavaScript, Rust ou Java ; `exerciseId` désigne un identifiant
+  `go-learn-*`, `js-learn-*`, `rust-learn-*` ou `java-learn-*` du curriculum serveur.
+  Le préfixe est vérifié sur une liste fermée, sans chemin fourni par le client.
+  Le serveur impose cible, cas publics et image officielle épinglée du langage et retourne aussi `checks`
+  (label, expected, actual, passed et error éventuel). Aucun score d’examen
+  n’est modifié. Les paramètres de test ou d’image transmis par le client sont ignorés.
 - `mode: example` : contrat de compatibilité, programme de consigne imposé, sans
   arguments personnalisés. Préférer `preview` pour l’interface actuelle.
 - Le serveur refuse les modes inconnus. Les champs de programme de test, stdin
@@ -95,3 +101,12 @@ Dans un aperçu, success signifie seulement que l’exécution a abouti. Le code
 Les sorties des processus sont bornées et affichées comme texte, jamais comme HTML.
 Le middleware ajoute les en-têtes de sécurité et interdit le cache des API. Voir
 [la préparation de mise en ligne](mise-en-ligne.md) pour les limites complètes.
+
+Le endpoint `/api/version` expose aussi `application: "z01-fake-exam"` en plus de
+`sha` et `dirty`. Le lanceur local s’en sert pour reconnaître une instance existante,
+sans prendre le contrôle d’un autre service sur le même port.
+
+Les exercices Rust/Java exposent `level` depuis `attrs.group`, et `checkpoint`
+depuis leur examen parent. Java conserve trois checkpoints à groupes N1–N5 ;
+ces groupes ne sont pas renumérotés en N1–N15. `attrs.level` désigne le cursus
+et ne constitue pas le niveau de l’exercice. Le runner conserve les mêmes IDs.

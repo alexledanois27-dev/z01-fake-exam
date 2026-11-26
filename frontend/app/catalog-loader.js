@@ -30,9 +30,9 @@ async function loadExercises() {
     }
     if (rustRes.ok) {
       const incomingRust = await rustRes.json();
-      rustExercises = incomingRust.map((ex, idx) => ({
+      rustExercises = incomingRust.map((ex) => ({
         ...ex,
-        level: Number(ex.level) || (idx % 10) + 1,
+        level: Number.isInteger(ex.level) && ex.level > 0 ? ex.level : null,
       }));
     } else {
       rustExercises = [];
@@ -43,9 +43,9 @@ async function loadExercises() {
     }
     if (javaRes.ok) {
       const incomingJava = await javaRes.json();
-      javaExercises = incomingJava.map((ex, idx) => ({
+      javaExercises = incomingJava.map((ex) => ({
         ...ex,
-        level: Number(ex.level) || (idx % 10) + 1,
+        level: Number.isInteger(ex.level) && ex.level > 0 ? ex.level : null,
       }));
     } else {
       javaExercises = [];
@@ -55,6 +55,7 @@ async function loadExercises() {
       );
     }
     const saved = personalStore.session(currentTrack);
+    if (currentTrack === "java") restoreJavaCheckpoints(saved);
     examKind = saved?.examKind === "strict" ? "strict" : "free";
     personalReady = true;
     if (saved) {
@@ -66,7 +67,7 @@ async function loadExercises() {
     renderChips();
     updateTrueExamControls();
     const source = getTrackExercises();
-    if (!trueExamMode && source.length) {
+    if (!pathMode && !learningMode && !trueExamMode && source.length) {
       const target = saved && source.find((ex) => exId(ex) === saved.selected);
       selectExercise(exId(target || source[0]));
     } else if (trueExamMode && !trueExamSeries.length) {

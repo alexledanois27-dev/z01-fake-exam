@@ -47,9 +47,21 @@ function savePersonalSession() {
   personalStore.session(currentTrack, {
     selected: trainingSelected,
     trainingSelected,
-    mode: learningMode ? "learning" : trueExamMode ? "true-exam" : "exam",
+    mode: pathMode
+      ? "path"
+      : learningMode
+        ? "learning"
+        : trueExamMode
+          ? "true-exam"
+          : "exam",
     filter: currentLevelFilter,
     examKind,
+    ...(currentTrack === "java"
+      ? {
+          trainingCheckpoint: javaTrainingCheckpoint,
+          examCheckpoint: javaExamCheckpoint,
+        }
+      : {}),
   });
   persistPersonal();
 }

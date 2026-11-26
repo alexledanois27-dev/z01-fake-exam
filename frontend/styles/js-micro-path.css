@@ -1,0 +1,376 @@
+.micro-dialog {
+  width: min(1380px, 97vw);
+  height: 94vh;
+}
+.micro-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 210px;
+  gap: 36px;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.micro-hero h2 {
+  font-size: clamp(25px, 3vw, 39px);
+  letter-spacing: -1.4px;
+  line-height: 1.15;
+  margin: 10px 0 18px;
+}
+.micro-hero p {
+  max-width: 78ch;
+  color: var(--muted);
+}
+.micro-kicker {
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 1.2px;
+  display: block;
+}
+.micro-progress-card {
+  padding: 18px;
+  background: var(--panel-raised);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  display: grid;
+  gap: 6px;
+}
+.micro-progress-card strong {
+  color: var(--accent);
+  font-size: 35px;
+}
+.micro-progress-card span {
+  font-weight: 650;
+}
+.micro-progress-card small {
+  color: var(--muted);
+}
+.micro-progress-card progress {
+  width: 100%;
+  accent-color: var(--accent);
+  height: 6px;
+  margin-top: 10px;
+}
+.micro-grid {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 30px;
+}
+.micro-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-self: start;
+}
+.micro-navigation > .button {
+  margin-bottom: 10px;
+  white-space: normal;
+}
+.micro-chapter {
+  text-align: left;
+  padding: 12px 15px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.micro-chapter strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.micro-chapter[aria-current="step"] {
+  border-color: var(--accent);
+  box-shadow: inset 3px 0 var(--accent);
+  background: var(--panel-raised);
+}
+.micro-lessons {
+  display: grid;
+  gap: 5px;
+  padding: 0 0 8px 12px;
+}
+.micro-lesson {
+  text-align: left;
+  border: 0;
+  border-left: 2px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  padding: 8px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.micro-lesson[aria-current="step"] {
+  border-left-color: var(--accent);
+  color: var(--accent);
+  background: var(--panel);
+}
+.micro-main {
+  min-width: 0;
+}
+.micro-title {
+  font-size: 28px;
+  margin: 8px 0 20px;
+  letter-spacing: -0.8px;
+  outline: none;
+}
+.micro-main h4 {
+  font-size: 15px;
+  margin: 0 0 16px;
+}
+.micro-chapter-intro,
+.micro-concept,
+.micro-practice,
+.micro-help,
+.micro-checkpoint-bridge {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+  padding: 22px;
+  margin-bottom: 20px;
+}
+.micro-chapter-intro summary,
+.micro-cases summary,
+.micro-solution summary {
+  cursor: pointer;
+  font-weight: 650;
+}
+.micro-chapter-intro > p,
+.micro-concept p {
+  line-height: 1.8;
+}
+.micro-language-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 20px 0;
+}
+.micro-code-example {
+  min-width: 0;
+}
+.micro-code-example .micro-kicker {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  background: var(--bg);
+  border-radius: 6px 6px 0 0;
+}
+.micro-code-example pre {
+  margin: 0;
+  overflow: auto;
+  white-space: pre;
+  font-size: 12px;
+  line-height: 1.75;
+  background: var(--bg);
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 0 0 6px 6px;
+  tab-size: 2;
+}
+.micro-bridge {
+  color: var(--accent);
+  padding-left: 12px;
+  border-left: 2px solid var(--accent);
+}
+.micro-cases {
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin: 18px 0;
+}
+.micro-cases p {
+  overflow-wrap: anywhere;
+  font-family: monospace;
+  font-size: 12px;
+}
+#micro-code {
+  width: 100%;
+  min-height: 200px;
+  resize: vertical;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font: 13px/1.8 monospace;
+  tab-size: 2;
+}
+#micro-code[hidden] {
+  display: none;
+}
+.micro-editor-host {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg);
+  min-height: 200px;
+}
+.micro-editor-host .cm-editor {
+  min-height: 200px;
+  max-height: 460px;
+}
+.micro-editor-host .cm-scroller {
+  overflow: auto;
+}
+.micro-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 16px 0 10px;
+}
+.micro-result {
+  border: 1px solid var(--line);
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 18px;
+  background: var(--bg);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.micro-success {
+  border-color: var(--accent);
+}
+.micro-success > strong {
+  color: var(--accent);
+}
+.micro-failure {
+  border-color: #b7725b;
+}
+.micro-check {
+  border-top: 1px solid var(--line);
+  margin-top: 14px;
+  padding-top: 12px;
+  font: 12px/1.7 monospace;
+}
+.micro-check p {
+  margin: 4px 0;
+}
+.micro-error {
+  color: #f0a792;
+}
+.micro-help > div p {
+  border-left: 2px solid var(--accent);
+  padding-left: 12px;
+  line-height: 1.8;
+}
+.micro-solution {
+  border-top: 1px solid var(--line);
+  margin-top: 20px;
+  padding-top: 18px;
+}
+.micro-solution .micro-code-example {
+  margin-top: 18px;
+}
+.micro-solution li {
+  margin: 10px 0;
+  line-height: 1.8;
+}
+.micro-step-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 24px 0;
+}
+.micro-checkpoint-bridge > p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+.micro-checkpoint-bridge > .button {
+  margin-top: 18px;
+}
+.micro-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-top: 1px solid var(--line);
+  margin-top: 30px;
+  padding-top: 20px;
+}
+@media (max-width: 900px) {
+  .micro-grid {
+    grid-template-columns: 185px minmax(0, 1fr);
+    gap: 18px;
+  }
+  .micro-language-pair {
+    grid-template-columns: 1fr;
+  }
+  .micro-hero {
+    gap: 18px;
+  }
+}
+@media (max-width: 650px) {
+  .micro-grid,
+  .micro-hero {
+    grid-template-columns: 1fr;
+  }
+  .micro-navigation {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .micro-navigation > .button,
+  .micro-lessons {
+    grid-column: 1/-1;
+  }
+  .micro-progress-card {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+  }
+  .micro-progress-card strong {
+    grid-row: span 2;
+  }
+  .micro-progress-card progress {
+    grid-column: 1/-1;
+  }
+  .micro-chapter-intro,
+  .micro-concept,
+  .micro-practice,
+  .micro-help,
+  .micro-checkpoint-bridge {
+    padding: 16px;
+  }
+  .micro-step-footer,
+  .micro-bottom {
+    flex-wrap: wrap;
+  }
+}
+
+/* The learning paths are a main tab, never an overlay. */
+#learn-path-panel {
+  min-height: 0;
+  overflow: auto;
+  flex: 1;
+}
+#learn-path-panel[hidden] {
+  display: none;
+}
+.path-mode .app-shell {
+  grid-template-columns: minmax(0, 1fr);
+}
+.path-mode .catalog-panel,
+.path-mode .workspace-header,
+.path-mode .layout,
+.path-mode .learning-panel,
+.path-mode .exam-lobby,
+.path-mode .exam-report,
+.path-mode .sprint-exercise-banner {
+  display: none !important;
+}
+.micro-page {
+  width: 100%;
+  max-width: 1450px;
+  margin: 0 auto;
+}
+.path-mode .workspace {
+  min-width: 0;
+}
+.mode-switch {
+  flex-wrap: wrap;
+}
+@media (max-width: 650px) {
+  .micro-page .sprint-body {
+    padding: 16px;
+  }
+}
